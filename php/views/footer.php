@@ -7,7 +7,7 @@
         <script>
           document.write(new Date().getFullYear());
         </script>
-        © Constructora Chuen - Develped By GO-Tech 
+        © ASTELECOM S.A. DE C.V. - Develped By GO-Tech 
       </div>
     </div>
   </div>

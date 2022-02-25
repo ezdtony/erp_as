@@ -1,6 +1,6 @@
 <?php
 if ($id_area <= 3) {
-    $sql_creditos = "SELECT * FROM uvzuyqbs_constructora.creditos ";
+    $sql_creditos = "SELECT * FROM constructora_personal.creditos ";
 
     $arr_creditos = $queries->getData($sql_creditos);
 }

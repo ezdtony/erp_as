@@ -4,12 +4,10 @@
         <div class="navbar-custom">
             <ul class="list-unstyled topbar-menu float-end mb-0">
 
-                <?= $btns_action ?>
-
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <span class="account-user-avatar">
-                            <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle" />
+                            <img src="images/user.png" alt="user-image" class="rounded-circle" />
                         </span>
                         <span>
                             <span class="account-user-name"><?= $user_name_short ?></span>

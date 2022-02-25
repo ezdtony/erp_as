@@ -22,8 +22,8 @@ function getChartData()
     $queries = new Queries;
 
     $stmt = "SELECT DISTINCT uti.descripcion AS tipo_material, uti.id_utilizacion
-        FROM uvzuyqbs_constructora.`cotizaciones_index` AS cot_in 
-        INNER JOIN uvzuyqbs_constructora.utilizaciones AS uti ON uti.id_utilizacion = cot_in.id_utilizacion
+        FROM constructora_personal.`cotizaciones_index` AS cot_in 
+        INNER JOIN constructora_personal.utilizaciones AS uti ON uti.id_utilizacion = cot_in.id_utilizacion
         INNER JOIN pagos_cotizaciones AS pag ON cot_in.`id_cotizaciones_index` = pag.id_cotizaciones_index 
         WHERE cot_in.id_proyectos = $id_proyecto
         ";
@@ -33,9 +33,9 @@ function getChartData()
         $labels = $data->tipo_material;
         $tipo_utilizacion = $data->id_utilizacion;
         $sql_suma = "SELECT SUM(cantidad_pago) AS total_pagos
-        FROM uvzuyqbs_constructora.`cotizaciones_index` AS cot_in 
-        INNER JOIN uvzuyqbs_constructora.utilizaciones AS uti ON uti.id_utilizacion = cot_in.id_utilizacion
-        INNER JOIN uvzuyqbs_constructora.pagos_cotizaciones AS pag ON cot_in.`id_cotizaciones_index` = pag.id_cotizaciones_index 
+        FROM constructora_personal.`cotizaciones_index` AS cot_in 
+        INNER JOIN constructora_personal.utilizaciones AS uti ON uti.id_utilizacion = cot_in.id_utilizacion
+        INNER JOIN constructora_personal.pagos_cotizaciones AS pag ON cot_in.`id_cotizaciones_index` = pag.id_cotizaciones_index 
         WHERE cot_in.id_proyectos = '$id_proyecto' AND cot_in.id_utilizacion='$tipo_utilizacion'";
 
         $getData_suma = $queries->getData($sql_suma);
@@ -76,7 +76,7 @@ function getCreditsChartData()
 
     $queries = new Queries;
 
-    $stmt = "SELECT * FROM uvzuyqbs_constructora.creditos";
+    $stmt = "SELECT * FROM constructora_personal.creditos";
 
     $getData = $queries->getData($stmt);
 

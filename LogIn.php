@@ -8,7 +8,7 @@ session_destroy();
 
 <head>
     <meta charset="utf-8" />
-    <title>Iniciar Sesión | CHUEN Constructora</title>
+    <title>Iniciar Sesión | S.I.C. ASTELECOM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
@@ -33,9 +33,9 @@ session_destroy();
                     <div class="card">
 
                         <!-- Logo -->
-                        <div class="card-header pt-4 pb-4 text-center bg-primary">
+                        <div class="card-header pt-4 pb-4 text-center bg-dark">
                             <a href="index.html">
-                                <span><img src="images/logo_chuen_light.png" alt="" height="38"></span>
+                                <span><img src="images/aslogo.png" alt="" height="58"></span>
                             </a>
                         </div>
 

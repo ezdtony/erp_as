@@ -19,15 +19,15 @@ if (!isset($_SESSION['user'])) {
 
 
     $queries = new Queries;
-    $estados = "SELECT * FROM uvzuyqbs_constructora.estados";
+    $estados = "SELECT * FROM constructora_personal.estados";
 
     $getStates = $queries->getData($estados);
 
 
-    $sql_materiales = "SELECT * FROM uvzuyqbs_constructora.matriz_materiales";
+    $sql_materiales = "SELECT * FROM constructora_personal.matriz_materiales";
     $getMateriales = $queries->getData($sql_materiales);
 
-    $sql_proyect_types = "SELECT * FROM uvzuyqbs_constructora.tipos_proyecto";
+    $sql_proyect_types = "SELECT * FROM constructora_personal.tipos_proyecto";
     $getProyectTypes = $queries->getData($sql_proyect_types);
 
     $sql_personal = "SELECT 
@@ -38,8 +38,8 @@ if (!isset($_SESSION['user'])) {
             psn.user_lastname
             ) AS nombre_completo
 
-            FROM uvzuyqbs_constructora.lista_personal AS psn
-            INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+            FROM constructora_personal.lista_personal AS psn
+            INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
             ";
     $getPersonal = $queries->getData($sql_personal);
 
@@ -67,13 +67,13 @@ if (!isset($_SESSION['user'])) {
 
         ) AS direccion_proyecto
 
-        FROM uvzuyqbs_constructora.proyectos AS proy 
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn 
-        INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
-        INNER JOIN uvzuyqbs_constructora.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
-        INNER JOIN uvzuyqbs_constructora.estados AS est ON direc.direccion_estado = est.id
-        INNER JOIN uvzuyqbs_constructora.municipios AS mun ON direc.direccion_municipio = mun.id
-        INNER JOIN uvzuyqbs_constructora.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND proy.id_proyectos = asp.id_proyecto AND asp.activo = 1
+        FROM constructora_personal.proyectos AS proy 
+        INNER JOIN constructora_personal.lista_personal AS psn 
+        INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+        INNER JOIN constructora_personal.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
+        INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
+        INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id
+        INNER JOIN constructora_personal.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND proy.id_proyectos = asp.id_proyecto AND asp.activo = 1
         WHERE proy.`status` = '1'    AND psn.id_lista_personal = $id_user
         ORDER BY id_proyectos   DESC
       ";
@@ -97,13 +97,13 @@ if (!isset($_SESSION['user'])) {
                est.estado, ', Méx.'
                ) AS direccion_personal
 
-            FROM uvzuyqbs_constructora.lista_personal AS lp
-            INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON lp.id_titulo = tit.id_titulo
-            INNER JOIN uvzuyqbs_constructora.areas_level AS al ON al.id_areas_level = lp.id_areas_level
-            INNER JOIN uvzuyqbs_constructora.areas AS area ON area.id_area = al.id_area
-            INNER JOIN uvzuyqbs_constructora.direcciones AS direc ON lp.`id_direccion` = direc.iddirecciones
-            INNER JOIN uvzuyqbs_constructora.estados AS est ON direc.direccion_estado = est.id
-INNER JOIN uvzuyqbs_constructora.municipios AS mun ON direc.direccion_municipio = mun.id;";
+            FROM constructora_personal.lista_personal AS lp
+            INNER JOIN constructora_personal.id_titulos AS tit ON lp.id_titulo = tit.id_titulo
+            INNER JOIN constructora_personal.areas_level AS al ON al.id_areas_level = lp.id_areas_level
+            INNER JOIN constructora_personal.areas AS area ON area.id_area = al.id_area
+            INNER JOIN constructora_personal.direcciones AS direc ON lp.`id_direccion` = direc.iddirecciones
+            INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
+INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id;";
 
 
         $getListaResidentes = $queries->getData($sql_lista_residentes);
@@ -130,19 +130,19 @@ INNER JOIN uvzuyqbs_constructora.municipios AS mun ON direc.direccion_municipio 
 
         ) AS direccion_proyecto
 
-        FROM uvzuyqbs_constructora.proyectos AS proy
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
-        INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
-        INNER JOIN uvzuyqbs_constructora.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
-        INNER JOIN uvzuyqbs_constructora.estados AS est ON direc.direccion_estado = est.id
-        INNER JOIN uvzuyqbs_constructora.municipios AS mun ON direc.direccion_municipio = mun.id
+        FROM constructora_personal.proyectos AS proy
+        INNER JOIN constructora_personal.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
+        INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+        INNER JOIN constructora_personal.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
+        INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
+        INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id
         ORDER BY id_proyectos DESC
     ;
 ";
     }
     $getProyects = $queries->getData($sql_proyectos);
 }
-$sql_utilizacion = "SELECT * FROM uvzuyqbs_constructora.utilizaciones";
+$sql_utilizacion = "SELECT * FROM constructora_personal.utilizaciones";
 
 $getUtilizacion = $queries->getData($sql_utilizacion);
 

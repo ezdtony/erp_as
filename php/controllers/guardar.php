@@ -28,7 +28,7 @@ if (!file_exists($directorio_pdf)) {
 }
 
 if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivo_pdf)) {
-    $sql = "INSERT INTO uvzuyqbs_constructora.rutas_archivos
+    $sql = "INSERT INTO constructora_personal.rutas_archivos
      (id_ruta,
      tipo_archivo,
      nombre_archivo,

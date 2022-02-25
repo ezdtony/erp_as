@@ -1,8 +1,8 @@
 <?php
-$sql_materiales = "SELECT * FROM uvzuyqbs_constructora.matriz_materiales";
+$sql_materiales = "SELECT * FROM constructora_personal.matriz_materiales";
 $getMateriales = $queries->getData($sql_materiales);
 
-$sql_medicion = "SELECT * FROM uvzuyqbs_constructora.medicion_tipo";
+$sql_medicion = "SELECT * FROM constructora_personal.medicion_tipo";
 $getMediciones = $queries->getData($sql_medicion);
 ?>
 <!-- Success Header Modal -->

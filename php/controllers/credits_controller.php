@@ -16,7 +16,7 @@ function getInfoCredit()
 
     $queries = new Queries;
 
-    $stmt = "SELECT * FROM uvzuyqbs_constructora.creditos WHERE id_credito='$id_credito'";
+    $stmt = "SELECT * FROM constructora_personal.creditos WHERE id_credito='$id_credito'";
 
     $getInfoCredit = $queries->getData($stmt);
 

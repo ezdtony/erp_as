@@ -19,7 +19,7 @@ function getAreaLevelsByAreaCode()
     $queries = new Queries;
 
     $stmt = "SELECT * 
-        FROM uvzuyqbs_constructora.areas_level 
+        FROM constructora_personal.areas_level 
         WHERE id_area = $id_area";
 
     $getAreaLevelsByAreaCode = $queries->getData($stmt);
@@ -73,7 +73,7 @@ function saveUser()
 
 
     $queries = new Queries;
-    $stmt_direccion = "INSERT INTO uvzuyqbs_constructora.direcciones 
+    $stmt_direccion = "INSERT INTO constructora_personal.direcciones 
                     (iddirecciones, 
                     direccion_calle,
                     direccion_numero,
@@ -95,7 +95,7 @@ function saveUser()
     $insertarDireccion = $queries->InsertData($stmt_direccion);
     if (!empty($insertarDireccion)) {
         $id_direccion = $insertarDireccion['last_id'];
-        $stmt = "INSERT INTO uvzuyqbs_constructora.lista_personal (
+        $stmt = "INSERT INTO constructora_personal.lista_personal (
             id_lista_personal,
             id_areas_level,
             id_titulo,
@@ -154,7 +154,7 @@ function changeStatusUser()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE uvzuyqbs_constructora.lista_personal
+    $stmt = "UPDATE constructora_personal.lista_personal
         SET active = '$active'
         WHERE id_lista_personal = $id_user";
 
@@ -190,7 +190,7 @@ function deleteUser()
 
     $queries = new Queries;
 
-    $stmt = "DELETE FROM uvzuyqbs_constructora.lista_personal
+    $stmt = "DELETE FROM constructora_personal.lista_personal
         WHERE id_lista_personal = $id_user";
 
     $deleteUser = $queries->InsertData($stmt);
@@ -227,7 +227,7 @@ function changeStatusProveedor()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE uvzuyqbs_constructora.proveedores
+    $stmt = "UPDATE constructora_personal.proveedores
         SET status = '$active'
         WHERE id_proveedores = $id_user";
 
@@ -263,7 +263,7 @@ function deleteProveedor()
 
     $queries = new Queries;
 
-    $stmt = "DELETE FROM uvzuyqbs_constructora.proveedores
+    $stmt = "DELETE FROM constructora_personal.proveedores
         WHERE id_proveedores = $id_user";
 
     $deleteUser = $queries->InsertData($stmt);
@@ -299,7 +299,7 @@ function saveProveedor()
     $correo_electronico = $_POST['correo_electronico'];
 
     $queries = new Queries;
-    $stmt_proveedor = "INSERT INTO uvzuyqbs_constructora.proveedores 
+    $stmt_proveedor = "INSERT INTO constructora_personal.proveedores 
                     (id_proveedores , 
                     nombre_proveedor,
                     empresa_proveedor,
@@ -344,7 +344,7 @@ function saveUtilizacion()
     $nombre = $_POST['nombre'];
 
     $queries = new Queries;
-    $stmt_proveedor = "INSERT INTO uvzuyqbs_constructora.utilizaciones 
+    $stmt_proveedor = "INSERT INTO constructora_personal.utilizaciones 
                     (id_utilizacion , 
                     descripcion)
             VALUES (
@@ -383,7 +383,7 @@ function saveMedicion()
     $nombre = $_POST['nombre'];
 
     $queries = new Queries;
-    $stmt_proveedor = "INSERT INTO uvzuyqbs_constructora.medicion_tipo 
+    $stmt_proveedor = "INSERT INTO constructora_personal.medicion_tipo 
                     (id_medicion_tipo , 
                     descripcion)
             VALUES (

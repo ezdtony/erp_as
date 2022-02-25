@@ -2,7 +2,7 @@
 
 class data_conn
 {
-    private $db_name = "uvzuyqbs_constructora";
+    private $db_name = "constructora_personal";
     private $db_user = "root";
     private $db_pass = "";
     private $db_host = "localhost";
@@ -24,8 +24,8 @@ class data_conn
 
 /* class data_conn
 {
-      private $db_name = "uvzuyqbs_constructora";
-    private $db_user = "uvzuyqbs_constructora";
+      private $db_name = "constructora_personal";
+    private $db_user = "constructora_personal";
     private $db_pass = "Dm6dnVb4";
     private $db_host = "localhost";
 

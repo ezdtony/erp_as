@@ -54,7 +54,7 @@ if ((move_uploaded_file($_FILES["pdf"]["tmp_name"], $archivo_pdf)) && (move_uplo
     $queries = new Queries;
      
 
-    $sql_chec_credito = "SELECT * FROM uvzuyqbs_constructora.pagos_cotizaciones WHERE id_pagos_cotizaciones = '$id_pago' AND id_credito IS NOT NULL";
+    $sql_chec_credito = "SELECT * FROM constructora_personal.pagos_cotizaciones WHERE id_pagos_cotizaciones = '$id_pago' AND id_credito IS NOT NULL";
     $result_chec_credito = $queries->getData($sql_chec_credito);
     
     if(!empty($result_chec_credito)){
@@ -62,13 +62,13 @@ if ((move_uploaded_file($_FILES["pdf"]["tmp_name"], $archivo_pdf)) && (move_uplo
             $id_credito = $creditos->id_credito;
             $cantidad_registrada = $creditos->cantidad_pago;
         }
-        $sql_update_credito = "UPDATE uvzuyqbs_constructora.creditos SET saldo = saldo + '$cantidad_registrada' WHERE id_credito = '$id_credito'";
+        $sql_update_credito = "UPDATE constructora_personal.creditos SET saldo = saldo + '$cantidad_registrada' WHERE id_credito = '$id_credito'";
         $result_update_credito = $queries->insertData($sql_update_credito);
     }
 
      
     
-    $sql = "UPDATE uvzuyqbs_constructora.pagos_cotizaciones SET
+    $sql = "UPDATE constructora_personal.pagos_cotizaciones SET
     id_formas_pago = '$id_forma_pago',
     id_proveedores = '$id_proveedor',
     cantidad_pago = '$cantidad',  

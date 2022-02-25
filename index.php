@@ -1,7 +1,7 @@
 <?php
 include_once('php/views/head.php');
 
-if (isset($_GET['submodule'])) {
+/* if (isset($_GET['submodule'])) {
     $submodule = $_GET['submodule'];
     switch ($submodule) {
         case 'solicitudes':
@@ -42,7 +42,7 @@ if (isset($_GET['submodule'])) {
     } else {
         $btns_action = '';
     }
-}
+} */
 
 
 include_once('php/views/navbar.php');
@@ -56,46 +56,9 @@ include_once('php/views/topbar.php');
         $submodule = $_GET['submodule'];
         switch ($submodule) {
             case 'solicitudes':
-
                 $include_file = 'php/views/solicitudes/lista_solicitudes.php';
-
-                break;
-            case 'reportes':
-                $include_file = 'php/views/reportes/index_reportes.php';
-                break;
-            case 'reporte_solicitudes':
-                $include_file = 'php/views/reportes/solicitudes/reporte_solicitudes.php';
-                break;
-            case 'reporte_solicitudes_proyecto':
-                $include_file = 'php/views/reportes/solicitudes/reporte_soli_proyecto.php';
                 break;
 
-            case 'desglose_solicitud':
-                $include_file = 'php/views/solicitudes/desglose_solicitud.php';
-                break;
-
-            case 'lista_archivos':
-                $include_file = 'php/views/solicitudes/lista_archivos.php';
-                break;
-            case 'revision_partidas':
-                $include_file = 'php/views/solicitudes/revision_partidas.php';
-                break;
-            case 'lista_archivos':
-                $include_file = 'php/views/solicitudes/lista_archivos.php';
-                break;
-            case 'graficas':
-                $include_file = 'php/views/graficas/graficas_gastos.php';
-                break;
-            case 'creditos':
-                $include_file = 'php/views/creditos/index_creditos.php';
-                break;
-            case 'reporte_credito':
-                $include_file = 'php/views/creditos/reporte_credito.php';
-                break;
-                case 'reporte_depositos':
-                    $include_file = 'php/views/creditos/reporte_credito_depositos.php';
-                    break;
-                
             default:
                 $include_file = 'php/views/principal.php';
                 break;

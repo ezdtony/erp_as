@@ -31,16 +31,16 @@ if ($id_solicitud == '') {
         est.estado, ', Méx.'
     
         ) AS direccion_proyecto
-    FROM uvzuyqbs_constructora.`cotizaciones_desglose` AS cot_des
-    INNER JOIN uvzuyqbs_constructora.cotizaciones_index AS cot_in ON cot_des.`id_cotizaciones_index` = cot_in.`id_cotizaciones_index`
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-        INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-        INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-        INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
-        INNER JOIN uvzuyqbs_constructora.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
-        INNER JOIN uvzuyqbs_constructora.estados AS est ON direc.direccion_estado = est.id
-        INNER JOIN uvzuyqbs_constructora.municipios AS mun ON direc.direccion_municipio = mun.id
-    INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+    FROM constructora_personal.`cotizaciones_desglose` AS cot_des
+    INNER JOIN constructora_personal.cotizaciones_index AS cot_in ON cot_des.`id_cotizaciones_index` = cot_in.`id_cotizaciones_index`
+    INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+        INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+        INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+        INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+        INNER JOIN constructora_personal.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
+        INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
+        INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id
+    INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
         WHERE cot_des.id_cotizaciones_index = $id_solicitud;
     ";
     $arr_solicitudes = $queries->getData($sql_solicitudes);

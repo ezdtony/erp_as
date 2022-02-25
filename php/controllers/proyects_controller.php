@@ -24,7 +24,7 @@ function saveProyect()
         // Output: 54esmdr0qf
 
         $random_code = "CHU-RDM-" . (substr(str_shuffle($permitted_chars), 0, 3));
-        $stmt_check_code = "SELECT * FROM uvzuyqbs_constructora.proyectos WHERE codigo_proyecto = '$random_code'";
+        $stmt_check_code = "SELECT * FROM constructora_personal.proyectos WHERE codigo_proyecto = '$random_code'";
         $queries = new Queries;
         $check_code = $queries->getData($stmt_check_code);
         if (!empty($check_code)) {
@@ -53,7 +53,7 @@ function saveProyect()
 
     $queries = new Queries;
 
-    $stmt_direccion = "INSERT INTO uvzuyqbs_constructora.direcciones 
+    $stmt_direccion = "INSERT INTO constructora_personal.direcciones 
                     (iddirecciones, 
                     direccion_calle,
                     direccion_numero,
@@ -76,7 +76,7 @@ function saveProyect()
     if (!empty($insertarDireccion)) {
         $id_direccion = $insertarDireccion['last_id'];
 
-        $stmt_proyecto = "INSERT INTO uvzuyqbs_constructora.proyectos (
+        $stmt_proyecto = "INSERT INTO constructora_personal.proyectos (
                     id_proyectos, 
                     codigo_proyecto,
                     id_tipo_proyecto,
@@ -158,12 +158,12 @@ function getInfoProyect()
     
         ) AS direccion_proyecto
     
-        FROM uvzuyqbs_constructora.proyectos AS proy
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
-        INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
-        INNER JOIN uvzuyqbs_constructora.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
-        INNER JOIN uvzuyqbs_constructora.estados AS est ON direc.direccion_estado = est.id
-        INNER JOIN uvzuyqbs_constructora.municipios AS mun ON direc.direccion_municipio = mun.id
+        FROM constructora_personal.proyectos AS proy
+        INNER JOIN constructora_personal.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
+        INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+        INNER JOIN constructora_personal.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
+        INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
+        INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id
         WHERE proy.id_proyectos = $id_proyecto
         ";
 
@@ -205,9 +205,9 @@ function getPersonalAviable()
     psn.user_lastname
     ) AS nombre_completo
     
-    FROM uvzuyqbs_constructora.lista_personal AS psn
-    INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
-    LEFT JOIN uvzuyqbs_constructora.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.id_proyecto = $id_proyecto AND asp.activo = 1
+    FROM constructora_personal.lista_personal AS psn
+    INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+    LEFT JOIN constructora_personal.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.id_proyecto = $id_proyecto AND asp.activo = 1
     WHERE asp.id_asignaciones IS NULL
         ";
 
@@ -239,7 +239,7 @@ function unassignPersonal()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE uvzuyqbs_constructora.asignaciones_proyectos 
+    $stmt = "UPDATE constructora_personal.asignaciones_proyectos 
     SET  activo = 0
     WHERE id_asignaciones = $id_asignacion";
 
@@ -273,7 +273,7 @@ function cambiarStatusProyecto()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE uvzuyqbs_constructora.proyectos 
+    $stmt = "UPDATE constructora_personal.proyectos 
     SET  status = $prop
     WHERE id_proyectos = $id_proyecto";
 
@@ -315,9 +315,9 @@ function getPersonalAssigned()
     psn.user_lastname
     ) AS nombre_completo
     
-    FROM uvzuyqbs_constructora.lista_personal AS psn
-    INNER JOIN uvzuyqbs_constructora.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
-    LEFT JOIN uvzuyqbs_constructora.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.id_proyecto = $id_proyecto
+    FROM constructora_personal.lista_personal AS psn
+    INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+    LEFT JOIN constructora_personal.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.id_proyecto = $id_proyecto
     WHERE asp.id_asignaciones IS NOT NULL AND asp.activo = 1
         ";
 
@@ -354,7 +354,7 @@ function asignarPersonal()
 
     for ($i = 0; $i < (count($ids_personal)); $i++) {
         $id_personal = $ids_personal[$i];
-        $stmt_asignar = "INSERT INTO uvzuyqbs_constructora.asignaciones_proyectos 
+        $stmt_asignar = "INSERT INTO constructora_personal.asignaciones_proyectos 
         (
             id_asignaciones, 
         id_proyecto,

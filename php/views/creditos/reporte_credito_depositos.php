@@ -14,8 +14,8 @@ if (isset($_GET['submodule']) && isset($_GET['id_credito'])) {
     cr.credit_code,
     cr.proveedor, 
     cr.saldo
-    FROM uvzuyqbs_constructora.creditos  AS cr
-    INNER JOIN uvzuyqbs_constructora.depositos_creditos AS dep ON dep.id_credito = cr.id_credito
+    FROM constructora_personal.creditos  AS cr
+    INNER JOIN constructora_personal.depositos_creditos AS dep ON dep.id_credito = cr.id_credito
     WHERE cr.id_credito = '$id_credito'";
     $arr_creditos = $queries->getData($sql_credito);
 }

@@ -27,7 +27,7 @@ function guardarSolicitud()
     $cd3 = (substr(str_shuffle($permitted_chars), 0, 3));
     $random_code = "PY" . $id_proyecto . "-" . $cd1 . "-" . $cd2;
 $fyh = date('Y-m-d H:i:s');
-    $stmt = "INSERT INTO uvzuyqbs_constructora.cotizaciones_index 
+    $stmt = "INSERT INTO constructora_personal.cotizaciones_index 
                  (
                     id_cotizaciones_index,
                     id_lista_personal_creo,
@@ -65,7 +65,7 @@ $fyh = date('Y-m-d H:i:s');
         $cantidad           = $arr_data[5][0][$i][4];
         $observaciones      = $arr_data[5][0][$i][5];
 
-        $stmt_desgloce = "INSERT INTO uvzuyqbs_constructora.cotizaciones_desglose
+        $stmt_desgloce = "INSERT INTO constructora_personal.cotizaciones_desglose
                  (
                     id_cotizaciones_desglose,
                     id_cotizaciones_index,
@@ -120,7 +120,7 @@ function guardarDetallesEntregaCotizacion()
     $comentarios_entrega = $_POST['comentarios_entrega'];
     $id_rutas_doc = $_POST['id_rutas_doc'];
     $fh_entrega = $fecha . " " . $hora;
-    $sql_entregas = "INSERT INTO uvzuyqbs_constructora.entregas
+    $sql_entregas = "INSERT INTO constructora_personal.entregas
     (
         id_rutas,
         fecha_entrega,
@@ -188,10 +188,10 @@ function getFullInfoPayment()
     $queries = new Queries;
 
     $stmt = "SELECT pag.*, pr.empresa_proveedor, payen.descripcion AS payment_enterprise_via, fp.descripcion AS tt_forma_pago, DATE_FORMAT(pag.fecha_pago, '%d/%m/%Y') AS fecha_pag
-    FROM uvzuyqbs_constructora.`pagos_cotizaciones`  AS pag
-    INNER JOIN uvzuyqbs_constructora.formas_pago AS fp ON pag.id_formas_pago = fp.id_formas_pago
-    INNER JOIN uvzuyqbs_constructora.proveedores AS pr ON pag.id_proveedores = pr.id_proveedores
-    INNER JOIN uvzuyqbs_constructora.payment_enterprise AS payen ON payen.id_empresa_pago_lis = pag.id_enterprise_payment
+    FROM constructora_personal.`pagos_cotizaciones`  AS pag
+    INNER JOIN constructora_personal.formas_pago AS fp ON pag.id_formas_pago = fp.id_formas_pago
+    INNER JOIN constructora_personal.proveedores AS pr ON pag.id_proveedores = pr.id_proveedores
+    INNER JOIN constructora_personal.payment_enterprise AS payen ON payen.id_empresa_pago_lis = pag.id_enterprise_payment
     WHERE id_pagos_cotizaciones = $id_pago ORDER BY id_pagos_cotizaciones DESC LIMIT 1";
 
     $getInfoRequest = $queries->getData($stmt);
@@ -227,7 +227,7 @@ function updateRequest()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE  uvzuyqbs_constructora.cotizaciones_desglose
+    $stmt = "UPDATE  constructora_personal.cotizaciones_desglose
              SET  $column_name = '$value'
              WHERE id_cotizaciones_index = $id_index AND numero_partida = $no_partida";
 
@@ -261,7 +261,7 @@ function deleteRequestItem()
 
     $queries = new Queries;
 
-    $stmt = "DELETE FROM  uvzuyqbs_constructora.cotizaciones_desglose
+    $stmt = "DELETE FROM  constructora_personal.cotizaciones_desglose
              WHERE id_cotizaciones_index = $id_cotizacion AND numero_partida = $id_partida";
 
     $setStatusRequest = $queries->insertData($stmt);
@@ -292,7 +292,7 @@ function getInfoDelivery()
 
     $queries = new Queries;
 
-    $stmt = "SELECT * FROM uvzuyqbs_constructora.`entregas` WHERE id_entrega = $id_entrega";
+    $stmt = "SELECT * FROM constructora_personal.`entregas` WHERE id_entrega = $id_entrega";
 
     $getInfoRequest = $queries->getData($stmt);
     //$last_id = $getInfoRequest['last_id'];
@@ -323,7 +323,7 @@ function changeStatusRequest()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE  uvzuyqbs_constructora.`cotizaciones_index` 
+    $stmt = "UPDATE  constructora_personal.`cotizaciones_index` 
              SET  status = $id_status
     WHERE `id_cotizaciones_index`= $id_solicitud
         ";
@@ -357,7 +357,7 @@ function changeStatusRequestList()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE  uvzuyqbs_constructora.`cotizaciones_desglose` 
+    $stmt = "UPDATE  constructora_personal.`cotizaciones_desglose` 
              SET  completa = $status
     WHERE `id_cotizaciones_desglose`= $id_desglose
         ";

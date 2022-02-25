@@ -46,7 +46,7 @@ $r_code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 4);
 $random_code = "CR-" . $r_code;
 
 $queries = new Queries;
-$sql_monto = "SELECT * FROM uvzuyqbs_constructora.creditos WHERE id_credito = '$id_credito'";
+$sql_monto = "SELECT * FROM constructora_personal.creditos WHERE id_credito = '$id_credito'";
 $arr_monto = $queries->getData($sql_monto);
 
 if (!empty($arr_monto)) {
@@ -73,14 +73,14 @@ if (!file_exists($directorio_pdf)) {
 //if ((move_uploaded_file($_FILES["pdf_payment"]["tmp_name"], $archivo_pdf)) && (move_uploaded_file($_FILES["xml_payment"]["tmp_name"], $archivo_xml)) && (move_uploaded_file($_FILES["img_payment"]["tmp_name"], $archivo_img))) {
 if ((move_uploaded_file($_FILES["img_payment"]["tmp_name"], $archivo_img))) {
 
-    $sql_update = "UPDATE uvzuyqbs_constructora.creditos SET monto = '$monto',  saldo = saldo + '$cantidad' WHERE id_credito = '$id_credito'";
+    $sql_update = "UPDATE constructora_personal.creditos SET monto = '$monto',  saldo = saldo + '$cantidad' WHERE id_credito = '$id_credito'";
 
     $queries = new Queries;
 
     $update = $queries->insertData($sql_update);
     //$last_id = $insert['last_id'];
 
-    $sql_insert =  "INSERT INTO uvzuyqbs_constructora.depositos_creditos(
+    $sql_insert =  "INSERT INTO constructora_personal.depositos_creditos(
         id_depositos_creditos,
         id_credito,
         cantidad,

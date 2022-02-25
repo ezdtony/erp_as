@@ -3,8 +3,8 @@ if ($id_area == 4) {
     $sql_solicitudes = "SELECT 
     cot_in.id_cotizaciones_index, 
     CONCAT(psn.user_name, ' ', psn.user_lastname) AS nombre_solicitante,
-    (SELECT COUNT(*) FROM uvzuyqbs_constructora.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index) AS partidas,
-    (SELECT COUNT(*) FROM uvzuyqbs_constructora.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index AND completa='1') AS partidas_completas,
+    (SELECT COUNT(*) FROM constructora_personal.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index) AS partidas,
+    (SELECT COUNT(*) FROM constructora_personal.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index AND completa='1') AS partidas_completas,
     util.descripcion AS utilizacion,
     proy.nombre_largo AS proyecto,
     proy.codigo_proyecto ,
@@ -13,20 +13,20 @@ if ($id_area == 4) {
     cot_in.consecutivo_cotizacion,
     cot_in.status,
     stat.descripcion AS status_descripcion
-    FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-    INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-    INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-    INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-    INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+    FROM constructora_personal.cotizaciones_index AS cot_in
+    INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+    INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+    INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+    INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+    INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
     WHERE cot_in.id_lista_personal_creo = $id_user
     ";
 } else if ($id_area <= 3) {
     $sql_solicitudes = "SELECT 
     cot_in.id_cotizaciones_index, 
     CONCAT(psn.user_name, ' ', psn.user_lastname) AS nombre_solicitante,
-    (SELECT COUNT(*) FROM uvzuyqbs_constructora.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index) AS partidas,
-    (SELECT COUNT(*) FROM uvzuyqbs_constructora.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index AND completa='1') AS partidas_completas,
+    (SELECT COUNT(*) FROM constructora_personal.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index) AS partidas,
+    (SELECT COUNT(*) FROM constructora_personal.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index AND completa='1') AS partidas_completas,
     util.descripcion AS utilizacion,
     proy.nombre_largo AS proyecto,
     proy.codigo_proyecto ,
@@ -36,20 +36,20 @@ if ($id_area == 4) {
     cot_in.codigo_cotizacion_chuen,
     cot_in.status,
     stat.descripcion AS status_descripcion
-    FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-    INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-    INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-    INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-    INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+    FROM constructora_personal.cotizaciones_index AS cot_in
+    INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+    INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+    INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+    INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+    INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
     ";
 } else if ($id_area >= 5) {
     $sql_solicitudes = "SELECT 
     cot_in.id_cotizaciones_index, 
     CONCAT(psn.user_name, ' ', psn.user_lastname) AS nombre_solicitante,
     CONCAT(psn1.user_name, ' ', psn1.user_lastname) AS supervisor,
-    (SELECT COUNT(*) FROM uvzuyqbs_constructora.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index) AS partidas,
-    (SELECT COUNT(*) FROM uvzuyqbs_constructora.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index AND completa='1') AS partidas_completas,
+    (SELECT COUNT(*) FROM constructora_personal.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index) AS partidas,
+    (SELECT COUNT(*) FROM constructora_personal.cotizaciones_desglose AS desg WHERE desg.`id_cotizaciones_index` = cot_in.id_cotizaciones_index AND completa='1') AS partidas_completas,
     util.descripcion AS utilizacion,
     proy.nombre_largo AS proyecto,
     proy.codigo_proyecto ,
@@ -58,14 +58,14 @@ if ($id_area == 4) {
     cot_in.consecutivo_cotizacion,
     cot_in.status,
     stat.descripcion AS status_descripcion
-    FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-    INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn1 ON psn1.id_lista_personal = $id_user
-    INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-    INNER JOIN uvzuyqbs_constructora.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.activo = 1
-    INNER JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos AND proy.id_proyectos = asp.id_proyecto 
-    INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+    FROM constructora_personal.cotizaciones_index AS cot_in
+    INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+    INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+    INNER JOIN constructora_personal.lista_personal AS psn1 ON psn1.id_lista_personal = $id_user
+    INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+    INNER JOIN constructora_personal.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.activo = 1
+    INNER JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos AND proy.id_proyectos = asp.id_proyecto 
+    INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
     
     WHERE  psn1.id_lista_personal = $id_user
     ";
@@ -73,10 +73,10 @@ if ($id_area == 4) {
 
 $arr_solicitudes = $queries->getData($sql_solicitudes);
 
-$sql_status_types = "SELECT * FROM uvzuyqbs_constructora.status_types";
+$sql_status_types = "SELECT * FROM constructora_personal.status_types";
 $arr_status_types = $queries->getData($sql_status_types);
 
-$sql_status_types_res = "SELECT * FROM uvzuyqbs_constructora.status_types WHERE id_status=4 OR id_status = 7 ";
+$sql_status_types_res = "SELECT * FROM constructora_personal.status_types WHERE id_status=4 OR id_status = 7 ";
 $arr_status_types_residente = $queries->getData($sql_status_types_res);
 
 ?>
@@ -201,7 +201,7 @@ $arr_status_types_residente = $queries->getData($sql_status_types_res);
                                     <td class="table-action">
                                         <a href="?submodule=desglose_solicitud&id_solicitud=<?= $solicit->id_cotizaciones_index ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Lista completa"> <i class="mdi mdi-beaker-alert-outline"></i></a>
                                         <?php if (($_SESSION['id_area'] <= 3 or $id_area >= 5)) :
-                                            $sql_pago = "SELECT COUNT(*) AS reg FROM uvzuyqbs_constructora.pagos_cotizaciones
+                                            $sql_pago = "SELECT COUNT(*) AS reg FROM constructora_personal.pagos_cotizaciones
                                             WHERE id_cotizaciones_index = '$solicit->id_cotizaciones_index' ORDER BY id_pagos_cotizaciones DESC LIMIT 1 ";
                                             $arr_count_pagos = $queries->getData($sql_pago);
                                             $count_pagos = $arr_count_pagos[0]->reg;
@@ -209,12 +209,12 @@ $arr_status_types_residente = $queries->getData($sql_status_types_res);
                                                 <a class="action-icon icon_add_payment_voucher" id_proyect="<?= $solicit->id_proyectos ?>" id="<?= $solicit->id_cotizaciones_index ?>" data-bs-toggle="modal" data-bs-target="#agregarPago" data-bs-placement="top" title="Agregar pago"> <i class="mdi mdi-cash-plus"></i></a>
                                             <?php } else {
 
-                                                $sql_pago_count = "SELECT COUNT(*) AS counts FROM uvzuyqbs_constructora.pagos_cotizaciones
+                                                $sql_pago_count = "SELECT COUNT(*) AS counts FROM constructora_personal.pagos_cotizaciones
                                                 WHERE id_cotizaciones_index = '$solicit->id_cotizaciones_index' AND url_pdf IS NOT NULL AND url_xml IS NOT NULL ORDER BY id_pagos_cotizaciones DESC LIMIT 1 ";
                                                 $arr_pagos_count = $queries->getData($sql_pago_count);
                                                 $id_pagos_count = $arr_pagos_count[0]->counts;
 
-                                                $sql_pago_2 = "SELECT * FROM uvzuyqbs_constructora.pagos_cotizaciones
+                                                $sql_pago_2 = "SELECT * FROM constructora_personal.pagos_cotizaciones
                                                 WHERE id_cotizaciones_index = '$solicit->id_cotizaciones_index' ORDER BY id_pagos_cotizaciones DESC LIMIT 1 ";
                                                 $arr_pagos = $queries->getData($sql_pago_2);
                                                 $id_pagos = $arr_pagos[0]->id_pagos_cotizaciones;
@@ -235,7 +235,7 @@ $arr_status_types_residente = $queries->getData($sql_status_types_res);
                                     <td id="td_status_<?= $solicit->id_cotizaciones_index ?>">
                                         <a class="action-icon add_document_request" id_proyect="<?= $solicit->id_proyectos ?>" id="<?= $solicit->id_cotizaciones_index ?>" data-bs-toggle="modal" data-bs-target="#agregarFactura" data-bs-placement="top" title="Subir Archivo"> <i class="mdi mdi-cloud-upload"></i></a>
                                         <?php
-                                        $sql_archivos = "SELECT COUNT(*) AS nrows FROM uvzuyqbs_constructora.rutas_archivos WHERE id_cotizacion = '$solicit->id_cotizaciones_index'";
+                                        $sql_archivos = "SELECT COUNT(*) AS nrows FROM constructora_personal.rutas_archivos WHERE id_cotizacion = '$solicit->id_cotizaciones_index'";
                                         $arr_archivos = $queries->getData($sql_archivos);
                                         $nrows = $arr_archivos[0]->nrows;
                                         if ($nrows > 0) {

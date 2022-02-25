@@ -10,12 +10,12 @@ if ($id_area >= 3) {
     cot_in.consecutivo_cotizacion,
     cot_in.status,
     stat.descripcion AS status_descripcion
-    FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-    INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-    INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-    INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-    INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+    FROM constructora_personal.cotizaciones_index AS cot_in
+    INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+    INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+    INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+    INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+    INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
     ";
 } else if ($id_area >= 5){
     $sql_solicitudes = "
@@ -30,20 +30,20 @@ if ($id_area >= 3) {
     cot_in.consecutivo_cotizacion,
     cot_in.status,
     stat.descripcion AS status_descripcion
-    FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-    INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-    INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-    INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-    INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
-    INNER JOIN uvzuyqbs_constructora.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.activo = 1
-    INNER JOIN uvzuyqbs_constructora.lista_personal AS psn1 ON psn1.id_lista_personal = $id_user
+    FROM constructora_personal.cotizaciones_index AS cot_in
+    INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+    INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+    INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+    INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+    INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+    INNER JOIN constructora_personal.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.id_personal AND asp.activo = 1
+    INNER JOIN constructora_personal.lista_personal AS psn1 ON psn1.id_lista_personal = $id_user
     ";
 }
 
 $arr_solicitudes = $queries->getData($sql_solicitudes);
 
-$sql_status_types = "SELECT * FROM uvzuyqbs_constructora.status_types";
+$sql_status_types = "SELECT * FROM constructora_personal.status_types";
 $arr_status_types = $queries->getData($sql_status_types);
 ?>
 <link href="assets/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css" />

@@ -35,7 +35,7 @@ if (!file_exists($directorio_pdf)) {
 }
 
 if (move_uploaded_file($_FILES["archivo"]["tmp_name"], $archivo_pdf)) {
-    $sql = "INSERT INTO uvzuyqbs_constructora.pagos_cotizaciones
+    $sql = "INSERT INTO constructora_personal.pagos_cotizaciones
      (id_pagos_cotizaciones,
      id_formas_pago,
      id_cotizaciones_index,

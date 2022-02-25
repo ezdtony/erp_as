@@ -20,9 +20,9 @@ function getUserInfo()
     $queries = new Queries;
 
         $stmt = "SELECT usr.*, area.description, area.id_area, al.id_areas_level,al.level_description 
-        FROM uvzuyqbs_constructora.lista_personal AS usr
-        INNER JOIN uvzuyqbs_constructora.areas_level AS al ON al.id_areas_level = usr.id_areas_level
-        INNER JOIN uvzuyqbs_constructora.areas AS area ON area.id_area = al.id_area
+        FROM constructora_personal.lista_personal AS usr
+        INNER JOIN constructora_personal.areas_level AS al ON al.id_areas_level = usr.id_areas_level
+        INNER JOIN constructora_personal.areas AS area ON area.id_area = al.id_area
         
         WHERE (usr.user_email = '$user' OR usr.user_code = '$user') AND usr.user_pass='$password'";
          

@@ -12,12 +12,12 @@ if (isset($_GET['submodule']) && isset($_GET['id_proyecto'])) {
         cot_in.consecutivo_cotizacion,
         cot_in.status,
         stat.descripcion AS status_descripcion
-        FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-        INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-        INNER JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
-        INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-        INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+        FROM constructora_personal.cotizaciones_index AS cot_in
+        INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+        INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+        INNER JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = cot_in.id_proveedores
+        INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+        INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
         WHERE cot_in.id_lista_personal_creo = $id_user AND cot_in.id_proyectos = $id_proyecto
         ";
     } else  if ($id_area <= 3) {
@@ -72,15 +72,15 @@ if (isset($_GET['submodule']) && isset($_GET['id_proyecto'])) {
          ELSE DATE(pac.fecha_pago)
         END AS fecha_pago
     
-        FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-        INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+        FROM constructora_personal.cotizaciones_index AS cot_in
+        INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+        INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
         
-        INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
-        INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
-        LEFT JOIN uvzuyqbs_constructora.rutas_archivos AS rut ON rut.id_cotizacion = cot_in.id_cotizaciones_index
-        LEFT JOIN uvzuyqbs_constructora.pagos_cotizaciones AS pac ON pac.id_cotizaciones_index = cot_in.id_cotizaciones_index
-        LEFT JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = pac.id_proveedores
+        INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos
+        INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+        LEFT JOIN constructora_personal.rutas_archivos AS rut ON rut.id_cotizacion = cot_in.id_cotizaciones_index
+        LEFT JOIN constructora_personal.pagos_cotizaciones AS pac ON pac.id_cotizaciones_index = cot_in.id_cotizaciones_index
+        LEFT JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = pac.id_proveedores
         WHERE  cot_in.id_proyectos = $id_proyecto
         ";
     } else  if ($id_area >= 5) {
@@ -135,20 +135,20 @@ if (isset($_GET['submodule']) && isset($_GET['id_proyecto'])) {
          ELSE DATE(pac.fecha_pago)
         END AS fecha_pago
     
-        FROM uvzuyqbs_constructora.cotizaciones_index AS cot_in
-        INNER JOIN uvzuyqbs_constructora.status_types AS stat ON stat.id_status = cot_in.status
-        INNER JOIN uvzuyqbs_constructora.asignaciones_proyectos AS asp ON  asp.id_personal = $id_user AND asp.activo = 1
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
-        INNER JOIN uvzuyqbs_constructora.lista_personal AS psn1 ON psn1.id_lista_personal = $id_user
-        INNER  JOIN uvzuyqbs_constructora.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos AND asp.id_proyecto = proy.id_proyectos
-        INNER JOIN uvzuyqbs_constructora.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
-        LEFT JOIN uvzuyqbs_constructora.rutas_archivos AS rut ON rut.id_cotizacion = cot_in.id_cotizaciones_index
-        RIGHT JOIN uvzuyqbs_constructora.pagos_cotizaciones AS pac ON pac.id_cotizaciones_index = cot_in.id_cotizaciones_index
-        LEFT JOIN uvzuyqbs_constructora.proveedores AS prov ON prov.id_proveedores = pac.id_proveedores
+        FROM constructora_personal.cotizaciones_index AS cot_in
+        INNER JOIN constructora_personal.status_types AS stat ON stat.id_status = cot_in.status
+        INNER JOIN constructora_personal.asignaciones_proyectos AS asp ON  asp.id_personal = $id_user AND asp.activo = 1
+        INNER JOIN constructora_personal.lista_personal AS psn ON psn.id_lista_personal = cot_in.id_lista_personal_creo
+        INNER JOIN constructora_personal.lista_personal AS psn1 ON psn1.id_lista_personal = $id_user
+        INNER  JOIN constructora_personal.proyectos AS proy ON proy.id_proyectos = cot_in.id_proyectos AND asp.id_proyecto = proy.id_proyectos
+        INNER JOIN constructora_personal.utilizaciones AS util ON util.id_utilizacion = cot_in.id_utilizacion
+        LEFT JOIN constructora_personal.rutas_archivos AS rut ON rut.id_cotizacion = cot_in.id_cotizaciones_index
+        RIGHT JOIN constructora_personal.pagos_cotizaciones AS pac ON pac.id_cotizaciones_index = cot_in.id_cotizaciones_index
+        LEFT JOIN constructora_personal.proveedores AS prov ON prov.id_proveedores = pac.id_proveedores
         WHERE  cot_in.id_proyectos = $id_proyecto
         ";
     }
-    $sql_status_types = "SELECT * FROM uvzuyqbs_constructora.status_types";
+    $sql_status_types = "SELECT * FROM constructora_personal.status_types";
     $arr_status_types = $queries->getData($sql_status_types);
 
 

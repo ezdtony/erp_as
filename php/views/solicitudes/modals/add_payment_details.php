@@ -1,14 +1,14 @@
 <?php
-$sql_fomras_pago = "SELECT * FROM uvzuyqbs_constructora.formas_pago WHERE id_formas_pago > 1";
+$sql_fomras_pago = "SELECT * FROM constructora_personal.formas_pago WHERE id_formas_pago > 1";
 $arr_f_pago = $queries->getData($sql_fomras_pago);
 
-$sql_proveedores = "SELECT DISTINCT id_proveedores, empresa_proveedor FROM uvzuyqbs_constructora.proveedores";
+$sql_proveedores = "SELECT DISTINCT id_proveedores, empresa_proveedor FROM constructora_personal.proveedores";
 $arr_proveedores = $queries->getData($sql_proveedores);
 
-$sql_payment_enterprise = "SELECT * FROM uvzuyqbs_constructora.payment_enterprise";
+$sql_payment_enterprise = "SELECT * FROM constructora_personal.payment_enterprise";
 $arr_payment_enterprise = $queries->getData($sql_payment_enterprise);
 
-$sql_creditos = "SELECT * FROM uvzuyqbs_constructora.creditos ";
+$sql_creditos = "SELECT * FROM constructora_personal.creditos ";
 
     $arr_creditos = $queries->getData($sql_creditos);
 

@@ -50,7 +50,7 @@ $r_code = substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 4);
 $random_code = "CR-" . $r_code ;
 
 $queries = new Queries;
-$check_code = "SELECT * FROM uvzuyqbs_constructora.creditos WHERE credit_code = '$random_code'";
+$check_code = "SELECT * FROM constructora_personal.creditos WHERE credit_code = '$random_code'";
 $arr_code = $queries->getData($check_code);
 if (!empty($arr_code)) {
     $random_code = "CD-" . $r_code;
@@ -64,7 +64,7 @@ if (!file_exists($directorio_pdf)) {
 
 if ((move_uploaded_file($_FILES["pdf_payment"]["tmp_name"], $archivo_pdf)) && (move_uploaded_file($_FILES["xml_payment"]["tmp_name"], $archivo_xml)) && (move_uploaded_file($_FILES["img_payment"]["tmp_name"], $archivo_img))) {
 
-    $sql = "INSERT INTO uvzuyqbs_constructora.creditos
+    $sql = "INSERT INTO constructora_personal.creditos
     (
         id_credito,
         credit_code,
