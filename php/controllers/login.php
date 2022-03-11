@@ -19,25 +19,22 @@ function getUserInfo()
 
     $queries = new Queries;
 
-        $stmt = "SELECT usr.*, area.description, area.id_area, al.id_areas_level,al.level_description 
-        FROM constructora_personal.lista_personal AS usr
-        INNER JOIN constructora_personal.areas_level AS al ON al.id_areas_level = usr.id_areas_level
-        INNER JOIN constructora_personal.areas AS area ON area.id_area = al.id_area
+        $stmt = "SELECT ar.id_areas, ar.descripcion_area,  niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+        FROM asteleco_personal.lista_personal AS usr INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
         
-        WHERE (usr.user_email = '$user' OR usr.user_code = '$user') AND usr.user_pass='$password'";
+        WHERE (usr.correo_sesion = '$user' OR usr.correo_sesion = '$user') AND usr.password='$password'";
          
     $getUserInfo = $queries->getData($stmt);
 
     if (!empty($getUserInfo)) {
 
         foreach ($getUserInfo as $key) {
-            $_SESSION['user']=$key->user_name." ".$key->user_lastname;
-            $_SESSION['user_short']=$key->user_name;
+            $_SESSION['user']=$key->nombres." ".$key->apellido_paterno." ".$key->apellido_materno;
             $_SESSION['id_user']=$key->id_lista_personal;
-            $_SESSION['id_area']=$key->id_area;
-            $_SESSION['id_areas_level']=$key->id_areas_level;
-            $_SESSION['txt_area']=$key->description;
-            $_SESSION['txt_area_level']=$key->level_description;
+            $_SESSION['id_area']=$key->id_areas;
+            $_SESSION['id_areas_level']=$key->id_niveles_areas;
+            $_SESSION['txt_area']=$key->descripcion_area;
+            $_SESSION['txt_area_level']=$key->puesto_area;
         }
         //--- --- ---//
         $data = array(

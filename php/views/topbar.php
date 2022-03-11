@@ -10,7 +10,7 @@
                             <img src="images/user.png" alt="user-image" class="rounded-circle" />
                         </span>
                         <span>
-                            <span class="account-user-name"><?= $user_name_short ?></span>
+                            <span class="account-user-name"><?= $_SESSION['user'] ?></span>
                             <span class="account-position"><?= $txt_area_level ?></span>
                         </span>
                     </a>

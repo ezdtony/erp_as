@@ -55,10 +55,15 @@ include_once('php/views/topbar.php');
     if (isset($_GET['submodule'])) {
         $submodule = $_GET['submodule'];
         switch ($submodule) {
-            case 'solicitudes':
-                $include_file = 'php/views/solicitudes/lista_solicitudes.php';
+            case 'registrar_gasto':
+                $include_file = 'php/views/viaticos/registrar_gasto.php';
                 break;
-
+            case 'proyectos':
+                $include_file = 'php/views/proyectos/index_proyectos.php';
+                break;
+            case 'personal':
+                $include_file = 'php/views/personal/index_personal.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

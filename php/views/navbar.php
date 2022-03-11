@@ -32,8 +32,15 @@
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="?submodule=proyectos" class="side-nav-link">
+                    <i class="uil-suitcase"></i>
+                    <span> Proyectos </span>
+                </a>
+
+            </li>
+            <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarViaticos" aria-expanded="false" aria-controls="sidebarViaticos" class="side-nav-link">
-                    <i class="uil-folder-plus"></i>
+                    <i class="uil-usd-circle"></i>
                     <span> Viáticos </span>
                     <span class="menu-arrow"></span>
                 </a>
@@ -47,17 +54,17 @@
                             <div class="collapse" id="sidebarSecondLevel">
                                 <ul class="side-nav-third-level">
                                     <li>
-                                        <a href="apps-email-read.html">Administrar folios</a>
+                                        <a href="#">Administrar folios</a>
                                     </li>
                                     <li>
-                                        <a href="apps-email-read.html">Todos los folios</a>
+                                        <a href="#">Todos los folios</a>
                                     </li>
 
                                     <li>
-                                        <a href="apps-email-read.html">Buscar folio</a>
+                                        <a href="#">Buscar folio</a>
                                     </li>
                                     <li>
-                                        <a href="apps-email-read.html">Depositar saldo</a>
+                                        <a href="#">Depositar saldo</a>
                                     </li>
                                 </ul>
                             </div>
@@ -70,22 +77,28 @@
                             <div class="collapse" id="sidebarThirdLevel">
                                 <ul class="side-nav-third-level">
                                     <li>
-                                        <a href="apps-email-inbox.html">Registrar gasto</a>
+                                        <a href="?submodule=registrar_gasto">Registrar gasto</a>
                                     </li>
                                     <li>
-                                        <a href="apps-email-read.html">Mis folios</a>
+                                        <a href="#">Mis folios</a>
                                     </li>
                                     <li>
-                                        <a href="apps-email-read.html">Mis depósitos</a>
+                                        <a href="#">Mis depósitos</a>
                                     </li>
                                     <li>
-                                        <a href="apps-email-read.html">Mis gastos</a>
+                                        <a href="#">Mis gastos</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
                 </div>
+            </li>
+            <li class="side-nav-item">
+                <a href="?submodule=personal" class="side-nav-link">
+                    <i class="uil-users-alt"></i>
+                    <span> Personal </span>
+                </a>
             </li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
@@ -99,13 +112,13 @@
                             <a href="apps-email-inbox.html">Captura</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Aprobados</a>
+                            <a href="#">Aprobados</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Revisión</a>
+                            <a href="#">Revisión</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Concentrado</a>
+                            <a href="#">Concentrado</a>
                         </li>
                     </ul>
                 </div>
@@ -119,16 +132,19 @@
                 <div class="collapse" id="sidebarCompras">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="apps-email-inbox.html">Captura</a>
+                            <a href="apps-email-inbox.html">Cotizaciones</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Aprobados</a>
+                            <a href="#">Solicitudes</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Revisión</a>
+                            <a href="#">Registro de Compras</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Concentrado</a>
+                            <a href="#">Revisión</a>
+                        </li>
+                        <li>
+                            <a href="#">Proveedores</a>
                         </li>
                     </ul>
                 </div>
@@ -139,19 +155,19 @@
                     <span> Inventarios </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="sidebarCompras">
+                <div class="collapse" id="sidebarInventarios">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="apps-email-inbox.html">Captura</a>
+                            <a href="apps-email-inbox.html">Almacenes</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Aprobados</a>
+                            <a href="#">Kits</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Revisión</a>
+                            <a href="#">Asignaciones</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Concentrado</a>
+                            <a href="#">Listas de Material</a>
                         </li>
                     </ul>
                 </div>
@@ -162,19 +178,19 @@
                     <span> Vehículos </span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="sidebarCompras">
+                <div class="collapse" id="sidebarMantenimiento">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="apps-email-inbox.html">Captura</a>
+                            <a href="apps-email-inbox.html">Revisión General</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Aprobados</a>
+                            <a href="#">Comporbar Gasolina</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Revisión</a>
+                            <a href="#">Solcitu</a>
                         </li>
                         <li>
-                            <a href="apps-email-read.html">Concentrado</a>
+                            <a href="#">Concentrado</a>
                         </li>
                     </ul>
                 </div>
@@ -198,7 +214,7 @@
 
 
             <li class="side-nav-item">
-                <a href="?submodule=reportes" class="side-nav-link">
+                <a href="" class="side-nav-link">
                     <i class=" uil-file-medical-alt"></i>
                     <span> Reportes </span>
                 </a>

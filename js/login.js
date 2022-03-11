@@ -31,14 +31,12 @@ $(document).on("click", "#login", function () {
               title: "¡Usuario no activo!",
               text:
                 "Estimado (a) " +
-                data.data[0].user_name +
-                " " +
-                data.data[0].user_lastname +
+                data.data[0].nombres +
                 " su cuenta no esta activa, por favor contacte al administrador",
               icon: "error",
             });
           } else {
-            var nombre = data.data[0].user_name;
+            var nombre = data.data[0].nombres;
             Swal.fire({
               icon: "success",
               title: "Bienvenido (a) " + nombre + "!!",
@@ -61,12 +59,10 @@ $(document).on("click", "#login", function () {
         //--- --- ---//
       })
       .fail(function (message) {
-        VanillaToasts.create({
-          title: "Error",
-          text: "Ocurrió un error, intentelo nuevamente",
-          type: "error",
-          timeout: 1200,
-          positionClass: "topRight",
+        Swal.fire({
+          icon: "error",
+          title: "Verifique los datos ingresados",
+          text: "Error al recibir la información",
         });
       });
   }

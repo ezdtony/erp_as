@@ -24,9 +24,9 @@ class data_conn
 
 /* class data_conn
 {
-      private $db_name = "constructora_personal";
-    private $db_user = "constructora_personal";
-    private $db_pass = "Dm6dnVb4";
+    private $db_name = "constructora_personal";
+    private $db_user = "asteleco_root";
+    private $db_pass = "Jp~5US_dXyIe";
     private $db_host = "localhost";
 
     private $db_conn;

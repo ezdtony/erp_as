@@ -1,128 +1,139 @@
-<!-- Info Header Modal -->
-
-<div id="addProyect" class="modal fade" role="dialog" aria-labelledby="addProyectLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+<div class="modal fade" id="modalCrearProyecto" tabindex="-1" role="dialog" aria-labelledby="modalCrearProyectoTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
-            <div class="modal-header modal-colored-header bg-info">
-                <h4 class="modal-title" id="addProyectLabel">Agregar Proyecto</h4>
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCrearProyectoTitle">Crear Nuevo Proyecto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title">Información general</h4>
-                                <p class="text-muted font-14">
-                                    Por favor ingrese todos los datos marcados con un asterísco (*).
-                                </p>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="proyect_code" placeholder="Ingrese el nombre" />
-                                    <label for="floatingInput">Código de proyecto (Opcional)</label>
-                                </div>
+                <form id="form_proyecto">
+                    <div id="formulario_registro">
+                        <h3>Información General</h3>
+                        <h5>Ingrese todos los datos requeridos</h5>
+                        <br>
+                        <div class="form-floating mb-3">
+                            <h4>Información General</h4>
+                            <div class="row g-2">
+                                <div class="col-md">
+                                    <select class="form-control select2 re" id="select_tipo_proyecto" data-toggle="select2">
+                                        <option selected="selected" class="proy_requerido" value="" disabled>Tipo de Proyecto *</option>
+                                        <optgroup label="Tipos de Proyecto *">
 
-                                <div class="mb-3">
-                                    <label class="form-label">Duración de Proyecto</label>
-                                    <p><small>La fecha de cierre puede o no ser exacta.</small></p>
-                                    <input type="text" class="form-control date" id="duracion_proyecto" data-toggle="date-picker" data-cancel-class="btn-warning">
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <label for="proyect_type">Tipo de proyecto *</label>
+                                            <?php
+                                            foreach ($getProyectTypes as $proyect_type) {
+                                            ?>
+                                                <option value="<?= $proyect_type->id_tipos_proyecto?>"><?= $proyect_type->descripcion_tipo?></option>
+                                            <?php } ?>
 
-                                    <select id="proyect_type" class="form-control select2" data-toggle="select2">
-                                        <option value="">** Seleccione un tipo de proyecto **</option>
 
-                                        <optgroup label="Tipos de proyecto">
-                                            <?php foreach ($getProyectTypes as $pr_types) : ?>
-                                                <option value="<?= $pr_types->id_tipo_proyecto ?>"><?= $pr_types->descripcion ?> </option>
-                                            <?php endforeach; ?>
                                         </optgroup>
                                     </select>
-
                                 </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="proyect_name" placeholder="Ingrese el nombre" />
-                                    <label for="floatingInput">Nombre de Proyecto *</label>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title">Dirección de proyecto</h4>
-                                <p class="text-muted font-14">
-                                    Por favor ingrese todos los datos marcados con un asterísco (*).
-                                </p>
-                                <div class="form-floating mb-3">
-                                    <div class="tab-content">
-                                        <div class="tab-pane show active" id="select2-preview">
-                                            <select id="estado" class="form-control select2" data-toggle="select2">
-                                                <option value="">** Seleccione un estado</option>
-
-                                                <optgroup label="Estados">
-                                                    <?php foreach ($getStates as $states) : ?>
-                                                        <option value="<?= $states->id ?>"><?= $states->estado ?> </option>
-                                                    <?php endforeach; ?>
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <div class="tab-content">
-                                        <div class="tab-pane show active" id="select2-preview">
-                                            <select id="municipio" class="form-control select2" data-toggle="select2">
-                                                <option value="">** Seleccione un municipio</option>
-
-                                                <optgroup label="Estados">
-                                                </optgroup>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="colonia_proyecto" placeholder="Ingrese el nombre" />
-                                    <label for="floatingInput">Colonia * </label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="calle_proyecto" placeholder="Ingrese el nombre" />
-                                    <label for="floatingInput">Calle *</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="dir_numero_proyecto" placeholder="Ingrese el nombre" />
-                                    <label for="floatingInput">Número</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="codigo_postal_proyecto" placeholder="Ingrese el nombre" />
-                                    <label for="floatingInput">Código postal *</label>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="header-title">Información adicional</h4>
-
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="comentarios_proyecto" style="height: 100px;"></textarea>
-                                    <label for="comentarios_proyecto">Comentarios adicionales</label>
+                                <div class="col-md">
+                                    <select class="form-control select2 proy_requerido" id="region_proyecto" data-toggle="select2">
+                                        <option selected="selected"  value="" disabled>Región *</option>
+                                        <optgroup label="Tipos de Proyecto *">
+                                        <?php
+                                            foreach ($getRegions as $regiones) {
+                                            ?>
+                                                <option value="<?= $regiones->id_regiones?>">Región <?= $regiones->nombre_region?></option>
+                                            <?php } ?>
+                                        </optgroup>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- end col -->
-                </div>
-                <!-- end row -->
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control proy_requerido" id="nombre_proyecto" placeholder="Nombre del Proyecto *" />
+                            <label for="nombre_proyecto">Nombre del Proyecto *</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" placeholder="Ingrese opcionalmente una descripción del proyecto" id="descripcion_proyecto" style="height: 100px;" data-toggle="maxlength" class="form-control" maxlength="450" rows="3" placeholder="Tiene un límite de 450 caracteres."></textarea>
+                            <label for="descripcion_proyecto">Descripción de Proyecto</label>
+                        </div>
 
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="mb-3 position-relative" id="datepicker4">
+                                    <label class="form-label">Fecha de Inicio *</label>
+                                    <input type="text" id="fecha_inicio" class="form-control proy_requerido" data-provide="datepicker" data-date-autoclose="true" data-date-container="#datepicker4">
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="mb-3 position-relative" id="datepicker4">
+                                    <label class="form-label">Fecha de Cierre (Proyección)</label>
+                                    <input type="text" id="fecha_cierre" class="form-control" data-provide="datepicker" data-date-autoclose="true" data-date-container="#datepicker4">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <h3>Dirección del Proyecto</h3>
+                        <h5>Ingresar los Datos que Apliquen</h5>
+
+                        <div class="form-floating mb-3">
+                            <div class="row g-2">
+                                <div class="col-md">
+                                    <select class="form-control select2 proy_requerido" id="estado_proyecto" data-toggle="select2">
+                                        <option selected="selected" value="" disabled>Estado *</option>
+                                        <optgroup label="Seleccione un estado *">
+                                        <?php
+                                            foreach ($getStates as $estados) {
+                                            ?>
+                                                <option value="<?= $estados->id?>"><?= $estados->estado?></option>
+                                            <?php } ?>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="col-md">
+                                    <select class="form-control select2" id="municipio_proyecto" data-toggle="select2">
+                                        <option selected="selected" class="proy_requerido" value="" disabled>Municipio *</option>
+                                        <optgroup label="Seleccione un municipio">
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="colonia_direccion" placeholder="Colonia" />
+                                    <label for="colonia_direccion">Colonia</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="zip_direccion" placeholder="Codigo Postal" />
+                                    <label for="zip_direccion">Codigo Postal</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="calle_direccion" placeholder="Calle" />
+                            <label for="calle_direccion">Calle</label>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="num_ext_direccion" placeholder="Número Exterior" />
+                                    <label for="num_ext_direccion">Número</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating mb-3">
+                                    <input type="hidden" class="form-control" id="num_int_direccion" placeholder="Número Interior"  />
+                                    <label for="num_int_direccion">Número Interior</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
+
+            </form>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button id="guardar_proyecto" class="btn btn-info">Guardar Proyecto</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="guardarProyecto" class="btn btn-primary">Guardar Proyecto</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

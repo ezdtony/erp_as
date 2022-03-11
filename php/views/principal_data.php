@@ -9,26 +9,69 @@ if (!isset($_SESSION['user'])) {
 } else {
     $id_user = $_SESSION['id_user'];
     $user_name = $_SESSION['user'];
-    $user_name_short = $_SESSION['user_short'];
     $id_area = $_SESSION['id_area'];
     $id_area_level = $_SESSION['id_areas_level'];
     $txt_area = $_SESSION['txt_area'];
     $txt_area_level = $_SESSION['txt_area_level'];
 
 
-
-
     $queries = new Queries;
-    $estados = "SELECT * FROM constructora_personal.estados";
 
+    $sql_proyect_types = "SELECT * FROM asteleco_proyectos.tipos_proyecto";
+    $getProyectTypes = $queries->getData($sql_proyect_types);
+
+    $sql_regiones = "SELECT * FROM asteleco_proyectos.regiones";
+    $getRegions = $queries->getData($sql_regiones);
+
+    $estados = "SELECT * FROM matriz_direcciones.estados";
     $getStates = $queries->getData($estados);
+
+    $estados = "SELECT * FROM matriz_direcciones.estados";
+    $getStates = $queries->getData($estados);
+
+    $todos_proyectos = "SELECT 
+    proy.id_proyectos,
+    proy.`codigo_proyecto`,
+    proy.`nombre_proyecto`,
+    proy.`descripcion`,
+    proy.`fecha_inicio`,
+    reg.nombre_region,
+    CONCAT(
+        direc.direccion_calle, ', ',
+        direc.direccion_numero_ext, ', ',
+        direc.direccion_colonia, ', ',
+        direc.direccion_zipcode, '. '
+    ) AS direccion_local,
+    CONCAT (
+        direc.direccion_municipio, ', ',
+        direc.direccion_estado, ', ',
+        'Méx.'
+    ) AS direccion_zona,
+    direc.*
+    FROM asteleco_proyectos.`proyectos`AS proy
+    INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
+    INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto";
+    $getAllProyects = $queries->getData($todos_proyectos);
+
+    $sql_lista_personal = "SELECT ar.id_areas, ar.descripcion_area,  niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+    FROM asteleco_personal.lista_personal AS usr INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas";
+
+    $getAllUsers = $queries->getData($sql_lista_personal);
+
+    $sql_get_all_areas = "SELECT * FROM asteleco_personal.areas";
+    $getAllAreas = $queries->getData($sql_get_all_areas);
+
+    $sql_academicos = "SELECT * FROM asteleco_personal.niveles_academicos";
+    $getAcademicLevels = $queries->getData($sql_academicos);
+    /* 
+    $queries = new Queries;
+   
 
 
     $sql_materiales = "SELECT * FROM constructora_personal.matriz_materiales";
     $getMateriales = $queries->getData($sql_materiales);
 
-    $sql_proyect_types = "SELECT * FROM constructora_personal.tipos_proyecto";
-    $getProyectTypes = $queries->getData($sql_proyect_types);
+   
 
     $sql_personal = "SELECT 
             psn.id_lista_personal AS id_personal,
@@ -143,9 +186,9 @@ if (!isset($_SESSION['user'])) {
     ;
 ";
     }
-    $getProyects = $queries->getData($sql_proyectos);
+    $getProyects = $queries->getData($sql_proyectos); */
 }
-$sql_utilizacion = "SELECT * FROM constructora_personal.utilizaciones";
+/* $sql_utilizacion = "SELECT * FROM constructora_personal.utilizaciones";
 
 $getUtilizacion = $queries->getData($sql_utilizacion);
 
@@ -166,3 +209,4 @@ $getUtilizaciones = $queries->getData($sql_utilizaciones);
 
 $sql_mediciones = "SELECT * FROM constructora_personal.medicion_tipo";
 $getMediciones = $queries->getData($sql_mediciones);
+ */
