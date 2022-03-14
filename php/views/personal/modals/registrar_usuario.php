@@ -105,22 +105,8 @@
                 </div>
                 <div class="row g-2">
                     <div class="col-md">
-                        <div class="mb-3">
-                            <label class="form-label">Fecha de Nacimiento</label>
-                            <input type="text" class="form-control date" id="fecha_nacimiento" data-toggle="date-picker" data-single-date-picker="true">
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="rfc" placeholder="Número de seguro social" />
-                            <label for="floatingInput">RFC</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-2">
-                    <div class="col-md">
                         <label for="example-email" class="form-label">Estado civil *</label>
-                        <select class="form-control select2" id="id_genero" data-toggle="select2">
+                        <select class="form-control select2" id="id_estado_civil" data-toggle="select2">
                             <option value="" selected disabled>Estado civil *</option>
                             <optgroup label="Género">
                                 <option value="1">Casado</option>
@@ -218,14 +204,14 @@
                 <div class="row g-2">
                     <div class="col-md">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="telefono_pricnipal" placeholder="Teléfono 1 *" />
-                            <label for="calle">Teléfono 1 *</label>
+                            <input type="text" class="form-control" id="telefono_familiar_pricnipal" placeholder="Teléfono 1 *" />
+                            <label for="calle">Teléfono Famiiar 1 *</label>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="telefono_secundario" placeholder="Teléfono 2 " />
-                            <label for="calle">Teléfono 2 </label>
+                            <input type="text" class="form-control" id="telefono_familiar_secundario" placeholder="Teléfono 2 " />
+                            <label for="calle">Teléfono Famiiar 2 </label>
                         </div>
                     </div>
                 </div>
@@ -250,14 +236,14 @@
                         <label for="password" class="form-label">Generar contraseña</label>
                         <button type="button" id="generate_password" class="btn btn-outline-info btn-rounded">Generar</button>
                     </div>
-                
-            </div>
-        </div>
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Guardar usuario</button>
-        </div>
-    </div><!-- /.modal-content -->
-</div><!-- /.modal-dialog -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="guardarUsuario">Guardar usuario</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

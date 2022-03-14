@@ -27,14 +27,15 @@
                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
-                            <th>N° Empleado</th>
                             <th>Nombre</th>
+                            <th>N° Empleado</th>
                             <th>Área</th>
                             <th>Puesto</th>
                             <th>Código de Usuario</th>
                             <th>Correo LogIn</th>
                             <th>Password</th>
-                            <th>Info. Detallada</th>
+                            <th>¿Activo?</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
 
@@ -42,17 +43,25 @@
                     <tbody>
                         <?php foreach ($getAllUsers as $user) { ?>
                             <tr>
-                                <td><?= $user->no_empleado ?></td>
-                                <td><?= ($user->nombres) . " " . $user->apellido_paterno . " " . $user->apellido_paterno ?></td>
+                                <td><?= ($user->nombres) . " " . $user->apellido_paterno . " " . $user->apellido_materno ?></td>
+                                <td><?= $user->id_lista_personal ?></td>
                                 <td><?= ($user->descripcion_area) ?></td>
                                 <td><?= ($user->puesto_area) ?></td>
                                 <td><?= ($user->codigo_usuario) ?></td>
                                 <td><?= ($user->correo_sesion) ?></td>
                                 <td><?= ($user->password) ?></td>
                                 <td>
-                                    <a href="" class="btn btn-info btn-sm">
-                                        <i class="mdi mdi-account-card-details"></i>
-                                    </a>
+                                    <!-- Switch-->
+                                    <div>
+                                        <input type="checkbox" id="switch03" data-switch="success" />
+                                        <label for="switch03" data-on-label="Si" data-off-label="No" class="mb-0 d-block"></label>
+                                    </div>
+                                </td>
+                                <td class="table-action">
+                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip"  title="Archivos"> <i class="mdi mdi-folder-account"></i></a>
+                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip"  title="Información detallada"> <i class="mdi mdi-information"></i></a>
+                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip"  title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>
+                                </td>
                             </tr>
                         <?php } ?>
                     </tbody>

@@ -99,78 +99,101 @@ $(document).ready(function () {
     }
   });
 
-  $(document).on("click", ".save_credit", function () {
-    console.log("save_credit");
-    var proveedor = $("#proveedor").val();
-    var fiscal_code = $("#fiscal_code").val();
-    var fecha_pago = $("#fecha_pago").val();
-    var monto_pago = $("#monto_pago").val();
+  $(document).on("click", "#guardarUsuario", function () {
+    /* Info general */
 
-    const img_payment = document.querySelector("#img_pago");
-    const pdf_payment = document.querySelector("#pdf_pago");
-    const xml_payment = document.querySelector("#xml_pago");
+    var id_area_level = $("#id_area_level").val();
+    var id_academic_level = $("#id_academic_level").val();
+    var id_genero = $("#id_genero").val();
+    var nombre = $("#nombre").val();
+    var ap_paterno = $("#ap_paterno").val();
+    var ap_materno = $("#ap_materno").val();
+    var curp = $("#curp").val();
+    var nss = $("#nss").val();
+    var fecha_nacimiento = $("#fecha_nacimiento").val();
+    var rfc = $("#rfc").val();
+    var id_estado_civil = $("#id_estado_civil").val();
 
-    if (
-      proveedor != "" &&
-      fiscal_code != "" &&
-      fecha_pago != "" &&
-      monto_pago != ""
-    ) {
-      if (
-        img_payment.files.length > 0 &&
-        pdf_payment.files.length > 0 &&
-        xml_payment.files.length > 0
-      ) {
-        let formData = new FormData();
-        formData.append("img_payment", img_payment.files[0]);
-        formData.append("pdf_payment", pdf_payment.files[0]);
-        formData.append("xml_payment", xml_payment.files[0]);
+    /* Info domicilio */
+    var calle = $("#calle").val();
+    var numero = $("#numero").val();
+    var colonia = $("#colonia").val();
+    var cp = $("#cp").val();
+    var id_municipio = $("#id_municipio option:selected").text();
+    var id_estado = $("#id_estado option:selected").text();
 
-        formData.append("proveedor", proveedor);
-        formData.append("fiscal_code", fiscal_code);
-        formData.append("fecha_pago", fecha_pago);
-        formData.append("fecha_pago", fecha_pago);
-        formData.append("monto_pago", monto_pago);
+    /* Info de contacto */
+    var telefono_pricnipal = $("#telefono_pricnipal").val();
+    var telefono_secundario = $("#telefono_secundario").val();
+    var correo_personal = $("#correo_personal").val();
+    var telefono_familiar_pricnipal = $("#telefono_familiar_pricnipal").val();
+    var telefono_familiar_secundario = $("#telefono_familiar_secundario").val();
 
-        fetch("php/controllers/save_credits_documents_info.php", {
-          method: "POST",
-          mod: "savePaymentVoucher",
-          body: formData,
-        })
-          .then((respuesta) => respuesta.json())
-          .then((decodificado) => {
-            console.log(decodificado.last_id);
-            Swal.fire({
-              title: "¡Archivo guardado!",
-              text: "Se  registro el nuevo crédito correctamente!!!",
-              icon: "success",
-              timer: 1500,
-            }).then((result) => {
-              location.reload();
-            });
+    /* Info de login */
+    var email_login = $("#email_login").val();
+    var password_login = $("#password").val();
+
+    $.ajax({
+      url: "php/controllers/personal/personal_controller.php",
+      method: "POST",
+      data: {
+        mod: "saveNewUser",
+        id_area_level:id_area_level,
+        id_academic_level: id_academic_level,
+        id_genero: id_genero,
+        nombre: nombre,
+        ap_paterno: ap_paterno,
+        ap_materno: ap_materno,
+        curp: curp,
+        nss: nss,
+        fecha_nacimiento: fecha_nacimiento,
+        rfc: rfc,
+        id_estado_civil: id_estado_civil,
+        calle: calle,
+        numero: numero,
+        colonia: colonia,
+        cp: cp,
+        id_municipio: id_municipio,
+        id_estado: id_estado,
+        telefono_pricnipal: telefono_pricnipal,
+        telefono_secundario: telefono_secundario,
+        correo_personal: correo_personal,
+        telefono_familiar_pricnipal: telefono_familiar_pricnipal,
+        telefono_familiar_secundario: telefono_familiar_secundario,
+        email_login: email_login,
+        password_login: password_login,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          Swal.fire({
+            title: "¡Registro exitoso!",
+            html: "CORREO DE USUARIO: <strong>" + data.user_email + "</strong><br>" +"CÓDIGO DE USUARIO: <strong>" + data.user_code + "</strong><br>" +"CONTRASEÑA: <strong>"+ data.user_password + "</strong>",    
+            icon: "success",
+            //timer: 1500,
+          }).then((result) => {
+            //location.reload();
           });
-      } else {
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Verifique los datos ingresados",
+            text: "Error al iniciar sesión",
+          });
+        }
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
         Swal.fire({
-          title: "Error",
-          text: "Debe seleccionar todos los archivos",
-          img: "error",
-          confirmButtonText: "Ok",
+          title: "Datos no registrados!",
+          text: "Ocurrió un error al guardar la información",
+          icon: "info",
         });
-      }
-    } else {
-      Swal.fire({
-        title: "Error",
-        text: "Debe llenar todos los campos",
-        icon: "error",
-        confirmButtonText: "Ok",
       });
-    }
-  });
-  $(document).on("click", "#reg_gasto_deducible", function () {
-    console.log("reg_gasto_deducible");
-  });
-  $(document).on("click", "#reg_gasto_no_deducible", function () {
-    console.log("reg_gasto_no_deducible");
   });
 
   $(document).on("change", "#id_area", function () {
@@ -291,6 +314,12 @@ $(document).ready(function () {
   });
 
   $("#id_municipio").select2({
+    dropdownParent: $("#registrarUsuario"),
+  });
+  $("#id_estado_civil").select2({
+    dropdownParent: $("#registrarUsuario"),
+  });
+  $("#id_genero").select2({
     dropdownParent: $("#registrarUsuario"),
   });
 
