@@ -213,3 +213,32 @@ function saveNewUser()
 
     echo json_encode($data);
 }
+function changeStatusUser()
+{
+    $id_user = $_POST['id_user'];
+    $status = $_POST['status'];
+
+
+    $queries = new Queries;
+
+
+
+    $updateStatus = "UPDATE asteleco_personal.lista_personal SET status = '$status' WHERE id_lista_personal = '$id_user'";
+    $execUpdateStatus = $queries->insertData($updateStatus);
+    if (!empty($execUpdateStatus)) {
+        $data = array(
+            'response' => true,
+            'message' => 'Se actualizó correctamente!!'
+
+        );
+    }else{
+        $data = array(
+            'response' => false,
+            'message' => 'Error al actualizar el usuario'
+        );
+    }
+    
+
+
+    echo json_encode($data);
+}

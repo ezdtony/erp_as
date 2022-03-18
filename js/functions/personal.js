@@ -133,67 +133,105 @@ $(document).ready(function () {
     var email_login = $("#email_login").val();
     var password_login = $("#password").val();
 
-    $.ajax({
-      url: "php/controllers/personal/personal_controller.php",
-      method: "POST",
-      data: {
-        mod: "saveNewUser",
-        id_area_level:id_area_level,
-        id_academic_level: id_academic_level,
-        id_genero: id_genero,
-        nombre: nombre,
-        ap_paterno: ap_paterno,
-        ap_materno: ap_materno,
-        curp: curp,
-        nss: nss,
-        fecha_nacimiento: fecha_nacimiento,
-        rfc: rfc,
-        id_estado_civil: id_estado_civil,
-        calle: calle,
-        numero: numero,
-        colonia: colonia,
-        cp: cp,
-        id_municipio: id_municipio,
-        id_estado: id_estado,
-        telefono_pricnipal: telefono_pricnipal,
-        telefono_secundario: telefono_secundario,
-        correo_personal: correo_personal,
-        telefono_familiar_pricnipal: telefono_familiar_pricnipal,
-        telefono_familiar_secundario: telefono_familiar_secundario,
-        email_login: email_login,
-        password_login: password_login,
-      },
-    })
-      .done(function (data) {
-        var data = JSON.parse(data);
-        console.log(data);
-
-        if (data.response == true) {
-          Swal.fire({
-            title: "¡Registro exitoso!",
-            html: "CORREO DE USUARIO: <strong>" + data.user_email + "</strong><br>" +"CÓDIGO DE USUARIO: <strong>" + data.user_code + "</strong><br>" +"CONTRASEÑA: <strong>"+ data.user_password + "</strong>",    
-            icon: "success",
-            //timer: 1500,
-          }).then((result) => {
-            //location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Verifique los datos ingresados",
-            text: "Error al iniciar sesión",
-          });
-        }
-        //--- --- ---//
-        //--- --- ---//
-      })
-      .fail(function (message) {
-        Swal.fire({
-          title: "Datos no registrados!",
-          text: "Ocurrió un error al guardar la información",
-          icon: "info",
-        });
+    if (
+      id_area_level == "" ||
+      id_academic_level == "" ||
+      id_genero == "" ||
+      nombre == "" ||
+      ap_paterno == "" ||
+      ap_materno == "" ||
+      curp == "" ||
+      id_estado_civil == "" ||
+      calle == "" ||
+      numero == "" ||
+      colonia == "" ||
+      cp == "" ||
+      id_municipio == "" ||
+      id_estado == "" ||
+      telefono_pricnipal == "" ||
+      correo_personal == "" ||
+      telefono_familiar_pricnipal == "" ||
+      email_login == "" ||
+      password_login == ""
+    ) {
+      Swal.fire({
+        title: "Atención!",
+        text: "Debe llenar todos los campos",
+        icon: "error",
+        confirmButtonText: "Ok",
       });
+    } else {
+      $.ajax({
+        url: "php/controllers/personal/personal_controller.php",
+        method: "POST",
+        data: {
+          mod: "saveNewUser",
+          id_area_level: id_area_level,
+          id_academic_level: id_academic_level,
+          id_genero: id_genero,
+          nombre: nombre,
+          ap_paterno: ap_paterno,
+          ap_materno: ap_materno,
+          curp: curp,
+          nss: nss,
+          fecha_nacimiento: fecha_nacimiento,
+          rfc: rfc,
+          id_estado_civil: id_estado_civil,
+          calle: calle,
+          numero: numero,
+          colonia: colonia,
+          cp: cp,
+          id_municipio: id_municipio,
+          id_estado: id_estado,
+          telefono_pricnipal: telefono_pricnipal,
+          telefono_secundario: telefono_secundario,
+          correo_personal: correo_personal,
+          telefono_familiar_pricnipal: telefono_familiar_pricnipal,
+          telefono_familiar_secundario: telefono_familiar_secundario,
+          email_login: email_login,
+          password_login: password_login,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+
+          if (data.response == true) {
+            Swal.fire({
+              title: "¡Registro exitoso!",
+              html:
+                "CORREO DE USUARIO: <strong>" +
+                data.user_email +
+                "</strong><br>" +
+                "CÓDIGO DE USUARIO: <strong>" +
+                data.user_code +
+                "</strong><br>" +
+                "CONTRASEÑA: <strong>" +
+                data.user_password +
+                "</strong>",
+              icon: "success",
+              //timer: 1500,
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Verifique los datos ingresados",
+              text: "Error al iniciar sesión",
+            });
+          }
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          Swal.fire({
+            title: "Datos no registrados!",
+            text: "Ocurrió un error al guardar la información",
+            icon: "info",
+          });
+        });
+    }
   });
 
   $(document).on("change", "#id_area", function () {
@@ -296,6 +334,90 @@ $(document).ready(function () {
   $(document).on("click", "#generate_password", function () {
     $("#password").val(autoCreate(6));
   });
+
+  $(".change_user_status").change(function () {
+    var id_user = $(this).attr("id");
+    if (this.checked) {
+      $.ajax({
+        url: "php/controllers/personal/personal_controller.php",
+        method: "POST",
+        data: {
+          mod: "changeStatusUser",
+          id_user: id_user,
+          status: 1,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          if (data.response == true) {
+            $.NotificationApp.send(
+              data.message,
+              "",
+              "top-left",
+              "#06996f",
+              "success"
+            );
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Verifique los datos ingresados",
+            });
+          }
+
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    } else {
+      $.ajax({
+        url: "php/controllers/personal/personal_controller.php",
+        method: "POST",
+        data: {
+          mod: "changeStatusUser",
+          id_user: id_user,
+          status: 0,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          if (data.response == true) {
+            $.NotificationApp.send(
+              data.message,
+              "",
+              "top-left",
+              "#06996f",
+              "success"
+            );
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Verifique los datos ingresados",
+            });
+          }
+
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    }
+  });
+
   $("#id_area").select2({
     dropdownParent: $("#registrarUsuario"),
   });

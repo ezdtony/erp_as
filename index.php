@@ -64,6 +64,9 @@ include_once('php/views/topbar.php');
             case 'personal':
                 $include_file = 'php/views/personal/index_personal.php';
                 break;
+            case 'detalle_info':
+                $include_file = 'php/views/personal/detalle_info.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

@@ -1,5 +1,4 @@
-<!-- Scrollable modal -->
-<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#registrarUsuario">Scrollable Modal</button>
+
 <div class="modal fade" id="registrarUsuario" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
@@ -197,7 +196,7 @@
                     <div class="col-md">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="correo_personal" placeholder="correo@domino.com" />
-                            <label for="floatingInput">Correo Personal</label>
+                            <label for="floatingInput">Correo Personal *</label>
                         </div>
                     </div>
                 </div>
@@ -221,15 +220,15 @@
                     <div class="col-md">
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="email_login" placeholder="correo@domino.com" />
-                            <label for="floatingInput">Correo asignado</label>
+                            <label for="floatingInput">Correo asignado *</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input class="form-control form_registro" type="text" required="" id="password" placeholder="Ingrese su contraseña">
+                            <label for="password" class="form-label">Contraseña*</label>
+                            <input class="form-control form_registro" type="text" required="" id="password" placeholder="Ingrese su contraseña *">
                         </div>
                     </div>
                     <div class="col-md-6">

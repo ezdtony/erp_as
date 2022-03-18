@@ -42,14 +42,19 @@
 
 
                     <tbody>
-                        <?php foreach ($getAllUsers as $user) { ?>
+                        <?php foreach ($getAllUsers as $user) { 
+                            $status = '';
+                            if ($user->status == 1) {
+                                $status = 'checked';
+                            }
+                            ?>
                             <tr>
                                 <td><?= ($user->nombres) . " " . $user->apellido_paterno . " " . $user->apellido_materno ?></td>
                                 <td><?= $user->id_lista_personal ?></td>
                                 <td>
                                     <!-- Switch-->
                                     <div>
-                                        <input type="checkbox" id="<?= $user->id_lista_personal ?>" data-switch="success" />
+                                        <input class="change_user_status" type="checkbox" id="<?= $user->id_lista_personal ?>" data-switch="success" <?=$status?>/>
                                         <label for="<?= $user->id_lista_personal ?>" data-on-label="Si" data-off-label="No" class="mb-0 d-block"></label>
                                     </div>
                                 </td>
@@ -61,7 +66,8 @@
 
                                 <td class="table-action">
                                     <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Archivos"> <i class="mdi mdi-folder-account"></i></a>
-                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
+                                    <a href="?submodule=detalle_info&id_user=<?=$user->id_lista_personal?>" target="_blank"class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
+                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
                                     <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>
                                 </td>
                             </tr>

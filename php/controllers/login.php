@@ -22,7 +22,7 @@ function getUserInfo()
         $stmt = "SELECT ar.id_areas, ar.descripcion_area,  niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
         FROM asteleco_personal.lista_personal AS usr INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
         
-        WHERE (usr.correo_sesion = '$user' OR usr.correo_sesion = '$user') AND usr.password='$password'";
+        WHERE (usr.correo_sesion = '$user' OR usr.correo_sesion = '$user') AND usr.password='$password' AND usr.status = 1";    
          
     $getUserInfo = $queries->getData($stmt);
 
