@@ -17,15 +17,15 @@ function saveProyect()
 
     $id_usuario = $_SESSION['id_user'];
 
-    $tipo_proyecto =$_POST['tipo_proyecto'];
-    $region_proyecto =$_POST['region_proyecto'];
-    $nombre_proyecto =$_POST['nombre_proyecto'];
-    $arr_fecha_inicio =$_POST['fecha_inicio'];
+    $tipo_proyecto = $_POST['tipo_proyecto'];
+    $region_proyecto = $_POST['region_proyecto'];
+    $nombre_proyecto = $_POST['nombre_proyecto'];
+    $arr_fecha_inicio = $_POST['fecha_inicio'];
     $fecha_inicio = date('Y-m-d', strtotime($arr_fecha_inicio));
 
 
-    $estado_proyecto =$_POST['estado_proyecto'];
-    $municipio_proyecto =$_POST['municipio_proyecto'];
+    $estado_proyecto = $_POST['estado_proyecto'];
+    $municipio_proyecto = $_POST['municipio_proyecto'];
 
     $descripcion_proyecto = $_POST['descripcion_proyecto'];
     $fecha_cierre = $_POST['fecha_cierre'];
@@ -38,24 +38,24 @@ function saveProyect()
     $num_int_direccion = $_POST['num_int_direccion'];
 
 
-    
-        $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
-        // Output: 54esmdr0qf
-        $arr_proy = explode(" ", $nombre_proyecto);
-        if (count($arr_proy) >=2 ) {
-            $cod_pr = (substr($arr_proy[0], 0, 3))."-".(substr($arr_proy[1], 0, 3))."R".$region_proyecto;
-        }else{
-            $cod_pr = substr($nombre_proyecto, 0, 3)."R".$region_proyecto;
-        }
-        $random_code = $cod_pr. "-". (substr(str_shuffle($permitted_chars), 0, 3));
 
-        $stmt_check_code = "SELECT * FROM asteleco_proyectos.proyectos WHERE codigo_proyecto = '$random_code'";
-        $queries = new Queries;
-        $check_code = $queries->getData($stmt_check_code);
-        if (!empty($check_code)) {
-            $random_code = $cod_pr . "--". (substr(str_shuffle($permitted_chars), 0, 3))."R".$region_proyecto;
-        }
-        $proyect_code = $random_code;
+    $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+    // Output: 54esmdr0qf
+    $arr_proy = explode(" ", $nombre_proyecto);
+    if (count($arr_proy) >= 2) {
+        $cod_pr = (substr($arr_proy[0], 0, 3)) . "-" . (substr($arr_proy[1], 0, 3)) . "R" . $region_proyecto;
+    } else {
+        $cod_pr = substr($nombre_proyecto, 0, 3) . "R" . $region_proyecto;
+    }
+    $random_code = $cod_pr . "-" . (substr(str_shuffle($permitted_chars), 0, 3));
+
+    $stmt_check_code = "SELECT * FROM asteleco_proyectos.proyectos WHERE codigo_proyecto = '$random_code'";
+    $queries = new Queries;
+    $check_code = $queries->getData($stmt_check_code);
+    if (!empty($check_code)) {
+        $random_code = $cod_pr . "--" . (substr(str_shuffle($permitted_chars), 0, 3)) . "R" . $region_proyecto;
+    }
+    $proyect_code = $random_code;
 
     $queries = new Queries;
 
@@ -135,6 +135,246 @@ function saveProyect()
     } else {
     }
 
+
+    echo json_encode($data);
+}
+
+function getPersonalAssigned()
+{
+    $id_proyecto = $_POST['id_proyecto'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT 
+    asp.id_asignaciones_proyectos,
+    psn.id_lista_personal AS id_personal,
+    CONCAT(
+    acad.shortname_nivel, ' ', 
+    psn.nombres, ' ', 
+    psn.apellido_paterno, ' ',
+        psn.apellido_materno
+    ) AS nombre_completo
+    
+    FROM asteleco_personal.lista_personal AS psn
+    INNER JOIN asteleco_personal.niveles_academicos AS acad ON psn.id_niveles_academicos = acad.id_niveles_academicos
+    LEFT JOIN asteleco_proyectos.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.	id_lista_personal AND asp.id_proyectos = $id_proyecto
+    WHERE asp.id_asignaciones_proyectos IS NOT NULL AND asp.status = 1
+        ";
+
+    $getPersonalAviable = $queries->getData($stmt);
+
+    if (!empty($getPersonalAviable)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getPersonalAviable
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function getPersonalAviable()
+{
+    $id_proyecto = $_POST['id_proyecto'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT 
+    asp.id_asignaciones_proyectos,
+    psn.id_lista_personal AS id_personal,
+    CONCAT(
+    acad.shortname_nivel, ' ', 
+    psn.nombres, ' ', 
+    psn.apellido_paterno, ' ',
+        psn.apellido_materno
+    ) AS nombre_completo
+    
+    FROM asteleco_personal.lista_personal AS psn
+    INNER JOIN asteleco_personal.niveles_academicos AS acad ON psn.id_niveles_academicos = acad.id_niveles_academicos
+    LEFT JOIN asteleco_proyectos.asignaciones_proyectos AS asp ON psn.id_lista_personal = asp.	id_lista_personal AND asp.id_proyectos = $id_proyecto AND asp.status = 1
+    WHERE asp.id_asignaciones_proyectos IS  NULL 
+        ";
+
+    $getPersonalAviable = $queries->getData($stmt);
+
+    if (!empty($getPersonalAviable)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getPersonalAviable
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function asignarPersonal()
+{
+
+
+    $id_proyecto = $_POST['id_proyecto'];
+    $ids_personal = $_POST['ids_personal'];
+    $queries = new Queries;
+
+    for ($i = 0; $i < (count($ids_personal)); $i++) {
+        $id_personal = $ids_personal[$i];
+        $stmt_asignar = "INSERT INTO asteleco_proyectos.asignaciones_proyectos 
+        (
+            id_asignaciones_proyectos, 
+            id_proyectos,
+            id_lista_personal,
+            status
+                )
+        VALUES (
+            NULL,
+            '$id_proyecto',
+            '$id_personal',
+            '1'
+        )
+        ";
+
+        $asignarPersonal = $queries->InsertData($stmt_asignar);
+    }
+
+
+
+
+
+
+    if (!empty($asignarPersonal)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $asignarPersonal
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+
+    echo json_encode($data);
+}
+function unassignPersonal()
+{
+    $id_asignacion = $_POST['id_asingacion'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_proyectos.asignaciones_proyectos 
+    SET  status = 0
+    WHERE id_asignaciones_proyectos = $id_asignacion";
+
+    $setInactivo = $queries->insertData($stmt);
+
+    if (!empty($setInactivo)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $setInactivo
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function getInfoProyect()
+{
+    $id_proyecto = $_POST['id_proyecto'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT 
+        proy.id_proyectos, 
+        proy.status, 
+        proy.codigo_proyecto, 
+        proy.nombre_largo,
+        proy.comentario,
+        proy.fecha_inicio,
+        proy.fecha_cierre_proyectada,
+        proy.fecha_creacion,
+        CONCAT(
+        tit.short_title, ' ', 
+        psn.user_name, ' ', 
+        psn.user_lastname
+        ) AS creador_proyecto,
+        CONCAT(
+        direc.direccion_calle, ' ', 
+        direc.direccion_numero, ', ',
+        direc.direccion_colonia, ', ',
+        direc.direccion_codigo_postal, ', ',
+        mun.municipio, ', ',
+        est.estado, ', Méx.'
+    
+        ) AS direccion_proyecto
+    
+        FROM constructora_personal.proyectos AS proy
+        INNER JOIN constructora_personal.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
+        INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
+        INNER JOIN constructora_personal.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
+        INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
+        INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id
+        WHERE proy.id_proyectos = $id_proyecto
+        ";
+
+    $getInfoProyect = $queries->getData($stmt);
+
+    if (!empty($getInfoProyect)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getInfoProyect
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
 
     echo json_encode($data);
 }

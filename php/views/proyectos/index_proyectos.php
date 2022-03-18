@@ -48,7 +48,7 @@
                                                 </p>
                                                 <br>
                                                 <button type="button" class="btn btn-success btn_add_personal" id="<?= $proyectos->id_proyectos ?>" data-bs-target="#addPPersonal" data-bs-toggle="modal" data-bs-placement="top" title="Asignar personal"><i class="mdi mdi-account-plus-outline"></i> </button>
-                                                <button type="button" class="btn btn-success infoProyect" id="<?= $proyectos->id_proyectos ?>" data-bs-toggle="modal" data-bs-placement="top" title="Detalle de proyecto"><i class="mdi mdi-information-outline"></i> </button>
+                                                <button type="button" class="btn btn-success infoProyect" id="<?= $proyectos->id_proyectos ?>" data-bs-target="#infoProyect" data-bs-toggle="modal" data-bs-placement="top" title="Detalle de proyecto"><i class="mdi mdi-information-outline"></i> </button>
                                             </div>
                                         </div>
                                     </div> <!-- end card-->
@@ -67,6 +67,8 @@
 <!-- end row -->
 <?php
 include_once('php/views/proyectos/modals/crear_proyecto.php');
+include_once('php/views/proyectos/modals/asignar_personal.php');
+include_once('php/views/proyectos/modals/detalle_proyecto.php');
 ?>
 <script src="js/functions/proyectos.js"></script>
 <script src="js/loading.js"></script>

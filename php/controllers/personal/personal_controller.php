@@ -83,7 +83,7 @@ function saveNewUser()
     $str_nombre = substr($nombre, 0, 2);
     $str_ap_paterno = substr($ap_paterno, 0, 2);
     $str_ap_materno = substr($ap_materno, 0, 2);
-    $int_user = rand(1, 99);
+    $int_user = rand(10, 99);
     $codigo_usuario = $str_nombre . "-" . $str_ap_paterno . $str_ap_materno . "-" . $int_user;
 
 
