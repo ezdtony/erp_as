@@ -18,29 +18,7 @@ $queries = new Queries;
 if (isset($_GET['id_user'])) {
     $id_user_data = $_GET['id_user'];
 
-    $sql_user = "SELECT 
-    ar.id_areas, 
-    ar.descripcion_area,
-    niv_ar.descripcion_niveles_areas AS puesto_area, 
-    CONCAT (
-        ar.descripcion_area, ' - ',
-        niv_ar.descripcion_niveles_areas
-    ) AS descripcion_area,
-    CONCAT (
-        aca.shortname_nivel, ' ',
-        usr.nombres, ' ',
-        usr.apellido_paterno, ' ',
-        usr.apellido_materno
-    ) AS nombre_usuario,
-    usr.*,
-    con.*
-    FROM asteleco_personal.lista_personal AS usr 
-    INNER JOIN asteleco_personal.niveles_academicos AS aca ON usr.id_niveles_academicos = aca.id_niveles_academicos
-    INNER JOIN asteleco_personal.contacto_personal AS con ON usr.id_contacto_personal = con.id_contacto_personal 
-    INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas 
-    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
-    WHERE usr.id_lista_personal = $id_user_data";
-    $userInfo = $queries->getData($sql_user);
+    include_once('php/models/user_details.php');
     if (!empty($userInfo)) { ?>
         <div class="row">
             <div class="col-lg-12">
@@ -81,9 +59,60 @@ if (isset($_GET['id_user'])) {
                     ?>
                         <link rel="stylesheet" href="css/edit_avatar.css">
                         <div class="tab-content">
+                            <!-- ARCHIVOS DE USUARIO -->
                             <div class="tab-pane" id="home1">
-                                <p>...</p>
+                                <div class="container">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th class="text-center">Nombre de archivo</th>
+                                                <th class="text-center">Formato</th>
+                                                <th class="text-center">Ver/Cargar</th>
+                                                <th class="text-center">Sustituir archivo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($getUserArchives as $structure) :
+                                                $ruta_archivo = $structure->ruta_archivo;
+                                            ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $structure->nombre_catalogo ?></td>
+                                                    <td class="text-center"><?= $structure->tipo_archivo ?></td>
+                                                    <td class="table-action text-center">
+                                                        <?php if ($ruta_archivo == '') : ?>
+                                                            <div>
+                                                                <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-primary btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo"><i class="mdi mdi-upload"></i> </button>
+                                                            </div>
+                                                            <?php else :
+                                                            if (file_exists($ruta_archivo)) { ?>
+                                                                <a href="<?= $ruta_archivo ?>" target="_blank"><button type="button" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </button></a>
+                                                            <?php
+                                                            } else { ?>
+                                                                <a><button type="button" class="btn btn-danger"><i class="mdi mdi-image-broken"></i> </button></a>
+                                                            <?php
+                                                            }
+                                                            ?>
+
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="table-action text-center">
+                                                        <?php if ($ruta_archivo == '') : ?>
+                                                            <div>
+
+                                                                <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-info btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo" disabled><i class="mdi mdi-reload"></i> </button>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-info btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo"><i class="mdi mdi-reload"></i> </button>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                            <!-- INFORMACION GENERAL -->
                             <div class="tab-pane show active" id="profile1">
                                 <div class="container">
                                     <div class="text-center">
@@ -100,48 +129,56 @@ if (isset($_GET['id_user'])) {
                                     <hr>
                                     <hr>
                                     <br>
-                                    <div class="row" style="height:260px; overflow: auto;">
-                                        <div class="col">
-                                            <h4><i class="uil-calendar-alt"></i> Fecha de nacimiento:</h4>
-                                            <h3><?= $fecha_nacimiento ?></h3>
-                                            <h5>Edad: <?= $edad ?></h5>
-                                            <br>
+                                    <div class="container">
+                                        <div class="row" style="height:260px; overflow: auto;">
+                                            <div class="col-sm">
 
-                                            <h4><i class="fas fa-envelope-open-text"></i> Correo prinicipal de contacto:</h4>
-                                            <h3> <?= $user_data->correo_electronico ?> </h3>
+                                                <h4><i class="fas fa-envelope-open-text"></i> CURP:</h4>
+                                                <h4> <?= $user_data->curp ?> </h4>
+                                                <br>
 
-                                            <h4><i class="fas fa-phone-square"></i> Teléfono prinicipal de contacto:</h4>
-                                            <h3><?= $user_data->telefono_principal ?> </h3>
-                                            <br>
-                                            
-                                        </div>
-                                        <div class="col">
-                                            <h2>Nombre del padre:</h2>
-                                            <h4>AMIGA SMEKE MARCOS </h4>
+                                                <h4><i class="fas fa-envelope-open-text"></i> RFC:</h4>
+                                                <h4> <?= $user_data->rfc ?> </h4>
+                                                <br>
 
-                                            <h2><i class="far fa-envelope"></i> Correo del padre:</h2>
-                                            <h4>marcosamiga@hotmail.com </h4>
+                                                <h4><i class="fas fa-envelope-open-text"></i> NSS:</h4>
+                                                <h4> <?= $user_data->nss ?> </h4>
+                                                <br>
 
-                                            <h2><i class="fas fa-phone"></i> Teléfono del padre:</h2>
-                                            <h4>5540946409 </h4>
+                                            </div>
+                                            <div class="col-sm">
+                                                <h4><i class="fas fa-envelope-open-text"></i> Correo prinicipal de contacto:</h4>
+                                                <h4> <?= $user_data->correo_electronico ?> </h4>
+                                                <br>
 
+                                                <h4><i class="fas fa-phone-square"></i> Teléfono prinicipal de contacto:</h4>
+                                                <h4><?= $user_data->telefono_principal ?> </h4>
+                                                <br>
 
-                                        </div>
+                                                <h4><i class="fas fa-envelope-open-text"></i> Teléfono secundario de contacto:</h4>
+                                                <h4> <?= $user_data->telefono_secundario ?> </h4>
+                                                <br>
 
-                                        <div class="col">
-                                            <h2>Nombre de la madre:</h2>
-                                            <h4>MICHAN HILU LETY </h4>
+                                            </div>
+                                            <div class="col-sm">
+                                                <h4><i class="uil-calendar-alt"></i> Fecha de nacimiento:</h4>
+                                                <h4><?= $fecha_nacimiento ?></h4>
+                                                <h5>Edad: <?= $edad ?></h5>
+                                                <br>
 
-                                            <h2><i class="far fa-envelope"></i> Correo de la madre:</h2>
-                                            <h4>letymichan@hotmail.com </h4>
+                                                <h4><i class="uil-calendar-alt"></i> Correo inicio de sesión:</h4>
+                                                <h4><?= $user_data->correo_sesion ?></h4>
+                                                <br>
 
-                                            <h2><i class="fas fa-phone"></i> Teléfono de la madre:</h2>
-                                            <h4>5521074648 </h4>
+                                                <h4><i class="uil-calendar-alt"></i> Contraseña inicio de sesión:</h4>
+                                                <h4><?= $user_data->password ?></h4>
+                                                <br>
+                                            </div>
                                         </div>
                                     </div>
                                     <br>
-                                    <h2><i class="fas fa-house-user"></i> Dirección</h2>
-                                    <h4>Goldsmith 317 int. 305, Polanco III Secc, Miguel Hidalgo. 11550</h4>
+                                    <h4><i class="fas fa-house-user"></i> Dirección</h4>
+                                    <h4><?= $user_data->direccion_usuario ?></h4>
                                     <br>
                                 </div>
                             </div>
@@ -160,13 +197,16 @@ if (isset($_GET['id_user'])) {
     <?php
     }
 
-    include_once('php/views/personal/modals/registrar_usuario.php');
+    include_once('php/views/personal/modals/subir_archivo.php');
 
     ?>
-    <script src="js/functions/personal.js"></script>
+    <script src="js/functions/profile/info_personal.js"></script>
     <script src="js/functions/profile/edit_avatar.js"></script>
     <script src="js/loading.js"></script>
-
+    <!-- plugin js -->
+    <script src="assets/js/vendor/dropzone.min.js"></script>
+    <!-- init js -->
+    <script src="assets/js/ui/component.fileupload.js"></script>
 <?php
 }
 ?>
