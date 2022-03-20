@@ -1,7 +1,7 @@
 <?php
 
 ?>
-
+<link rel="stylesheet" href="css/cards_style.css">
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -21,7 +21,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xl-4 col-lg-3">
+    <div class="col-xl-4 col-lg-4">
         <div class="card cta-box overflow-hidden">
             <a href="?submodule=reporte_viaticos_1">
                 <div class="card-body">
@@ -37,7 +37,7 @@
             </a>
         </div>
     </div>
-    <div class="col-xl-4 col-lg-3">
+    <div class="col-xl-4 col-lg-4">
         <div class="card cta-box overflow-hidden">
             <a href="?submodule=reporte_viaticos_2">
                 <div class="card-body">
@@ -53,9 +53,9 @@
             </a>
         </div>
     </div>
-    <div class="col-xl-4 col-lg-3">
+    <div class="col-xl-4 col-lg-4">
         <div class="card cta-box overflow-hidden">
-            <a href="reporte_viaticos_3">
+            <a href="?submodule=reporte_viaticos_3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
@@ -70,9 +70,8 @@
         </div>
     </div>
 </div>
-</div>
 <script src="js/functions/solicitudes.js"></script>
 <script src="js/loading.js"></script>
-<?php 
+<?php
 
 ?>
