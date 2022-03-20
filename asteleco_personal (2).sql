@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-03-2022 a las 23:07:42
+-- Tiempo de generación: 20-03-2022 a las 02:03:46
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.1
 
@@ -42,13 +42,24 @@ CREATE TABLE `archivos_usuarios` (
 --
 
 INSERT INTO `archivos_usuarios` (`id_archivos_usuarios`, `id_lista_personal`, `id_catalogo_archivos`, `nombre_archivo`, `ruta_archivo`, `fecha_carga`, `activo`) VALUES
-(1, 7, 1, NULL, NULL, NULL, NULL),
-(2, 7, 2, NULL, NULL, NULL, NULL),
-(3, 7, 3, NULL, NULL, NULL, NULL),
-(4, 8, 1, NULL, NULL, NULL, NULL),
-(5, 8, 2, NULL, NULL, NULL, NULL),
-(6, 8, 3, NULL, NULL, NULL, NULL),
-(7, 8, 4, NULL, NULL, NULL, NULL);
+(1, 1, 2, 'INE-LAGO-001-2022-03-19-1647733880', 'uploads/archivo_colaboradores/LAGO-001/archivos/INE-LAGO-001-2022-03-19-1647733880.pdf', '2022-03-19 17:51:20', 1),
+(2, 1, 3, 'ACT-LAGO-001-2022-03-19-1647735021', 'uploads/archivo_colaboradores/LAGO-001/archivos/ACT-LAGO-001-2022-03-19-1647735021.pdf', '2022-03-19 18:10:21', 1),
+(3, 1, 4, NULL, NULL, NULL, NULL),
+(4, 1, 5, NULL, NULL, NULL, NULL),
+(5, 1, 6, NULL, NULL, NULL, NULL),
+(11, 1, 1, 'FOT-LAGO-001-2022-03-19-1647735701', 'uploads/archivo_colaboradores/LAGO-001/archivos/FOT-LAGO-001-2022-03-19-1647735701.jpeg', '2022-03-19 18:21:41', 1),
+(12, 2, 1, NULL, NULL, NULL, NULL),
+(13, 2, 2, NULL, NULL, NULL, NULL),
+(14, 2, 3, NULL, NULL, NULL, NULL),
+(15, 2, 4, NULL, NULL, NULL, NULL),
+(16, 2, 5, NULL, NULL, NULL, NULL),
+(17, 2, 6, NULL, NULL, NULL, NULL),
+(18, 6, 1, NULL, NULL, NULL, NULL),
+(19, 6, 2, NULL, NULL, NULL, NULL),
+(20, 6, 3, NULL, NULL, NULL, NULL),
+(21, 6, 4, NULL, NULL, NULL, NULL),
+(22, 6, 5, NULL, NULL, NULL, NULL),
+(23, 6, 6, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -82,18 +93,22 @@ CREATE TABLE `catalogo_archivos` (
   `id_catalogo_archivos` int(11) NOT NULL,
   `tipo_archivo` varchar(45) DEFAULT NULL,
   `nombre_archivo` varchar(45) DEFAULT NULL,
-  `class_css` varchar(45) DEFAULT NULL
+  `html_input_type` varchar(50) DEFAULT NULL,
+  `class_css` varchar(45) DEFAULT NULL,
+  `btn_class_color` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `catalogo_archivos`
 --
 
-INSERT INTO `catalogo_archivos` (`id_catalogo_archivos`, `tipo_archivo`, `nombre_archivo`, `class_css`) VALUES
-(1, NULL, 'CURP', NULL),
-(2, NULL, 'INE', NULL),
-(3, NULL, 'ACTA DE NACIMIENTO', NULL),
-(4, NULL, 'COMPROBANTE DE DOMICILIO', NULL);
+INSERT INTO `catalogo_archivos` (`id_catalogo_archivos`, `tipo_archivo`, `nombre_archivo`, `html_input_type`, `class_css`, `btn_class_color`) VALUES
+(1, 'IMAGEN', 'FOTOGRAFÍA', 'image/png,image/jpeg', 'mdi-image', 'light'),
+(2, 'PDF', 'INE', 'application/pdf', 'mdi-file-pdf-box', 'danger'),
+(3, 'PDF', 'ACTA DE NACIMIENTO', 'application/pdf', 'mdi-file-pdf-box', 'danger'),
+(4, 'PDF', 'COMPROBANTE DE DOMICILIO', 'application/pdf', 'mdi-file-pdf-box', 'danger'),
+(5, 'PDF', 'CURP', 'application/pdf', 'mdi-file-pdf-box', 'danger'),
+(6, 'PDF', 'VIGENCIA IMSS', 'application/pdf', 'mdi-file-pdf-box', 'danger');
 
 -- --------------------------------------------------------
 
@@ -122,7 +137,8 @@ INSERT INTO `contacto_personal` (`id_contacto_personal`, `telefono_principal`, `
 (5, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
 (6, '5517267813', '5517267813', 'a@mail.com', '5517267813', ''),
 (7, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(8, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813');
+(8, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
+(9, '5517267813', '', 'a@mail.com', '5517267813', '');
 
 -- --------------------------------------------------------
 
@@ -146,14 +162,15 @@ CREATE TABLE `direcciones_personal` (
 --
 
 INSERT INTO `direcciones_personal` (`id_direcciones_personal`, `direccion_calle`, `direccion_numero_int`, `direccion_numero_ext`, `direccion_colonia`, `direccion_municipio`, `direccion_zipcode`, `direccion_estado`) VALUES
-(1, 'Loma de Chapultepec', NULL, '16', 'Francisco I. Madero', 'Nicolás Romero', '54400', 'Estado de México'),
+(1, 'Loma de Chapultepec', '1', '16', 'Francisco I. Madero', 'Nicolás Romero', '54400', 'Estado de México'),
 (3, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Valle de Bravo', '54900', 'Estado de México'),
 (4, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México'),
 (5, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Acambay de Ruíz Castañeda', '53398', 'Estado de México'),
 (6, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Acambay de Ruíz Castañeda', '53398', 'Estado de México'),
 (7, 'Roble Mz 84 Lt', '', '3', '', 'Acambay de Ruíz Castañeda', '53398', 'Estado de México'),
 (8, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México'),
-(9, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México');
+(9, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México'),
+(10, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '54900', 'Estado de México');
 
 -- --------------------------------------------------------
 
@@ -180,22 +197,24 @@ CREATE TABLE `lista_personal` (
   `nss` varchar(45) DEFAULT NULL,
   `edad` int(11) DEFAULT NULL,
   `genero` int(11) DEFAULT NULL,
-  `estado_civil` int(11) DEFAULT NULL
+  `estado_civil` int(11) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `lista_personal`
 --
 
-INSERT INTO `lista_personal` (`id_lista_personal`, `id_niveles_areas`, `id_niveles_academicos`, `id_direcciones_personal`, `id_contacto_personal`, `no_empleado`, `nombres`, `apellido_paterno`, `apellido_materno`, `codigo_usuario`, `correo_sesion`, `password`, `fecha_nacimiento`, `curp`, `rfc`, `nss`, `edad`, `genero`, `estado_civil`) VALUES
-(1, 16, 1, 1, 1, 99, 'Luis Antonio', 'González', 'Olvera', 'LAGO-001', 'antoniogonzalez.rt@gmail.com', '123', '1999-11-29', 'GOOL991129HMCNLS07', 'GOOL991129', '04169903566', 22, 1, 1),
-(2, 14, 1, 3, 2, NULL, 'CESAR RENE', 'ANAYA', 'MARTINEZ', 'CE-ANMA-4', 'antoniogonzalez.rt@gmail.com', 'wF6U6t', '0000-00-00', 'GOOL991129HMCNLS07', 'AFEF413513', '3515351351', NULL, 1, 2),
-(3, 14, 2, 4, 3, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-53', 'antoniogonzalez.rt@gmail.com', 'oNAnbF', '0000-00-00', 'GOOL991129HMCNLS07', '23546424', '4252235244', NULL, 1, 2),
-(4, 11, 2, 5, 4, NULL, 'ANTONIO', 'GONZALEZ', 'GONZALEZ', 'AN-GOGO-65', 'antoniogonzalez.rt@gmail.com', '95BZDc', '0000-00-00', 'GOOL991129HMCNLS07', '3768765', '4666226', NULL, 2, 1),
-(5, 11, 2, 6, 5, NULL, 'ANTONIO', 'GONZALEZ', 'GONZALEZ', 'AN-GOGO-9', 'antoniogonzalez.rt@gmail.com', '95BZDc', '0000-00-00', 'GOOL991129HMCNLS07', '3768765', '4666226', NULL, 2, 1),
-(6, 9, 1, 7, 6, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-2', 'antoniogonzalez.rt@gmail.com', 'KKgBWQ', '0000-00-00', 'GOOL991129HMCNLS07', '53278327HGSRH', '757337373', NULL, 1, 2),
-(7, 11, 2, 8, 7, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-42', 'antoniogonzalez.rt@gmail.com', '3bD34d', '0000-00-00', 'GOOL991129HMCNLS07', 'rbeth35y3q', '462464632', NULL, 2, 1),
-(8, 11, 2, 9, 8, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-90', 'antoniogonzalez.rt@gmail.com', '3bD34d', '0000-00-00', 'GOOL991129HMCNLS07', 'rbeth35y3q', '462464632', NULL, 2, 1);
+INSERT INTO `lista_personal` (`id_lista_personal`, `id_niveles_areas`, `id_niveles_academicos`, `id_direcciones_personal`, `id_contacto_personal`, `no_empleado`, `nombres`, `apellido_paterno`, `apellido_materno`, `codigo_usuario`, `correo_sesion`, `password`, `fecha_nacimiento`, `curp`, `rfc`, `nss`, `edad`, `genero`, `estado_civil`, `status`) VALUES
+(1, 16, 1, 1, 1, 99, 'Luis Antonio', 'González', 'Olvera', 'LAGO-001', 'antoniogonzalez.rt@gmail.com', '123', '1999-11-29', 'GOOL991129HMCNLS07', 'GOOL991129', '04169903566', 22, 1, 1, 1),
+(2, 14, 1, 3, 2, NULL, 'CESAR RENE', 'ANAYA', 'MARTINEZ', 'CE-ANMA-4', 'antoniogonzalez.rt@gmail.com', 'wF6U6t', '0000-00-00', 'GOOL991129HMCNLS07', 'AFEF413513', '3515351351', NULL, 1, 2, 1),
+(3, 14, 2, 4, 3, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-53', 'antoniogonzalez.rt@gmail.com', 'oNAnbF', '0000-00-00', 'GOOL991129HMCNLS07', '23546424', '4252235244', NULL, 1, 2, 1),
+(4, 11, 2, 5, 4, NULL, 'ANTONIO', 'GONZALEZ', 'GONZALEZ', 'AN-GOGO-65', 'antoniogonzalez.rt@gmail.com', '95BZDc', '0000-00-00', 'GOOL991129HMCNLS07', '3768765', '4666226', NULL, 2, 1, 1),
+(5, 11, 2, 6, 5, NULL, 'ANTONIO', 'GONZALEZ', 'GONZALEZ', 'AN-GOGO-9', 'antoniogonzalez.rt@gmail.com', '95BZDc', '0000-00-00', 'GOOL991129HMCNLS07', '3768765', '4666226', NULL, 2, 1, 1),
+(6, 9, 1, 7, 6, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-2', 'antoniogonzalez.rt@gmail.com', 'KKgBWQ', '0000-00-00', 'GOOL991129HMCNLS07', '53278327HGSRH', '757337373', NULL, 1, 2, 1),
+(7, 11, 2, 8, 7, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-42', 'antoniogonzalez.rt@gmail.com', '3bD34d', '0000-00-00', 'GOOL991129HMCNLS07', 'rbeth35y3q', '462464632', NULL, 2, 1, 1),
+(8, 11, 2, 9, 8, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-90', 'antoniogonzalez.rt@gmail.com', '3bD34d', '0000-00-00', 'GOOL991129HMCNLS07', 'rbeth35y3q', '462464632', NULL, 2, 1, 1),
+(9, 10, 1, 10, 9, NULL, 'Gerardo', 'Aguilar', 'Santos', 'Ge-AgSa-58', 'antoniogonzalez.rt@gmail.com', 'QbQUYr', '0000-00-00', 'GOOL991129HMCNLS07', '', '', NULL, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -334,7 +353,7 @@ ALTER TABLE `sistema_activo`
 -- AUTO_INCREMENT de la tabla `archivos_usuarios`
 --
 ALTER TABLE `archivos_usuarios`
-  MODIFY `id_archivos_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_archivos_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
@@ -346,25 +365,25 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT de la tabla `catalogo_archivos`
 --
 ALTER TABLE `catalogo_archivos`
-  MODIFY `id_catalogo_archivos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_catalogo_archivos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto_personal`
 --
 ALTER TABLE `contacto_personal`
-  MODIFY `id_contacto_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_contacto_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `direcciones_personal`
 --
 ALTER TABLE `direcciones_personal`
-  MODIFY `id_direcciones_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_direcciones_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `lista_personal`
 --
 ALTER TABLE `lista_personal`
-  MODIFY `id_lista_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_lista_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `niveles_academicos`

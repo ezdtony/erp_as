@@ -70,7 +70,7 @@
 
                                 <td class="table-action">
                                     <a href="?submodule=detalle_info&id_user=<?=$user->id_lista_personal?>" target="_blank"class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
-                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
+                                    <a class="action-icon editUser" id=<?=$user->id_lista_personal?>" data-bs-container="#tooltip-container2" data-bs-toggle="modal" data-bs-target="#editarUsuario" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
                                     <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>
                                 </td>
                             </tr>
@@ -88,6 +88,7 @@
 <!-- end row -->
 <?php
 include_once('php/views/personal/modals/registrar_usuario.php');
+include_once('php/views/personal/modals/editar_usuario.php');
 
 ?>
 <script src="js/functions/personal.js"></script>
