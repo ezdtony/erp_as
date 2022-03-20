@@ -1,6 +1,7 @@
 //|console.log("load_creditos");
 $(document).ready(function () {
   $(document).on("click", ".btn_SubirArchivo", function () {
+    
     var txt_archivo = $(this).attr("data-nombre_archivo");
     var id_archivos_usuarios = $(this).attr("id");
     var html_input_type = $(this).attr("data-html_input_type");
@@ -19,6 +20,7 @@ $(document).ready(function () {
     const inputFile = document.querySelector("#archivo_usuario");
 
     if (inputFile.files.length <= 0) {
+      Swal.close();
       Swal.fire({
         title: "Debe seleccionar un archivo",
         text: "",
@@ -26,6 +28,7 @@ $(document).ready(function () {
         timer: 3000,
       });
     } else {
+      loading();
       let formData = new FormData();
       formData.append("archivo", inputFile.files[0]); // En la posición 0; es decir, el primer elemento
       formData.append("id_archivos_usuarios", id_archivos_usuarios);
@@ -38,6 +41,7 @@ $(document).ready(function () {
         .then((decodificado) => {
           console.log(decodificado);
           if (decodificado.response == true) {
+            Swal.close();
             Swal.fire({
               title: "Archivo cargado correctamente",
               text: "",
@@ -63,3 +67,17 @@ $(document).ready(function () {
   });
   $("#subirArchivo").modal({ backdrop: "static", keyboard: false });
 });
+
+function loading(){
+  $(document).ready(function() {
+    Swal.fire({
+        title: 'Cargando...',
+        html: '<img src="images/loading.gif" width="300" height="175">',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showCloseButton: false,
+        showCancelButton: false,
+        showConfirmButton: false,
+    })
+});
+}

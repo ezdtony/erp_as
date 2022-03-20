@@ -26,10 +26,10 @@ if (!isset($_SESSION['user'])) {
     $sql_regiones = "SELECT * FROM asteleco_proyectos.regiones";
     $getRegions = $queries->getData($sql_regiones);
 
-    $estados = "SELECT * FROM matriz_direcciones.estados";
+    $estados = "SELECT * FROM asteleco_matriz_direcciones.estados";
     $getStates = $queries->getData($estados);
 
-    $estados = "SELECT * FROM matriz_direcciones.estados";
+    $estados = "SELECT * FROM asteleco_matriz_direcciones.estados";
     $getStates = $queries->getData($estados);
 
     $todos_proyectos = "SELECT 

@@ -16,7 +16,7 @@ $sql_user = "SELECT
     ) AS nombre_usuario,
     CONCAT(
         dir.direccion_calle, ' ',
-        dir.direccion_numero_int, ', ',
+        dir.direccion_numero_ext, ', ',
         dir.direccion_colonia, ', ',
         dir.direccion_municipio, ', ',
         dir.direccion_zipcode, ', ',

@@ -20,8 +20,8 @@ function getMunicipios()
 
         $stmt = "SELECT munic.* 
         FROM constructora_personal.estados AS est 
-        INNER JOIN constructora_personal.estados_municipios AS est_mun ON est.id = est_mun.estados_id
-        INNER JOIN constructora_personal.municipios AS munic ON est_mun.municipios_id = munic.id
+        INNER JOIN asteleco_matriz_direcciones.estados_municipios AS est_mun ON est.id = est_mun.estados_id
+        INNER JOIN asteleco_matriz_direcciones.municipios AS munic ON est_mun.municipios_id = munic.id
         WHERE est.id = $id_estado";
          
     $getMunicipios = $queries->getData($stmt);

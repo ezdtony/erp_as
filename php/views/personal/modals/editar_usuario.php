@@ -103,16 +103,7 @@
                     </div>
                 </div>
                 <div class="row g-2">
-                    <div class="col-md">
-                        <label for="example-email" class="form-label">Estado civil *</label>
-                        <select class="form-control select2" id="edit_id_estado_civil" data-toggle="select2">
-                            <option value=""  disabled>Estado civil *</option>
-                            <optgroup label="Género">
-                                <option value="1">Casado</option>
-                                <option value="2">Soltero</option>
-                                <option value="3">Unión Libre</option>
-                        </select>
-                    </div>
+                   
                     <div class="col-md">
 
                     </div>

@@ -57,7 +57,7 @@ function saveNewUser()
     $curp = $_POST['curp'];
     $nss = $_POST['nss'];
     $arr_fecha_nacimiento = explode("/", $_POST['fecha_nacimiento']);
-    $fecha_nacimiento = $arr_fecha_nacimiento[2] . "-" . $arr_fecha_nacimiento[1] . "-" . $arr_fecha_nacimiento[0];
+    $fecha_nacimiento = $arr_fecha_nacimiento[2] . "-" . $arr_fecha_nacimiento[0] . "-" . $arr_fecha_nacimiento[1];
     $rfc = $_POST['rfc'];
     $id_estado_civil = $_POST['id_estado_civil'];
 
@@ -80,11 +80,11 @@ function saveNewUser()
     $email_login = $_POST['email_login'];
     $password_login = $_POST['password_login'];
 
-    $str_nombre = substr($nombre, 0, 2);
-    $str_ap_paterno = substr($ap_paterno, 0, 2);
-    $str_ap_materno = substr($ap_materno, 0, 2);
+    $str_nombre = strtoupper(substr($nombre, 0, 2));
+    $str_ap_paterno = substr($ap_paterno, 0, 1);
+    $str_ap_materno = substr($ap_materno, 0, 1);
     $int_user = rand(10, 99);
-    $codigo_usuario = $str_nombre . "-" . $str_ap_paterno . $str_ap_materno . "-" . $int_user;
+    $codigo_usuario = $str_nombre  . $str_ap_paterno . $str_ap_materno . "-0" . $int_user;
 
 
 

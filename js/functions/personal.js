@@ -101,7 +101,7 @@ $(document).ready(function () {
 
   $(document).on("click", "#guardarUsuario", function () {
     /* Info general */
-
+    loading();
     var id_area_level = $("#id_area_level").val();
     var id_academic_level = $("#id_academic_level").val();
     var id_genero = $("#id_genero").val();
@@ -155,6 +155,7 @@ $(document).ready(function () {
       email_login == "" ||
       password_login == ""
     ) {
+      Swal.close();
       Swal.fire({
         title: "Atención!",
         text: "Debe llenar todos los campos",
@@ -195,8 +196,7 @@ $(document).ready(function () {
       })
         .done(function (data) {
           var data = JSON.parse(data);
-          console.log(data);
-
+          Swal.close();
           if (data.response == true) {
             Swal.fire({
               title: "¡Registro exitoso!",
@@ -226,6 +226,7 @@ $(document).ready(function () {
           //--- --- ---//
         })
         .fail(function (message) {
+          Swal.close();
           Swal.fire({
             title: "Datos no registrados!",
             text: "Ocurrió un error al guardar la información",
@@ -458,5 +459,18 @@ $(document).ready(function () {
     }
 
     return password;
+  }
+  function loading() {
+    $(document).ready(function () {
+      Swal.fire({
+        title: "Cargando...",
+        html: '<img src="images/loading.gif" width="300" height="175">',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        showCloseButton: false,
+        showCancelButton: false,
+        showConfirmButton: false,
+      });
+    });
   }
 });
