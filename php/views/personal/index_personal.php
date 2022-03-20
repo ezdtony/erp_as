@@ -92,4 +92,5 @@ include_once('php/views/personal/modals/editar_usuario.php');
 
 ?>
 <script src="js/functions/personal.js"></script>
+<script src="js/functions/users/edit_user.js"></script>
 <script src="js/loading.js"></script>
