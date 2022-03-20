@@ -137,6 +137,7 @@ $(document).ready(function () {
       id_area_level == "" ||
       id_academic_level == "" ||
       id_genero == "" ||
+      fecha_nacimiento == "" ||
       nombre == "" ||
       ap_paterno == "" ||
       ap_materno == "" ||

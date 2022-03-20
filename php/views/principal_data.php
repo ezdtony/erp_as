@@ -1,6 +1,7 @@
 <?php
 include "php/controllers/login.php";
 
+
 date_default_timezone_set('America/Mexico_City');
 $user_name = "";
 $id_area = "";
@@ -16,6 +17,8 @@ if (!isset($_SESSION['user'])) {
 
 
     $queries = new Queries;
+    
+
 
     $sql_proyect_types = "SELECT * FROM asteleco_proyectos.tipos_proyecto";
     $getProyectTypes = $queries->getData($sql_proyect_types);
@@ -63,6 +66,14 @@ if (!isset($_SESSION['user'])) {
 
     $sql_academicos = "SELECT * FROM asteleco_personal.niveles_academicos";
     $getAcademicLevels = $queries->getData($sql_academicos);
+
+
+    $sql_archives_table_structure = "SELECT count(*) as total_archives
+    FROM asteleco_personal.catalogo_archivos AS cat
+    WHERE cat.id_catalogo_archivos > '1'
+    ";
+    $getArchivesTableStructure = $queries->getData($sql_archives_table_structure);
+
     /* 
     $queries = new Queries;
    

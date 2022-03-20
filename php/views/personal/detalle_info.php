@@ -25,21 +25,15 @@ if (isset($_GET['id_user'])) {
                 <div class="card">
                     <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                         <li class="nav-item">
-                            <a href="#home1" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                                <span class="d-none d-md-block">Archivo de Usuario</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a href="#profile1" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0 active">
                                 <i class="mdi mdi-account-circle d-md-none d-block"></i>
                                 <span class="d-none d-md-block">Información General</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#settings1" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                <span class="d-none d-md-block">Información médica</span>
+                            <a href="#home1" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Archivo de Usuario</span>
                             </a>
                         </li>
                     </ul>
@@ -59,73 +53,22 @@ if (isset($_GET['id_user'])) {
                     ?>
                         <link rel="stylesheet" href="css/edit_avatar.css">
                         <div class="tab-content">
-                            <!-- ARCHIVOS DE USUARIO -->
-                            <div class="tab-pane" id="home1">
-                                <div class="container">
-                                    <table class="table table-centered mb-0">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th class="text-center">Nombre de archivo</th>
-                                                <th class="text-center">Formato</th>
-                                                <th class="text-center">Ver/Cargar</th>
-                                                <th class="text-center">Sustituir archivo</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($getUserArchives as $structure) :
-                                                $ruta_archivo = $structure->ruta_archivo;
-                                            ?>
-                                                <tr>
-                                                    <td class="text-center"><?= $structure->nombre_catalogo ?></td>
-                                                    <td class="text-center"><?= $structure->tipo_archivo ?></td>
-                                                    <td class="table-action text-center">
-                                                        <?php if ($ruta_archivo == '') : ?>
-                                                            <div>
-                                                                <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-primary btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo"><i class="mdi mdi-upload"></i> </button>
-                                                            </div>
-                                                            <?php else :
-                                                            if (file_exists($ruta_archivo)) { ?>
-                                                                <a href="<?= $ruta_archivo ?>" target="_blank"><button type="button" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </button></a>
-                                                            <?php
-                                                            } else { ?>
-                                                                <a><button type="button" class="btn btn-danger"><i class="mdi mdi-image-broken"></i> </button></a>
-                                                            <?php
-                                                            }
-                                                            ?>
-
-
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td class="table-action text-center">
-                                                        <?php if ($ruta_archivo == '') : ?>
-                                                            <div>
-
-                                                                <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-info btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo" disabled><i class="mdi mdi-reload"></i> </button>
-                                                            </div>
-                                                        <?php else : ?>
-                                                            <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-info btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo"><i class="mdi mdi-reload"></i> </button>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                             <!-- INFORMACION GENERAL -->
                             <div class="tab-pane show active" id="profile1">
                                 <div class="container">
                                     <div class="text-center">
-                                        <div class="avatar-wrapper">
-                                            <img class="profile-pic profile-user-img img-responsive img-circle rounded" src="images/user_default.png" height="180" width="auto" />
-                                            <div class="upload-button">
-                                                <i class="fa fa-arrow-circle-up" aria-hidden="true"></i>
-                                            </div>
-                                            <input class="file-upload" type="file" accept="image/*" />
-                                        </div>
+                                        <?php
+                                        $ruta_profile = "images/user_default.png";
+                                        if ($getProfilePicture[0]->ruta_archivo != '') {
+                                            $ruta_profile = $getProfilePicture[0]->ruta_archivo;
+                                        }
+                                        ?>
+                                        <img class="rounded-circle" src="<?= $ruta_profile ?>" height="180" width="auto" />
                                     </div>
                                     <h4>Nombre y puesto:</h4>
                                     <h3> <?= $user_data->nombre_usuario ?> | <?= $user_data->descripcion_area ?></h3>
+                                    <h6>Número de colaborador:</h5>
+                                    <h5> <?= $user_data->id_lista_personal ?></h5>
                                     <hr>
                                     <hr>
                                     <br>
@@ -182,8 +125,58 @@ if (isset($_GET['id_user'])) {
                                     <br>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="settings1">
-                                <p>...</p>
+                            <!-- ARCHIVOS DE USUARIO -->
+                            <div class="tab-pane" id="home1">
+                                <div class="container">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th class="text-center">Nombre de archivo</th>
+                                                <th class="text-center">Formato</th>
+                                                <th class="text-center">Ver/Cargar</th>
+                                                <th class="text-center">Sustituir archivo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($getUserArchives as $structure) :
+                                                $ruta_archivo = $structure->ruta_archivo;
+                                            ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $structure->nombre_catalogo ?></td>
+                                                    <td class="text-center"><?= $structure->tipo_archivo ?></td>
+                                                    <td class="table-action text-center">
+                                                        <?php if ($ruta_archivo == '') : ?>
+                                                            <div>
+                                                                <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-primary btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo"><i class="mdi mdi-upload"></i> </button>
+                                                            </div>
+                                                            <?php else :
+                                                            if (file_exists($ruta_archivo)) { ?>
+                                                                <a href="<?= $ruta_archivo ?>" target="_blank"><button type="button" class="btn btn-<?=$structure->btn_class_color?>"><i class="mdi <?=$structure->class_css?>"></i> </button></a>
+                                                            <?php
+                                                            } else { ?>
+                                                                <a><button type="button" class="btn btn-dark"><i class="mdi mdi-image-broken"></i> </button></a>
+                                                            <?php
+                                                            }
+                                                            ?>
+
+
+                                                        <?php endif; ?>
+                                                    </td>
+                                                    <td class="table-action text-center">
+                                                        <?php if ($ruta_archivo == '') : ?>
+                                                            <div>
+
+                                                                <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-info btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo" disabled><i class="mdi mdi-reload"></i> </button>
+                                                            </div>
+                                                        <?php else : ?>
+                                                            <button id="<?= $structure->id_archivos_usuarios ?>" data-html_input_type="<?= $structure->html_input_type ?>" data-nombre_archivo="<?= $structure->nombre_catalogo ?>" type="button" class="btn btn-info btn_SubirArchivo" data-bs-toggle="modal" data-bs-target="#subirArchivo"><i class="mdi mdi-reload"></i> </button>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
 

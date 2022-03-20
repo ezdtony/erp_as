@@ -33,16 +33,19 @@
                             <th>Área</th>
                             <th>Puesto</th>
                             <th>Código de Usuario</th>
+                            <th>Documentos</th>
                             <th>Correo LogIn</th>
                             <th>Password</th>
-
                             <th>Acciones</th>
                         </tr>
                     </thead>
 
 
                     <tbody>
-                        <?php foreach ($getAllUsers as $user) { 
+                        <?php
+                        include_once('php/models/user_information_table.php');
+                        $user_information_table = new UserArchives();
+                        foreach ($getAllUsers as $user) { 
                             $status = '';
                             if ($user->status == 1) {
                                 $status = 'checked';
@@ -61,11 +64,11 @@
                                 <td><?= ($user->descripcion_area) ?></td>
                                 <td><?= ($user->puesto_area) ?></td>
                                 <td><?= ($user->codigo_usuario) ?></td>
+                                <td><?=$user_information_table->getArchivesCount($user->id_lista_personal)?> de <?=$getArchivesTableStructure[0]->total_archives?></td>
                                 <td><?= ($user->correo_sesion) ?></td>
                                 <td><?= ($user->password) ?></td>
 
                                 <td class="table-action">
-                                    <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Archivos"> <i class="mdi mdi-folder-account"></i></a>
                                     <a href="?submodule=detalle_info&id_user=<?=$user->id_lista_personal?>" target="_blank"class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
                                     <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
                                     <a href="javascript: void(0);" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>

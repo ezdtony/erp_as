@@ -37,7 +37,6 @@ $userInfo = $queries->getData($sql_user);
 $sql_archives_table_structure = "SELECT
     *
         FROM asteleco_personal.catalogo_archivos AS cat
-        WHERE cat.id_catalogo_archivos > '1'
         ";
 $getArchivesTableStructure = $queries->getData($sql_archives_table_structure);
 foreach ($getArchivesTableStructure as $archives_structure) {
@@ -68,8 +67,20 @@ arc.ruta_archivo,
 arc.id_archivos_usuarios,
 cat.tipo_archivo,
 cat.html_input_type,
+cat.class_css,
+cat.btn_class_color,
 cat.nombre_archivo AS nombre_catalogo
 FROM asteleco_personal.archivos_usuarios AS arc
 INNER JOIN asteleco_personal.catalogo_archivos AS cat ON arc.id_catalogo_archivos = cat.id_catalogo_archivos
-WHERE cat.id_catalogo_archivos > '1' AND arc.id_lista_personal = '$id_user_data'";
+WHERE arc.id_lista_personal = '$id_user_data' ORDER BY cat.id_catalogo_archivos";
 $getUserArchives = $queries->getData($sql_user_archives);
+
+$sql_get_profile_picture = "SELECT
+    arc.ruta_archivo
+    FROM asteleco_personal.archivos_usuarios AS arc
+    INNER JOIN asteleco_personal.catalogo_archivos AS cat ON arc.id_catalogo_archivos = cat.id_catalogo_archivos
+    WHERE arc.id_lista_personal = '$id_user_data' AND cat.id_catalogo_archivos = '1'";
+$getProfilePicture = $queries->getData($sql_get_profile_picture);
+
+
+

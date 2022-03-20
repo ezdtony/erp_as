@@ -1,3 +1,7 @@
+<?php
+ include_once('php/models/user_information_table.php');
+ $user_information_table = new UserArchives();
+?>
 <div class="content-page">
     <div class="content">
         <!-- Topbar Start -->
@@ -7,7 +11,7 @@
                 <li class="dropdown notification-list">
                     <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                         <span class="account-user-avatar">
-                            <img src="images/user.png" alt="user-image" class="rounded-circle" />
+                            <img src="<?= $user_information_table->getProfilePic($_SESSION['id_user']) ?>" alt="user-image" class="rounded-circle">
                         </span>
                         <span>
                             <span class="account-user-name"><?= $_SESSION['user'] ?></span>

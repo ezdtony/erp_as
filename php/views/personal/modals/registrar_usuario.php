@@ -91,7 +91,7 @@
                 <div class="row g-2">
                     <div class="col-md">
                         <div class="mb-3">
-                            <label class="form-label">Fecha de Nacimiento</label>
+                            <label class="form-label">Fecha de Nacimiento *</label>
                             <input type="text" class="form-control date" id="fecha_nacimiento" data-toggle="date-picker" data-single-date-picker="true">
                         </div>
                     </div>
