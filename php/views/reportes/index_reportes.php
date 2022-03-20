@@ -74,10 +74,6 @@
 <script src="js/functions/solicitudes.js"></script>
 <script src="js/loading.js"></script>
 <?php
-include_once('php/views/solicitudes/modals/info_pago_completa.php');
-include_once('php/views/solicitudes/modals/crear_solicitud.php');
-include_once('php/views/solicitudes/modals/agregar_factura.php');
-include_once('php/views/solicitudes/modals/agregar_pago.php');
-include_once('php/views/solicitudes/modals/add_payment_details.php');
+
 
 ?>

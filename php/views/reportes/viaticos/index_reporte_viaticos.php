@@ -39,7 +39,7 @@
     </div>
     <div class="col-xl-4 col-lg-3">
         <div class="card cta-box overflow-hidden">
-            <a href="reporte_viaticos_2">
+            <a href="?submodule=reporte_viaticos_2">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
@@ -73,11 +73,6 @@
 </div>
 <script src="js/functions/solicitudes.js"></script>
 <script src="js/loading.js"></script>
-<?php
-include_once('php/views/solicitudes/modals/info_pago_completa.php');
-include_once('php/views/solicitudes/modals/crear_solicitud.php');
-include_once('php/views/solicitudes/modals/agregar_factura.php');
-include_once('php/views/solicitudes/modals/agregar_pago.php');
-include_once('php/views/solicitudes/modals/add_payment_details.php');
+<?php 
 
 ?>

@@ -12,8 +12,8 @@ $(document).ready(function () {
       }
     }
     var rango_fechas = $("#rango_fechas").val();
-    var fecha_1 = rango_fechas.split("-")[0];
-    var fecha_2 = rango_fechas.split("-")[1];
+    var fecha_1 = rango_fechas.split("-")[0].trim();
+    var fecha_2 = rango_fechas.split("-")[1].trim();
     console.log(colaborador);
     console.log(rango_fechas);
 
