@@ -32,6 +32,12 @@
                 </a>
             </li>
             <li class="side-nav-item">
+                <a href="?submodule=personal" class="side-nav-link">
+                    <i class="uil-users-alt"></i>
+                    <span> Personal </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
                 <a href="?submodule=proyectos" class="side-nav-link">
                     <i class="uil-suitcase"></i>
                     <span> Proyectos </span>
@@ -93,12 +99,6 @@
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li class="side-nav-item">
-                <a href="?submodule=personal" class="side-nav-link">
-                    <i class="uil-users-alt"></i>
-                    <span> Personal </span>
-                </a>
             </li>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
@@ -214,7 +214,7 @@
 
 
             <li class="side-nav-item">
-                <a href="" class="side-nav-link">
+                <a href="?submodule=reportes" class="side-nav-link">
                     <i class=" uil-file-medical-alt"></i>
                     <span> Reportes </span>
                 </a>

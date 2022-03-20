@@ -67,6 +67,21 @@ include_once('php/views/topbar.php');
             case 'detalle_info':
                 $include_file = 'php/views/personal/detalle_info.php';
                 break;
+            case 'reportes':
+                $include_file = 'php/views/reportes/index_reportes.php';
+                break;
+            case 'reporte_viaticos':
+                $include_file = 'php/views/reportes/viaticos/index_reporte_viaticos.php';
+                break;
+            case 'reporte_viaticos_1':
+                $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_1.php';
+                break;
+            case 'reporte_viaticos_2':
+                $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_2.php';
+                break;
+            case 'reporte_viaticos_3':
+                $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_3.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

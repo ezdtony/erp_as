@@ -23,15 +23,15 @@
 <div class="row">
     <div class="col-xl-4 col-lg-3">
         <div class="card cta-box overflow-hidden">
-            <a href="?submodule=reporte_viaticos">
+            <a href="?submodule=reporte_viaticos_1">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <h6 class="text-uppercase mt-0"></h6>
-                            <h2 class="my-2" id="active-users-count">Viáticos</h2>
+                            <h6 class="text-uppercase mt-0">Con rango de fechas</h6>
+                            <h2 class="my-2" id="active-users-count">Por colaborador</h2>
                             <p class="mb-0 text-muted">
                         </div>
-                        <img class="ms-3" src="images/groceries.png" width="75" alt="Generic placeholder image">
+                        <img class="ms-3" src="images/payment-method.png" width="75" alt="Generic placeholder image">
                     </div>
                 </div>
             </a>
@@ -39,15 +39,15 @@
     </div>
     <div class="col-xl-4 col-lg-3">
         <div class="card cta-box overflow-hidden">
-            <a href="">
+            <a href="reporte_viaticos_2">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <h6 class="text-uppercase mt-0"></h6>
-                            <h2 class="my-2" id="active-users-count">Herramientas</h2>
+                            <h6 class="text-uppercase mt-0">Con rango de fechas</h6>
+                            <h2 class="my-2" id="active-users-count">Por proyecto</h2>
                             <p class="mb-0 text-muted">
                         </div>
-                        <img class="ms-3" src="images/tool-box.png" width="75" alt="Generic placeholder image">
+                        <img class="ms-3" src="images/cash-machine.png" width="75" alt="Generic placeholder image">
                     </div>
                 </div>
             </a>
@@ -55,15 +55,15 @@
     </div>
     <div class="col-xl-4 col-lg-3">
         <div class="card cta-box overflow-hidden">
-            <a href="">
+            <a href="reporte_viaticos_3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
                         <div>
-                            <h6 class="text-uppercase mt-0"></h6>
-                            <h2 class="my-2" id="active-users-count">Vehículos</h2>
+                            <h6 class="text-uppercase mt-0">Por colaborador y proyecto</h6>
+                            <h2 class="my-2" id="active-users-count">Depósitos</h2>
                             <p class="mb-0 text-muted">
                         </div>
-                        <img class="ms-3" src="images/vehicle_clipboard.png" width="75" alt="Generic placeholder image">
+                        <img class="ms-3" src="images/deposit.png" width="75" alt="Generic placeholder image">
                     </div>
                 </div>
             </a>
