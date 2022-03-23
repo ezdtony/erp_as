@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-03-2022 a las 02:03:46
+-- Tiempo de generación: 23-03-2022 a las 19:15:17
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.1
 
@@ -43,23 +43,29 @@ CREATE TABLE `archivos_usuarios` (
 
 INSERT INTO `archivos_usuarios` (`id_archivos_usuarios`, `id_lista_personal`, `id_catalogo_archivos`, `nombre_archivo`, `ruta_archivo`, `fecha_carga`, `activo`) VALUES
 (1, 1, 2, 'INE-LAGO-001-2022-03-19-1647733880', 'uploads/archivo_colaboradores/LAGO-001/archivos/INE-LAGO-001-2022-03-19-1647733880.pdf', '2022-03-19 17:51:20', 1),
-(2, 1, 3, 'ACT-LAGO-001-2022-03-19-1647735021', 'uploads/archivo_colaboradores/LAGO-001/archivos/ACT-LAGO-001-2022-03-19-1647735021.pdf', '2022-03-19 18:10:21', 1),
+(2, 1, 3, 'ACT-LAGO-001-2022-03-19-1647748716', 'uploads/archivo_colaboradores/LAGO-001/archivos/ACT-LAGO-001-2022-03-19-1647748716.pdf', '2022-03-19 21:58:36', 1),
 (3, 1, 4, NULL, NULL, NULL, NULL),
 (4, 1, 5, NULL, NULL, NULL, NULL),
 (5, 1, 6, NULL, NULL, NULL, NULL),
-(11, 1, 1, 'FOT-LAGO-001-2022-03-19-1647735701', 'uploads/archivo_colaboradores/LAGO-001/archivos/FOT-LAGO-001-2022-03-19-1647735701.jpeg', '2022-03-19 18:21:41', 1),
-(12, 2, 1, NULL, NULL, NULL, NULL),
-(13, 2, 2, NULL, NULL, NULL, NULL),
-(14, 2, 3, NULL, NULL, NULL, NULL),
-(15, 2, 4, NULL, NULL, NULL, NULL),
-(16, 2, 5, NULL, NULL, NULL, NULL),
-(17, 2, 6, NULL, NULL, NULL, NULL),
-(18, 6, 1, NULL, NULL, NULL, NULL),
-(19, 6, 2, NULL, NULL, NULL, NULL),
+(11, 1, 1, 'FOT-LAGO-001-2022-03-19-1647748701', 'uploads/archivo_colaboradores/LAGO-001/archivos/FOT-LAGO-001-2022-03-19-1647748701.jpeg', '2022-03-19 21:58:21', 1),
+(18, 6, 1, 'FOT-MALG-091-2022-03-20-1647758142', 'uploads/archivo_colaboradores/MALG-091/archivos/FOT-MALG-091-2022-03-20-1647758142.jpeg', '2022-03-20 00:35:42', 1),
+(19, 6, 2, 'INE-MALG-091-2022-03-20-1647758291', 'uploads/archivo_colaboradores/MALG-091/archivos/INE-MALG-091-2022-03-20-1647758291.pdf', '2022-03-20 00:38:11', 1),
 (20, 6, 3, NULL, NULL, NULL, NULL),
 (21, 6, 4, NULL, NULL, NULL, NULL),
 (22, 6, 5, NULL, NULL, NULL, NULL),
-(23, 6, 6, NULL, NULL, NULL, NULL);
+(23, 6, 6, NULL, NULL, NULL, NULL),
+(24, 7, 1, NULL, NULL, NULL, NULL),
+(25, 7, 2, NULL, NULL, NULL, NULL),
+(26, 7, 3, NULL, NULL, NULL, NULL),
+(27, 7, 4, NULL, NULL, NULL, NULL),
+(28, 7, 5, NULL, NULL, NULL, NULL),
+(29, 7, 6, NULL, NULL, NULL, NULL),
+(30, 9, 1, NULL, NULL, NULL, NULL),
+(31, 9, 2, NULL, NULL, NULL, NULL),
+(32, 9, 3, NULL, NULL, NULL, NULL),
+(33, 9, 4, NULL, NULL, NULL, NULL),
+(34, 9, 5, NULL, NULL, NULL, NULL),
+(35, 9, 6, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -131,14 +137,10 @@ CREATE TABLE `contacto_personal` (
 
 INSERT INTO `contacto_personal` (`id_contacto_personal`, `telefono_principal`, `telefono_secundario`, `correo_electronico`, `telefono_familiar_1`, `telefono_familiar_2`) VALUES
 (1, '5517267813', '5533121395', 'antoniogonzalez.rt@gmail.com', '5539780843', NULL),
-(2, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(3, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(4, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(5, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(6, '5517267813', '5517267813', 'a@mail.com', '5517267813', ''),
-(7, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(8, '5517267813', '5517267813', 'a@mail.com', '5517267813', '5517267813'),
-(9, '5517267813', '', 'a@mail.com', '5517267813', '');
+(6, '455624622', '5517267813', 'manuel.leon@astelecom.com.mx', '5517267813', ''),
+(7, '5517267813', '', 'a@mail.com', '5517267813', '5517267813'),
+(9, '221 591 5641', '', 'lmgger@hotmail.com', '5517267813', ''),
+(10, '5517267813', '5517267813', 'manuel.leon@astelecom.com.mx', '5517267813', '');
 
 -- --------------------------------------------------------
 
@@ -163,14 +165,10 @@ CREATE TABLE `direcciones_personal` (
 
 INSERT INTO `direcciones_personal` (`id_direcciones_personal`, `direccion_calle`, `direccion_numero_int`, `direccion_numero_ext`, `direccion_colonia`, `direccion_municipio`, `direccion_zipcode`, `direccion_estado`) VALUES
 (1, 'Loma de Chapultepec', '1', '16', 'Francisco I. Madero', 'Nicolás Romero', '54400', 'Estado de México'),
-(3, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Valle de Bravo', '54900', 'Estado de México'),
-(4, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México'),
-(5, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Acambay de Ruíz Castañeda', '53398', 'Estado de México'),
-(6, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Acambay de Ruíz Castañeda', '53398', 'Estado de México'),
-(7, 'Roble Mz 84 Lt', '', '3', '', 'Acambay de Ruíz Castañeda', '53398', 'Estado de México'),
-(8, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México'),
-(9, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '53398', 'Estado de México'),
-(10, 'Roble Mz 84 Lt', '', '3', 'EL PARQUE', 'Seleccione un municipio', '54900', 'Estado de México');
+(7, 'Roble Mz 84 Lt', '', '3', 'Los Héroes', 'Carmen', '53398', 'Campeche'),
+(8, 'Roble Mz 84 Lt', '', '3', 'Álamos', 'Palizada', '53398', 'Campeche'),
+(10, 'Av. Don Juan de Palafox y. Mendoza', '', '14', 'Centro histórico de Puebla', 'Puebla', '72000', 'Puebla'),
+(11, 'Roble Mz 84 Lt', '', '3', 'Los Hérores', 'Comondú', '53398', 'Baja California Sur');
 
 -- --------------------------------------------------------
 
@@ -207,14 +205,9 @@ CREATE TABLE `lista_personal` (
 
 INSERT INTO `lista_personal` (`id_lista_personal`, `id_niveles_areas`, `id_niveles_academicos`, `id_direcciones_personal`, `id_contacto_personal`, `no_empleado`, `nombres`, `apellido_paterno`, `apellido_materno`, `codigo_usuario`, `correo_sesion`, `password`, `fecha_nacimiento`, `curp`, `rfc`, `nss`, `edad`, `genero`, `estado_civil`, `status`) VALUES
 (1, 16, 1, 1, 1, 99, 'Luis Antonio', 'González', 'Olvera', 'LAGO-001', 'antoniogonzalez.rt@gmail.com', '123', '1999-11-29', 'GOOL991129HMCNLS07', 'GOOL991129', '04169903566', 22, 1, 1, 1),
-(2, 14, 1, 3, 2, NULL, 'CESAR RENE', 'ANAYA', 'MARTINEZ', 'CE-ANMA-4', 'antoniogonzalez.rt@gmail.com', 'wF6U6t', '0000-00-00', 'GOOL991129HMCNLS07', 'AFEF413513', '3515351351', NULL, 1, 2, 1),
-(3, 14, 2, 4, 3, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-53', 'antoniogonzalez.rt@gmail.com', 'oNAnbF', '0000-00-00', 'GOOL991129HMCNLS07', '23546424', '4252235244', NULL, 1, 2, 1),
-(4, 11, 2, 5, 4, NULL, 'ANTONIO', 'GONZALEZ', 'GONZALEZ', 'AN-GOGO-65', 'antoniogonzalez.rt@gmail.com', '95BZDc', '0000-00-00', 'GOOL991129HMCNLS07', '3768765', '4666226', NULL, 2, 1, 1),
-(5, 11, 2, 6, 5, NULL, 'ANTONIO', 'GONZALEZ', 'GONZALEZ', 'AN-GOGO-9', 'antoniogonzalez.rt@gmail.com', '95BZDc', '0000-00-00', 'GOOL991129HMCNLS07', '3768765', '4666226', NULL, 2, 1, 1),
-(6, 9, 1, 7, 6, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-2', 'antoniogonzalez.rt@gmail.com', 'KKgBWQ', '0000-00-00', 'GOOL991129HMCNLS07', '53278327HGSRH', '757337373', NULL, 1, 2, 1),
-(7, 11, 2, 8, 7, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-42', 'antoniogonzalez.rt@gmail.com', '3bD34d', '0000-00-00', 'GOOL991129HMCNLS07', 'rbeth35y3q', '462464632', NULL, 2, 1, 1),
-(8, 11, 2, 9, 8, NULL, 'ANTONIO', 'ANAYA', 'GONZALEZ', 'AN-ANGO-90', 'antoniogonzalez.rt@gmail.com', '3bD34d', '0000-00-00', 'GOOL991129HMCNLS07', 'rbeth35y3q', '462464632', NULL, 2, 1, 1),
-(9, 10, 1, 10, 9, NULL, 'Gerardo', 'Aguilar', 'Santos', 'Ge-AgSa-58', 'antoniogonzalez.rt@gmail.com', 'QbQUYr', '0000-00-00', 'GOOL991129HMCNLS07', '', '', NULL, 1, 1, 1);
+(6, 14, 1, 7, 6, NULL, 'Manuel', 'León', 'González', 'MALG-091', 'manuel.leon@astelecom.com.mx', 'wBYwGp', '2022-03-19', 'XXXXXXXXXXXX', '53278327HGSRH', '757337373', NULL, 1, 2, 1),
+(7, 15, 1, 8, 7, NULL, 'David Iván', 'Rodríguez', 'Vela', 'DARV-063', 'antoniogonzalez.rt@gmail.com', 'bUgC6z', '2022-03-19', 'XXXXXXXXXXXXXX', 'VRWBE3363R', '462464632', NULL, 2, 1, 1),
+(9, 10, 3, 10, 9, NULL, 'Gerardo', 'López', 'Martínez', 'GELM-087', 'lmgger@hotmail.com', 'AsNb69', '2022-03-20', 'XXXXXXXXXXX', '', '', NULL, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -234,7 +227,9 @@ CREATE TABLE `niveles_academicos` (
 
 INSERT INTO `niveles_academicos` (`id_niveles_academicos`, `descripcion_nivel`, `shortname_nivel`) VALUES
 (1, 'Ingeniero (a)', 'Ing.'),
-(2, 'Técnico Especializado', 'Téc. Esp.');
+(2, 'Técnico Especializado', 'Téc. Esp.'),
+(3, 'Licenciado', 'Lic.'),
+(4, 'Arquitecto', 'Arq.');
 
 -- --------------------------------------------------------
 
@@ -353,7 +348,7 @@ ALTER TABLE `sistema_activo`
 -- AUTO_INCREMENT de la tabla `archivos_usuarios`
 --
 ALTER TABLE `archivos_usuarios`
-  MODIFY `id_archivos_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_archivos_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
@@ -371,25 +366,25 @@ ALTER TABLE `catalogo_archivos`
 -- AUTO_INCREMENT de la tabla `contacto_personal`
 --
 ALTER TABLE `contacto_personal`
-  MODIFY `id_contacto_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_contacto_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `direcciones_personal`
 --
 ALTER TABLE `direcciones_personal`
-  MODIFY `id_direcciones_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_direcciones_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `lista_personal`
 --
 ALTER TABLE `lista_personal`
-  MODIFY `id_lista_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_lista_personal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `niveles_academicos`
 --
 ALTER TABLE `niveles_academicos`
-  MODIFY `id_niveles_academicos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_niveles_academicos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `niveles_areas`

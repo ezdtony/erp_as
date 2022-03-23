@@ -325,34 +325,37 @@ function getInfoProyect()
 
     $stmt = "SELECT 
         proy.id_proyectos, 
-        proy.status, 
+        tip.descripcion_tipo AS tipo_proyecto, 
         proy.codigo_proyecto, 
-        proy.nombre_largo,
-        proy.comentario,
+        proy.nombre_proyecto,
+        proy.descripcion,
         proy.fecha_inicio,
-        proy.fecha_cierre_proyectada,
-        proy.fecha_creacion,
+        proy.fecha_proyectada_cierre,
+        proy.fecha_cierre_real,
+        proy.log_creacion,
+
         CONCAT(
-        tit.short_title, ' ', 
-        psn.user_name, ' ', 
-        psn.user_lastname
+        tit.shortname_nivel, ' ', 
+        psn.nombres, ' ', 
+        psn.apellido_paterno, ' ',
+            psn.apellido_materno
         ) AS creador_proyecto,
+
         CONCAT(
         direc.direccion_calle, ' ', 
-        direc.direccion_numero, ', ',
+        direc.direccion_numero_ext, ', ',
         direc.direccion_colonia, ', ',
-        direc.direccion_codigo_postal, ', ',
-        mun.municipio, ', ',
-        est.estado, ', Méx.'
+        direc.direccion_zipcode, ', ',
+        direc.direccion_municipio, ', ',
+        direc.direccion_estado, ', Méx.'
     
         ) AS direccion_proyecto
     
-        FROM constructora_personal.proyectos AS proy
-        INNER JOIN constructora_personal.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
-        INNER JOIN constructora_personal.id_titulos AS tit ON psn.id_titulo = tit.id_titulo
-        INNER JOIN constructora_personal.direcciones AS direc ON proy.id_direccion = direc.iddirecciones
-        INNER JOIN constructora_personal.estados AS est ON direc.direccion_estado = est.id
-        INNER JOIN constructora_personal.municipios AS mun ON direc.direccion_municipio = mun.id
+        FROM asteleco_proyectos.proyectos AS proy
+        INNER JOIN asteleco_proyectos.tipos_proyecto AS tip ON proy.id_tipos_proyecto = tip.id_tipos_proyecto
+        INNER JOIN asteleco_personal.lista_personal AS psn ON proy.id_personal_creador = psn.id_lista_personal
+        INNER JOIN asteleco_personal.niveles_academicos AS tit ON psn.id_niveles_academicos = tit.id_niveles_academicos
+        INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
         WHERE proy.id_proyectos = $id_proyecto
         ";
 

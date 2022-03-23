@@ -82,6 +82,9 @@ include_once('php/views/topbar.php');
             case 'reporte_viaticos_3':
                 $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_3.php';
                 break;
+            case 'reporte_viaticos_4':
+                $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_4.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

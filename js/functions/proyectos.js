@@ -367,7 +367,7 @@ $(document).ready(function () {
     var id_proyecto = $(this).attr("id");
     loading();
     $.ajax({
-      url: "php/controllers/proyects_controller.php",
+      url: "php/controllers/proyectos/proyects_controller.php",
       method: "POST",
       data: {
         mod: "getPersonalAssigned",
@@ -401,7 +401,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-      url: "php/controllers/proyects_controller.php",
+      url: "php/controllers/proyectos/proyects_controller.php",
       method: "POST",
       data: {
         mod: "getInfoProyect",
@@ -414,9 +414,8 @@ $(document).ready(function () {
 
         if (data.response == true) {
           Swal.close();
-          var fecha_cr_sql = data.data[0].fecha_creacion.split(" ");
-          var fecha_cr = fecha_cr_sql[0];
-          var hora_cr = fecha_cr_sql[1];
+          var fecha_inicio = data.data[0].fecha_inicio.split(" ");
+         
 
           $("#info_proyect_name").text(data.data[0].nombre_largo);
           $("#info_proyect_code").text(
@@ -437,7 +436,7 @@ $(document).ready(function () {
             "Proyecto creado por: " + data.data[0].creador_proyecto
           );
           $("#nombre_creador").text(
-            "Abierto el: " + fecha_cr + " a las " + hora_cr + " horas."
+            "Iniciado el: " + fecha_inicio+"."
           );
 
           $("#infoProyect").modal("show");
