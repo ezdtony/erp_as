@@ -331,9 +331,18 @@ function getInfoProyect()
         proy.descripcion,
         proy.fecha_inicio,
         proy.fecha_proyectada_cierre,
-        proy.fecha_cierre_real,
+        CASE 
+            WHEN proy.fecha_cierre_real IS NULL THEN '-'
+            WHEN proy.fecha_cierre_real ='0000-00-00' THEN '-'
+            WHEN proy.fecha_cierre_real IS NOT NULL THEN proy.fecha_cierre_real
+        END AS fecha_cierre_real,
         proy.log_creacion,
-
+        CASE 
+            WHEN proy.fecha_proyectada_cierre IS NULL THEN '-'
+            WHEN proy.fecha_proyectada_cierre ='0000-00-00' THEN '-'
+            WHEN proy.fecha_proyectada_cierre IS NOT NULL THEN proy.fecha_proyectada_cierre
+        END AS fecha_proyectada_cierre,
+        proy.log_creacion,
         CONCAT(
         tit.shortname_nivel, ' ', 
         psn.nombres, ' ', 
@@ -344,7 +353,7 @@ function getInfoProyect()
         CONCAT(
         direc.direccion_calle, ' ', 
         direc.direccion_numero_ext, ', ',
-        direc.direccion_colonia, ', ',
+        direc.direccion_colonia, ', C.P. ',
         direc.direccion_zipcode, ', ',
         direc.direccion_municipio, ', ',
         direc.direccion_estado, ', Méx.'
@@ -368,6 +377,73 @@ function getInfoProyect()
         $data = array(
             'response' => true,
             'data'                => $getInfoProyect
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function deleteProyect()
+{
+    $id_proyecto = $_POST['id_proyect'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_proyectos.proyectos
+    SET  show_proyect = 0
+    WHERE id_proyectos = $id_proyecto";
+
+    $setInactivo = $queries->insertData($stmt);
+
+    if (!empty($setInactivo)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $setInactivo
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function changeStatusProyect()
+{
+    $id_proyecto = $_POST['id_proyect'];
+    $status = $_POST['status'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_proyectos.proyectos 
+    SET  status = $status
+    WHERE id_proyectos = $id_proyecto";
+
+    $setInactivo = $queries->insertData($stmt);
+
+    if (!empty($setInactivo)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $setInactivo
         );
         //--- --- ---//
     } else {

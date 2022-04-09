@@ -31,12 +31,14 @@
                     <span> Inicio </span>
                 </a>
             </li>
-            <li class="side-nav-item">
-                <a href="?submodule=personal" class="side-nav-link">
-                    <i class="uil-users-alt"></i>
-                    <span> Personal </span>
-                </a>
-            </li>
+            <?php if ($id_area <= 3) : ?>
+                <li class="side-nav-item">
+                    <a href="?submodule=personal" class="side-nav-link">
+                        <i class="uil-users-alt"></i>
+                        <span> Personal </span>
+                    </a>
+                </li>
+            <?php endif; ?>
             <li class="side-nav-item">
                 <a href="?submodule=proyectos" class="side-nav-link">
                     <i class="uil-suitcase"></i>
@@ -52,29 +54,32 @@
                 </a>
                 <div class="collapse" id="sidebarViaticos">
                     <ul class="side-nav-second-level">
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
-                                <span> Administrador </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarSecondLevel">
-                                <ul class="side-nav-third-level">
-                                    <li>
-                                        <a href="#">Administrar folios</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Todos los folios</a>
-                                    </li>
+                        <?php if ($id_area <= 3) : ?>
+                            <li class="side-nav-item">
+                                <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
+                                    <span> Administrador </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarSecondLevel">
+                                    <ul class="side-nav-third-level">
+                                        <li>
+                                            <a href="?submodule=depositos_viaticos">Depósitos</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Todos los folios</a>
+                                        </li>
 
-                                    <li>
-                                        <a href="#">Buscar folio</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Depositar saldo</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                                        <li>
+                                            <a href="#">Buscar folio</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Depositar saldo</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($id_area >= 4) : ?>
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
                                 <span> Personal de Campo </span>
@@ -97,6 +102,7 @@
                                 </ul>
                             </div>
                         </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </li>
