@@ -231,14 +231,48 @@ function changeStatusUser()
             'message' => 'Se actualizó correctamente!!'
 
         );
-    }else{
+    } else {
         $data = array(
             'response' => false,
             'message' => 'Error al actualizar el usuario'
         );
     }
-    
 
+
+
+    echo json_encode($data);
+}
+
+function getUserProyects()
+{
+    $id_user = $_POST['id_user'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT pas.id_asignaciones_proyectos,proy.id_proyectos, proy.nombre_proyecto
+    FROM asteleco_proyectos.asignaciones_proyectos  AS pas
+    INNER JOIN asteleco_proyectos.proyectos AS proy ON pas.id_proyectos = proy.id_proyectos
+    WHERE pas.id_lista_personal = '$id_user' AND pas.status = 1";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
 
     echo json_encode($data);
 }

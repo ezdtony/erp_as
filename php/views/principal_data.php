@@ -59,7 +59,7 @@ if (!isset($_SESSION['user'])) {
     ";
     $getAllProyects = $queries->getData($todos_proyectos);
 
-    $sql_lista_personal = "SELECT ar.id_areas, ar.descripcion_area,  niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+    $sql_lista_personal = "SELECT ar.id_areas, ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
     FROM asteleco_personal.lista_personal AS usr INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas";
 
     $getAllUsers = $queries->getData($sql_lista_personal);
@@ -69,6 +69,12 @@ if (!isset($_SESSION['user'])) {
 
     $sql_academicos = "SELECT * FROM asteleco_personal.niveles_academicos";
     $getAcademicLevels = $queries->getData($sql_academicos);
+
+
+    $viatics_types = "SELECT tg.*
+    FROM asteleco_viaticos.tipos_gasto AS tg
+    WHERE tg.id_clases_gasto = 1";
+    $getViaticsTypes = $queries->getData($viatics_types);
 
 
     $sql_archives_table_structure = "SELECT count(*) as total_archives

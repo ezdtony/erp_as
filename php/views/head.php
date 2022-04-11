@@ -36,6 +36,8 @@ $id_user = $_SESSION['id_user'];
   <link href="assets/css/app-dark.min.css?v=1.1" rel="stylesheet" type="text/css" id="dark-style" />
 
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+  <!-- TABLE FILTER -->
+<script src="js/tablefilter/tablefilter.js"></script>
 
 </head>
 
