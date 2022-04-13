@@ -7,7 +7,7 @@
         <script>
           document.write(new Date().getFullYear());
         </script>
-        © ASTELECOM S.A. DE C.V. - Develped By GO-Tech 
+        © ERP ASTELECOM  - Developed By GO-Tech 
       </div>
     </div>
   </div>

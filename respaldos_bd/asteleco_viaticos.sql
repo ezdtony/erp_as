@@ -91,7 +91,7 @@ CREATE TABLE `depositos` (
   PRIMARY KEY (`id_depositos`),
   KEY `id_tipos_gasto` (`id_tipos_gasto`),
   CONSTRAINT `id_tipos_gasto` FOREIGN KEY (`id_tipos_gasto`) REFERENCES `tipos_gasto` (`id_tipos_gasto`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE `depositos` (
 
 LOCK TABLES `depositos` WRITE;
 /*!40000 ALTER TABLE `depositos` DISABLE KEYS */;
-INSERT INTO `depositos` VALUES (1,1,4,1,11,'Calzada del Hueso','100.00','2022-04-11',NULL,NULL,NULL,NULL,'2022-04-11 00:00:00'),(2,6,4,1,11,'Autopista México-Puebla','80.50','2022-04-11',NULL,NULL,NULL,NULL,'2022-04-11 00:42:49'),(3,6,4,2,11,'Calzada del Hueso','48.40','2022-04-10',NULL,NULL,NULL,NULL,'2022-04-11 00:52:38'),(4,1,4,1,11,'ECATEPEC','100.00','2022-04-11',NULL,NULL,NULL,NULL,'2022-04-11 01:49:34');
+INSERT INTO `depositos` VALUES (1,1,4,1,11,'Calzada del Hueso','100.00','2022-04-11',NULL,NULL,NULL,NULL,'2022-04-11 00:00:00'),(2,6,4,1,11,'Autopista México-Puebla','80.50','2022-04-11',NULL,NULL,NULL,NULL,'2022-04-11 00:42:49'),(3,6,4,2,11,'Calzada del Hueso','48.40','2022-04-10',NULL,NULL,NULL,NULL,'2022-04-11 00:52:38'),(4,1,4,1,11,'ECATEPEC','100.00','2022-04-11',NULL,NULL,NULL,NULL,'2022-04-11 01:49:34'),(5,12,4,2,11,'','85.00','2022-04-01',NULL,NULL,NULL,NULL,'2022-04-12 13:15:22');
 /*!40000 ALTER TABLE `depositos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -334,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-11  1:56:28
+-- Dump completed on 2022-04-13 11:56:10

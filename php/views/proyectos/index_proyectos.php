@@ -29,8 +29,15 @@
 
                     <div class="row">
                         <div class="row" id="simple-dragula" data-plugin="dragula">
-
-                            <?php foreach ($getAllProyects as $proyectos) {
+                            
+                            <?php
+                            if ($id_area<=3) {
+                                $ForeachProyectos = $getAllProyects;
+                            }
+                            else if ($id_area>=4) {
+                                $ForeachProyectos = $getAllProyectsByUser;
+                            }
+                            foreach ($ForeachProyectos as $proyectos) {
                                 $class_status = "bg-primary text-white";
                                 $status_proy = $proyectos->status;
                                 if ($status_proy==0) {

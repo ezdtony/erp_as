@@ -7,8 +7,10 @@ session_destroy();
 <html lang="en">
 
 <head>
+
+
     <meta charset="utf-8" />
-    <title>Iniciar Sesión | S.I.C. ASTELECOM</title>
+    <title>Iniciar Sesión | ERP ASTELECOM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- App favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">

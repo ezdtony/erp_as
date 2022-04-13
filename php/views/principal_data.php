@@ -59,6 +59,35 @@ if (!isset($_SESSION['user'])) {
     ";
     $getAllProyects = $queries->getData($todos_proyectos);
 
+    $id_user_proy = $_SESSION['id_user'];
+    $todos_proyectos_usuario = "SELECT 
+    proy.id_proyectos,
+    proy.`codigo_proyecto`,
+    proy.`nombre_proyecto`,
+    proy.`descripcion`,
+    proy.`fecha_inicio`,
+    proy.`status`,
+    reg.nombre_region,
+    CONCAT(
+        direc.direccion_calle, ', ',
+        direc.direccion_numero_ext, ', ',
+        direc.direccion_colonia, ', ',
+        direc.direccion_zipcode, '. '
+    ) AS direccion_local,
+    CONCAT (
+        direc.direccion_municipio, ', ',
+        direc.direccion_estado, ', ',
+        'Méx.'
+    ) AS direccion_zona,
+    direc.*
+    FROM asteleco_proyectos.`proyectos`AS proy
+    INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
+    INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
+    INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_proyectos = proy.id_proyectos
+    WHERE  proy.show_proyect = 1 AND asig.id_lista_personal = '$id_user_proy'
+    ";
+    $getAllProyectsByUser = $queries->getData($todos_proyectos_usuario);
+
     $sql_lista_personal = "SELECT ar.id_areas, ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
     FROM asteleco_personal.lista_personal AS usr INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas";
 

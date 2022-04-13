@@ -62,4 +62,77 @@ class Viatics
 
         return ($getUserArchives);
     }
+
+    public function getProyectSpend($id_proyect)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_user_archives = "SELECT * FROM asteleco_viaticos_old.registros_principal 
+        WHERE proyecto = '$id_proyect' ";
+        $getUserArchives = $queries->getData($sql_user_archives);
+
+        return ($getUserArchives);
+    }
+
+    public function getProyectsExpenses($proyecto,$fecha_1, $fecha_2)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_proyects_expenses = "SELECT DISTINCT *
+         FROM asteleco_viaticos_old.registros_principal AS gas
+         WHERE gas.proyecto = '$proyecto' AND gas.fecha BETWEEN '$fecha_1' AND '$fecha_2' ORDER BY id_reg DESC";
+         //
+        $getProyectsExpenses = $queries->getData($sql_proyects_expenses);
+
+        return ($getProyectsExpenses);
+    }
+
+    public function getProyectsExpensesByType($tipo,$fecha_1, $fecha_2)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_proyects_expenses = "SELECT DISTINCT *
+         FROM asteleco_viaticos_old.registros_principal AS gas
+         WHERE gas.tgasto = '$tipo' AND gas.fecha BETWEEN '$fecha_1' AND '$fecha_2' ORDER BY id_reg DESC";
+         //
+        $getProyectsExpenses = $queries->getData($sql_proyects_expenses);
+
+        return ($getProyectsExpenses);
+    }
+
+    public function getProyectsSpends($proyecto, $fecha_1, $fecha_2)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_proyects_spends = "SELECT *
+         FROM asteleco_viaticos_old.depositos AS dep
+         WHERE dep.proyecto = '$proyecto' AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2' ORDER BY id_deposito DESC";
+         //  AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2'";
+        $getProyectsSpends = $queries->getData($sql_proyects_spends);
+
+        return ($getProyectsSpends);
+    }
+
+    public function getExpensesTypes()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_proyects_spends = "SELECT *
+         FROM asteleco_viaticos_old.tipos_gasto WHERE status = '1' ORDER BY tipo ASC ";
+         //  AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2'";
+        $getProyectsSpends = $queries->getData($sql_proyects_spends);
+
+        return ($getProyectsSpends);
+    }
+
+    public function getProyectsUp()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_proyects = "SELECT * 
+         FROM asteleco_viaticos_old.proyectos";
+        $getProyects = $queries->getData($sql_proyects);
+
+        return ($getProyects);
+    }
 }
