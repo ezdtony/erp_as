@@ -53,6 +53,59 @@ $(document).ready(function () {
       });
   });
 
+  $(document).on("change", "#edit_destinatario", function () {
+    var id_user = this.value;
+    $("#proyecto").empty();
+    $.ajax({
+      url: "php/controllers/personal/personal_controller.php",
+      method: "POST",
+      data: {
+        mod: "getUserProyects",
+        id_user: id_user,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          $("#edit_proyecto").empty();
+          $("#edit_proyecto").append(
+            '<option value"" disabled selected>Elija una opción</option><optgroup label="Proyecto">'
+          );
+          for (var i = 0; i < data.data.length; i++) {
+            $("#edit_proyecto").append(
+              '<option value="' +
+                data.data[i].id_proyectos +
+                '">' +
+                data.data[i].nombre_proyecto +
+                "</option>"
+            );
+          }
+          $("#edit_proyecto").append("</optgroup>");
+          $("#edit_proyecto").prop("disabled", false);
+        } else {
+          $("#edit_proyecto").prop("disabled", true);
+          Swal.fire({
+            icon: "error",
+            title: "Al parecer este usuario no tiene proyectos asignados",
+          });
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      });
+  });
+
   $(document).on("click", "#guardar_deposito", function () {
     var id_user = $("#destinatario").val();
     var fecha = $("#fecha_deposito").val();
@@ -220,6 +273,12 @@ $(document).ready(function () {
       .fail(function (message) {});
   });
 
+  $("#edit_destinatario").select2({
+    dropdownParent: $("#editarDeposito"),
+  });
+  $("#edit_proyecto").select2({
+    dropdownParent: $("#editarDeposito"),
+  });
   $("#destinatario").select2({
     dropdownParent: $("#depositarViatico"),
   });

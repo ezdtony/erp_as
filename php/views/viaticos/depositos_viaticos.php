@@ -58,8 +58,8 @@
                                 <td><?= $deposits->nombre_proyecto ?></td>
                                 <td><?= $deposits->author ?></td>
                                 <td class="table-action">
-                                    <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                    <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                    <a id="<?=$deposits->id_depositos?>" class="action-icon" data-id-destinatario="<?=$deposits->nombre_completo?>" data-bs-toggle="modal" data-bs-target="#editarDeposito"> <i class="mdi mdi-pencil editDeposit"></i></a>
+                                    <a id="<?=$deposits->id_depositos?>" class="action-icon"> <i class="mdi mdi-delete deleteDeposit"></i></a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -76,6 +76,7 @@
 <!-- end row -->
 <?php
 include_once('php/views/viaticos/modals/depositarViatico.php');
+include_once('php/views/viaticos/modals/editarDeposito.php');
 
 ?>
 <script src="js/functions/viaticos/viaticos.js"></script>
