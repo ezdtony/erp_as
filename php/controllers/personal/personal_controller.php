@@ -174,7 +174,16 @@ function saveNewUser()
 
             $insert_personal_request = $queries->insertData($insert_personal);
             if (!empty($insert_personal_request)) {
-
+                $create_saldo = "INSERT INTO asteleco_viaticos.saldos (
+                    id_saldoS,
+                    id_personal,
+                    saldo
+                    ) VALUES (
+                    NULL,
+                    '$insert_personal_request[last_id]',
+                    '0'
+                    )";
+                $insert_saldo = $queries->insertData($create_saldo);
                 $get_archives_catalog = "SELECT * FROM asteleco_personal.catalogo_archivos";
                 $request_archives_catalog = $queries->getData($get_archives_catalog);
                 foreach ($request_archives_catalog as $archive) {

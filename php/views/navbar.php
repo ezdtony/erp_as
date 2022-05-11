@@ -88,7 +88,7 @@
                             <div class="collapse" id="sidebarThirdLevel">
                                 <ul class="side-nav-third-level">
                                     <li>
-                                        <a href="?submodule=registrar_gasto">Registrar gasto</a>
+                                        <a href="?submodule=gastos_usuario">Gastos</a>
                                     </li>
                                     <li>
                                         <a href="#">Mis folios</a>

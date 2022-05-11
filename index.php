@@ -55,8 +55,8 @@ include_once('php/views/topbar.php');
     if (isset($_GET['submodule'])) {
         $submodule = $_GET['submodule'];
         switch ($submodule) {
-            case 'registrar_gasto':
-                $include_file = 'php/views/viaticos/registrar_gasto.php';
+            case 'gastos_usuario':
+                $include_file = 'php/views/viaticos/gastos_usuario.php';
                 break;
             case 'proyectos':
                 $include_file = 'php/views/proyectos/index_proyectos.php';

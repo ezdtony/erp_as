@@ -58,8 +58,8 @@
                                 <td><?= $deposits->nombre_proyecto ?></td>
                                 <td><?= $deposits->author ?></td>
                                 <td class="table-action">
-                                    <a id="<?=$deposits->id_depositos?>" class="action-icon" data-id-destinatario="<?=$deposits->nombre_completo?>" data-bs-toggle="modal" data-bs-target="#editarDeposito"> <i class="mdi mdi-pencil editDeposit"></i></a>
-                                    <a id="<?=$deposits->id_depositos?>" class="action-icon"> <i class="mdi mdi-delete deleteDeposit"></i></a>
+                                    <a id="<?=$deposits->id_depositos?>" class="action-icon btnEditDeposits" data-id-destinatario="<?=$deposits->nombre_completo?>" data-bs-toggle="modal" data-bs-target="#editarDeposito"> <i class="mdi mdi-pencil editDeposit"></i></a>
+                                    <a id="<?=$deposits->id_depositos?>" class="action-icon deleteDeposit"> <i class="mdi mdi-delete "></i></a>
                                 </td>
                             </tr>
                         <?php } ?>
