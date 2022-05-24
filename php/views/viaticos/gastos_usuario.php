@@ -86,8 +86,8 @@
                                 <?php endif; ?>
                                 <?php endif; ?>
                                 <td class="table-action">
-                                    <a id="<?= $deposits->id_gastos ?>" class="action-icon btnEditDeposits" data-id-destinatario="<?= $deposits->nombre_completo ?>" data-bs-toggle="modal" data-bs-target="#editarDeposito"> <i class="mdi mdi-pencil editDeposit"></i></a>
-                                    <a id="<?= $deposits->id_gastos ?>" class="action-icon deleteDeposit"> <i class="mdi mdi-delete "></i></a>
+                                    <a id="<?= $deposits->id_gastos ?>" class="action-icon btnEditDeposits" data-bs-toggle="modal" data-bs-target="#editarGasto"> <i class="mdi mdi-pencil editGasto"></i></a>
+                                    <a id="<?= $deposits->id_gastos ?>" class="action-icon deleteGasto"> <i class="mdi mdi-delete "></i></a>
                                 </td>
                             </tr>
                         <?php } ?>
@@ -105,6 +105,7 @@
 <?php
 include_once('php/views/viaticos/modals/addFactura.php');
 include_once('php/views/viaticos/modals/registrarGasto.php');
+include_once('php/views/viaticos/modals/editarGasto.php');
 
 ?>
 <script src="js/functions/viaticos/viaticos.js"></script>

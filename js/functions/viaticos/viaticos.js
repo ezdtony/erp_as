@@ -422,6 +422,13 @@ $(document).ready(function () {
     }
   });
 
+  $(document).on("click", ".btnEditDeposits", function () {
+    var id_gasto = $(this).attr("id");
+    $("#id_gasto_editar").val(id_gasto);
+    $("#lbl_folio_editar").text("");
+    $("#lbl_folio_editar").text("Está editando el folio: #" + id_gasto);
+  });
+
   $("input[type=radio][name=clasificacion_gasto]").change(function () {
     if (this.value == "1") {
       $("#div-deducibles").show();
@@ -526,44 +533,184 @@ $(document).ready(function () {
         text: "Verifica que todos los campos esten llenos",
       });
     }
+  });
+  $(document).on("click", "#guardar_gasto_editar", function () {
+    var fecha_compra = $("#fecha_compra_editar").val();
+    var id_asignacion = $("#proyecto_gasto_editar option:selected").val();
+    var id_proyecto = $("#proyecto_gasto_editar")
+      .find("option:selected")
+      .attr("id");
+    var id_author = $("#id_autor_editar").val();
+    var sitio_gasto = $("#sitio_gasto_editar").val();
+    var tipos_gasto = $("#tipos_gasto_gasto_editar").val();
+    var importe_gasto = $("#importe_gasto_editar").val();
+    var id_gasto = $("#id_gasto_editar").val();
 
-    /* $.ajax({
-      url: "php/controllers/proyectos/proyects_controller.php",
+    /*  console.log("fecha_compra: " + fecha_compra);
+    console.log("id_asignacion: " + id_asignacion);
+    console.log("id_proyecto: " + id_proyecto);
+    console.log("id_author: " + id_author);
+    console.log("sitio_gasto: " + sitio_gasto);
+    console.log("tipos_gasto: " + tipos_gasto);
+    console.log("importe_gasto: " + importe_gasto);
+    console.log("img_payment: " + img_payment.files.length); */
+    if (
+      fecha_compra != "" &&
+      id_asignacion != "" &&
+      id_proyecto != "" &&
+      id_author != "" &&
+      sitio_gasto != "" &&
+      tipos_gasto != "" &&
+      importe_gasto != ""
+    ) {
+      $.ajax({
+        url: "php/controllers/viaticos/viaticos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateSpent",
+          fecha_compra: fecha_compra,
+          id_asignacion: id_asignacion,
+          id_proyecto: id_proyecto,
+          id_author: id_author,
+          sitio_gasto: sitio_gasto,
+          tipos_gasto: tipos_gasto,
+          importe_gasto: importe_gasto,
+          id_gasto: id_gasto,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+
+          if (data.response == true) {
+            Swal.fire({
+              icon: "success",
+              title: "Éxito",
+              text: "Gasto editado correctamente",
+              timer: 2000,
+            }).then(function () {
+              location.reload();
+            });
+          } else {
+          }
+
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {});
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Verifica que todos los campos esten llenos",
+      });
+    }
+  });
+  $(document).on("click", ".check_ap_contabilidad", function () {
+    var id_gasto = $(this).attr("id-gasto");
+    var column_name = "ap_contabilidad";
+    if (this.checked) {
+      var status = 1;
+    } else {
+      var status = 0;
+    }
+
+    $.ajax({
+      url: "php/controllers/viaticos/viaticos_controller.php",
       method: "POST",
       data: {
-        mod: "unassignPersonal",
-        id_asingacion: id_asingacion,
+        mod: "approveSpent",
+        id_gasto: id_gasto,
+        status: status,
+        column_name: column_name,
       },
     })
       .done(function (data) {
         var data = JSON.parse(data);
         console.log(data);
-
+        var id_status_type = data.id_status_type;
         if (data.response == true) {
-          $("#li_" + id_asingacion).remove();
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", Swal.stopTimer);
-              toast.addEventListener("mouseleave", Swal.resumeTimer);
-            },
-          });
-
-          Toast.fire({
-            icon: "info",
-            title: "Se realizó la petición con éxito!!",
-          });
+          $.NotificationApp.send(
+            "Éxito",
+            "Se actualizó la propiedad del gasto",
+            "top-right",
+            "#ffffff",
+            "info"
+          );
+          console.log(id_status_type);
+          $("#status_gasto" + id_gasto)
+            .val(id_status_type)
+            .prop("selected", true);
+          $("#txt_status_gasto" + id_gasto).empty();
+          var html_txt_status =
+            '<i class="mdi mdi-circle text-' +
+            data.clase_css +
+            '"></i><p id="txt_status' +
+            id_gasto +
+            '">' +
+            data.txt_status +
+            "</p>";
+          $("#txt_status_gasto" + id_gasto).append(html_txt_status);
         } else {
         }
 
         //--- --- ---//
         //--- --- ---//
       })
-      .fail(function (message) {}); */
+      .fail(function (message) {});
+  });
+  $(document).on("click", ".check_ap_coordinacion", function () {
+    var id_gasto = $(this).attr("id-gasto");
+    var column_name = "ap_coordinacion";
+    if (this.checked) {
+      var status = 1;
+    } else {
+      var status = 0;
+    }
+
+    $.ajax({
+      url: "php/controllers/viaticos/viaticos_controller.php",
+      method: "POST",
+      data: {
+        mod: "approveSpent",
+        id_gasto: id_gasto,
+        status: status,
+        column_name: column_name,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+        var id_status_type = data.id_status_type;
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Éxito",
+            "Se actualizó la propiedad del gasto",
+            "top-right",
+            "#ffffff",
+            "info"
+          );
+          console.log(id_status_type);
+          $("#status_gasto" + id_gasto)
+            .val(id_status_type)
+            .prop("selected", true);
+          $("#txt_status_gasto" + id_gasto).empty();
+          var html_txt_status =
+            '<i class="mdi mdi-circle text-' +
+            data.clase_css +
+            '"></i><p id="txt_status' +
+            id_gasto +
+            '">' +
+            data.txt_status +
+            "</p>";
+          $("#txt_status_gasto" + id_gasto).append(html_txt_status);
+        } else {
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {});
   });
 
   $(document).on("click", ".save_credit", function () {
@@ -652,6 +799,111 @@ $(document).ready(function () {
     console.log(codigo_proyecto);
     $("#input_id_gastos").val(id_gastos);
   });
+  $(document).on("click", ".deleteGasto", function () {
+    var id_gasto = $(this).attr("id");
+
+    if (id_gasto == null) {
+      Swal.fire({
+        icon: "info",
+        title: "Atención",
+        text: "Ocurrió un error al intentar eliminar el registro",
+      });
+    } else {
+      loading();
+      $.ajax({
+        url: "php/controllers/viaticos/viaticos_controller.php",
+        method: "POST",
+        data: {
+          mod: "deleteGasto",
+          id_gasto: id_gasto,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+          if (data.response == true) {
+            Swal.fire({
+              icon: "success",
+              title: "Éxito",
+              text: data.message,
+              timer: 2000,
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: data.message,
+              timer: 2000,
+            });
+          }
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    }
+  });
+
+  
+  $(document).on("change", ".select_status_gasto", function () {
+    var id_gasto = $(this).attr("id-gasto");
+
+    var column_name = "id_status_type";
+    var status = $(this).val();
+    console.log(status);
+   
+
+    $.ajax({
+      url: "php/controllers/viaticos/viaticos_controller.php",
+      method: "POST",
+      data: {
+        mod: "changeSpentStatus",
+        id_gasto: id_gasto,
+        status: status,
+        column_name: column_name,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+        var id_status_type = data.id_status_type;
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Éxito",
+            "Se actualizó la propiedad del gasto",
+            "top-right",
+            "#ffffff",
+            "info"
+          );
+          console.log(id_status_type);
+          $("#status_gasto" + id_gasto)
+            .val(id_status_type)
+            .prop("selected", true);
+          $("#txt_status_gasto" + id_gasto).empty();
+          var html_txt_status =
+            '<i class="mdi mdi-circle text-' +
+            data.clase_css +
+            '"></i><p id="txt_status' +
+            id_gasto +
+            '">' +
+            data.txt_status +
+            "</p>";
+          $("#txt_status_gasto" + id_gasto).append(html_txt_status);
+        } else {
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {});
+  });
 
   function saveTicketDocument(last_id) {
     const img_payment = document.querySelector("#fotografia_ticket_gasto");
@@ -711,9 +963,10 @@ $(document).ready(function () {
         });
     }
   }
-  function saveLateFacturaDocument(last_id,proyect) {
+  function saveLateFacturaDocument(last_id, proyect) {
     const factura = document.querySelector("#factura_late");
     const user_name = $("#user_name_gasto").val();
+    const folio_fiscal_late = $("#folio_fiscal_late").val();
     const proyecto = proyect;
     if (factura.files.length > 0) {
       let formData = new FormData();
@@ -721,8 +974,9 @@ $(document).ready(function () {
       formData.append("user_name", user_name);
       formData.append("last_id", last_id);
       formData.append("proyecto", proyecto);
+      formData.append("folio_fiscal_late", folio_fiscal_late);
 
-      fetch("php/controllers/viaticos/saveFacturaDocument.php", {
+      fetch("php/controllers/viaticos/saveLateFactura.php", {
         method: "POST",
         body: formData,
       })
@@ -734,11 +988,10 @@ $(document).ready(function () {
             title: "¡Archivo guardado!",
             text: "Se  cargó la factura correctamente!!!",
             icon: "success",
-            timer: 1500,  
+            timer: 1500,
           }).then((result) => {
             location.reload();
-
-          })
+          });
         });
     }
   }
@@ -940,6 +1193,12 @@ $(document).ready(function () {
   });
   $("#tipos_gasto_gasto").select2({
     dropdownParent: $("#registrarGasto"),
+  });
+  $("#proyecto_gasto_editar").select2({
+    dropdownParent: $("#editarGasto"),
+  });
+  $("#tipos_gasto_gasto_editar").select2({
+    dropdownParent: $("#editarGasto"),
   });
 });
 

@@ -13,7 +13,7 @@
                     <div class="form-floating mb-3">
                         <input type="hidden" id="input_id_gastos">
                         <input type="hidden" id="input_codigo_proyecto">
-                        <input type="text" class="form-control" id="folio_fiscal" placeholder="Folio fiscal" />
+                        <input type="text" class="form-control" id="folio_fiscal_late" placeholder="Folio fiscal" />
                         <label for="sitio">Folio fiscal</label>
                     </div>
                     <div class="col-sm-12">

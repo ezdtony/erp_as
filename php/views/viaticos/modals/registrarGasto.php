@@ -101,7 +101,7 @@
                 <br>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" id="guardar_gasto" disabled class="btn btn-success">Registrar depósito</button>
+                    <button type="button" id="guardar_gasto" disabled class="btn btn-success">Registrar gasto</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

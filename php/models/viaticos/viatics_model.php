@@ -34,7 +34,23 @@ class ViaticsInformation
 
         return ($getSaldo);
     }
+    public function getAllGastos()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.id_status_type, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, 
+        rut.ruta_archivo AS ruta_img, CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS usuario_gasto
+        FROM asteleco_viaticos.gastos AS gas
+        INNER JOIN asteleco_personal.lista_personal AS pers ON pers.id_lista_personal = gas.id_personal
+        INNER JOIN asteleco_viaticos.status_type AS stat ON stat.id_status_type = gas.id_status_type
+        INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = gas.id_asignaciones_proyectos
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
+        INNER JOIN asteleco_viaticos.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf";
+        $getSaldo = $queries->getData($sql_saldo);
 
+        return ($getSaldo);
+    }
     public function getGastosByUser($id_user)
     {
         include_once('php/models/petitions.php');
@@ -86,5 +102,13 @@ class ViaticsInformation
 
         return ($getSaldo);
     }
-  
+    public function getStatusTypes()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_saldo = "SELECT * FROM asteleco_viaticos.status_type";
+        $getSaldo = $queries->getData($sql_saldo);
+
+        return ($getSaldo);
+    }
 }

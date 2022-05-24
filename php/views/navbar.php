@@ -66,7 +66,7 @@
                                             <a href="?submodule=depositos_viaticos">Depósitos</a>
                                         </li>
                                         <li>
-                                            <a href="#">Todos los folios</a>
+                                            <a href="?submodule=gastos">Todos los gastos</a>
                                         </li>
 
                                         <li>
@@ -90,15 +90,9 @@
                                     <li>
                                         <a href="?submodule=gastos_usuario">Gastos</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Mis folios</a>
-                                    </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="#">Mis depósitos</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Mis gastos</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </li>
@@ -106,7 +100,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="side-nav-item">
+           <!--  <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
                     <i class="uil-keyhole-circle"></i>
                     <span> Accesos </span>
@@ -206,7 +200,7 @@
                     <i class="uil-chart-line"></i>
                     <span> Gráficas </span>
                 </a>
-            </li>
+            </li> -->
 
             <!--             <?php if ($id_area <= 3) { ?>
                 <li class="side-nav-item">
@@ -218,13 +212,14 @@
             <?php } ?> -->
 
 
-
+            <?php if ($id_area <= 3) { ?>
             <li class="side-nav-item">
                 <a href="?submodule=reportes" class="side-nav-link">
                     <i class=" uil-file-medical-alt"></i>
                     <span> Reportes </span>
                 </a>
             </li>
+            <?php } ?>
         </ul>
 
         <!-- Help Box -->

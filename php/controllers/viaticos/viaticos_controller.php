@@ -197,10 +197,55 @@ function deleteDeposit()
 
     echo json_encode($data);
 }
+function deleteGasto()
+{
+    $id_gastos = $_POST['id_gasto'];
 
+    $queries = new Queries;
+
+    $getOgImport = "SELECT importe, id_personal FROM asteleco_viaticos.gastos WHERE id_gastos = $id_gastos";
+    $getInfoRequest = $queries->getData($getOgImport);
+    $og_import = $getInfoRequest[0]->importe;
+    $id_user_og = $getInfoRequest[0]->id_personal;
+
+    $returnBalance = "UPDATE  asteleco_viaticos.saldos SET saldo = saldo + $og_import WHERE id_personal = $id_user_og";
+    $updateBalance = $queries->insertData($returnBalance);
+
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($updateBalance)) {
+
+        $sql_insertar_deposito = "DELETE FROM asteleco_viaticos.gastos WHERE id_gastos = $id_gastos";
+        //--- --- ---//
+        $insertar_deposito = $queries->insertData($sql_insertar_deposito);
+        if (!empty($insertar_deposito)) {
+            $data = array(
+                'response' => true,
+                'message'                => 'El gasto se eliminó correctamente!!'
+            );
+            //--- --- ---//
+
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false,
+                'message'                => 'Error al borrar el gasto :('
+            );
+            //--- --- ---//
+        }
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al actualizar el saldo del destinatario :('
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
 function saveSpent()
 {
-    $arr_fecha_compra = explode("/",$_POST['fecha_compra']);
+    $arr_fecha_compra = explode("/", $_POST['fecha_compra']);
     $fecha_compra = $arr_fecha_compra[2] . "-" . $arr_fecha_compra[0] . "-" . $arr_fecha_compra[1];
     $id_asignacion = $_POST['id_asignacion'];
     $id_proyecto = $_POST['id_proyecto'];
@@ -243,16 +288,16 @@ function saveSpent()
             NOW()
         )";
         $insertSpent = $queries->insertData($sql_insertar_gasto);
-    
-    
-    
+
+
+
         //$last_id = $getInfoRequest['last_id'];
         if (!empty($insertSpent)) {
             $last_id = $insertSpent['last_id'];
-    
+
             $returnBalance = "UPDATE asteleco_viaticos.saldos SET saldo = saldo - $importe_gasto WHERE id_personal = $id_author";
             $updateBalance = $queries->insertData($returnBalance);
-    
+
             if (!empty($updateBalance)) {
                 $data = array(
                     'response' => true,
@@ -260,7 +305,7 @@ function saveSpent()
                     'id_gasto' => $last_id
                 );
                 //--- --- ---//
-    
+
             } else {
                 //--- --- ---//
                 $data = array(
@@ -277,19 +322,19 @@ function saveSpent()
             );
             //--- --- ---//
         }
-    }else{
+    } else {
         $data = array(
             'response' => false,
             'message'                => 'No tiene saldo suficiente para realizar el gasto :('
         );
     }
-   
+
 
     echo json_encode($data);
 }
 function saveSpentDeduciblePendiente()
 {
-    $arr_fecha_compra = explode("/",$_POST['fecha_compra']);
+    $arr_fecha_compra = explode("/", $_POST['fecha_compra']);
     $fecha_compra = $arr_fecha_compra[2] . "-" . $arr_fecha_compra[0] . "-" . $arr_fecha_compra[1];
     $id_asignacion = $_POST['id_asignacion'];
     $id_proyecto = $_POST['id_proyecto'];
@@ -332,16 +377,16 @@ function saveSpentDeduciblePendiente()
             NOW()
         )";
         $insertSpent = $queries->insertData($sql_insertar_gasto);
-    
-    
-    
+
+
+
         //$last_id = $getInfoRequest['last_id'];
         if (!empty($insertSpent)) {
             $last_id = $insertSpent['last_id'];
-    
+
             $returnBalance = "UPDATE asteleco_viaticos.saldos SET saldo = saldo - $importe_gasto WHERE id_personal = $id_author";
             $updateBalance = $queries->insertData($returnBalance);
-    
+
             if (!empty($updateBalance)) {
                 $data = array(
                     'response' => true,
@@ -349,7 +394,7 @@ function saveSpentDeduciblePendiente()
                     'id_gasto' => $last_id
                 );
                 //--- --- ---//
-    
+
             } else {
                 //--- --- ---//
                 $data = array(
@@ -366,19 +411,19 @@ function saveSpentDeduciblePendiente()
             );
             //--- --- ---//
         }
-    }else{
+    } else {
         $data = array(
             'response' => false,
             'message'                => 'No tiene saldo suficiente para realizar el gasto :('
         );
     }
-   
+
 
     echo json_encode($data);
 }
 function saveSpentDeducible()
 {
-    $arr_fecha_compra = explode("/",$_POST['fecha_compra']);
+    $arr_fecha_compra = explode("/", $_POST['fecha_compra']);
     $fecha_compra = $arr_fecha_compra[2] . "-" . $arr_fecha_compra[0] . "-" . $arr_fecha_compra[1];
     $id_asignacion = $_POST['id_asignacion'];
     $id_proyecto = $_POST['id_proyecto'];
@@ -424,16 +469,16 @@ function saveSpentDeducible()
             NOW()
         )";
         $insertSpent = $queries->insertData($sql_insertar_gasto);
-    
-    
-    
+
+
+
         //$last_id = $getInfoRequest['last_id'];
         if (!empty($insertSpent)) {
             $last_id = $insertSpent['last_id'];
-    
+
             $returnBalance = "UPDATE asteleco_viaticos.saldos SET saldo = saldo - $importe_gasto WHERE id_personal = $id_author";
             $updateBalance = $queries->insertData($returnBalance);
-    
+
             if (!empty($updateBalance)) {
                 $data = array(
                     'response' => true,
@@ -441,7 +486,7 @@ function saveSpentDeducible()
                     'id_gasto' => $last_id
                 );
                 //--- --- ---//
-    
+
             } else {
                 //--- --- ---//
                 $data = array(
@@ -458,13 +503,218 @@ function saveSpentDeducible()
             );
             //--- --- ---//
         }
-    }else{
+    } else {
         $data = array(
             'response' => false,
             'message'                => 'No tiene saldo suficiente para realizar el gasto :('
         );
     }
-   
+
+
+    echo json_encode($data);
+}
+function updateSpent()
+{
+    $arr_fecha_compra = explode("/", $_POST['fecha_compra']);
+    $fecha_compra = $arr_fecha_compra[2] . "-" . $arr_fecha_compra[0] . "-" . $arr_fecha_compra[1];
+    $id_asignacion = $_POST['id_asignacion'];
+
+    $id_gasto = $_POST['id_gasto'];
+
+    $id_author = $_POST['id_author'];
+    $sitio_gasto = $_POST['sitio_gasto'];
+    $tipos_gasto = $_POST['tipos_gasto'];
+    $importe_gasto = $_POST['importe_gasto'];
+
+    $queries = new Queries;
+
+    $sql_get_importe_og = "SELECT importe FROM asteleco_viaticos.gastos WHERE id_gastos = $id_gasto";
+    $get_importe_og = $queries->getData($sql_get_importe_og);
+    $importe_og = $get_importe_og[0]->importe;
+
+    $sql_update_saldo = "UPDATE asteleco_viaticos.saldos SET saldo = saldo + '$importe_og' WHERE id_personal = $id_author";
+    $update_saldo = $queries->insertData($sql_update_saldo);
+
+    if (!empty($update_saldo)) {
+        $sql_update_gasto = "UPDATE asteleco_viaticos.gastos
+            SET 
+            id_asignaciones_proyectos = '$id_asignacion',
+            id_tipos_gasto = '$tipos_gasto',
+            id_personal = '$id_author',
+            importe = '$importe_gasto',
+            fecha_registro = '$fecha_compra',
+            localidad = '$sitio_gasto',
+            log_date = NOW()
+            WHERE id_gastos = $id_gasto";
+        $insertSpent = $queries->insertData($sql_update_gasto);
+
+
+
+        //$last_id = $getInfoRequest['last_id'];
+        if (!empty($insertSpent)) {
+
+
+            $returnBalance = "UPDATE asteleco_viaticos.saldos SET saldo = saldo - $importe_gasto WHERE id_personal = $id_author";
+            $updateBalance = $queries->insertData($returnBalance);
+
+            if (!empty($updateBalance)) {
+                $data = array(
+                    'response' => true,
+                    'message'                => 'Se actualizó el gasto!!'
+                );
+                //--- --- ---//
+
+            } else {
+                //--- --- ---//
+                $data = array(
+                    'response' => false,
+                    'message'                => 'Error al registrar el gasto :('
+                );
+                //--- --- ---//
+            }
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false,
+                'message'                => 'Error al actualizar el saldo del destinatario :('
+            );
+            //--- --- ---//
+        }
+    } else {
+        $data = array(
+            'response' => false,
+            'message'                => 'No tiene saldo suficiente para realizar el gasto :('
+        );
+    }
+
+
+    echo json_encode($data);
+}
+
+function approveSpent()
+{
+
+
+    $id_gasto = $_POST['id_gasto'];
+    $status = $_POST['status'];
+    $column_name = $_POST['column_name'];
+
+    $queries = new Queries;
+    
+    
+    $sql_update_gasto = "UPDATE asteleco_viaticos.gastos SET $column_name =  '$status' WHERE id_gastos = $id_gasto";
+    $update_saldo = $queries->insertData($sql_update_gasto);
+
+    $sql_get_spent_info = "SELECT * FROM asteleco_viaticos.gastos WHERE id_gastos = $id_gasto";
+    $get_spent_info = $queries->getData($sql_get_spent_info);
+    if (!empty($get_spent_info)) {
+        $ap_coordinacion = $get_spent_info[0]->ap_coordinacion;
+        $ap_contabilidad = $get_spent_info[0]->ap_contabilidad;
+
+        if ($ap_coordinacion == 1 && $ap_contabilidad == 1) {
+            $status_gral = 4;
+        }else if($ap_coordinacion == 1 && $ap_contabilidad == 0){
+            $status_gral = 2;
+
+        } else if($ap_coordinacion == 0 && $ap_contabilidad == 1){
+            $status_gral = 3;
+
+        } else if($ap_coordinacion == 0 && $ap_contabilidad == 0){
+            $status_gral = 1;
+        }
+    }
+
+    $sql_update_gasto_gral = "UPDATE asteleco_viaticos.gastos SET id_status_type =  '$status_gral' WHERE id_gastos = $id_gasto";
+    $update_saldo_gral = $queries->insertData($sql_update_gasto_gral);
+    if (!empty($update_saldo_gral)) {
+        $sql_get_spent_info = "SELECT gas.id_status_type, stt.descripcion AS txt_status, stt.clase_css
+        FROM asteleco_viaticos.gastos AS gas
+        INNER JOIN asteleco_viaticos.status_type stt ON stt.id_status_type = gas.id_status_type
+        WHERE id_gastos = $id_gasto";
+    $get_spent_info = $queries->getData($sql_get_spent_info);
+    if (!empty($get_spent_info)) {
+        $id_status_type = $get_spent_info[0]->id_status_type;
+        $txt_status = $get_spent_info[0]->txt_status;
+        $clase_css = $get_spent_info[0]->clase_css;
+    }else{
+        $id_status_type = 0;
+    }
+
+    }
+
+    if (!empty($update_saldo)) {
+        $data = array(
+            'response' => true,
+            'message'                => 'Petición realizada con éxito!!',
+            'id_status_type' => $id_status_type,
+            'txt_status' => $txt_status,
+            'clase_css' => $clase_css
+        );
+    } else {
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al registrar el gasto :(',
+            'id_status_type' => $id_status_type
+        );
+    }
+
+
+    echo json_encode($data);
+}
+function changeSpentStatus()
+{
+
+
+    $id_gasto = $_POST['id_gasto'];
+    $status = $_POST['status'];
+    $column_name = $_POST['column_name'];
+
+    $queries = new Queries;
+    
+    
+    $sql_update_gasto = "UPDATE asteleco_viaticos.gastos SET $column_name =  '$status' WHERE id_gastos = $id_gasto";
+    $update_saldo = $queries->insertData($sql_update_gasto);
+
+    $sql_get_spent_info = "SELECT * FROM asteleco_viaticos.gastos WHERE id_gastos = $id_gasto";
+    $get_spent_info = $queries->getData($sql_get_spent_info);
+    if (!empty($get_spent_info)) {
+        $status_gral = $get_spent_info[0]->id_status_type;
+    }
+
+    $sql_update_gasto_gral = "UPDATE asteleco_viaticos.gastos SET id_status_type =  '$status_gral' WHERE id_gastos = $id_gasto";
+    $update_saldo_gral = $queries->insertData($sql_update_gasto_gral);
+    if (!empty($update_saldo_gral)) {
+        $sql_get_spent_info = "SELECT gas.id_status_type, stt.descripcion AS txt_status, stt.clase_css
+        FROM asteleco_viaticos.gastos AS gas
+        INNER JOIN asteleco_viaticos.status_type stt ON stt.id_status_type = gas.id_status_type
+        WHERE id_gastos = $id_gasto";
+    $get_spent_info = $queries->getData($sql_get_spent_info);
+    if (!empty($get_spent_info)) {
+        $id_status_type = $get_spent_info[0]->id_status_type;
+        $txt_status = $get_spent_info[0]->txt_status;
+        $clase_css = $get_spent_info[0]->clase_css;
+    }else{
+        $id_status_type = 0;
+    }
+
+    }
+
+    if (!empty($update_saldo)) {
+        $data = array(
+            'response' => true,
+            'message'                => 'Petición realizada con éxito!!',
+            'id_status_type' => $id_status_type,
+            'txt_status' => $txt_status,
+            'clase_css' => $clase_css
+        );
+    } else {
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al registrar el gasto :(',
+            'id_status_type' => $id_status_type
+        );
+    }
+
 
     echo json_encode($data);
 }
