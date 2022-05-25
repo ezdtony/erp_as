@@ -88,7 +88,7 @@ CREATE TABLE `centrales` (
 
 LOCK TABLES `centrales` WRITE;
 /*!40000 ALTER TABLE `centrales` DISABLE KEYS */;
-INSERT INTO `centrales` VALUES (1,'Ecatepec','ECA'),(2,'TOLLOCAN','TOL'),(3,'XOCHIMILCO','XOCH');
+INSERT INTO `centrales` VALUES (1,'ECATEPEC','ECA'),(2,'TOLLOCAN','TOL'),(3,'XOCHIMILCO','XOCH');
 /*!40000 ALTER TABLE `centrales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,8 +172,10 @@ CREATE TABLE `direcciones_accesos` (
   `direccion_estado` varchar(45) DEFAULT NULL,
   `direccion_zipcode` varchar(45) DEFAULT NULL,
   `direccion_referencias` varchar(450) DEFAULT NULL,
+  `latitud` varchar(100) DEFAULT NULL,
+  `longitud` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_direcciones_accesos`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +184,7 @@ CREATE TABLE `direcciones_accesos` (
 
 LOCK TABLES `direcciones_accesos` WRITE;
 /*!40000 ALTER TABLE `direcciones_accesos` DISABLE KEYS */;
-INSERT INTO `direcciones_accesos` VALUES (1,'Loma de Chapultepec','','16','Francisco I. Madero','Nicolás Romero','Estado de México','54400',NULL);
+INSERT INTO `direcciones_accesos` VALUES (1,'Loma de Chapultepec','','16','Francisco I. Madero','Nicolás Romero','Estado de México','54400',NULL,NULL,NULL),(2,'Av Principal',NULL,'123','Tierra Blanca','Ecatepec de Morelos','Estado de México','534213','','',''),(3,'Av Principal',NULL,'123','Tierra Blanca','Ecatepec de Morelos','Estado de México','534213','','',''),(4,'Av Principal',NULL,'123','Tierra Blanca','Ecatepec de Morelos','Estado de México','534213','A 100mts. de la central de autobuses','',''),(5,'Benito Juarez',NULL,'522','Centro','Ecatepec de Morelos','Estado de México','53000','En la plaza Cívica','19.5931177305752','-99.01901907108459'),(6,'Benito Juarez',NULL,'522','Centro','Ecatepec de Morelos','Estado de México','53000','En la plaza Cívica','19.5931177305752','-99.01901907108459'),(7,'Av El Parque',NULL,'1','Centro','Cuauhtémoc','Ciudad de México','31000','Frente a Frikiplaza','',''),(8,'Av El Parque',NULL,'1','Centro','Cuauhtémoc','Ciudad de México','31000','Frente a Frikiplaza','','');
 /*!40000 ALTER TABLE `direcciones_accesos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +295,7 @@ CREATE TABLE `propietarios` (
   `correo_electronico` varchar(45) DEFAULT NULL,
   `id_direccion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_propietarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +304,7 @@ CREATE TABLE `propietarios` (
 
 LOCK TABLES `propietarios` WRITE;
 /*!40000 ALTER TABLE `propietarios` DISABLE KEYS */;
-INSERT INTO `propietarios` VALUES (1,'PREDEFINIDO','PREDEFINIDO','PREDEFINIDO','0','0','0');
+INSERT INTO `propietarios` VALUES (1,'PREDEFINIDO','PREDEFINIDO','PREDEFINIDO','0','0','0'),(2,'LUIS ANTONIO','GONZALEZ OLVERA','5517267813','','',NULL);
 /*!40000 ALTER TABLE `propietarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,6 +376,7 @@ DROP TABLE IF EXISTS `sitios`;
 CREATE TABLE `sitios` (
   `id_sitios` int(11) NOT NULL AUTO_INCREMENT,
   `id_centrales` int(11) NOT NULL,
+  `id_zonas_central` int(11) DEFAULT NULL,
   `id_direcciones_accesos` int(11) NOT NULL,
   `id_propietarios` int(11) NOT NULL,
   `id_tipo_perimetro` int(11) NOT NULL,
@@ -390,7 +393,8 @@ CREATE TABLE `sitios` (
   `perimetro` int(11) DEFAULT NULL,
   `limpieza` int(11) DEFAULT NULL,
   `comentarios` varchar(450) DEFAULT NULL,
-  `no_sitio_astelecom` int(11) NOT NULL,
+  `no_sitio_astelecom` int(11) DEFAULT NULL,
+  `logdate` datetime DEFAULT NULL,
   PRIMARY KEY (`id_sitios`),
   KEY `fk_sitios_centrales_idx` (`id_centrales`),
   KEY `fk_sitios_direcciones_accesos1_idx` (`id_direcciones_accesos`),
@@ -402,7 +406,7 @@ CREATE TABLE `sitios` (
   CONSTRAINT `fk_sitios_propietarios1` FOREIGN KEY (`id_propietarios`) REFERENCES `propietarios` (`id_propietarios`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_sitios_tipo_perimetro1` FOREIGN KEY (`id_tipo_perimetro`) REFERENCES `tipo_perimetro` (`id_tipo_perimetro`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_sitios_tipos_sitio1` FOREIGN KEY (`id_tipos_sitio`) REFERENCES `tipos_sitio` (`id_tipos_sitio`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,7 +415,7 @@ CREATE TABLE `sitios` (
 
 LOCK TABLES `sitios` WRITE;
 /*!40000 ALTER TABLE `sitios` DISABLE KEYS */;
-INSERT INTO `sitios` VALUES (2,1,1,1,1,1,1,'N/A','MX3506','AMECAMECA','1',NULL,NULL,NULL,NULL,NULL,NULL,'Sitio de prueba',5);
+INSERT INTO `sitios` VALUES (2,1,1,1,1,1,1,1,'N/A','MX3506','AMECAMECA','1',NULL,NULL,NULL,NULL,NULL,NULL,'Sitio de prueba',5,'2022-05-25 13:52:50'),(3,1,2,6,1,1,1,1,NULL,'MX2643','1RO. DE MAYO','2',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,'2022-05-25 14:47:50'),(4,1,2,8,2,1,1,2,NULL,'MX0256','ACOLMAN','3',NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,'2022-05-25 15:50:40');
 /*!40000 ALTER TABLE `sitios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -429,7 +433,7 @@ CREATE TABLE `status_operaciones` (
   `color_html` varchar(45) DEFAULT NULL,
   `clase_css` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_status_operaciones`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -438,6 +442,7 @@ CREATE TABLE `status_operaciones` (
 
 LOCK TABLES `status_operaciones` WRITE;
 /*!40000 ALTER TABLE `status_operaciones` DISABLE KEYS */;
+INSERT INTO `status_operaciones` VALUES (1,'Buen Estado',NULL,NULL,NULL),(2,'Requiere Mantenimiento',NULL,NULL,NULL),(3,'Vandalizado',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `status_operaciones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -641,6 +646,33 @@ LOCK TABLES `vandalismos` WRITE;
 /*!40000 ALTER TABLE `vandalismos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `vandalismos` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `zonas_central`
+--
+
+DROP TABLE IF EXISTS `zonas_central`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `zonas_central` (
+  `id_zonas_central` int(11) NOT NULL AUTO_INCREMENT,
+  `id_centrales` int(11) NOT NULL,
+  `descripcion` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_zonas_central`),
+  KEY `fk_zonas_central_centrales1_idx` (`id_centrales`),
+  CONSTRAINT `fk_zonas_central_centrales1` FOREIGN KEY (`id_centrales`) REFERENCES `centrales` (`id_centrales`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `zonas_central`
+--
+
+LOCK TABLES `zonas_central` WRITE;
+/*!40000 ALTER TABLE `zonas_central` DISABLE KEYS */;
+INSERT INTO `zonas_central` VALUES (1,1,'Malinche'),(2,1,'Ecatepec');
+/*!40000 ALTER TABLE `zonas_central` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -651,4 +683,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-25 11:25:15
+-- Dump completed on 2022-05-25 16:32:13
