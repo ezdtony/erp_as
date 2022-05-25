@@ -63,44 +63,40 @@
                                 <div class="collapse" id="sidebarSecondLevel">
                                     <ul class="side-nav-third-level">
                                         <li>
+                                            <a href="?submodule=saldos">Saldos</a>
+                                        </li>
+                                        <li>
                                             <a href="?submodule=depositos_viaticos">Depósitos</a>
                                         </li>
                                         <li>
                                             <a href="?submodule=gastos">Todos los gastos</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">Buscar folio</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Depositar saldo</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                         <?php endif; ?>
                         <?php if ($id_area >= 4) : ?>
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
-                                <span> Personal de Campo </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarThirdLevel">
-                                <ul class="side-nav-third-level">
-                                    <li>
-                                        <a href="?submodule=gastos_usuario">Gastos</a>
-                                    </li>
-                                    <!-- <li>
+                            <li class="side-nav-item">
+                                <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
+                                    <span> Personal de Campo </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarThirdLevel">
+                                    <ul class="side-nav-third-level">
+                                        <li>
+                                            <a href="?submodule=gastos_usuario">Gastos</a>
+                                        </li>
+                                        <!-- <li>
                                         <a href="#">Mis depósitos</a>
                                     </li> -->
-                                </ul>
-                            </div>
-                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         <?php endif; ?>
                     </ul>
                 </div>
             </li>
-           <!--  <li class="side-nav-item">
+            <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
                     <i class="uil-keyhole-circle"></i>
                     <span> Accesos </span>
@@ -108,6 +104,11 @@
                 </a>
                 <div class="collapse" id="sidebarAccesos">
                     <ul class="side-nav-second-level">
+                        <?php if ($id_area <= 3) : ?>
+                            <li>
+                            <a href="?submodule=sitios">Sitios</a>
+                            </li>
+                        <?php endif; ?>
                         <li>
                             <a href="apps-email-inbox.html">Captura</a>
                         </li>
@@ -123,6 +124,7 @@
                     </ul>
                 </div>
             </li>
+            <!--  
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                     <i class="uil-shopping-trolley"></i>
@@ -213,12 +215,12 @@
 
 
             <?php if ($id_area <= 3) { ?>
-            <li class="side-nav-item">
-                <a href="?submodule=reportes" class="side-nav-link">
-                    <i class=" uil-file-medical-alt"></i>
-                    <span> Reportes </span>
-                </a>
-            </li>
+                <li class="side-nav-item">
+                    <a href="?submodule=reportes" class="side-nav-link">
+                        <i class=" uil-file-medical-alt"></i>
+                        <span> Reportes </span>
+                    </a>
+                </li>
             <?php } ?>
         </ul>
 

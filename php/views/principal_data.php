@@ -101,8 +101,7 @@ if (!isset($_SESSION['user'])) {
 
 
     $viatics_types = "SELECT tg.*
-    FROM asteleco_viaticos.tipos_gasto AS tg
-    WHERE tg.id_clases_gasto = 1";
+    FROM asteleco_viaticos.tipos_gasto AS tg";
     $getViaticsTypes = $queries->getData($viatics_types);
 
 

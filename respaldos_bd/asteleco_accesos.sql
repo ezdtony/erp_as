@@ -79,7 +79,7 @@ CREATE TABLE `centrales` (
   `nombre_central` varchar(45) DEFAULT NULL,
   `short_name_central` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_centrales`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,6 +88,7 @@ CREATE TABLE `centrales` (
 
 LOCK TABLES `centrales` WRITE;
 /*!40000 ALTER TABLE `centrales` DISABLE KEYS */;
+INSERT INTO `centrales` VALUES (1,'Ecatepec','ECA'),(2,'TOLLOCAN','TOL'),(3,'XOCHIMILCO','XOCH');
 /*!40000 ALTER TABLE `centrales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,7 +173,7 @@ CREATE TABLE `direcciones_accesos` (
   `direccion_zipcode` varchar(45) DEFAULT NULL,
   `direccion_referencias` varchar(450) DEFAULT NULL,
   PRIMARY KEY (`id_direcciones_accesos`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +182,7 @@ CREATE TABLE `direcciones_accesos` (
 
 LOCK TABLES `direcciones_accesos` WRITE;
 /*!40000 ALTER TABLE `direcciones_accesos` DISABLE KEYS */;
+INSERT INTO `direcciones_accesos` VALUES (1,'Loma de Chapultepec','','16','Francisco I. Madero','Nicolás Romero','Estado de México','54400',NULL);
 /*!40000 ALTER TABLE `direcciones_accesos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +293,7 @@ CREATE TABLE `propietarios` (
   `correo_electronico` varchar(45) DEFAULT NULL,
   `id_direccion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_propietarios`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,6 +302,7 @@ CREATE TABLE `propietarios` (
 
 LOCK TABLES `propietarios` WRITE;
 /*!40000 ALTER TABLE `propietarios` DISABLE KEYS */;
+INSERT INTO `propietarios` VALUES (1,'PREDEFINIDO','PREDEFINIDO','PREDEFINIDO','0','0','0');
 /*!40000 ALTER TABLE `propietarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,6 +378,7 @@ CREATE TABLE `sitios` (
   `id_propietarios` int(11) NOT NULL,
   `id_tipo_perimetro` int(11) NOT NULL,
   `id_tipos_sitio` int(11) NOT NULL,
+  `id_tipos_cerraduras` int(11) DEFAULT NULL,
   `empresa_responsable` varchar(45) DEFAULT NULL,
   `codigo_sitio` varchar(45) DEFAULT NULL,
   `nombre_sitio` varchar(45) DEFAULT NULL,
@@ -386,6 +390,7 @@ CREATE TABLE `sitios` (
   `perimetro` int(11) DEFAULT NULL,
   `limpieza` int(11) DEFAULT NULL,
   `comentarios` varchar(450) DEFAULT NULL,
+  `no_sitio_astelecom` int(11) NOT NULL,
   PRIMARY KEY (`id_sitios`),
   KEY `fk_sitios_centrales_idx` (`id_centrales`),
   KEY `fk_sitios_direcciones_accesos1_idx` (`id_direcciones_accesos`),
@@ -397,7 +402,7 @@ CREATE TABLE `sitios` (
   CONSTRAINT `fk_sitios_propietarios1` FOREIGN KEY (`id_propietarios`) REFERENCES `propietarios` (`id_propietarios`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_sitios_tipo_perimetro1` FOREIGN KEY (`id_tipo_perimetro`) REFERENCES `tipo_perimetro` (`id_tipo_perimetro`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_sitios_tipos_sitio1` FOREIGN KEY (`id_tipos_sitio`) REFERENCES `tipos_sitio` (`id_tipos_sitio`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -406,6 +411,7 @@ CREATE TABLE `sitios` (
 
 LOCK TABLES `sitios` WRITE;
 /*!40000 ALTER TABLE `sitios` DISABLE KEYS */;
+INSERT INTO `sitios` VALUES (2,1,1,1,1,1,1,'N/A','MX3506','AMECAMECA','1',NULL,NULL,NULL,NULL,NULL,NULL,'Sitio de prueba',5);
 /*!40000 ALTER TABLE `sitios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +452,7 @@ CREATE TABLE `tipo_perimetro` (
   `id_tipo_perimetro` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_tipo_perimetro`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -455,6 +461,7 @@ CREATE TABLE `tipo_perimetro` (
 
 LOCK TABLES `tipo_perimetro` WRITE;
 /*!40000 ALTER TABLE `tipo_perimetro` DISABLE KEYS */;
+INSERT INTO `tipo_perimetro` VALUES (1,'Malla Ciclónica');
 /*!40000 ALTER TABLE `tipo_perimetro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -469,7 +476,7 @@ CREATE TABLE `tipos_cerraduras` (
   `id_tipos_cerraduras` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_tipos_cerraduras`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -478,6 +485,7 @@ CREATE TABLE `tipos_cerraduras` (
 
 LOCK TABLES `tipos_cerraduras` WRITE;
 /*!40000 ALTER TABLE `tipos_cerraduras` DISABLE KEYS */;
+INSERT INTO `tipos_cerraduras` VALUES (1,'WATCHMAN'),(2,'TARJETA');
 /*!40000 ALTER TABLE `tipos_cerraduras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -539,7 +547,7 @@ CREATE TABLE `tipos_sitio` (
   `descripcion` varchar(45) DEFAULT NULL,
   `comentario` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_tipos_sitio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -548,6 +556,7 @@ CREATE TABLE `tipos_sitio` (
 
 LOCK TABLES `tipos_sitio` WRITE;
 /*!40000 ALTER TABLE `tipos_sitio` DISABLE KEYS */;
+INSERT INTO `tipos_sitio` VALUES (1,'Indoor',NULL),(2,'Outdoor',NULL),(3,'Indoor y Outdoor',NULL);
 /*!40000 ALTER TABLE `tipos_sitio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -642,4 +651,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-05-24 11:56:10
+-- Dump completed on 2022-05-25 11:25:15

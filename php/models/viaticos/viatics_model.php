@@ -111,4 +111,19 @@ class ViaticsInformation
 
         return ($getSaldo);
     }
+
+    public function getAllUserBalances()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT
+        CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS nombre_usuario,
+        sald.saldo
+        FROM asteleco_viaticos.saldos AS sald
+        INNER JOIN asteleco_personal.lista_personal AS pers ON sald.id_personal = pers.id_lista_personal
+        ";
+        $getDeposits = $queries->getData($sql_deposits);
+
+        return ($getDeposits);
+    }
 }

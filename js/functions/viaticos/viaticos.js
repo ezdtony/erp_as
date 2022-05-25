@@ -638,9 +638,8 @@ $(document).ready(function () {
             "info"
           );
           console.log(id_status_type);
-          $("#status_gasto" + id_gasto)
-            .val(id_status_type)
-            .prop("selected", true);
+          $("#status_gasto" + id_gasto).val(id_status_type).prop("selected", true);
+
           $("#txt_status_gasto" + id_gasto).empty();
           var html_txt_status =
             '<i class="mdi mdi-circle text-' +
