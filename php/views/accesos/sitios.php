@@ -36,7 +36,9 @@
                             <th>Nombre Sitio</th>
                             <th>Empresa</th>
                             <th>Clasificación</th>
-                            <th>Dirección</th>
+                            <th>Central</th>
+                            <th>Zona</th>
+                            <th>Status</th>
                             <th>Info. Detallada</th>
                         </tr>
                     </thead>
@@ -50,9 +52,11 @@
                             <tr>
                                 <td><?= $sites->codigo_sitio ?></td>
                                 <td><?= $sites->nombre_sitio ?></td>
-                                <td><?= $sites->empresa_responsable ?></td>
-                                <td>Indoor</td>
-                                <td>Av. Parque de Chapultepec #1 int 1, El Parque, Naucalpan.</td>
+                                <td><?= $sites->empresa_sitio ?></td>
+                                <td><?= $sites->tipo_sitio ?></td>
+                                <td><?= $sites->nombre_central ?></td>
+                                <td><?= $sites->zona ?></td>
+                                <td><?= $sites->status_sitio ?></td>
                                 <td><button class="btn btn-secondary addFactura"><i class="mdi mdi-information-variant"></i> </button></td>
 
                             </tr>

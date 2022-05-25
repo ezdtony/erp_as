@@ -19,16 +19,31 @@ $getEstados = $accesos->getAllStates();
                 <div class="row g-2">
                     <div class="col-md">
                         <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="numero_sitio_astelecom" placeholder="Número de sitio (Opcional)" />
+                            <label for="numero_sitio_astelecom">Número de sitio (Opcional)</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <!--  <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="nombre_sitio" placeholder="Nombre de sitio" />
+                            <label for="nombre_sitio">Nombre de sitio</label>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-md">
+                        <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="codigo_sitio" placeholder="Código de sitio" />
-                            <label for="codigo_sitio">Código de sitio</label>
+                            <label for="codigo_sitio">Código de sitio *</label>
                         </div>
                     </div>
                     <div class="col-md">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nombre_sitio" placeholder="Nombre de sitio" />
-                            <label for="nombre_sitio">Nombre de sitio</label>
+                            <input type="text" class="form-control" id="nombre_sitio" placeholder="Nombre de sitio *" />
+                            <label for="nombre_sitio">Nombre de sitio *</label>
                         </div>
                     </div>
+
 
                     <!-- Inline-->
                     <h5>Tipo de sitio *</h5>
@@ -79,7 +94,7 @@ $getEstados = $accesos->getAllStates();
                         <div class="col-md">
                             <h5>Tipo de perímetro *</h5>
                             <div class="form-floating mb-3">
-                                <select class="form-select mb-3" id="tipo_cerradura">
+                                <select class="form-select mb-3" id="tipo_perimetro">
                                     <option value="" selected disabled>Tipo de perímetro *</option>
                                     <?php foreach ($getTipoPerimetro as $perimetro) : ?>
                                         <option value="<?= $perimetro->id_tipo_perimetro ?>"><?= ($perimetro->descripcion) ?></option>
@@ -143,15 +158,22 @@ $getEstados = $accesos->getAllStates();
                         <div class="col-md">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="latitud_sitio" placeholder="Latitud (Opcional)" />
-                                <label for="latitud_sitio">Colonia *</label>
+                                <label for="latitud_sitio">Latitud (Opcional)</label>
                             </div>
                         </div>
                         <div class="col-md">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="longitud_sitio" placeholder="Longitud (Opcional)" />
-                                <label for="longitud_sitio">Código Postal *</label>
+                                <label for="longitud_sitio">Longitud (Opcional)</label>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <label class="form-label">Referencias</label>
+                        <p class="text-muted font-13">
+                            Ingrese algunas referencias acerca del sitio
+                        </p>
+                        <textarea id="referencias_sitio" data-toggle="maxlength" class="form-control" maxlength="225" rows="3" placeholder="Ingrese algunas referencias acerca del sitio (255 caractéres)."></textarea>
                     </div>
 
                     <h5>Es un sitio con propietario?</h5>
@@ -212,8 +234,8 @@ $getEstados = $accesos->getAllStates();
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="guardarNuevoSitio" class="btn btn-primary">Guardar Sitio</button>
             </div> <!-- end modal footer -->
         </div> <!-- end modal content-->
     </div> <!-- end modal dialog-->
