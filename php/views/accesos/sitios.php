@@ -1,3 +1,8 @@
+<?php
+ include_once('php/models/accesos/accesos_model.php');
+ $accesos = new Access();
+?>
+
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -19,7 +24,7 @@
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Sitios</h4>
                 <br>
-                <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#registrarSitio">Dar de alta sitio</button>
+                <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoSitio">Nuevo Sitio</button>
                 <br>
                 <br>
                 <br>
@@ -39,52 +44,17 @@
 
                     <tbody>
                         <?php
-                        include_once('php/models/viaticos/viatics_model.php');
-                        $viatics = new ViaticsInformation();
-                        $allGastos = $viatics->getGastosByUser($id_user);
+                        $allSites = $accesos->getAllSites();
 
-                        foreach ($allGastos as $deposits) {
-                            $clasificacion = $deposits->clasificacion;
-                            if ($clasificacion == 1) {
-                                $folio_fiscal = 'N/A';
-                                $factura = 'N/A';
-                            } else {
-                                $folio_fiscal = $deposits->folio_fiscal;
-                                if ($folio_fiscal == '') {
-                                    $folio_fiscal = 'S/I';
-                                  //  $factura = '<a href="'.$deposits->ruta_pdf.'" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>';
-                                }
-                            }
-
-
-
-                        ?>
+                        foreach ($allSites as $sites) { ?>
                             <tr>
-                                <td><?= $deposits->id_gastos ?></td>
-                                <td><?= $deposits->fecha_registro ?></td>
-                                <td><?= $deposits->nombre_proyecto ?></td>
-                                <td><?= $deposits->localidad ?></td>
-                                <td>$ <?= $deposits->importe ?></td>
-                                <td><i class="mdi mdi-circle text-<?= $deposits->clase_css ?>"></i><?= $deposits->estatus ?></td>
-                                <td class="table-action">
-                                    <div>
-                                    <a href="<?=$deposits->ruta_img?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
-                                    </div>
-                                </td>
-                                <td><?= $folio_fiscal ?></td>
-                                <?php if ($clasificacion === 1) : ?>
-                                <td><?=$factura?></td>
-                                <?php else : ?>
-                                    <?php if ($deposits->ruta_pdf=='') : ?>
-                                        <td><button id="<?= $deposits->id_gastos ?>" class="btn btn-secondary addFactura" proyect-code="<?=$deposits->codigo_proyecto?> - <?=$deposits->nombre_proyecto?>" title="Agregar factura" data-bs-toggle="modal" data-bs-target="#agregarFactura"><i class="mdi mdi-file-upload-outline"></i> </button></td>
-                                    <?php else : ?>
-                                <td><a href="<?=$deposits->ruta_pdf?>" target="_blank" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </a></td>
-                                <?php endif; ?>
-                                <?php endif; ?>
-                                <td class="table-action">
-                                    <a id="<?= $deposits->id_gastos ?>" class="action-icon btnEditDeposits" data-bs-toggle="modal" data-bs-target="#editarGasto"> <i class="mdi mdi-pencil editGasto"></i></a>
-                                    <a id="<?= $deposits->id_gastos ?>" class="action-icon deleteGasto"> <i class="mdi mdi-delete "></i></a>
-                                </td>
+                                <td><?= $sites->codigo_sitio ?></td>
+                                <td><?= $sites->nombre_sitio ?></td>
+                                <td><?= $sites->empresa_responsable ?></td>
+                                <td>Indoor</td>
+                                <td>Av. Parque de Chapultepec #1 int 1, El Parque, Naucalpan.</td>
+                                <td><button class="btn btn-secondary addFactura"><i class="mdi mdi-information-variant"></i> </button></td>
+
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -99,10 +69,8 @@
 </div>
 <!-- end row -->
 <?php
-include_once('php/views/viaticos/modals/addFactura.php');
-include_once('php/views/viaticos/modals/registrarGasto.php');
-include_once('php/views/viaticos/modals/editarGasto.php');
+include_once('php/views/accesos/modals/nuevoSitio.php');
 
 ?>
-<script src="js/functions/viaticos/viaticos.js"></script>
+<script src="js/functions/accesos/accesos.js"></script>
 <script src="js/loading.js"></script>
