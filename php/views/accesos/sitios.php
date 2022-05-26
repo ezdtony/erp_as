@@ -57,7 +57,7 @@
                                 <td><?= $sites->nombre_central ?></td>
                                 <td><?= $sites->zona ?></td>
                                 <td><?= $sites->status_sitio ?></td>
-                                <td><button class="btn btn-secondary addFactura"><i class="mdi mdi-information-variant"></i> </button></td>
+                                <td><button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-secondary infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="mdi mdi-information-variant"></i> </button></td>
 
                             </tr>
                         <?php } ?>
@@ -74,6 +74,8 @@
 <!-- end row -->
 <?php
 include_once('php/views/accesos/modals/nuevoSitio.php');
+include_once('php/views/accesos/modals/infoSitio.php');
+
 
 ?>
 <script src="js/functions/accesos/accesos.js"></script>

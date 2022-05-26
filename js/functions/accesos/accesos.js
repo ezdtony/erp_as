@@ -397,6 +397,63 @@ $(document).ready(function () {
       }
     }
   });
+
+  $(document).on("click", ".infoSitio", function () {
+    var id_sitio = $(this).attr("data-id-site");
+    var site_name = $(this).attr("data-site-name");
+    var site_code = $(this).attr("data-site-code");
+    console.log(id_sitio);
+    $("#siteName").text(site_code + " | " + site_name);
+
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getFulInfoSite",
+        id_sitio: id_sitio,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+        var html_info = "";
+        if (data.response == true) {
+          
+          html_info += "<h4>"+data.data[0].direccion_sitio+"</h4>";
+          html_info += "<br>";
+          html_info +=
+            '<button class="btn btn-primary ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#divMapa" aria-expanded="false" aria-controls="divMapa">';
+          html_info += "Ver mapa...";
+          html_info += "</button>";
+          html_info += '<div class="collapse" id="divMapa">';
+          html_info += '<div class="card card-body mb-0">';
+          html_info +=
+            '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d940.5878516970419!2d-99.01901907108459!3d19.5931177305752!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2021a78aadb2f%3A0xd706a2a7c72ee311!2sMuseo%20Soumaya!5e0!3m2!1ses-419!2smx!4v1653594986738!5m2!1ses-419!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+          html_info += "</div>";
+          html_info += "</div>";
+          html_info += "<br>";
+          html_info += "<h5>Central: Ecatepec</h5>";
+          html_info += "<h6>Zona: Malinche</h6>";
+          
+
+          $("#div_info").html(html_info);
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Ocurrió un error al guardar la información del sitio",
+          });
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        Swal.fire({
+          icon: "error",
+          title: "Ocurrió un error, intentelo nuevamente",
+        });
+      });
+  });
   $("#estado_sitio").select2({
     dropdownParent: $("#nuevoSitio"),
   });
