@@ -275,3 +275,117 @@ function getFulInfoSite()
 
     echo json_encode($data);
 }
+function getGabinetesInfo()
+{
+
+    $id_site = $_POST['id_sitio'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT gab.*, cerr.descripcion AS cerradura
+    FROM asteleco_accesos.gabinetes AS gab 
+    INNER JOIN asteleco_accesos.tipos_cerraduras AS cerr ON cerr.id_tipos_cerraduras = gab.id_tipos_cerraduras
+    WHERE gab.id_sitios = $id_site";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+        $html_gabinetes = '';
+        foreach ($getInfoRequest as $gabinetes) {
+
+
+            $html_gabinetes .= '<div class="col-md-4"  id="gab' . $gabinetes->id_gabinetes . '">';
+            $html_gabinetes .= '<div class="card border-secondary border">';
+            $html_gabinetes .= '<div class="card-body">';
+            $html_gabinetes .= '<h5 class="card-title">' . $gabinetes->nombre_gabinete . '          <span class="badge badge-outline-warning editGabineteNombre"  data-id-gabinete="' . $gabinetes->id_gabinetes . '"><i class="dripicons-pencil"></i></span></h5>';
+            $html_gabinetes .= '<p class="card-text">Baterías: ' . $gabinetes->baterias_gabinete . '          <span class="badge badge-outline-warning editGabineteBaterias"  data-id-gabinete="' . $gabinetes->id_gabinetes . '"><i class="dripicons-pencil"></i></span></p>';
+            //$html_gabinetes .= '<p class="card-text">Estado: óptimo</p>';
+            $html_gabinetes .= '<button type="button" class="btn btn-danger deleteGabinete" data-id-gabinete="' . $gabinetes->id_gabinetes . '"><i class="uil uil-trash-alt"></i></button>';
+            $html_gabinetes .= '</div>';
+            $html_gabinetes .= '</div>';
+            $html_gabinetes .= '</div>';
+        }
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data' => $getInfoRequest,
+            'html' => $html_gabinetes
+        );
+        //--- --- ---//
+    } else {
+        $html_gabinetes = '<div class="col-md-12">';
+        $html_gabinetes .= '<div class="card-body">';
+        $html_gabinetes .= '<div class="card">';
+        $html_gabinetes .= '<h3 class="card-title">No hay gabinetes registrados</h3>';
+        $html_gabinetes .= '</div>';
+        $html_gabinetes .= '</div>';
+        $html_gabinetes .= '</div>';
+
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => '',
+            'html' => $html_gabinetes
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function getSiteContactOwner()
+{
+
+    $id_site = $_POST['id_sitio'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT prop.*
+    FROM asteleco_accesos.propietarios AS prop 
+    INNER JOIN asteleco_accesos.sitios AS sites ON sites.id_propietarios = prop.id_propietarios
+    WHERE sites.id_sitios = $id_site";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+        $html_owner_info = '';
+        foreach ($getInfoRequest as $owner) {
+
+
+            $html_owner_info .= '<div class="mt-3">';
+            $html_owner_info .= '<hr class="">';
+            $html_owner_info .= '<p class="mt-4 mb-1"><strong><i class="uil uil-user"></i> Nombre:</strong></p>';
+            $html_owner_info .= '<p>' . $owner->nombres . ' ' . $owner->apellidos . '    <span class="badge badge-outline-warning editOwnerName" data-id-owner="' . $owner->id_propietarios . '"><i class="dripicons-pencil"></i></span></p>';
+            $html_owner_info .= '<p class="mt-3 mb-1"><strong><i class="uil uil-phone"></i> Número de teléfono:</strong></p>';
+            $html_owner_info .= '<p> ' . $owner->numero_telefonico . '    <span class="badge badge-outline-warning editOwnerPhone"  data-id-owner="' . $owner->id_propietarios . '"><i class="dripicons-pencil"></i></span></p>';
+            $html_owner_info .= '<p class="mt-3 mb-1"><strong><i class="uil uil-fast-mail"></i> Correo electrónico:</h4></strong></p>';
+
+            $html_owner_info .= '<p> ' . $owner->correo_electronico . '      <span class="badge badge-outline-warning editOwnerMail"  data-id-owner="' . $owner->id_propietarios . '"><i class="dripicons-pencil"></i></span></p>';
+            $html_owner_info .= '</div>';
+        }
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data' => $getInfoRequest,
+            'html' => $html_owner_info
+        );
+        //--- --- ---//
+    } else {
+        $html_owner_info = '<div class="col-md-12">';
+        $html_owner_info .= '<div class="card-body">';
+        $html_owner_info .= '<div class="card">';
+        $html_owner_info .= '<h3 class="card-title">No hay información de contacto registrada</h3>';
+        $html_owner_info .= '</div>';
+        $html_owner_info .= '</div>';
+        $html_owner_info .= '</div>';
+
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => '',
+            'html' => $html_owner_info
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}

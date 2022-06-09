@@ -418,10 +418,18 @@ $(document).ready(function () {
         console.log(data);
         var html_info = "";
         if (data.response == true) {
-          
-          html_info += "<h4>"+data.data[0].direccion_sitio+"</h4>";
-          html_info += "<br>";
           html_info +=
+            "<h2 id=siteName>" +
+            data.data[0].codigo_sitio +
+            " | " +
+            data.data[0].nombre_sitio +
+            "   <span class='badge badge-outline-warning editSiteName'><i class='dripicons-pencil'></i></span></h2>";
+          html_info +=
+            "<h4>" +
+            data.data[0].direccion_sitio +
+            "   <span class='badge badge-outline-warning editAddressSite'><i class='dripicons-pencil'></i></span></h4>";
+          html_info += "<br>";
+          /*  html_info +=
             '<button class="btn btn-primary ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#divMapa" aria-expanded="false" aria-controls="divMapa">';
           html_info += "Ver mapa...";
           html_info += "</button>";
@@ -431,12 +439,80 @@ $(document).ready(function () {
             '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d940.5878516970419!2d-99.01901907108459!3d19.5931177305752!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2021a78aadb2f%3A0xd706a2a7c72ee311!2sMuseo%20Soumaya!5e0!3m2!1ses-419!2smx!4v1653594986738!5m2!1ses-419!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
           html_info += "</div>";
           html_info += "</div>";
-          html_info += "<br>";
-          html_info += "<h5>Central: Ecatepec</h5>";
-          html_info += "<h6>Zona: Malinche</h6>";
-          
+          html_info += "<br>"; */
+          html_info +=
+            "<h5>Central: " +
+            data.data[0].nombre_central +
+            "   <span class='badge badge-outline-warning editSiteCentral'><i class='dripicons-pencil'></i></span></h5>";
+          html_info +=
+            "<h6>Zona: " +
+            data.data[0].nombre_zona +
+            "   <span class='badge badge-outline-warning editSiteZone'><i class='dripicons-pencil'></i></span></h6><br><br>";
+          html_info +=
+            "<h4>Status del Sitio: " +
+            data.data[0].status_operacion +
+            "   <span class='badge badge-outline-warning editSiteStatus'><i class='dripicons-pencil'></i></span></h4>";
+          html_info +=
+            "<h4>Tipo de Sitio: " +
+            data.data[0].tipo_sitio +
+            "   <span class='badge badge-outline-warning editSiteStatus'><i class='dripicons-pencil'></i></span></h4>";
 
           $("#div_info").html(html_info);
+
+          //--- OBTENER INFORMACIÓN DE GABINETES ---//
+
+          $.ajax({
+            url: "php/controllers/accesos/accesos_controller.php",
+            method: "POST",
+            data: {
+              mod: "getGabinetesInfo",
+              id_sitio: id_sitio,
+            },
+          })
+            .done(function (data) {
+              var data = JSON.parse(data);
+              console.log(data);
+              var html_info = "";
+              if (data.response == true) {
+                $("#div_gabinetes").empty();
+                $("#div_gabinetes").html(data.html);
+              } else {
+                $("#div_gabinetes").empty();
+                $("#div_gabinetes").html(data.html);
+              }
+
+              //--- --- ---//
+              //--- --- ---//
+            })
+            .fail(function (message) {
+             
+            });
+            $.ajax({
+              url: "php/controllers/accesos/accesos_controller.php",
+              method: "POST",
+              data: {
+                mod: "getSiteContactOwner",
+                id_sitio: id_sitio,
+              },
+            })
+              .done(function (data) {
+                var data = JSON.parse(data);
+                console.log(data);
+                var html_info = "";
+                if (data.response == true) {
+                  $("#div_contacto_propietario").empty();
+                  $("#div_contacto_propietario").html(data.html);
+                } else {
+                  $("#div_contacto_propietario").empty();
+                  $("#div_contacto_propietario").html(data.html);
+                }
+  
+                //--- --- ---//
+                //--- --- ---//
+              })
+              .fail(function (message) {
+               
+              });
         } else {
           Swal.fire({
             icon: "error",
