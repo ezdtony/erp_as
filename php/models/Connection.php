@@ -2,10 +2,10 @@
 
 class data_conn
 {
-    private $db_name = "constructora_personal";
-    private $db_user = "root";
-    private $db_pass = "";
-    private $db_host = "localhost";
+    private $db_name = "asteleco_personal";
+    private $db_user = "asteleco_root";
+    private $db_pass = "Jp~5US_dXyIe";
+    private $db_host = "209.59.139.150";
 
     private $db_conn;
     public function dbConn()

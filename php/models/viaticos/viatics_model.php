@@ -12,12 +12,12 @@ class ViaticsInformation
         proy.nombre_proyecto,
         tg.descripcion AS descripcion_tipo_gasto,
         dep.*
-        FROM asteleco_viaticos.depositos AS dep	
+        FROM asteleco_viaticos_erp.depositos AS dep	
         INNER JOIN asteleco_personal.lista_personal AS pers ON dep.id_personal = pers.id_lista_personal
         INNER JOIN asteleco_personal.lista_personal AS aut ON dep.id_personal_registro = aut.id_lista_personal
-        INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = dep.id_asignacion_proyecto
-        INNER JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
-        INNER JOIN asteleco_viaticos.tipos_gasto AS tg ON dep.id_tipos_gasto = tg.id_tipos_gasto
+        left JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = dep.id_asignacion_proyecto
+        left JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tg ON dep.id_tipos_gasto = tg.id_tipos_gasto
 
         ";
         $getDeposits = $queries->getData($sql_deposits);
@@ -29,7 +29,7 @@ class ViaticsInformation
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_saldo = "SELECT saldo FROM asteleco_viaticos.saldos WHERE id_personal = '$id_user'";
+        $sql_saldo = "SELECT saldo FROM asteleco_viaticos_erp.saldos WHERE id_personal = '$id_user'";
         $getSaldo = $queries->getData($sql_saldo);
 
         return ($getSaldo);
@@ -40,13 +40,13 @@ class ViaticsInformation
         $queries = new Queries;
         $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.id_status_type, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, 
         rut.ruta_archivo AS ruta_img, CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS usuario_gasto
-        FROM asteleco_viaticos.gastos AS gas
+        FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_personal.lista_personal AS pers ON pers.id_lista_personal = gas.id_personal
-        INNER JOIN asteleco_viaticos.status_type AS stat ON stat.id_status_type = gas.id_status_type
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type
         INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = gas.id_asignaciones_proyectos
         INNER JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
-        INNER JOIN asteleco_viaticos.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
-        LEFT JOIN asteleco_viaticos.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf";
+        INNER JOIN asteleco_viaticos_erp.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf";
         $getSaldo = $queries->getData($sql_saldo);
 
         return ($getSaldo);
@@ -56,12 +56,12 @@ class ViaticsInformation
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, rut.ruta_archivo AS ruta_img
-        FROM asteleco_viaticos.gastos AS gas
-        INNER JOIN asteleco_viaticos.status_type AS stat ON stat.id_status_type = gas.id_status_type
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type
         INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = gas.id_asignaciones_proyectos
         INNER JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
-        INNER JOIN asteleco_viaticos.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
-        LEFT JOIN asteleco_viaticos.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf
+        INNER JOIN asteleco_viaticos_erp.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf
          WHERE id_personal = '$id_user'";
         $getSaldo = $queries->getData($sql_saldo);
 
@@ -106,7 +106,7 @@ class ViaticsInformation
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_saldo = "SELECT * FROM asteleco_viaticos.status_type";
+        $sql_saldo = "SELECT * FROM asteleco_viaticos_erp.status_type";
         $getSaldo = $queries->getData($sql_saldo);
 
         return ($getSaldo);
@@ -119,7 +119,7 @@ class ViaticsInformation
         $sql_deposits = "SELECT
         CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS nombre_usuario,
         sald.saldo
-        FROM asteleco_viaticos.saldos AS sald
+        FROM asteleco_viaticos_erp.saldos AS sald
         INNER JOIN asteleco_personal.lista_personal AS pers ON sald.id_personal = pers.id_lista_personal
         ";
         $getDeposits = $queries->getData($sql_deposits);

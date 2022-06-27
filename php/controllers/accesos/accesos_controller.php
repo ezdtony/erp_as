@@ -389,3 +389,39 @@ function getSiteContactOwner()
 
     echo json_encode($data);
 }
+function editSiteName()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $column_name = $_POST['column_name'];
+    $site_code = $_POST['site_code'];
+    $site_name = $_POST['site_name'];
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_accesos.sitios SET nombre_sitio = '$site_name', codigo_sitio = '$site_code' 
+    WHERE id_sitios = $id_sitio";
+
+    $getInfoRequest = $queries->InsertData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+        
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data' => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        
+
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+

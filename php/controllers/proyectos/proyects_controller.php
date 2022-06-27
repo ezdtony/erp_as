@@ -432,7 +432,7 @@ function changeStatusProyect()
     $queries = new Queries;
 
     $stmt = "UPDATE asteleco_proyectos.proyectos 
-    SET  status = $status
+    SET  status = $status, fecha_cierre_real = NOW()
     WHERE id_proyectos = $id_proyecto";
 
     $setInactivo = $queries->insertData($stmt);

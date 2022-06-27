@@ -28,7 +28,7 @@
                 <div class="chart-content-bg">
 
                     <div class="row">
-                        <div class="row" id="simple-dragula" data-plugin="dragula">
+                        <div class="row" id="">
                             
                             <?php
                             if ($id_area<=3) {

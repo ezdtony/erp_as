@@ -43,7 +43,7 @@ if (move_uploaded_file($_FILES["factura"]["tmp_name"], $archivo_img)) {
     );
     //echo json_encode($data);
 
-    $sql = "INSERT INTO asteleco_viaticos.rutas_archivos
+    $sql = "INSERT INTO asteleco_viaticos_erp.rutas_archivos
     (
         id_rutas_archivos,
         ruta_archivo,
@@ -64,7 +64,7 @@ if (move_uploaded_file($_FILES["factura"]["tmp_name"], $archivo_img)) {
     $insert = $queries->insertData($sql);
     $last_id = $insert['last_id'];
 
-    $sql_update_gasto = "UPDATE asteleco_viaticos.gastos SET id_ruta_pdf = '$last_id', id_status_type = '1',  folio_fiscal='$folio_fiscal_late' WHERE id_gastos = '$id_gasto'";
+    $sql_update_gasto = "UPDATE asteleco_viaticos_erp.gastos SET id_ruta_pdf = '$last_id', id_status_type = '1',  folio_fiscal='$folio_fiscal_late' WHERE id_gastos = '$id_gasto'";
     
     $update_sql= $queries->insertData($sql_update_gasto);
 

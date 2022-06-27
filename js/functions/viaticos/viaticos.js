@@ -452,6 +452,7 @@ $(document).ready(function () {
     var tipos_gasto = $("#tipos_gasto_gasto").val();
     var importe_gasto = $("#importe_gasto").val();
     const img_payment = document.querySelector("#fotografia_ticket_gasto");
+    comentario_gasto = $("#comentario_gasto").val();
     /*  console.log("fecha_compra: " + fecha_compra);
     console.log("id_asignacion: " + id_asignacion);
     console.log("id_proyecto: " + id_proyecto);
@@ -490,7 +491,8 @@ $(document).ready(function () {
               sitio_gasto,
               tipos_gasto,
               importe_gasto,
-              folio_fiscal
+              folio_fiscal,
+              comentario_gasto
             );
           } else {
             Swal.fire({
@@ -509,7 +511,8 @@ $(document).ready(function () {
             id_author,
             sitio_gasto,
             tipos_gasto,
-            importe_gasto
+            importe_gasto,
+            comentario_gasto
           );
         }
       } else if (clasificacion_gasto == 2) {
@@ -523,7 +526,8 @@ $(document).ready(function () {
           id_author,
           sitio_gasto,
           tipos_gasto,
-          importe_gasto
+          importe_gasto,
+          comentario_gasto
         );
       }
     } else {
@@ -532,6 +536,17 @@ $(document).ready(function () {
         title: "Error",
         text: "Verifica que todos los campos esten llenos",
       });
+    }
+  });
+  $(document).on("change", "#tipos_gasto_gasto", function () {
+    var id_tipo_gasto = $(this).val();
+    if (id_tipo_gasto=='99') {
+      $("#div_comentario_gasto").show();
+      $("#comentario_gasto").prop("required", true);
+    }else{
+      $("#div_comentario_gasto").hide();
+      $("#comentario_gasto").prop("required", false);
+
     }
   });
   $(document).on("click", "#guardar_gasto_editar", function () {
@@ -1002,7 +1017,8 @@ $(document).ready(function () {
     sitio_gasto,
     tipos_gasto,
     importe_gasto,
-    folio_fiscal
+    folio_fiscal,
+    comentario_gasto
   ) {
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1017,6 +1033,7 @@ $(document).ready(function () {
         tipos_gasto: tipos_gasto,
         importe_gasto: importe_gasto,
         folio_fiscal: folio_fiscal,
+        comentario_gasto: comentario_gasto,
       },
     })
       .done(function (data) {
@@ -1061,7 +1078,8 @@ $(document).ready(function () {
     id_author,
     sitio_gasto,
     tipos_gasto,
-    importe_gasto
+    importe_gasto,
+    comentario_gasto
   ) {
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1075,6 +1093,7 @@ $(document).ready(function () {
         sitio_gasto: sitio_gasto,
         tipos_gasto: tipos_gasto,
         importe_gasto: importe_gasto,
+        comentario_gasto: comentario_gasto,
       },
     })
       .done(function (data) {
@@ -1118,7 +1137,8 @@ $(document).ready(function () {
     id_author,
     sitio_gasto,
     tipos_gasto,
-    importe_gasto
+    importe_gasto,
+    comentario_gasto
   ) {
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1132,6 +1152,7 @@ $(document).ready(function () {
         sitio_gasto: sitio_gasto,
         tipos_gasto: tipos_gasto,
         importe_gasto: importe_gasto,
+        comentario_gasto: comentario_gasto,
       },
     })
       .done(function (data) {

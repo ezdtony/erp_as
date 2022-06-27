@@ -15,7 +15,7 @@
                 <h6>La información obligatoria está marcada con un asterísco (*)</h6>
                 <br>
                 <input type="hidden" id="id_autor" value="<?= $_SESSION['id_user'] ?>">
-                <input type="hidden" id="user_name_gasto" value= "<?=$_SESSION['user']?>">
+                <input type="hidden" id="user_name_gasto" value="<?= $_SESSION['user'] ?>">
                 <!-- Single Date Picker -->
                 <div class="mb-3">
                     <label class="form-label">Fecha de compra *</label>
@@ -54,6 +54,12 @@
                         </optgroup>
                     </select>
                 </div>
+                <div class="mb-3" id="div_comentario_gasto" style="display:none">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Ingrese una descripción *" id="comentario_gasto" style="height: 100px;"></textarea>
+                        <label for="comentario_gasto">Ingrese una descripción * </label>
+                    </div>
+                </div>
                 <div class="mb-3">
                     <label class="form-label">Importe *</label>
                     <input data-toggle="touchspin" id="importe_gasto" type="number" data-bts-max="10000000" data-step="0.1" data-decimals="2" data-bts-prefix="$">
@@ -76,15 +82,15 @@
                 </div>
                 <br>
                 <br>
-                <div id="div-deducibles" style="display:none" >
+                <div id="div-deducibles" style="display:none">
                     <h5>¿Cuenta con factura?</h5>
                     <!-- Success Switch-->
                     <input type="checkbox" id="check_factura" checked data-switch="success" />
                     <label for="check_factura" data-on-label="Si" data-off-label="No"></label>
                     <br>
-                    <div id="div-folio-fiscal" >
+                    <div id="div-folio-fiscal">
                         <br><br>
-                    <label class="form-label">Por favor, ingrese los primeros 5 digitos del folio fiscal de la factura (CFDI)</label>
+                        <label class="form-label">Por favor, ingrese los primeros 5 digitos del folio fiscal de la factura (CFDI)</label>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="folio_fiscal" placeholder="Folio fiscal" />
                             <label for="sitio">Folio fiscal</label>
@@ -96,13 +102,13 @@
                     </div>
 
                 </div>
-                </div>
-                <br>
-                <br>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" id="guardar_gasto" disabled class="btn btn-success">Registrar gasto</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+            <br>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="guardar_gasto" disabled class="btn btn-success">Registrar gasto</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

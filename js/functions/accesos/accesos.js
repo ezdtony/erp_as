@@ -423,11 +423,19 @@ $(document).ready(function () {
             data.data[0].codigo_sitio +
             " | " +
             data.data[0].nombre_sitio +
-            "   <span class='badge badge-outline-warning editSiteName'><i class='dripicons-pencil'></i></span></h2>";
+            "   <span class='badge badge-outline-warning editSiteName' data-site-code='" +
+            site_code +
+            "' data-site-name='" +
+            site_name +
+            "' data-id-sitio='" +
+            id_sitio +
+            "'><i class='dripicons-pencil'></i></span></h2><br><div id='div_site_name'></div>";
           html_info +=
             "<h4>" +
             data.data[0].direccion_sitio +
-            "   <span class='badge badge-outline-warning editAddressSite'><i class='dripicons-pencil'></i></span></h4>";
+            "   <span class='badge badge-outline-warning editAddressSite' data-id-sitio='" +
+            id_sitio +
+            "'><i class='dripicons-pencil'></i></span></h4>";
           html_info += "<br>";
           /*  html_info +=
             '<button class="btn btn-primary ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#divMapa" aria-expanded="false" aria-controls="divMapa">';
@@ -443,19 +451,27 @@ $(document).ready(function () {
           html_info +=
             "<h5>Central: " +
             data.data[0].nombre_central +
-            "   <span class='badge badge-outline-warning editSiteCentral'><i class='dripicons-pencil'></i></span></h5>";
+            "   <span class='badge badge-outline-warning editSiteCentral' data-id-sitio='" +
+            id_sitio +
+            "'><i class='dripicons-pencil'></i></span></h5>";
           html_info +=
             "<h6>Zona: " +
             data.data[0].nombre_zona +
-            "   <span class='badge badge-outline-warning editSiteZone'><i class='dripicons-pencil'></i></span></h6><br><br>";
+            "   <span class='badge badge-outline-warning editSiteZone' data-id-sitio='" +
+            id_sitio +
+            "'><i class='dripicons-pencil'></i></span></h6><br><br>";
           html_info +=
             "<h4>Status del Sitio: " +
             data.data[0].status_operacion +
-            "   <span class='badge badge-outline-warning editSiteStatus'><i class='dripicons-pencil'></i></span></h4>";
+            "   <span class='badge badge-outline-warning editSiteStatus' data-id-sitio='" +
+            id_sitio +
+            "'><i class='dripicons-pencil'></i></span></h4>";
           html_info +=
             "<h4>Tipo de Sitio: " +
             data.data[0].tipo_sitio +
-            "   <span class='badge badge-outline-warning editSiteStatus'><i class='dripicons-pencil'></i></span></h4>";
+            "   <span class='badge badge-outline-warning editSiteStatus' data-id-sitio='" +
+            id_sitio +
+            "'><i class='dripicons-pencil'></i></span></h4>";
 
           $("#div_info").html(html_info);
 
@@ -484,35 +500,31 @@ $(document).ready(function () {
               //--- --- ---//
               //--- --- ---//
             })
-            .fail(function (message) {
-             
-            });
-            $.ajax({
-              url: "php/controllers/accesos/accesos_controller.php",
-              method: "POST",
-              data: {
-                mod: "getSiteContactOwner",
-                id_sitio: id_sitio,
-              },
+            .fail(function (message) {});
+          $.ajax({
+            url: "php/controllers/accesos/accesos_controller.php",
+            method: "POST",
+            data: {
+              mod: "getSiteContactOwner",
+              id_sitio: id_sitio,
+            },
+          })
+            .done(function (data) {
+              var data = JSON.parse(data);
+              console.log(data);
+              var html_info = "";
+              if (data.response == true) {
+                $("#div_contacto_propietario").empty();
+                $("#div_contacto_propietario").html(data.html);
+              } else {
+                $("#div_contacto_propietario").empty();
+                $("#div_contacto_propietario").html(data.html);
+              }
+
+              //--- --- ---//
+              //--- --- ---//
             })
-              .done(function (data) {
-                var data = JSON.parse(data);
-                console.log(data);
-                var html_info = "";
-                if (data.response == true) {
-                  $("#div_contacto_propietario").empty();
-                  $("#div_contacto_propietario").html(data.html);
-                } else {
-                  $("#div_contacto_propietario").empty();
-                  $("#div_contacto_propietario").html(data.html);
-                }
-  
-                //--- --- ---//
-                //--- --- ---//
-              })
-              .fail(function (message) {
-               
-              });
+            .fail(function (message) {});
         } else {
           Swal.fire({
             icon: "error",
@@ -530,6 +542,70 @@ $(document).ready(function () {
         });
       });
   });
+  $(document).on("click", ".editSiteName", function () {
+    var id_sitio = $(this).attr("data-id-sitio");
+    var site_code = $(this).attr("data-site-code");
+    var site_name = $(this).attr("data-site-name");
+    var html_edit = "";
+    html_edit +=
+      '<label for="editSiteName">Editar Nombre y Código del Sitio</label>';
+    html_edit += '<div class="input-group mb-3">';
+    html_edit +=
+      '<input value="' +
+      site_code +
+      '" type="text" class="form-control" id="editSiteCode" aria-describedby="emailHelp" placeholder="Código de Sitio">';
+    html_edit += "</div>";
+    html_edit += '<div class="input-group mb-3">';
+    html_edit +=
+      '<input value="' +
+      site_name +
+      '" type="text" class="form-control" id="editSiteName" aria-describedby="emailHelp" placeholder="Nombre del Sitio">';
+    html_edit += "</div>";
+    html_edit +=
+      '<button type="button" class="btn btn-primary ms-1 saveEditNameSite" data-id-site="' +
+      id_sitio +
+      '" data-column-name="nombre_sitio">Guardar</button>';
+    html_edit += "<br>";
+    $("#div_site_name").empty().append(html_edit);
+  });
+  $(document).on("click", ".saveEditNameSite", function () {
+    var id_sitio = $(this).attr("data-id-site");
+    var column_name = $(this).attr("data-column-name");
+    var site_code = $("#editSiteCode").val();
+    var site_name = $("#editSiteName").val();
+    console.log(id_sitio);
+    console.log(column_name);
+    console.log(site_code);
+    console.log(site_name);
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "editSiteName",
+        id_sitio: id_sitio,
+        column_name: column_name,
+        site_code: site_code,
+        site_name: site_name,
+      },
+    }).done(function (data) {
+      var data = JSON.parse(data);
+      console.log(data);
+      if (data.response == true) {
+        Swal.fire({
+          icon: "success",
+          title: "Nombre y Código del Sitio actualizado",
+        });
+        $("#div_site_name").empty().append(data.html);
+        $("#siteName").empty().text(site_code+ " | " +site_name);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Ocurrió un error al guardar la información del sitio",
+        });
+      }
+    });
+  });
+
   $("#estado_sitio").select2({
     dropdownParent: $("#nuevoSitio"),
   });

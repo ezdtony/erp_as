@@ -174,7 +174,7 @@ function saveNewUser()
 
             $insert_personal_request = $queries->insertData($insert_personal);
             if (!empty($insert_personal_request)) {
-                $create_saldo = "INSERT INTO asteleco_viaticos.saldos (
+                $create_saldo = "INSERT INTO asteleco_viaticos_erp.saldos (
                     id_saldoS,
                     id_personal,
                     saldo
