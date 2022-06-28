@@ -64,6 +64,10 @@
                     <label class="form-label">Importe *</label>
                     <input data-toggle="touchspin" id="importe_gasto" type="number" data-bts-max="10000000" data-step="0.1" data-decimals="2" data-bts-prefix="$">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">Coordenadas *</label>
+                    <input id="coordenadas" class = "form-control">
+                </div>
                 <div class="col-sm-12">
                     <label class="form-label">Fotografía del ticket</label>
                     <input class="form-control" type="file" id="fotografia_ticket_gasto">

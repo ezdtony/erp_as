@@ -100,7 +100,7 @@
                                 <td><?= $deposits->id_gastos ?></td>
                                 <td><?= $deposits->fecha_registro ?></td>
                                 <td><?= $deposits->usuario_gasto ?></td>
-                                <td><?= $deposits->nombre_proyecto ?></td>
+                                <td><?= $deposits->string_proyecto ?></td>
                                 <td><?= $deposits->localidad ?></td>
                                 <td>$ <?= $deposits->importe ?></td>
                                 <td><?= $txt_clasifiacion ?></td>
@@ -123,14 +123,14 @@
                                         <select class="form-select select_status_gasto" id-gasto="<?= $deposits->id_gastos ?>" id="status_gasto<?= $deposits->id_gastos ?>">
                                             <option value="" disabled>Eliga una opción</option>
                                             <?php foreach ($statusTypes as $statusType) : ?>
-                                                <?php if (($statusType->id_status_type)==2 || $statusType->id_status_type == 3 ) : ?>
+                                                <?php if (($statusType->id_status_type) == 2 || $statusType->id_status_type == 3) : ?>
                                                     <option value="<?= $statusType->id_status_type ?>" disabled><?= $statusType->descripcion ?></option>
-                                                    <?php else : ?>
-                                                <?php if ($statusType->id_status_type == $deposits->id_status_type) : ?>
-                                                    <option value="<?= $statusType->id_status_type ?>" selected><?= $statusType->descripcion ?></option>
                                                 <?php else : ?>
-                                                    <option value="<?= $statusType->id_status_type ?>"><?= $statusType->descripcion ?></option>
-                                                <?php endif; ?>
+                                                    <?php if ($statusType->id_status_type == $deposits->id_status_type) : ?>
+                                                        <option value="<?= $statusType->id_status_type ?>" selected><?= $statusType->descripcion ?></option>
+                                                    <?php else : ?>
+                                                        <option value="<?= $statusType->id_status_type ?>"><?= $statusType->descripcion ?></option>
+                                                    <?php endif; ?>
                                                 <?php endif; ?>
                                             <?php endforeach; ?>
                                         </select>
@@ -179,6 +179,9 @@ include_once('php/views/viaticos/modals/editarGasto.php');
 <script>
     var tGastos = new TableFilter(document.querySelector("#tablaGastos"), {
         base_path: "js/tablefilter/",
+        paging: {
+            results_per_page: ['Records: ', [10, 25, 50, 100]]
+        },
         responsive: true,
         rows_counter: true,
         btn_reset: true,

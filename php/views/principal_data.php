@@ -32,7 +32,7 @@ if (!isset($_SESSION['user'])) {
     $estados = "SELECT * FROM asteleco_matriz_direcciones.estados";
     $getStates = $queries->getData($estados);
     $parametro_busqueda = " AND id_personal_creador = $id_user";
-    if ($id_user==11 || $id_user==1) {
+    if ($id_user==2 || $id_user==1) {
         $parametro_busqueda = "";
     }
     

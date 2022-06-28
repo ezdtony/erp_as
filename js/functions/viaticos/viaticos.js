@@ -453,7 +453,10 @@ $(document).ready(function () {
     var importe_gasto = $("#importe_gasto").val();
     const img_payment = document.querySelector("#fotografia_ticket_gasto");
     comentario_gasto = $("#comentario_gasto").val();
-    /*  console.log("fecha_compra: " + fecha_compra);
+    console.log("comentario_gasto: " + comentario_gasto);
+    var coordenadas_gasto = $("#coordenadas").val();
+    console.log("coordenadas_gasto: " + coordenadas_gasto);
+    /*  
     console.log("id_asignacion: " + id_asignacion);
     console.log("id_proyecto: " + id_proyecto);
     console.log("id_author: " + id_author);
@@ -492,7 +495,8 @@ $(document).ready(function () {
               tipos_gasto,
               importe_gasto,
               folio_fiscal,
-              comentario_gasto
+              comentario_gasto,
+              coordenadas_gasto
             );
           } else {
             Swal.fire({
@@ -512,7 +516,8 @@ $(document).ready(function () {
             sitio_gasto,
             tipos_gasto,
             importe_gasto,
-            comentario_gasto
+            comentario_gasto,
+            coordenadas_gasto
           );
         }
       } else if (clasificacion_gasto == 2) {
@@ -527,7 +532,8 @@ $(document).ready(function () {
           sitio_gasto,
           tipos_gasto,
           importe_gasto,
-          comentario_gasto
+          comentario_gasto,
+          coordenadas_gasto
         );
       }
     } else {
@@ -540,13 +546,12 @@ $(document).ready(function () {
   });
   $(document).on("change", "#tipos_gasto_gasto", function () {
     var id_tipo_gasto = $(this).val();
-    if (id_tipo_gasto=='99') {
+    if (id_tipo_gasto == "99") {
       $("#div_comentario_gasto").show();
       $("#comentario_gasto").prop("required", true);
-    }else{
+    } else {
       $("#div_comentario_gasto").hide();
       $("#comentario_gasto").prop("required", false);
-
     }
   });
   $(document).on("click", "#guardar_gasto_editar", function () {
@@ -653,7 +658,9 @@ $(document).ready(function () {
             "info"
           );
           console.log(id_status_type);
-          $("#status_gasto" + id_gasto).val(id_status_type).prop("selected", true);
+          $("#status_gasto" + id_gasto)
+            .val(id_status_type)
+            .prop("selected", true);
 
           $("#txt_status_gasto" + id_gasto).empty();
           var html_txt_status =
@@ -864,15 +871,66 @@ $(document).ready(function () {
         });
     }
   });
+  $(document).on("click", ".nuevoGasto", function () {
+    loading();
+    function positionSuccess(position) {
+      Swal.close();
+      //alert("Coordenadas obtenidas");
+      /* document.getElementById("coordenadas").value =
+        position.coords.latitude + " " + position.coords.longitude; */
+      //console.log(position);
+      $("#coordenadas").val( position.coords.latitude + ", " + position.coords.longitude);
+    }
+    function setCoorenadas(lat, lon) {}
+    function positionError(error) {
+      Swal.close();
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById("theError").innerHTML =
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "No se ha permitido obtener la ubicación",
+              timer: 2000,
+            });
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById("theError").innerHTML =
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: "La ubicación no está disponible",
+              timer: 2000,
+            });
+          break;
+        case error.TIMEOUT:
+          document.getElementById("theError").innerHTML =
+           Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "El tiempo de espera ha expirado",
+            timer: 2000,
+          });
+          break;
+        case error.UNKNOWN_ERROR:
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Ha ocurrido un error desconocido",
+            timer: 2000,
+          });
+          break;
+      }
+    }
+    navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+  });
 
-  
   $(document).on("change", ".select_status_gasto", function () {
     var id_gasto = $(this).attr("id-gasto");
 
     var column_name = "id_status_type";
     var status = $(this).val();
     console.log(status);
-   
 
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1018,7 +1076,8 @@ $(document).ready(function () {
     tipos_gasto,
     importe_gasto,
     folio_fiscal,
-    comentario_gasto
+    comentario_gasto,
+    coordenadas_gasto
   ) {
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1034,6 +1093,7 @@ $(document).ready(function () {
         importe_gasto: importe_gasto,
         folio_fiscal: folio_fiscal,
         comentario_gasto: comentario_gasto,
+        coordenadas_gasto: coordenadas_gasto,
       },
     })
       .done(function (data) {
@@ -1079,7 +1139,8 @@ $(document).ready(function () {
     sitio_gasto,
     tipos_gasto,
     importe_gasto,
-    comentario_gasto
+    comentario_gasto,
+    coordenadas_gasto
   ) {
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1094,6 +1155,7 @@ $(document).ready(function () {
         tipos_gasto: tipos_gasto,
         importe_gasto: importe_gasto,
         comentario_gasto: comentario_gasto,
+        coordenadas_gasto: coordenadas_gasto,
       },
     })
       .done(function (data) {
@@ -1138,7 +1200,8 @@ $(document).ready(function () {
     sitio_gasto,
     tipos_gasto,
     importe_gasto,
-    comentario_gasto
+    comentario_gasto,
+    coordenadas_gasto
   ) {
     $.ajax({
       url: "php/controllers/viaticos/viaticos_controller.php",
@@ -1153,6 +1216,7 @@ $(document).ready(function () {
         tipos_gasto: tipos_gasto,
         importe_gasto: importe_gasto,
         comentario_gasto: comentario_gasto,
+        coordenadas_gasto: coordenadas_gasto,
       },
     })
       .done(function (data) {
@@ -1224,6 +1288,9 @@ $(document).ready(function () {
 
 var tf = new TableFilter(document.querySelector(".tablaDepositos"), {
   base_path: "js/tablefilter/",
+  paging: {
+    results_per_page: ["Records: ", [10, 25, 50, 100]],
+  },
   responsive: true,
   rows_counter: true,
   btn_reset: true,

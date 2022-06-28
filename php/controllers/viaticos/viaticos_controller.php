@@ -254,6 +254,7 @@ function saveSpent()
     $tipos_gasto = $_POST['tipos_gasto'];
     $importe_gasto = $_POST['importe_gasto'];
     $comentario_gasto = $_POST['comentario_gasto'];
+    $coordenadas_gasto = $_POST['coordenadas_gasto'];
 
     $queries = new Queries;
 
@@ -273,7 +274,9 @@ function saveSpent()
             localidad,
             clasificacion,
             id_ruta_img,
-            log_date
+            log_date,
+            tipo_gasto_manual,
+            coordenadas
         )VALUES(
             NULL,
             1,
@@ -286,7 +289,9 @@ function saveSpent()
             '$sitio_gasto',
             '1',
             NULL,
-            NOW()
+            NOW(),
+            '$comentario_gasto',
+            '$coordenadas_gasto'
         )";
         $insertSpent = $queries->insertData($sql_insertar_gasto);
 
@@ -344,6 +349,7 @@ function saveSpentDeduciblePendiente()
     $tipos_gasto = $_POST['tipos_gasto'];
     $importe_gasto = $_POST['importe_gasto'];
     $comentario_gasto = $_POST['comentario_gasto'];
+    $coordenadas_gasto = $_POST['coordenadas_gasto'];
 
     $queries = new Queries;
 
@@ -364,7 +370,8 @@ function saveSpentDeduciblePendiente()
             clasificacion,
             id_ruta_img,
             log_date,
-            comentarios_usuario
+            tipo_gasto_manual,
+            coordenadas
         )VALUES(
             NULL,
             1,
@@ -378,7 +385,8 @@ function saveSpentDeduciblePendiente()
             '2',
             NULL,
             NOW(),
-            '$comentario_gasto'
+            '$comentario_gasto',
+            '$coordenadas_gasto'
         )";
         $insertSpent = $queries->insertData($sql_insertar_gasto);
 
@@ -437,6 +445,7 @@ function saveSpentDeducible()
     $importe_gasto = $_POST['importe_gasto'];
     $folio_fiscal = $_POST['folio_fiscal'];
     $comentario_gasto = $_POST['comentario_gasto'];
+    $coordenadas_gasto = $_POST['coordenadas_gasto'];
 
     $queries = new Queries;
 
@@ -457,7 +466,9 @@ function saveSpentDeducible()
             clasificacion,
             id_ruta_img,
             folio_fiscal,
-            log_date
+            log_date,
+            tipo_gasto_manual,
+            coordenadas
         )VALUES(
             NULL,
             1,
@@ -471,7 +482,9 @@ function saveSpentDeducible()
             '2',
             NULL,
             '$folio_fiscal',
-            NOW()
+            NOW(),
+            '$comentario_gasto',
+            '$coordenadas_gasto'
         )";
         $insertSpent = $queries->insertData($sql_insertar_gasto);
 

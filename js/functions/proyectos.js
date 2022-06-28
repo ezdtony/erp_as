@@ -473,7 +473,7 @@ $(document).ready(function () {
       })
       .fail(function (message) {});
   });
-  $(document).on("click", ".info_proyect_start_date", function () {
+  $(document).on("click", ".infoProyect", function () {
     var id_proyecto = $(this).attr("id");
     loading();
     $.ajax({

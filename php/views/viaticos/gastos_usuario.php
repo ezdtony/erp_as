@@ -19,7 +19,7 @@
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Gastos</h4>
                 <br>
-                <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#registrarGasto">Registrar Gasto</button>
+                <button type="button" class="btn btn-info rounded-pill nuevoGasto" data-bs-toggle="modal" data-bs-target="#registrarGasto">Registrar Gasto</button>
                 <br>
                 <br>
                 <br>
