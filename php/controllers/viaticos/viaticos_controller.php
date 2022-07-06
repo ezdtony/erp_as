@@ -19,6 +19,7 @@ function saveDeposit()
     $tipos_gasto = $_POST['tipos_gasto'];
     $importe = $_POST['importe'];
     $id_author = $_POST['id_author'];
+    $id_proyecto = $_POST['id_proyecto'];
 
     $queries = new Queries;
 
@@ -39,7 +40,8 @@ function saveDeposit()
             sitio,
             cantidad,
             fecha,
-            log_date
+            log_date,
+            id_proyectos
         ) VALUES (
             '$id_user',
             '$id_asingacion',
@@ -48,7 +50,8 @@ function saveDeposit()
             '$sitio',
             '$importe',
             '$fecha',
-            NOW()
+            NOW(),
+            '$id_proyecto'
             )";
         //--- --- ---//
         $insertar_deposito = $queries->insertData($sql_insertar_deposito);
@@ -91,6 +94,7 @@ function editDeposit()
     $importe = $_POST['importe'];
     $id_author = $_POST['id_author'];
     $id_deposito = $_POST['id_deposit'];
+    $id_proyecto = $_POST['id_proyecto'];
 
     $queries = new Queries;
 
@@ -99,18 +103,14 @@ function editDeposit()
     $og_import = $getInfoRequest[0]->cantidad;
     $id_user_og = $getInfoRequest[0]->id_personal;
 
-    $returnBalance = "UPDATE  asteleco_viaticos_erp.saldos SET saldo = saldo - $og_import WHERE id_personal = $id_user_og";
+    $returnBalance = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo - $og_import WHERE id_personal = $id_user_og";
     $updateBalance = $queries->insertData($returnBalance);
 
-    $stmt = "UPDATE asteleco_viaticos_erp.saldos 
-    SET 
-    saldo = saldo + $importe
-    WHERE id_personal = $id_user";
+    $stmt = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo + $importe WHERE id_personal = $id_user";
 
     $updateSaldo = $queries->insertData($stmt);
     //$last_id = $getInfoRequest['last_id'];
     if (!empty($updateSaldo)) {
-
         $sql_insertar_deposito = "UPDATE asteleco_viaticos_erp.depositos 
         SET
             id_personal = $id_user ,
@@ -120,10 +120,13 @@ function editDeposit()
             sitio = '$sitio' ,
             cantidad = $importe ,
             fecha = '$fecha' ,
-            log_date = NOW() 
+            log_date = NOW(),
+            id_proyectos = $id_proyecto
             WHERE id_depositos = $id_deposito";
         //--- --- ---//
         $insertar_deposito = $queries->insertData($sql_insertar_deposito);
+        
+        
         if (!empty($insertar_deposito)) {
             $data = array(
                 'response' => true,
@@ -618,8 +621,8 @@ function approveSpent()
     $column_name = $_POST['column_name'];
 
     $queries = new Queries;
-    
-    
+
+
     $sql_update_gasto = "UPDATE asteleco_viaticos_erp.gastos SET $column_name =  '$status' WHERE id_gastos = $id_gasto";
     $update_saldo = $queries->insertData($sql_update_gasto);
 
@@ -631,13 +634,11 @@ function approveSpent()
 
         if ($ap_coordinacion == 1 && $ap_contabilidad == 1) {
             $status_gral = 4;
-        }else if($ap_coordinacion == 1 && $ap_contabilidad == 0){
+        } else if ($ap_coordinacion == 1 && $ap_contabilidad == 0) {
             $status_gral = 2;
-
-        } else if($ap_coordinacion == 0 && $ap_contabilidad == 1){
+        } else if ($ap_coordinacion == 0 && $ap_contabilidad == 1) {
             $status_gral = 3;
-
-        } else if($ap_coordinacion == 0 && $ap_contabilidad == 0){
+        } else if ($ap_coordinacion == 0 && $ap_contabilidad == 0) {
             $status_gral = 1;
         }
     }
@@ -649,15 +650,14 @@ function approveSpent()
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_viaticos_erp.status_type stt ON stt.id_status_type = gas.id_status_type
         WHERE id_gastos = $id_gasto";
-    $get_spent_info = $queries->getData($sql_get_spent_info);
-    if (!empty($get_spent_info)) {
-        $id_status_type = $get_spent_info[0]->id_status_type;
-        $txt_status = $get_spent_info[0]->txt_status;
-        $clase_css = $get_spent_info[0]->clase_css;
-    }else{
-        $id_status_type = 0;
-    }
-
+        $get_spent_info = $queries->getData($sql_get_spent_info);
+        if (!empty($get_spent_info)) {
+            $id_status_type = $get_spent_info[0]->id_status_type;
+            $txt_status = $get_spent_info[0]->txt_status;
+            $clase_css = $get_spent_info[0]->clase_css;
+        } else {
+            $id_status_type = 0;
+        }
     }
 
     if (!empty($update_saldo)) {
@@ -688,8 +688,8 @@ function changeSpentStatus()
     $column_name = $_POST['column_name'];
 
     $queries = new Queries;
-    
-    
+
+
     $sql_update_gasto = "UPDATE asteleco_viaticos_erp.gastos SET $column_name =  '$status' WHERE id_gastos = $id_gasto";
     $update_saldo = $queries->insertData($sql_update_gasto);
 
@@ -706,15 +706,14 @@ function changeSpentStatus()
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_viaticos_erp.status_type stt ON stt.id_status_type = gas.id_status_type
         WHERE id_gastos = $id_gasto";
-    $get_spent_info = $queries->getData($sql_get_spent_info);
-    if (!empty($get_spent_info)) {
-        $id_status_type = $get_spent_info[0]->id_status_type;
-        $txt_status = $get_spent_info[0]->txt_status;
-        $clase_css = $get_spent_info[0]->clase_css;
-    }else{
-        $id_status_type = 0;
-    }
-
+        $get_spent_info = $queries->getData($sql_get_spent_info);
+        if (!empty($get_spent_info)) {
+            $id_status_type = $get_spent_info[0]->id_status_type;
+            $txt_status = $get_spent_info[0]->txt_status;
+            $clase_css = $get_spent_info[0]->clase_css;
+        } else {
+            $id_status_type = 0;
+        }
     }
 
     if (!empty($update_saldo)) {

@@ -17,7 +17,7 @@ function getSiteZoneByIDCentral()
     $queries = new Queries;
 
     $stmt = "SELECT zce.*
-    FROM asteleco_accesos.zonas_central  AS zce
+    FROM asteleco_accesos_erp.zonas_central  AS zce
     WHERE zce.id_centrales = $id_central
     ORDER BY descripcion ASC";
 
@@ -58,7 +58,7 @@ function SaveDirectionSite()
 
     $queries = new Queries;
 
-    $stmt = "INSERT INTO asteleco_accesos.direcciones_accesos (
+    $stmt = "INSERT INTO asteleco_accesos_erp.direcciones_accesos (
         direccion_calle,
         direccion_num_externo,
         direccion_colonia,
@@ -119,7 +119,7 @@ function SaveNewSite()
 
     $queries = new Queries;
 
-    $stmt = "INSERT INTO asteleco_accesos.sitios (
+    $stmt = "INSERT INTO asteleco_accesos_erp.sitios (
        id_centrales,
        id_zonas_central,
        id_direcciones_accesos,
@@ -179,7 +179,7 @@ function SaveSitePropiety()
 
     $queries = new Queries;
 
-    $stmt = "INSERT INTO asteleco_accesos.propietarios (
+    $stmt = "INSERT INTO asteleco_accesos_erp.propietarios (
        nombres,
          apellidos,
          numero_telefonico,
@@ -242,15 +242,15 @@ function getFulInfoSite()
     tip_sit.descripcion AS tipo_sitio,
     tip_cer.descripcion AS tipo_cerradura,
     status_op.descripcion AS status_operacion
-     FROM asteleco_accesos.sitios AS sites
-     INNER JOIN asteleco_accesos.centrales AS centrales ON centrales.id_centrales = sites.id_centrales
-     INNER JOIN asteleco_accesos.zonas_central AS zonas_central ON zonas_central.id_zonas_central = sites.id_zonas_central
-     INNER JOIN asteleco_accesos.direcciones_accesos AS dirac ON dirac.id_direcciones_accesos = sites.id_direcciones_accesos
-     INNER JOIN asteleco_accesos.propietarios AS prop_site ON prop_site.id_propietarios = sites.id_propietarios
-    INNER JOIN asteleco_accesos.tipo_perimetro AS tip_per ON tip_per.id_tipo_perimetro = sites.id_tipo_perimetro
-    INNER JOIN asteleco_accesos.tipos_sitio AS tip_sit ON tip_sit.id_tipos_sitio = sites.id_tipos_sitio
-    INNER JOIN asteleco_accesos.tipos_cerraduras AS tip_cer ON tip_cer.id_tipos_cerraduras = sites.id_tipos_cerraduras
-    INNER JOIN asteleco_accesos.status_operaciones AS status_op ON status_op.id_status_operaciones = sites.status
+     FROM asteleco_accesos_erp.sitios AS sites
+     INNER JOIN asteleco_accesos_erp.centrales AS centrales ON centrales.id_centrales = sites.id_centrales
+     INNER JOIN asteleco_accesos_erp.zonas_central AS zonas_central ON zonas_central.id_zonas_central = sites.id_zonas_central
+     INNER JOIN asteleco_accesos_erp.direcciones_accesos AS dirac ON dirac.id_direcciones_accesos = sites.id_direcciones_accesos
+     INNER JOIN asteleco_accesos_erp.propietarios AS prop_site ON prop_site.id_propietarios = sites.id_propietarios
+    INNER JOIN asteleco_accesos_erp.tipo_perimetro AS tip_per ON tip_per.id_tipo_perimetro = sites.id_tipo_perimetro
+    INNER JOIN asteleco_accesos_erp.tipos_sitio AS tip_sit ON tip_sit.id_tipos_sitio = sites.id_tipos_sitio
+    INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tip_cer ON tip_cer.id_tipos_cerraduras = sites.id_tipos_cerraduras
+    INNER JOIN asteleco_accesos_erp.status_operaciones AS status_op ON status_op.id_status_operaciones = sites.status
     WHERE sites.id_sitios = $id_site";
 
     $getInfoRequest = $queries->getData($stmt);
@@ -283,8 +283,8 @@ function getGabinetesInfo()
     $queries = new Queries;
 
     $stmt = "SELECT gab.*, cerr.descripcion AS cerradura
-    FROM asteleco_accesos.gabinetes AS gab 
-    INNER JOIN asteleco_accesos.tipos_cerraduras AS cerr ON cerr.id_tipos_cerraduras = gab.id_tipos_cerraduras
+    FROM asteleco_accesos_erp.gabinetes AS gab 
+    INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS cerr ON cerr.id_tipos_cerraduras = gab.id_tipos_cerraduras
     WHERE gab.id_sitios = $id_site";
 
     $getInfoRequest = $queries->getData($stmt);
@@ -340,8 +340,8 @@ function getSiteContactOwner()
     $queries = new Queries;
 
     $stmt = "SELECT prop.*
-    FROM asteleco_accesos.propietarios AS prop 
-    INNER JOIN asteleco_accesos.sitios AS sites ON sites.id_propietarios = prop.id_propietarios
+    FROM asteleco_accesos_erp.propietarios AS prop 
+    INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_propietarios = prop.id_propietarios
     WHERE sites.id_sitios = $id_site";
 
     $getInfoRequest = $queries->getData($stmt);
@@ -398,7 +398,7 @@ function editSiteName()
     $site_name = $_POST['site_name'];
     $queries = new Queries;
 
-    $stmt = "UPDATE asteleco_accesos.sitios SET nombre_sitio = '$site_name', codigo_sitio = '$site_code' 
+    $stmt = "UPDATE asteleco_accesos_erp.sitios SET nombre_sitio = '$site_name', codigo_sitio = '$site_code' 
     WHERE id_sitios = $id_sitio";
 
     $getInfoRequest = $queries->InsertData($stmt);

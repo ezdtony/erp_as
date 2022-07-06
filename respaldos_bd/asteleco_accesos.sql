@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.24-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: asteleco_accesos
+-- Host: localhost    Database: asteleco_accesos_erp
 -- ------------------------------------------------------
 -- Server version	10.4.24-MariaDB
 

@@ -16,11 +16,11 @@ class Access
         zonas.descripcion AS zona, 
         stat.descripcion AS status_sitio, 
         tipos.descripcion AS tipo_sitio
-        FROM asteleco_accesos.sitios AS sites
-        INNER JOIN asteleco_accesos.centrales AS centr ON centr.id_centrales = sites.id_centrales
-        INNER JOIN asteleco_accesos.zonas_central AS zonas ON zonas.id_zonas_central = sites.id_zonas_central
-        INNER JOIN asteleco_accesos.tipos_sitio AS tipos ON tipos.id_tipos_sitio = sites.id_tipos_sitio
-        INNER JOIN asteleco_accesos.status_operaciones AS stat ON stat.id_status_operaciones = sites.status
+        FROM asteleco_accesos_erp.sitios AS sites
+        INNER JOIN asteleco_accesos_erp.centrales AS centr ON centr.id_centrales = sites.id_centrales
+        INNER JOIN asteleco_accesos_erp.zonas_central AS zonas ON zonas.id_zonas_central = sites.id_zonas_central
+        INNER JOIN asteleco_accesos_erp.tipos_sitio AS tipos ON tipos.id_tipos_sitio = sites.id_tipos_sitio
+        INNER JOIN asteleco_accesos_erp.status_operaciones AS stat ON stat.id_status_operaciones = sites.status
         ";
         
         $getSites = $queries->getData($sql_sites);
@@ -32,7 +32,7 @@ class Access
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_Central = "SELECT * FROM asteleco_accesos.centrales";
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.centrales";
         
         $getCentral = $queries->getData($sql_Central);
 
@@ -42,7 +42,7 @@ class Access
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_Central = "SELECT * FROM asteleco_accesos.tipos_cerraduras";
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipos_cerraduras";
         
         $getCentral = $queries->getData($sql_Central);
 
@@ -52,7 +52,7 @@ class Access
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_perimeter = "SELECT * FROM asteleco_accesos.tipo_perimetro";
+        $sql_perimeter = "SELECT * FROM asteleco_accesos_erp.tipo_perimetro";
         
         $getPerimeter = $queries->getData($sql_perimeter);
 

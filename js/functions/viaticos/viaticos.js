@@ -115,6 +115,7 @@ $(document).ready(function () {
     var tipos_gasto = $("#tipos_gasto").val();
     var importe = $("#importe").val();
     var id_author = $("#id_autor").val();
+    var id_proyecto = $("#proyecto").val();
 
     console.log("id_user: " + id_user);
     console.log("fecha: " + fecha);
@@ -149,6 +150,7 @@ $(document).ready(function () {
           tipos_gasto: tipos_gasto,
           id_author: id_author,
           importe: importe,
+          id_proyecto: id_proyecto,
         },
       })
         .done(function (data) {
@@ -253,19 +255,15 @@ $(document).ready(function () {
     var importe = $("#edit_importe").val();
     var id_author = $("#id_autor").val();
     var id_deposit = $("#edit_id_deposito").val();
-    console.log("id_user: " + id_user);
-    console.log("fecha: " + fecha);
-    console.log("id_asingacion: " + id_asingacion);
-    console.log("sitio: " + sitio);
-    console.log("tipos_gasto: " + tipos_gasto);
-    console.log("importe: " + importe);
+    var id_proyecto = $("#edit_proyecto").val();
     if (
       id_user == null ||
       fecha == null ||
       id_asingacion == null ||
       tipos_gasto == null ||
       importe == null ||
-      importe == ""
+      importe == "" ||
+      id_proyecto == null
     ) {
       Swal.fire({
         icon: "info",
@@ -287,6 +285,7 @@ $(document).ready(function () {
           id_author: id_author,
           importe: importe,
           id_deposit: id_deposit,
+          id_proyecto: id_proyecto,
         },
       })
         .done(function (data) {
