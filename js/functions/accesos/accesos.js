@@ -596,11 +596,95 @@ $(document).ready(function () {
           title: "Nombre y Código del Sitio actualizado",
         });
         $("#div_site_name").empty().append(data.html);
-        $("#siteName").empty().text(site_code+ " | " +site_name);
+        $("#siteName")
+          .empty()
+          .text(site_code + " | " + site_name);
       } else {
         Swal.fire({
           icon: "error",
           title: "Ocurrió un error al guardar la información del sitio",
+        });
+      }
+    });
+  });
+
+  $(document).on("change", "#na_central", function () {
+    var id_central = $(this).val();
+
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getZonesByCentral",
+        id_central: id_central,
+      },
+    }).done(function (data) {
+      var data = JSON.parse(data);
+      console.log(data);
+      if (data.response == true) {
+        console.log(data.data);
+        html_options = "";
+        html_options +=
+          '<option disabled selected value="">Seleccione una zona</option>';
+        for (var i = 0; i < data.data.length; i++) {
+          html_options +=
+            '<option value="' +
+            data.data[i].id_zonas_central +
+            '">' +
+            data.data[i].descripcion +
+            "</option>";
+        }
+        $("#na_zona").empty().append(html_options);
+        $("#na_zona").attr("disabled", false);
+      } else {
+        $("#na_zona").empty().append(html_options);
+        $("#na_zona").attr("disabled", true);
+        Swal.fire({
+          icon: "error",
+          title: "Ocurrió un error al obtener las zonas",
+          text: data.message,
+        });
+      }
+    });
+  });
+
+  $(document).on("change", "#na_zona", function () {
+    var id_zona = $(this).val();
+
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getSitesByZone",
+        id_zona: id_zona,
+      },
+    }).done(function (data) {
+      var data = JSON.parse(data);
+      console.log(data);
+      if (data.response == true) {
+        console.log(data.data);
+        html_options = "";
+        html_options +=
+          '<option disabled selected value="">Seleccione una sitio</option>';
+        for (var i = 0; i < data.data.length; i++) {
+          html_options +=
+            '<option value="' +
+            data.data[i].id_sitios +
+            '">' +
+            data.data[i].codigo_sitio +
+            " | " +
+            data.data[i].nombre_sitio +
+            "</option>";
+        }
+        $("#na_sitio").empty().append(html_options);
+        $("#na_sitio").attr("disabled", false);
+      } else {
+        $("#na_sitio").empty().append(html_options);
+        $("#na_sitio").attr("disabled", true);
+        Swal.fire({
+          icon: "error",
+          title: "Ocurrió un error al obtener los sitios",
+          text: data.message,
         });
       }
     });
@@ -613,8 +697,16 @@ $(document).ready(function () {
   $("#municipio_sitio").select2({
     dropdownParent: $("#nuevoSitio"),
   });
+  $("#na_central").select2({
+    dropdownParent: $("#nuevoAcceso"),
+  });
+  $("#na_sitio").select2({
+    dropdownParent: $("#nuevoAcceso"),
+  });
+  $("#na_zona").select2({
+    dropdownParent: $("#nuevoAcceso"),
+  });
 });
-
 /* Swal.fire({
     title: "¿Estás seguro?",
     text: "¿Deseas guardar el nuevo sitio?",

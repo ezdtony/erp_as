@@ -110,7 +110,7 @@
                             </li>
                         <?php endif; ?>
                         <li>
-                            <a href="apps-email-inbox.html">Captura</a>
+                            <a href="?submodule=captura_accesos">Captura</a>
                         </li>
                         <li>
                             <a href="#">Aprobados</a>

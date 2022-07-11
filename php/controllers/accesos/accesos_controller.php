@@ -424,4 +424,99 @@ function editSiteName()
 
     echo json_encode($data);
 }
+function getZonesByCentral()
+{
 
+    $id_central = $_POST['id_central'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT *
+    FROM asteleco_accesos_erp.zonas_central
+    WHERE id_centrales = $id_central";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+       
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data' => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'No se encontraron zonas para esta central',
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function getSitesByCentral()
+{
+
+    $id_central = $_POST['id_central'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT *
+    FROM asteleco_accesos_erp.sitios
+    WHERE id_centrales = $id_central";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+       
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data' => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'No se encontraron sitios para esta central',
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function getSitesByZone()
+{
+
+    $id_zonas_central = $_POST['id_zona'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT *
+    FROM asteleco_accesos_erp.sitios
+    WHERE id_zonas_central = $id_zonas_central";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+       
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data' => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'No se encontraron sitios para esta zona',
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
