@@ -36,16 +36,15 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                 <optgroup label="Colaborador">
                                     <?php foreach ($getUsersName as $users_name) : ?>
                                         <?php if (isset($_GET['colaborador'])) :
-                                            $txt_colaborador = $_GET['colaborador'];
-                                            $colaborador = str_replace('-', ' ', $txt_colaborador);
+                                        $colaborador = $_GET['colaborador'];
                                         ?>
-                                            <?php if ($users_name->nombre == $colaborador) : ?>
-                                                <option value="<?= $users_name->nombre ?>" selected><?= $users_name->nombre ?></option>
+                                            <?php if ($users_name->id_lista_personal == $colaborador) : ?>
+                                                <option value="<?= $users_name->id_lista_personal ?>" selected><?= $users_name->nombre ?></option>
                                             <?php else : ?>
-                                                <option value="<?= $users_name->nombre ?>"><?= $users_name->nombre ?></option>
+                                                <option value="<?= $users_name->id_lista_personal ?>"><?= $users_name->nombre ?></option>
                                             <?php endif; ?>
                                         <?php else : ?>
-                                            <option value="<?= $users_name->nombre ?>"><?= $users_name->nombre ?></option>
+                                            <option value="<?= $users_name->id_lista_personal ?>"><?= $users_name->nombre ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </optgroup>
@@ -62,8 +61,7 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
         <!-- end card-->
     </div>
     <?php if (isset($_GET['colaborador']) && isset($_GET['fecha_1']) && isset($_GET['fecha_2'])) :
-        $txt_colaborador = $_GET['colaborador'];
-        $colaborador = str_replace('-', ' ', $txt_colaborador);
+        $colaborador = $_GET['colaborador'];
         $arr_fecha_1 = explode("/", $_GET['fecha_1']);
         $fecha_1 = $arr_fecha_1[2] . '-' . $arr_fecha_1[0] . '-' . $arr_fecha_1[1];
         $fecha_1 = str_replace(' ', '', $fecha_1);
@@ -74,12 +72,16 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
         include_once('php/models/viatics_reports.php');
         $viaticos_reports = new Viatics;
         $getUserRegisters = $viaticos_reports->getUserRegisters($colaborador, $fecha_1, $fecha_2);
+        $nombre_usuario = '';
+        if (!empty($getUserRegisters)) {
+            $nombre_usuario = $getUserRegisters[0]->nombre;
+        }
     ?>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
 
-                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $colaborador ?></h4>
+                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?></h4>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -101,16 +103,21 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                             <tbody>
                                 <?php foreach ($getUserRegisters as $registers) :
                                     $ruta_factura = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_pdf);
+                                    if ($registers->clasificacion == '1') {
+                                        $str_clasificacion = 'No deducible';
+                                    }else{
+                                        $str_clasificacion = 'Deducible';
+                                    }
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $registers->id_reg ?></td>
-                                        <td class="text-center"><?= $registers->fecha ?></td>
-                                        <td class="text-center"><?= $registers->proyecto ?></td>
+                                        <td class="text-center"><?= $registers->id_gastos ?></td>
+                                        <td class="text-center"><?= $registers->fecha_registro ?></td>
+                                        <td class="text-center"><?= $registers->string_proyecto ?></td>
                                         <td class="text-center"><?= $registers->importe ?></td>
-                                        <td class="text-center"><?= $registers->tgasto ?></td>
-                                        <td class="text-center"><?= $registers->clasificacion ?></td>
-                                        <td class="text-center"><?= $registers->status ?></td>
-                                        <td class="text-center"><?= $registers->ffiscal ?></td>
+                                        <td class="text-center"><?= $registers->tipo_gasto ?></td>
+                                        <td class="text-center"><?= $str_clasificacion ?></td>
+                                        <td class="text-center"><?= $registers->estatus ?></td>
+                                        <td class="text-center"><?= $registers->folio_fiscal ?></td>
                                         <td class="table-action text-center">
                                             <div>
                                                 <?php
@@ -120,11 +127,11 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                             </div>
                                         </td>
                                         <td class="table-action text-center">
-                                            <?php if ($ruta_factura == 'Pendiente') : ?>
-                                                <?php if ($ruta_factura == 'Pendiente' && $registers->clasificacion == 'No deducible') : ?>
+                                            <?php if ($ruta_factura == '') : ?>
+                                                <?php if ($ruta_factura == '' && $registers->clasificacion == '1') : ?>
                                                     N/A
                                                 <?php else : ?>
-                                                    <?= $ruta_factura ?>
+                                                    PENDIENTE
                                                 <?php endif; ?>
                                             <?php else : ?>
                                                 <div>

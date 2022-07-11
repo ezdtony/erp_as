@@ -1,16 +1,8 @@
 //|console.log("load_creditos");
 $(document).ready(function () {
   $(document).on("change", "#colaborador", function () {
-    var txt_colaborador = $(this).val();
-    var arr_colaborador = txt_colaborador.split(" ");
-    var colaborador = "";
-    for (let index = 0; index < arr_colaborador.length; index++) {
-      if (index == (arr_colaborador.length - 1)) {
-        colaborador += arr_colaborador[index];
-      } else {
-        colaborador += arr_colaborador[index] + "-";
-      }
-    }
+    var colaborador = $(this).val();
+
     var rango_fechas = $("#rango_fechas").val();
     var fecha_1 = rango_fechas.split("-")[0].trim();
     var fecha_2 = rango_fechas.split("-")[1].trim();

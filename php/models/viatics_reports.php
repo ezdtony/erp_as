@@ -6,8 +6,20 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_user_archives = "SELECT * FROM asteleco_viaticos_old.registros_principal 
-        WHERE nombre = '$id_user_data' AND fecha BETWEEN '$fecha_1' AND '$fecha_2'";
+        $sql_user_archives = "SELECT gas.*, tgas.descripcion AS tipo_gasto, 
+        stat.descripcion AS estatus,
+        rimg.ruta_archivo AS ruta_img,
+        rpdf.ruta_archivo AS ruta_pdf,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON gas.id_status_type = stat.id_status_type
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rimg ON rimg.id_rutas_archivos = gas.id_ruta_img
+
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
+        WHERE id_personal = '$id_user_data' AND fecha_registro BETWEEN '$fecha_1' AND '$fecha_2'";
+        
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);

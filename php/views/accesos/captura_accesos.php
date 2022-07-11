@@ -23,7 +23,7 @@ $allCentrales = $accesos->getAllCentral();
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mb-3">Lista de Sitios</h4>
+                <h4 class="header-title mb-3">Lista de Accesos Registrados</h4>
                 <div class="button-list">
                     <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoAcceso">Registrar Acceso</button>
                     <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#informacionSitio">Información de Sitios</button>
@@ -35,12 +35,11 @@ $allCentrales = $accesos->getAllCentral();
                         <tr>
                             <th>Código</th>
                             <th>Nombre Sitio</th>
+                            <th>Actividad</th>
                             <th>Empresa</th>
-                            <th>Clasificación</th>
-                            <th>Central</th>
-                            <th>Zona</th>
-                            <th>Status</th>
-                            <th>Info. Detallada</th>
+                            <th>Proveedor</th>
+                            <th>Fecha</th>
+                            <th>Check-List</th>
                         </tr>
                     </thead>
 
@@ -53,12 +52,13 @@ $allCentrales = $accesos->getAllCentral();
                             <tr>
                                 <td><?= $sites->codigo_sitio ?></td>
                                 <td><?= $sites->nombre_sitio ?></td>
-                                <td><?= $sites->empresa_sitio ?></td>
-                                <td><?= $sites->tipo_sitio ?></td>
-                                <td><?= $sites->nombre_central ?></td>
-                                <td><?= $sites->zona ?></td>
-                                <td><?= $sites->status_sitio ?></td>
-                                <td><button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-secondary infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="mdi mdi-information-variant"></i> </button></td>
+                                <td>MTTO. PREVENTIVO</td>
+                                <td>ASTELECOM</td>
+                                <td>Manuel León</td>
+                                <td><?= date('Y-m-d') ?></td>
+                                <td>
+                                    <button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-danger infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="dripicons-document"></i> </button>
+                                </td>
                             </tr>
                         <?php } ?>
                     </tbody>

@@ -106,13 +106,15 @@
                     <ul class="side-nav-second-level">
                         <?php if ($id_area <= 3) : ?>
                             <li>
-                            <a href="?submodule=sitios">Sitios</a>
+                                <a href="?submodule=sitios">Sitios</a>
+                            </li>
+                        <?php else : ?>
+                            <li>
+                                <a href="?submodule=captura_accesos">Captura</a>
                             </li>
                         <?php endif; ?>
-                        <li>
-                            <a href="?submodule=captura_accesos">Captura</a>
-                        </li>
-                        <li>
+
+                        <!-- <li>
                             <a href="#">Aprobados</a>
                         </li>
                         <li>
@@ -120,7 +122,7 @@
                         </li>
                         <li>
                             <a href="#">Concentrado</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </li>
