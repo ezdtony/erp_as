@@ -28,8 +28,10 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_user_archives = "SELECT DISTINCT(proyecto) FROM asteleco_viaticos_old.registros_principal 
-        WHERE nombre = '$id_user_data'";
+        $sql_user_archives = "SELECT DISTINCT proy.id_proyectos, codigo_proyecto, nombre_proyecto, CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
+         WHERE id_personal = '$id_user_data'";
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);
@@ -48,8 +50,16 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_user_archives = "SELECT * FROM asteleco_viaticos_old.registros_principal 
-        WHERE nombre = '$id_user_data' AND fecha BETWEEN '$fecha_1' AND '$fecha_2' AND proyecto = '$proyecto'";
+        $sql_user_archives = "SELECT *, tgas.descripcion AS tipo_gasto, stat.descripcion AS estatus, rpdf.ruta_archivo AS ruta_pdf, rimg.ruta_archivo AS ruta_img,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON gas.id_status_type = stat.id_status_type
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rimg ON rimg.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
+        WHERE gas.id_personal = '$id_user_data' AND gas.fecha_registro BETWEEN '$fecha_1' AND '$fecha_2' AND gas.id_proyectos = '$proyecto'";
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);

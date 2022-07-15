@@ -54,6 +54,7 @@
                         $statusTypes = $viatics->getStatusTypes();
 
                         foreach ($allGastos as $deposits) {
+                            
                             $clasificacion = $deposits->clasificacion;
                             if ($clasificacion == 1) {
                                 $folio_fiscal = 'N/A';
@@ -138,7 +139,10 @@
                                 </td>
                                 <td class="table-action">
                                     <div>
-                                        <a href="<?= $deposits->ruta_img ?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
+                                        <?php 
+                                        $ruta_img = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_img);
+                                        ?>
+                                        <a href="<?= $ruta_img ?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
                                     </div>
                                 </td>
                                 <td><?= $folio_fiscal ?></td>
@@ -147,8 +151,10 @@
                                 <?php else : ?>
                                     <?php if ($deposits->ruta_pdf == '') : ?>
                                         <td><button id="<?= $deposits->id_gastos ?>" class="btn btn-secondary addFactura" proyect-code="<?= $deposits->codigo_proyecto ?> - <?= $deposits->nombre_proyecto ?>" title="Agregar factura" data-bs-toggle="modal" data-bs-target="#agregarFactura"><i class="mdi mdi-file-upload-outline"></i> </button></td>
-                                    <?php else : ?>
-                                        <td><a href="<?= $deposits->ruta_pdf ?>" target="_blank" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </a></td>
+                                    <?php else :
+                                       $ruta_pdf = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_pdf);
+                                        ?>
+                                        <td><a href="<?= $ruta_pdf ?>" target="_blank" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </a></td>
                                     <?php endif; ?>
                                 <?php endif; ?>
                                 <td class="table-action">
