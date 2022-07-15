@@ -78,8 +78,13 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_user_archives = "SELECT * FROM asteleco_viaticos_old.depositos 
-        WHERE destinatario = '$id_user_data' AND fecha BETWEEN '$fecha_1' AND '$fecha_2'";
+        $sql_user_archives = "SELECT dep.*, codigo_proyecto, nombre_proyecto, CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto, tgas.descripcion AS tipo_gasto,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.depositos AS dep
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON dep.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = dep.id_personal
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = dep.id_proyectos
+        WHERE id_personal = '$id_user_data' AND fecha BETWEEN '$fecha_1' AND '$fecha_2'";
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);

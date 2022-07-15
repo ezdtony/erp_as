@@ -36,16 +36,15 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                 <optgroup label="Colaborador">
                                     <?php foreach ($getUsersName as $users_name) : ?>
                                         <?php if (isset($_GET['colaborador'])) :
-                                            $txt_colaborador = $_GET['colaborador'];
-                                            $colaborador = str_replace('-', ' ', $txt_colaborador);
+                                            $colaborador = $_GET['colaborador'];
                                         ?>
-                                            <?php if ($users_name->nombre == $colaborador) : ?>
-                                                <option value="<?= $users_name->nombre ?>" selected><?= $users_name->nombre ?></option>
+                                            <?php if ($users_name->id_lista_personal == $colaborador) : ?>
+                                                <option value="<?= $users_name->id_lista_personal ?>" selected><?= $users_name->nombre ?></option>
                                             <?php else : ?>
-                                                <option value="<?= $users_name->nombre ?>"><?= $users_name->nombre ?></option>
+                                                <option value="<?= $users_name->id_lista_personal ?>"><?= $users_name->nombre ?></option>
                                             <?php endif; ?>
                                         <?php else : ?>
-                                            <option value="<?= $users_name->nombre ?>"><?= $users_name->nombre ?></option>
+                                            <option value="<?= $users_name->id_lista_personal ?>"><?= $users_name->nombre ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </optgroup>
@@ -74,12 +73,17 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
         include_once('php/models/viatics_reports.php');
         $viaticos_reports = new Viatics;
         $getUserRegisters = $viaticos_reports->getUserDeposits($colaborador, $fecha_1, $fecha_2);
+        if (!empty($getUserRegisters)) {
+            $nombre_usuario = $getUserRegisters[0]->nombre;
+        }
+        $total_depositos = 0;
     ?>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
 
-                    <h4 id="nombre_informe" class="header-title mb-3">Depósitos Registrados para <?= $colaborador ?></h4>
+                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?></h4>
+                    <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -96,21 +100,24 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                             </thead>
                             <tbody>
                                 <?php foreach ($getUserRegisters as $registers) :
-                                
+
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $registers->id_deposito ?></td>
+                                        <td class="text-center"><?= $registers->id_depositos ?></td>
                                         <td class="text-center"><?= $registers->fecha ?></td>
                                         <td class="text-center"><?= $registers->proyecto ?></td>
-                                        <td class="text-center"><?= $registers->importe ?></td>
-                                        <td class="text-center"><?= $registers->tgasto ?></td>
+                                        <td class="text-center">$ <?= $registers->cantidad ?></td>
+                                        <td class="text-center"><?= $registers->tipo_gasto ?></td>
                                         <td class="text-center"><?= $registers->sitio ?></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php
+                                    $total_depositos =  $total_depositos + floatval($registers->cantidad) ;
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                     <br>
+                    <h2 id="obra">Total: $ <?= $total_depositos; ?> </h2>
                 </div>
                 <!-- end card-body-->
             </div>
