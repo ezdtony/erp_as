@@ -82,7 +82,7 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
             <div class="card">
                 <div class="card-body">
 
-                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?></h4>
+                    <h4 id="nombre_informe" class="header-title mb-3">Depósitos Registrados de <?= $nombre_usuario ?></h4>
                     <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
                     <br>
                     <br>

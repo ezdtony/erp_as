@@ -16,7 +16,7 @@ $viaticos_reports = new Viatics;
                          </a> -->
                 </form>
             </div>
-            <h4 class="page-title">Reporte de Viáticos | Gastos por Colaborador y Proyecto</h4>
+            <h4 class="page-title">Reporte de Viáticos | Gastos por Colaborador y Tipo de Gasto</h4>
         </div>
     </div>
 </div>
@@ -28,7 +28,7 @@ $viaticos_reports = new Viatics;
                 <!-- Single Select -->
                 <div class="container">
                     <div class="row">
-                        
+
                         <div class="col">
                             <label class="form-label">Colaborador:</label>
                             <select id="colaborador" class="form-control select2 " data-toggle="select2">
@@ -36,57 +36,54 @@ $viaticos_reports = new Viatics;
                                 <optgroup label="Colaborador">
                                     <?php foreach ($getUsersName as $users_name) : ?>
                                         <?php if (isset($_GET['colaborador'])) :
-                                            $txt_colaborador = $_GET['colaborador'];
-                                            $colaborador = str_replace('-', ' ', $txt_colaborador);
+                                            $colaborador = $_GET['colaborador'];
                                         ?>
-                                            <?php if ($users_name->nombre == $colaborador) : ?>
-                                                <option value="<?= $users_name->nombre ?>" selected><?= $users_name->nombre ?></option>
+                                            <?php if ($users_name->id_lista_personal == $colaborador) : ?>
+                                                <option value="<?= $users_name->id_lista_personal ?>" selected><?= $users_name->nombre ?></option>
                                             <?php else : ?>
-                                                <option value="<?= $users_name->nombre ?>"><?= $users_name->nombre ?></option>
+                                                <option value="<?= $users_name->id_lista_personal ?>"><?= $users_name->nombre ?></option>
                                             <?php endif; ?>
                                         <?php else : ?>
-                                            <option value="<?= $users_name->nombre ?>"><?= $users_name->nombre ?></option>
+                                            <option value="<?= $users_name->id_lista_personal ?>"><?= $users_name->nombre ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </optgroup>
                             </select>
                         </div>
-                        <?php if (isset($_GET['colaborador'])): ?>
-                        <div class="col">
-                            <label class="form-label">Rango de fechas:</label>
-                            <input type="text" class="form-control date" id="rango_fechas" data-toggle="date-picker" data-cancel-class="btn-warning">
-                        </div>
-                        
-                        <div class="col">
-                            <label class="form-label">Concepto de Gasto:</label>
-                            <select id="tgasto" class="form-control select2 " data-toggle="select2">
-                                <option>Eliga un concepto *</option>
-                                <optgroup label="Concepto de Gasto">
-                                    <?php
-                                    if (isset($_GET['colaborador'])) {
-                                        $txt_colaborador = $_GET['colaborador'];
-                                        $colaborador = str_replace('-', ' ', $txt_colaborador);
-                                        $getUserSpend = $viaticos_reports->getUserSpend($colaborador);
+                        <?php if (isset($_GET['colaborador'])) : ?>
+                            <div class="col">
+                                <label class="form-label">Rango de fechas:</label>
+                                <input type="text" class="form-control date" id="rango_fechas" data-toggle="date-picker" data-cancel-class="btn-warning">
+                            </div>
 
-                                        foreach ($getUserSpend as $conceptos) : ?>
-                                            <?php if (isset($_GET['tgasto'])) :
-                                                $nombre_proyecto = $_GET['tgasto'];
-                                            ?>
-                                                <?php if ($conceptos->tgasto == $tgasto) : ?>
-                                                    <option value="<?= $conceptos->tgasto ?>" selected><?= $conceptos->tgasto ?></option>
+                            <div class="col">
+                                <label class="form-label">Concepto de Gasto:</label>
+                                <select id="tgasto" class="form-control select2 " data-toggle="select2">
+                                    <option>Eliga un concepto *</option>
+                                    <optgroup label="Concepto de Gasto">
+                                        <?php
+                                        if (isset($_GET['colaborador'])) {
+                                            $colaborador = $_GET['colaborador'];
+                                            $getUserSpend = $viaticos_reports->getUserSpend($colaborador);
+                                            $tgasto = $_GET['tgasto'];
+
+                                            foreach ($getUserSpend as $conceptos) : ?>
+                                                <?php if (isset($_GET['tgasto'])) : ?>
+                                                    <?php if ($conceptos->id_tipos_gasto == $tgasto) : ?>
+                                                        <option value="<?= $conceptos->id_tipos_gasto ?>" selected><?= $conceptos->tipo_gasto ?></option>
+                                                    <?php else : ?>
+                                                        <option value="<?= $conceptos->id_tipos_gasto ?>"><?= $conceptos->tipo_gasto ?></option>
+                                                    <?php endif; ?>
                                                 <?php else : ?>
-                                                    <option value="<?= $conceptos->tgasto ?>"><?= $conceptos->tgasto ?></option>
+                                                    <option value="<?= $conceptos->id_tipos_gasto ?>"><?= $conceptos->tipo_gasto ?></option>
                                                 <?php endif; ?>
-                                            <?php else : ?>
-                                                <option value="<?= $conceptos->tgasto ?>"><?= $conceptos->tgasto ?></option>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    <?php }
+                                            <?php endforeach; ?>
+                                        <?php }
 
-                                    ?>
-                                </optgroup>
-                            </select>
-                        </div>
+                                        ?>
+                                    </optgroup>
+                                </select>
+                            </div>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -96,9 +93,8 @@ $viaticos_reports = new Viatics;
         <!-- end card-->
     </div>
     <?php if (isset($_GET['colaborador']) && isset($_GET['fecha_1']) && isset($_GET['fecha_2']) && isset($_GET['tgasto'])) :
-        $txt_colaborador = $_GET['colaborador'];
+        $colaborador = $_GET['colaborador'];
         $tgasto = $_GET['tgasto'];
-        $colaborador = str_replace('-', ' ', $txt_colaborador);
         $arr_fecha_1 = explode("/", $_GET['fecha_1']);
         $fecha_1 = $arr_fecha_1[2] . '-' . $arr_fecha_1[0] . '-' . $arr_fecha_1[1];
         $fecha_1 = str_replace(' ', '', $fecha_1);
@@ -107,12 +103,22 @@ $viaticos_reports = new Viatics;
         $fecha_2 = str_replace(' ', '', $fecha_2);
 
         $getUserRegisters = $viaticos_reports->getUserRegistersBySpendType($colaborador, $fecha_1, $fecha_2, $tgasto);
+
     ?>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <?php
+                    $total_depositos = 0;
+                    if (!empty($getUserRegisters)) {
+                        $nombre_usuario = $getUserRegisters[0]->nombre;
+                        $tipo_gasto = $getUserRegisters[0]->tipo_gasto;
 
-                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $colaborador ?></h4>
+                    ?>
+
+                        <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?> para el tipo de gasto <?= $tipo_gasto ?></h4>
+                        <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
+                    <?php } ?>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -134,16 +140,21 @@ $viaticos_reports = new Viatics;
                             <tbody>
                                 <?php foreach ($getUserRegisters as $registers) :
                                     $ruta_factura = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_pdf);
+                                    if ($registers->clasificacion == '1') {
+                                        $str_clasificacion = 'No deducible';
+                                    } else {
+                                        $str_clasificacion = 'Deducible';
+                                    }
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $registers->id_reg ?></td>
-                                        <td class="text-center"><?= $registers->fecha ?></td>
+                                        <td class="text-center"><?= $registers->id_gastos ?></td>
+                                        <td class="text-center"><?= $registers->fecha_registro ?></td>
                                         <td class="text-center"><?= $registers->proyecto ?></td>
                                         <td class="text-center"><?= $registers->importe ?></td>
-                                        <td class="text-center"><?= $registers->tgasto ?></td>
-                                        <td class="text-center"><?= $registers->clasificacion ?></td>
-                                        <td class="text-center"><?= $registers->status ?></td>
-                                        <td class="text-center"><?= $registers->ffiscal ?></td>
+                                        <td class="text-center"><?= $registers->tipo_gasto ?></td>
+                                        <td class="text-center"><?= $str_clasificacion ?></td>
+                                        <td class="text-center"><?= $registers->estatus ?></td>
+                                        <td class="text-center"><?= $registers->folio_fiscal ?></td>
                                         <td class="table-action text-center">
                                             <div>
                                                 <?php
@@ -153,11 +164,11 @@ $viaticos_reports = new Viatics;
                                             </div>
                                         </td>
                                         <td class="table-action text-center">
-                                            <?php if ($ruta_factura == 'Pendiente') : ?>
-                                                <?php if ($ruta_factura == 'Pendiente' && $registers->clasificacion == 'No deducible') : ?>
+                                            <?php if ($ruta_factura == '') : ?>
+                                                <?php if ($ruta_factura == '' && $registers->clasificacion == '1') : ?>
                                                     N/A
                                                 <?php else : ?>
-                                                    <?= $ruta_factura ?>
+                                                    PENDIENTE
                                                 <?php endif; ?>
                                             <?php else : ?>
                                                 <div>
@@ -166,10 +177,12 @@ $viaticos_reports = new Viatics;
                                             <?php endif; ?>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php $total_depositos =  $total_depositos + floatval($registers->importe);
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
+                    <h2 id="obra">Total: $ <?= $total_depositos; ?> </h2>
                     <br>
                 </div>
                 <!-- end card-body-->

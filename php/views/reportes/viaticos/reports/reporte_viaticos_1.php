@@ -36,7 +36,7 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                 <optgroup label="Colaborador">
                                     <?php foreach ($getUsersName as $users_name) : ?>
                                         <?php if (isset($_GET['colaborador'])) :
-                                        $colaborador = $_GET['colaborador'];
+                                            $colaborador = $_GET['colaborador'];
                                         ?>
                                             <?php if ($users_name->id_lista_personal == $colaborador) : ?>
                                                 <option value="<?= $users_name->id_lista_personal ?>" selected><?= $users_name->nombre ?></option>
@@ -76,12 +76,14 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
         if (!empty($getUserRegisters)) {
             $nombre_usuario = $getUserRegisters[0]->nombre;
         }
+        $total_depositos = 0;
     ?>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
 
                     <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?></h4>
+                    <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -91,7 +93,6 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Fecha</th>
                                     <th class="text-center">Proyecto</th>
-                                    <th class="text-center">Importe</th>
                                     <th class="text-center">T. Gasto</th>
                                     <th class="text-center">Clasificación</th>
                                     <th class="text-center">Status</th>
@@ -105,14 +106,13 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                     $ruta_factura = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_pdf);
                                     if ($registers->clasificacion == '1') {
                                         $str_clasificacion = 'No deducible';
-                                    }else{
+                                    } else {
                                         $str_clasificacion = 'Deducible';
                                     }
                                 ?>
                                     <tr>
                                         <td class="text-center"><?= $registers->id_gastos ?></td>
                                         <td class="text-center"><?= $registers->fecha_registro ?></td>
-                                        <td class="text-center"><?= $registers->string_proyecto ?></td>
                                         <td class="text-center"><?= $registers->importe ?></td>
                                         <td class="text-center"><?= $registers->tipo_gasto ?></td>
                                         <td class="text-center"><?= $str_clasificacion ?></td>
@@ -140,11 +140,14 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                             <?php endif; ?>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php
+                                    $total_depositos =  $total_depositos + floatval($registers->importe);
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                     <br>
+                    <h2 id="obra">Total: $ <?= $total_depositos; ?> </h2>
                 </div>
                 <!-- end card-body-->
             </div>

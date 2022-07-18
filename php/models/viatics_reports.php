@@ -2,7 +2,7 @@
 
 class Viatics
 {
-    public function getUserRegisters($id_user_data,$fecha_1, $fecha_2)
+    public function getUserRegisters($id_user_data, $fecha_1, $fecha_2)
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
@@ -19,7 +19,7 @@ class Viatics
 
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
         WHERE id_personal = '$id_user_data' AND fecha_registro BETWEEN '$fecha_1' AND '$fecha_2'";
-        
+
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);
@@ -40,18 +40,21 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_user_archives = "SELECT DISTINCT(tgasto) FROM asteleco_viaticos_old.registros_principal 
-        WHERE nombre = '$id_user_data'";
+        $sql_user_archives = "SELECT DISTINCT gasty.id_tipos_gasto, gasty.descripcion AS tipo_gasto FROM
+         asteleco_viaticos_erp.gastos AS gas
+         INNER JOIN asteleco_viaticos_erp.tipos_gasto AS gasty ON gasty.id_tipos_gasto = gas.id_tipos_gasto
+         WHERE id_personal = '$id_user_data'";
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);
     }
-    public function getUserRegistersByProyect($id_user_data,$fecha_1, $fecha_2,$proyecto)
+    public function getUserRegistersByProyect($id_user_data, $fecha_1, $fecha_2, $proyecto)
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_user_archives = "SELECT *, tgas.descripcion AS tipo_gasto, stat.descripcion AS estatus, rpdf.ruta_archivo AS ruta_pdf, rimg.ruta_archivo AS ruta_img,
-        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre,
+        CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
         INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
@@ -64,17 +67,29 @@ class Viatics
 
         return ($getUserArchives);
     }
-    public function getUserRegistersBySpendType($id_user_data,$fecha_1, $fecha_2,$tgasto)
+    public function getUserRegistersBySpendType($id_user_data, $fecha_1, $fecha_2, $tgasto)
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_user_archives = "SELECT * FROM asteleco_viaticos_old.registros_principal 
-        WHERE nombre = '$id_user_data' AND fecha BETWEEN '$fecha_1' AND '$fecha_2' AND tgasto = '$tgasto'";
+        $sql_user_archives = "SELECT gas.*, tgas.descripcion AS tipo_gasto, tgas.id_tipos_gasto,
+        stat.descripcion AS estatus,
+        rimg.ruta_archivo AS ruta_img,
+        rpdf.ruta_archivo AS ruta_pdf,
+        CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON gas.id_status_type = stat.id_status_type
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rimg ON rimg.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
+        WHERE id_personal = '$id_user_data' AND fecha_registro BETWEEN '$fecha_1' AND '$fecha_2' AND tgas.id_tipos_gasto = '$tgasto'";
         $getUserArchives = $queries->getData($sql_user_archives);
 
         return ($getUserArchives);
     }
-    public function getUserDeposits($id_user_data,$fecha_1, $fecha_2)
+    public function getUserDeposits($id_user_data, $fecha_1, $fecha_2)
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
@@ -101,27 +116,42 @@ class Viatics
         return ($getUserArchives);
     }
 
-    public function getProyectsExpenses($proyecto,$fecha_1, $fecha_2)
+    public function getProyectsExpenses($proyecto, $fecha_1, $fecha_2)
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_proyects_expenses = "SELECT DISTINCT *
-         FROM asteleco_viaticos_old.registros_principal AS gas
-         WHERE gas.proyecto = '$proyecto' AND gas.fecha BETWEEN '$fecha_1' AND '$fecha_2' ORDER BY id_reg DESC";
-         //
+        $sql_proyects_expenses = "SELECT dep.*, codigo_proyecto, nombre_proyecto, CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto, tgas.descripcion AS tipo_gasto,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.depositos AS dep
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON dep.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = dep.id_personal
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = dep.id_proyectos
+        WHERE fecha BETWEEN '$fecha_1' AND '$fecha_2' AND dep.id_proyectos = '$proyecto'";
+        //
         $getProyectsExpenses = $queries->getData($sql_proyects_expenses);
 
         return ($getProyectsExpenses);
     }
 
-    public function getProyectsExpensesByType($tipo,$fecha_1, $fecha_2)
+    public function getProyectsExpensesByType($tipo, $fecha_1, $fecha_2)
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_proyects_expenses = "SELECT DISTINCT *
-         FROM asteleco_viaticos_old.registros_principal AS gas
-         WHERE gas.tgasto = '$tipo' AND gas.fecha BETWEEN '$fecha_1' AND '$fecha_2' ORDER BY id_reg DESC";
-         //
+        $sql_proyects_expenses = "SELECT gas.*, tgas.descripcion AS tipo_gasto, tgas.id_tipos_gasto,
+        stat.descripcion AS estatus,
+        rimg.ruta_archivo AS ruta_img,
+        rpdf.ruta_archivo AS ruta_pdf,
+        CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON gas.id_status_type = stat.id_status_type
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rimg ON rimg.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
+        WHERE fecha_registro BETWEEN '$fecha_1' AND '$fecha_2' AND tgas.id_tipos_gasto = '$tipo'";
+        //
         $getProyectsExpenses = $queries->getData($sql_proyects_expenses);
 
         return ($getProyectsExpenses);
@@ -131,10 +161,21 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_proyects_spends = "SELECT *
-         FROM asteleco_viaticos_old.depositos AS dep
-         WHERE dep.proyecto = '$proyecto' AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2' ORDER BY id_deposito DESC";
-         //  AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2'";
+        $sql_proyects_spends = "SELECT gas.*, tgas.descripcion AS tipo_gasto, tgas.id_tipos_gasto,
+        stat.descripcion AS estatus,
+        rimg.ruta_archivo AS ruta_img,
+        rpdf.ruta_archivo AS ruta_pdf,
+        CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto,
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
+        INNER JOIN asteleco_viaticos_erp.status_type AS stat ON gas.id_status_type = stat.id_status_type
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rimg ON rimg.id_rutas_archivos = gas.id_ruta_img
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
+        WHERE fecha_registro BETWEEN '$fecha_1' AND '$fecha_2' AND gas.id_proyectos = '$proyecto'";
+        //  AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2'";
         $getProyectsSpends = $queries->getData($sql_proyects_spends);
 
         return ($getProyectsSpends);
@@ -144,9 +185,11 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_proyects_spends = "SELECT *
-         FROM asteleco_viaticos_old.tipos_gasto WHERE status = '1' ORDER BY tipo ASC ";
-         //  AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2'";
+        $sql_proyects_spends = "SELECT DISTINCT tgas.*
+         FROM asteleco_viaticos_erp.tipos_gasto AS tgas
+         INNER JOIN asteleco_viaticos_erp.gastos AS gas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
+          ORDER BY descripcion ASC ";
+        //  AND dep.fecha BETWEEN '$fecha_1' AND '$fecha_2'";
         $getProyectsSpends = $queries->getData($sql_proyects_spends);
 
         return ($getProyectsSpends);
@@ -156,8 +199,10 @@ class Viatics
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_proyects = "SELECT * 
-         FROM asteleco_viaticos_old.proyectos";
+        $sql_proyects = "SELECT DISTINCT proy.*, CONCAT (codigo_proyecto, ' - ', nombre_proyecto) AS proyecto
+         FROM asteleco_viaticos_erp.gastos AS gas
+         INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
+         ";
         $getProyects = $queries->getData($sql_proyects);
 
         return ($getProyects);

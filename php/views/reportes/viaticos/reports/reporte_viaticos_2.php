@@ -107,12 +107,15 @@ $viaticos_reports = new Viatics;
         $getUserRegisters = $viaticos_reports->getUserRegistersByProyect($colaborador, $fecha_1, $fecha_2, $proyecto);
         if (!empty($getUserRegisters)) {
             $nombre_usuario = $getUserRegisters[0]->nombre;
+            $proyecto = $getUserRegisters[0]->proyecto;
         }
+        $total_depositos = 0;
     ?>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?></h4>
+                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?> para el proyecto <?= $proyecto ?></h4>
+                    <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -157,25 +160,27 @@ $viaticos_reports = new Viatics;
                                                 ?>
                                                 <a href="<?= $ruta_comprobante ?>" target="_blank"><button type="button" class="btn btn-info"><i class="mdi mdi-image"></i> </button></a>
                                             </div>
-                                            </td>
-                                            <td class="table-action text-center">
-                                                <?php if ($ruta_factura == '') : ?>
-                                                    <?php if ($ruta_factura == '' && $registers->clasificacion == '1') : ?>
-                                                        N/A
-                                                    <?php else : ?>
-                                                        PENDIENTE
-                                                    <?php endif; ?>
+                                        </td>
+                                        <td class="table-action text-center">
+                                            <?php if ($ruta_factura == '') : ?>
+                                                <?php if ($ruta_factura == '' && $registers->clasificacion == '1') : ?>
+                                                    N/A
                                                 <?php else : ?>
-                                                    <div>
-                                                        <a href="<?= $ruta_factura ?>" target="_blank"><button type="button" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </button></a>
-                                                    </div>
+                                                    PENDIENTE
                                                 <?php endif; ?>
-                                            </td>
+                                            <?php else : ?>
+                                                <div>
+                                                    <a href="<?= $ruta_factura ?>" target="_blank"><button type="button" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </button></a>
+                                                </div>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php $total_depositos =  $total_depositos + floatval($registers->importe);
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>
+                    <h2 id="obra">Total: $ <?= $total_depositos; ?> </h2>
                     <br>
                 </div>
                 <!-- end card-body-->

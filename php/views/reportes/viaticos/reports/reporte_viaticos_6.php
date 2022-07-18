@@ -16,7 +16,7 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
                          </a> -->
                 </form>
             </div>
-            <h4 class="page-title">Reporte de Viáticos | Gastos y Depósitos por Proyecto</h4>
+            <h4 class="page-title">Reporte de Viáticos | Gastos por Tipo de Gasto</h4>
         </div>
     </div>
 </div>
@@ -42,13 +42,13 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
                                             $tipo = $_GET['tipo'];
                                             //$colaborador = str_replace('-', ' ', $txt_colaborador);
                                         ?>
-                                            <?php if ($expenses->tipo == $tipo) : ?>
-                                                <option value="<?= $expenses->tipo ?>" selected><?= $expenses->tipo ?></option>
+                                            <?php if ($expenses->id_tipos_gasto == $tipo) : ?>
+                                                <option value="<?= $expenses->id_tipos_gasto ?>" selected><?= $expenses->descripcion ?></option>
                                             <?php else : ?>
-                                                <option value="<?= $expenses->tipo ?>" ><?= $expenses->tipo ?></option>
+                                                <option value="<?= $expenses->id_tipos_gasto ?>"><?= $expenses->descripcion ?></option>
                                             <?php endif; ?>
                                         <?php else : ?>
-                                            <option value="<?= $expenses->tipo ?>" ><?= $expenses->tipo ?></option>
+                                            <option value="<?= $expenses->id_tipos_gasto ?>"><?= $expenses->descripcion ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </optgroup>
@@ -69,7 +69,7 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
         <!-- end card-->
     </div>
     <?php if (isset($_GET['tipo']) && isset($_GET['fecha_1']) && isset($_GET['fecha_2'])) :
-        $tipo= $_GET['tipo'];
+        $tipo = $_GET['tipo'];
         $arr_fecha_1 = explode("/", $_GET['fecha_1']);
         $fecha_1 = $arr_fecha_1[2] . '-' . $arr_fecha_1[0] . '-' . $arr_fecha_1[1];
         $fecha_1 = str_replace(' ', '', $fecha_1);
@@ -78,11 +78,17 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
         $fecha_2 = str_replace(' ', '', $fecha_2);
 
         $getProyectsExpensesByType = $viaticos_reports->getProyectsExpensesByType($tipo, $fecha_1, $fecha_2);
+        $tipo_gasto = '';
+        if (!empty($getProyectsExpensesByType)) { {
+                $tipo_gasto = $getProyectsExpensesByType[0]->tipo_gasto;
+            }
+            # code...
+        }
 
         $total_gastos = 0;
 
         foreach ($getProyectsExpensesByType as $getProyectsSpend) {
-            $total_gastos = $total_gastos + $getProyectsSpend->importe;
+            $total_gastos = $total_gastos + floatval($getProyectsSpend->importe);
         }
 
         $total_gastos = number_format($total_gastos, 2, '.', ',');
@@ -92,9 +98,9 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
             <div class="card">
                 <div class="card-body">
 
-                <h3 id="nombre_informe" class="header-title mb-3">Total gastos: $ <?= $total_gastos ?></h3>
-                    <h4 id="fecha_solicitud" class="header-title mb-3">Gastos Registrados  para <?= $tipo ?></h4>
-                    <h4 id="obra" class="header-title mb-3">Rango de fechas: <?= $fecha_1 ." / " . $fecha_2 ?></h4>
+                    <h3 id="nombre_informe" class="header-title mb-3">Total gastos: $ <?= $total_gastos ?></h3>
+                    <h4 id="fecha_solicitud" class="header-title mb-3">Gastos Registrados para <?= $tipo_gasto ?></h4>
+                    <h4 id="obra" class="header-title mb-3">Rango de fechas: <?= $fecha_1 . " / " . $fecha_2 ?></h4>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -111,14 +117,19 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
                             </thead>
                             <tbody>
                                 <?php foreach ($getProyectsExpensesByType as $expenses) :
+                                    if ($expenses->clasificacion == '1') {
+                                        $str_clasificacion = 'No deducible';
+                                    } else {
+                                        $str_clasificacion = 'Deducible';
+                                    }
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $expenses->id_reg ?></td>
-                                        <td class="text-center"><?= $expenses->fecha ?></td>
+                                        <td class="text-center"><?= $expenses->id_gastos ?></td>
+                                        <td class="text-center"><?= $expenses->fecha_registro ?></td>
                                         <td class="text-center"><?= $expenses->importe ?></td>
                                         <td class="text-center"><?= $expenses->nombre ?></td>
-                                        <td class="text-center"><?= $expenses->lugar ?></td>
-                                        <td class="text-center"><?= $expenses->clasificacion ?></td>
+                                        <td class="text-center"><?= $expenses->localidad ?></td>
+                                        <td class="text-center"><?= $str_clasificacion ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

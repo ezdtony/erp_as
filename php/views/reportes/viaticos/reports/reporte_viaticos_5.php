@@ -39,16 +39,16 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                                 <optgroup label="Proyecto">
                                     <?php foreach ($Proyectos as $proyectos) : ?>
                                         <?php if (isset($_GET['proyecto'])) :
-                                            $txt_proyecto = $_GET['proyecto'];
-                                            //$colaborador = str_replace('-', ' ', $txt_colaborador);
+                                            $proyecto = $_GET['proyecto'];
+                                            //$colaborador = str_replace('-', ' ', $colaborador);
                                         ?>
-                                            <?php if ($proyectos->consecutivo_proyecto == $txt_proyecto) : ?>
-                                                <option value="<?= $proyectos->consecutivo_proyecto ?>" selected><?= $proyectos->consecutivo_proyecto . " / " . $proyectos->nombre ?></option>
+                                            <?php if ($proyectos->id_proyectos == $proyecto) : ?>
+                                                <option value="<?= $proyectos->id_proyectos ?>" selected><?= $proyectos->proyecto ?></option>
                                             <?php else : ?>
-                                                <option value="<?= $proyectos->consecutivo_proyecto ?>"><?= $proyectos->consecutivo_proyecto . " / " . $proyectos->nombre ?></option>
+                                                <option value="<?= $proyectos->id_proyectos ?>"><?= $proyectos->proyecto ?></option>
                                             <?php endif; ?>
                                         <?php else : ?>
-                                            <option value="<?= $proyectos->consecutivo_proyecto ?>"><?= $proyectos->consecutivo_proyecto . " / " . $proyectos->nombre ?></option>
+                                            <option value="<?= $proyectos->id_proyectos ?>"><?= $proyectos->proyecto ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </optgroup>
@@ -78,17 +78,25 @@ $Proyectos = $viaticos_reports->getProyectsUp();
         $fecha_2 = str_replace(' ', '', $fecha_2);
 
         $getProyectsExpenses = $viaticos_reports->getProyectsExpenses($proyecto, $fecha_1, $fecha_2);
+        $nombre_proy_exp = '';
+        if (!empty($getProyectsExpenses)) {
+            $nombre_proy_exp = $getProyectsExpenses[0]->proyecto;
+        }
         $getProyectsSpends = $viaticos_reports->getProyectsSpends($proyecto, $fecha_1, $fecha_2);
+        $nombre_proy = '';
+        if (!empty($getProyectsExpenses)) {
+            $nombre_proy = $getProyectsExpenses[0]->proyecto;
+        }
 
         $total_depositos = 0;
         $total_gastos = 0;
 
         foreach ($getProyectsExpenses as $getProyectsExpense) {
-            $total_depositos = $total_depositos + $getProyectsExpense->importe;
+            $total_depositos = $total_depositos + floatval($getProyectsExpense->cantidad);
         }
 
         foreach ($getProyectsSpends as $getProyectsSpend) {
-            $total_gastos = $total_gastos + $getProyectsSpend->importe;
+            $total_gastos = $total_gastos + floatval($getProyectsSpend->importe);
         }
 
         $total_depositos = number_format($total_depositos, 2, '.', ',');
@@ -98,9 +106,9 @@ $Proyectos = $viaticos_reports->getProyectsUp();
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                <h3 id="nombre_informe" class="header-title mb-3">Total depositado: $ <?= $total_depositos ?></h3>
-                <h4 id="fecha_solicitud" class="header-title mb-3">Depósitos Registrados del proyecto <?= $proyecto ?></h4>
-                    <h4 id="obra" class="header-title mb-3">Rango de fechas: <?= $fecha_1 ." / " . $fecha_2 ?></h4>
+                    <h3 id="nombre_informe" class="header-title mb-3">Total depositado: $ <?= $total_depositos ?></h3>
+                    <h4 id="fecha_solicitud" class="header-title mb-3">Depósitos del proyecto <?= $nombre_proy_exp ?></h4>
+                    <h4 id="obra" class="header-title mb-3">Rango de fechas: <?= $fecha_1 . " / " . $fecha_2 ?></h4>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -116,15 +124,15 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($getProyectsSpends as $spends) :
+                                <?php foreach ($getProyectsExpenses as $expenses) :
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $spends->id_deposito ?></td>
-                                        <td class="text-center"><?= $spends->fecha ?></td>
-                                        <td class="text-center"><?= $spends->importe ?></td>
-                                        <td class="text-center"><?= $spends->destinatario ?></td>
-                                        <td class="text-center"><?= $spends->sitio ?></td>
-                                        <td class="text-center"><?= $spends->tgasto ?></td>
+                                        <td class="text-center"><?= $expenses->id_depositos ?></td>
+                                        <td class="text-center"><?= $expenses->fecha ?></td>
+                                        <td class="text-center"><?= $expenses->cantidad ?></td>
+                                        <td class="text-center"><?= $expenses->nombre ?></td>
+                                        <td class="text-center"><?= $expenses->sitio ?></td>
+                                        <td class="text-center"><?= $expenses->tipo_gasto ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -140,9 +148,9 @@ $Proyectos = $viaticos_reports->getProyectsUp();
             <div class="card">
                 <div class="card-body">
 
-                <h3 id="nombre_informe" class="header-title mb-3">Total gastos: $ <?= $total_gastos ?></h3>
-                    <h4 id="fecha_solicitud" class="header-title mb-3">Depósitos Registrados del proyecto <?= $proyecto ?></h4>
-                    <h4 id="obra" class="header-title mb-3">Rango de fechas: <?= $fecha_1 ." / " . $fecha_2 ?></h4>
+                    <h3 id="nombre_informe" class="header-title mb-3">Total gastos: $ <?= $total_gastos ?></h3>
+                    <h4 id="fecha_solicitud" class="header-title mb-3">Depósitos del proyecto <?= $nombre_proy ?></h4>
+                    <h4 id="obra" class="header-title mb-3">Rango de fechas: <?= $fecha_1 . " / " . $fecha_2 ?></h4>
                     <br>
                     <br>
                     <div class="table-responsive">
@@ -158,15 +166,20 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($getProyectsExpenses as $expenses) :
+                                <?php foreach ($getProyectsSpends as $spents) :
+                                    if ($spents->clasificacion == '1') {
+                                        $str_clasificacion = 'No deducible';
+                                    } else {
+                                        $str_clasificacion = 'Deducible';
+                                    }
                                 ?>
                                     <tr>
-                                        <td class="text-center"><?= $expenses->id_reg ?></td>
-                                        <td class="text-center"><?= $expenses->fecha ?></td>
-                                        <td class="text-center"><?= $expenses->importe ?></td>
-                                        <td class="text-center"><?= $expenses->nombre ?></td>
-                                        <td class="text-center"><?= $expenses->lugar ?></td>
-                                        <td class="text-center"><?= $expenses->clasificacion ?></td>
+                                        <td class="text-center"><?= $spents->id_gastos ?></td>
+                                        <td class="text-center"><?= $spents->fecha_registro ?></td>
+                                        <td class="text-center"><?= $spents->importe ?></td>
+                                        <td class="text-center"><?= $spents->nombre ?></td>
+                                        <td class="text-center"><?= $spents->localidad ?></td>
+                                        <td class="text-center"><?= $str_clasificacion ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
