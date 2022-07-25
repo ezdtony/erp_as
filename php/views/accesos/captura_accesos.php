@@ -2,6 +2,9 @@
 include_once('php/models/accesos/accesos_model.php');
 $accesos = new Access();
 $allCentrales = $accesos->getAllCentral();
+$getAllLockTypes = $accesos->getAllLockTypes();
+$getPuertasDeAcceso = $accesos->getPuertasDeAcceso();
+$getTiposCerraduraPA = $accesos->getTiposCerraduraPA();
 ?>
 
 <div class="row">
@@ -26,7 +29,7 @@ $allCentrales = $accesos->getAllCentral();
                 <h4 class="header-title mb-3">Lista de Accesos Registrados</h4>
                 <div class="button-list">
                     <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoAcceso">Registrar Acceso</button>
-                    <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#informacionSitio">Información de Sitios</button>
+                    <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#informacionSitio">Información de Sitios</button> -->
                 </div>
                 <br>
 
@@ -75,6 +78,7 @@ $allCentrales = $accesos->getAllCentral();
 <?php
 include_once('php/views/accesos/modals/nuevoAcceso.php');
 include_once('php/views/accesos/modals/actualizarInfoSitio.php');
+include_once('php/views/accesos/modals/addGabinete.php');
 
 
 ?>

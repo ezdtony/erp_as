@@ -610,7 +610,7 @@ $(document).ready(function () {
 
   $(document).on("change", "#na_central", function () {
     var id_central = $(this).val();
-
+    loading();
     $.ajax({
       url: "php/controllers/accesos/accesos_controller.php",
       method: "POST",
@@ -619,8 +619,9 @@ $(document).ready(function () {
         id_central: id_central,
       },
     }).done(function (data) {
+      Swal.close();
       var data = JSON.parse(data);
-      console.log(data);
+      //console.log(data);
       if (data.response == true) {
         console.log(data.data);
         html_options = "";
@@ -650,7 +651,7 @@ $(document).ready(function () {
 
   $(document).on("change", "#na_zona", function () {
     var id_zona = $(this).val();
-
+    loading();
     $.ajax({
       url: "php/controllers/accesos/accesos_controller.php",
       method: "POST",
@@ -659,8 +660,9 @@ $(document).ready(function () {
         id_zona: id_zona,
       },
     }).done(function (data) {
+      Swal.close();
       var data = JSON.parse(data);
-      console.log(data);
+      //console.log(data);
       if (data.response == true) {
         console.log(data.data);
         html_options = "";
@@ -689,6 +691,306 @@ $(document).ready(function () {
       }
     });
   });
+  $(document).on("change", "#na_sitio", function () {
+    loading();
+    var id_sitio = $(this).val();
+    $(".btnAddGabinete").attr("disabled", false);
+    $(".saveGabinete").attr("data-id-sitio", id_sitio);
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getGabinetesStio",
+        id_sitio: id_sitio,
+      },
+    }).done(function (data) {
+      var data = JSON.parse(data);
+      //console.log(data);
+      Swal.close();
+      if (data.response == true) {
+        var html_gabinetes = data.html_gabinetes;
+        $("#div_gabinetes").empty().append(html_gabinetes);
+      } else {
+        $("#div_gabinetes").empty().append(html_gabinetes);
+      }
+    });
+  });
+  $(document).on("click", ".saveGabinete", function () {
+    loading();
+    var id_sitio = $(this).attr("data-id-sitio");
+    var nombre_gabinete = $("#nombre_gabinete").val();
+    var baterias_gabinete = $("#baterias_gabinete").val();
+    var cerraduras_gabinetes = $("#cerraduras_gabinetes").val();
+    var txt_cerradura = $("#cerraduras_gabinetes option:selected").text();
+
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "saveGabinete",
+        id_sitio: id_sitio,
+        nombre_gabinete: nombre_gabinete,
+        baterias_gabinete: baterias_gabinete,
+        cerraduras_gabinetes: cerraduras_gabinetes,
+      },
+    }).done(function (data) {
+      var data = JSON.parse(data);
+      //console.log(data);
+      Swal.close();
+      if (data.response == true) {
+        Swal.fire({
+          icon: "success",
+          title: data.message,
+          timer: 1500,
+        });
+        id_gabinete = data.last_id;
+        var html_gabinete = "";
+        html_gabinete +=
+          '<div class="col-md-6" id="divGabinete' + id_gabinete + '">';
+        html_gabinete += '<div class="card border-primary border">';
+        html_gabinete += '<div class="card-body">';
+        html_gabinete +=
+          '<h5 class="card-title text-primary">' + nombre_gabinete + "</h5>";
+        html_gabinete += '<p class="card-text">';
+        html_gabinete += "Baterías: " + baterias_gabinete;
+        html_gabinete += "</p>";
+        html_gabinete += '<p class="card-text">';
+        html_gabinete += "Cerradura: " + txt_cerradura;
+        html_gabinete += "</p>";
+        html_gabinete +=
+          '<button type="button" class="btn btn-light deleteGabinete" data-id-gabinete="' +
+          id_gabinete +
+          '" title="Eliminar"><i class="mdi mdi-trash-can"></i> </button>';
+        html_gabinete += "</div>";
+        html_gabinete += "</div>";
+        html_gabinete += "</div>";
+        $("#div_gabinetes").append(html_gabinete);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: data.message,
+          timer: 1500,
+        });
+      }
+    });
+  });
+  $(document).on("click", ".deleteGabinete", function () {
+    var id_gabinete = $(this).attr("data-id-gabinete");
+
+    Swal.fire({
+      title: "¿Está seguro de eliminar el gabinete?",
+      text: "¡No podrá revertir esta acción!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        loading();
+        $.ajax({
+          url: "php/controllers/accesos/accesos_controller.php",
+          method: "POST",
+          data: {
+            mod: "deleteGabinete",
+            id_gabinete: id_gabinete,
+          },
+        }).done(function (data) {
+          var data = JSON.parse(data);
+          //console.log(data);
+          if (data.response == true) {
+            Swal.close();
+            $("#divGabinete" + id_gabinete).remove();
+          } else {
+            Swal.close();
+            Swal.fire({
+              icon: "error",
+              title: "Ocurrió un error al eliminar el gabinete",
+              timer: 1500,
+            });
+          }
+        });
+      } else {
+      }
+    });
+  });
+  $("input[type=radio][name=acceso1]").change(function () {
+    var id_tipos_cerraduras = $(this).val();
+    var id_puertas_acceso = $(this).attr("data-id-puertas-acceso");
+    var id_sitio = $("#na_sitio").val();
+    console.log(id_sitio);
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateCerradurasSitio",
+          id_sitio: id_sitio,
+          id_tipos_cerraduras: id_tipos_cerraduras,
+          id_puertas_acceso: id_puertas_acceso,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("input[type=radio][name=acceso2]").change(function () {
+    var id_tipos_cerraduras = $(this).val();
+    var id_puertas_acceso = $(this).attr("data-id-puertas-acceso");
+    var id_sitio = $("#na_sitio").val();
+    console.log(id_sitio);
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateCerradurasSitio",
+          id_sitio: id_sitio,
+          id_tipos_cerraduras: id_tipos_cerraduras,
+          id_puertas_acceso: id_puertas_acceso,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("input[type=radio][name=acceso3]").change(function () {
+    var id_tipos_cerraduras = $(this).val();
+    var id_puertas_acceso = $(this).attr("data-id-puertas-acceso");
+    var id_sitio = $("#na_sitio").val();
+    console.log(id_sitio);
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateCerradurasSitio",
+          id_sitio: id_sitio,
+          id_tipos_cerraduras: id_tipos_cerraduras,
+          id_puertas_acceso: id_puertas_acceso,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("input[type=radio][name=acceso4]").change(function () {
+    var id_tipos_cerraduras = $(this).val();
+    var id_puertas_acceso = $(this).attr("data-id-puertas-acceso");
+    var id_sitio = $("#na_sitio").val();
+    console.log(id_sitio);
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateCerradurasSitio",
+          id_sitio: id_sitio,
+          id_tipos_cerraduras: id_tipos_cerraduras,
+          id_puertas_acceso: id_puertas_acceso,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
 
   $("#estado_sitio").select2({
     dropdownParent: $("#nuevoSitio"),
@@ -706,6 +1008,9 @@ $(document).ready(function () {
   $("#na_zona").select2({
     dropdownParent: $("#nuevoAcceso"),
   });
+  $("#cerraduras_gabinetes").select2({
+    dropdownParent: $("#newGabinete"),
+  });
 });
 /* Swal.fire({
     title: "¿Estás seguro?",
@@ -721,3 +1026,15 @@ $(document).ready(function () {
       $("#form_nuevo_sitio").submit();
     }
   }); */
+
+function loading() {
+  Swal.fire({
+    title: "Cargando...",
+    html: '<img src="images/loading.gif" width="300" height="175">',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCloseButton: false,
+    showCancelButton: false,
+    showConfirmButton: false,
+  });
+}

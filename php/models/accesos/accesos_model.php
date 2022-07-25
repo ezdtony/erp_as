@@ -22,7 +22,7 @@ class Access
         INNER JOIN asteleco_accesos_erp.tipos_sitio AS tipos ON tipos.id_tipos_sitio = sites.id_tipos_sitio
         INNER JOIN asteleco_accesos_erp.status_operaciones AS stat ON stat.id_status_operaciones = sites.status
         ";
-        
+
         $getSites = $queries->getData($sql_sites);
 
         return ($getSites);
@@ -33,7 +33,7 @@ class Access
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_Central = "SELECT * FROM asteleco_accesos_erp.centrales";
-        
+
         $getCentral = $queries->getData($sql_Central);
 
         return ($getCentral);
@@ -43,7 +43,7 @@ class Access
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipos_cerraduras";
-        
+
         $getCentral = $queries->getData($sql_Central);
 
         return ($getCentral);
@@ -53,7 +53,7 @@ class Access
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_perimeter = "SELECT * FROM asteleco_accesos_erp.tipo_perimetro";
-        
+
         $getPerimeter = $queries->getData($sql_perimeter);
 
         return ($getPerimeter);
@@ -64,10 +64,39 @@ class Access
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_States = "SELECT * FROM asteleco_matriz_direcciones.estados";
-        
+
         $getStates = $queries->getData($sql_States);
 
         return ($getStates);
     }
-    
+    public function getGabinetesSitio()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT *, tip_cer.descripcion AS cerradura 
+        FROM asteleco_accesos_erp.gabinetes AS gab
+        INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tip_cer ON tip_cer.id_tipos_cerraduras = gab.id_tipos_cerraduras";
+
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
+    public function getPuertasDeAcceso()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.puertas_de_acceso";
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
+    public function getTiposCerraduraPA()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipos_cerraduras WHERE apply_access_gate = 1";
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
 }

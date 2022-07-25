@@ -404,7 +404,7 @@ function editSiteName()
     $getInfoRequest = $queries->InsertData($stmt);
     //$last_id = $getInfoRequest['last_id'];
     if (!empty($getInfoRequest)) {
-        
+
         //--- --- ---//
         $data = array(
             'response' => true,
@@ -412,7 +412,7 @@ function editSiteName()
         );
         //--- --- ---//
     } else {
-        
+
 
         //--- --- ---//
         $data = array(
@@ -438,7 +438,7 @@ function getZonesByCentral()
     $getInfoRequest = $queries->getData($stmt);
     //$last_id = $getInfoRequest['last_id'];
     if (!empty($getInfoRequest)) {
-       
+
         //--- --- ---//
         $data = array(
             'response' => true,
@@ -470,7 +470,7 @@ function getSitesByCentral()
     $getInfoRequest = $queries->getData($stmt);
     //$last_id = $getInfoRequest['last_id'];
     if (!empty($getInfoRequest)) {
-       
+
         //--- --- ---//
         $data = array(
             'response' => true,
@@ -502,7 +502,7 @@ function getSitesByZone()
     $getInfoRequest = $queries->getData($stmt);
     //$last_id = $getInfoRequest['last_id'];
     if (!empty($getInfoRequest)) {
-       
+
         //--- --- ---//
         $data = array(
             'response' => true,
@@ -514,6 +514,165 @@ function getSitesByZone()
         $data = array(
             'response' => false,
             'message'                => 'No se encontraron sitios para esta zona',
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function saveGabinete()
+{
+    $id_sitio = $_POST['id_sitio'];
+    $nombre_gabinete = $_POST['nombre_gabinete'];
+    $baterias_gabinete = $_POST['baterias_gabinete'];
+    $cerraduras_gabinetes = $_POST['cerraduras_gabinetes'];
+
+    $queries = new Queries;
+
+    $stmt = "INSERT INTO asteleco_accesos_erp.gabinetes
+             (id_sitios,
+             id_tipos_cerraduras,
+             nombre_gabinete,
+             baterias_gabinete) VALUES
+             ($id_sitio,
+             $cerraduras_gabinetes,
+             '$nombre_gabinete',
+             $baterias_gabinete)";
+
+
+
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        $last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'message' => 'Se ha guardado el gabinete correctamente',
+            'last_id' => $last_id
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message' => 'No se pudo guardar el gabinete'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function getGabinetesStio()
+{
+    $id_sitio = $_POST['id_sitio'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT *, tip_cer.descripcion AS cerradura 
+    FROM asteleco_accesos_erp.gabinetes AS gab
+    INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tip_cer ON tip_cer.id_tipos_cerraduras = gab.id_tipos_cerraduras
+    WHERE gab.id_sitios = $id_sitio";
+
+
+    $html_gabinetes = '';
+    if (!empty($getInfoRequest = $queries->getData($stmt))) {
+        foreach ($getInfoRequest as $gabinetes) {
+            $id_gabinete = $gabinetes->id_gabinetes;
+            $nombre_gabinete = $gabinetes->nombre_gabinete;
+            $baterias_gabinete = $gabinetes->baterias_gabinete;
+            $cerradura = $gabinetes->cerradura;
+
+            $html_gabinetes .= '<div class="col-md-6" id="divGabinete' . $id_gabinete . '">';
+            $html_gabinetes .= '<div class="card border-primary border">';
+            $html_gabinetes .= '<div class="card-body">';
+            $html_gabinetes .= '<h5 class="card-title text-primary">'  . $nombre_gabinete .  '</h5>';
+            $html_gabinetes .= '<p class="card-text">';
+            $html_gabinetes .= 'Baterías: "' . $baterias_gabinete;
+            $html_gabinetes .= '</p>';
+            $html_gabinetes .= '<p class="card-text">';
+            $html_gabinetes .= 'Cerradura: ' . $cerradura;
+            $html_gabinetes .= '</p>';
+            $html_gabinetes .= '<button type="button" class="btn btn-light deleteGabinete" data-id-gabinete="' . $id_gabinete . '" title="Eliminar"><i class="mdi mdi-trash-can"></i> </button>';
+            $html_gabinetes .= '</div>';
+            $html_gabinetes .= '</div>';
+            $html_gabinetes .= '</div>';
+        }
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'html_gabinetes' => $html_gabinetes
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'html_gabinetes' => $html_gabinetes
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function deleteGabinete()
+{
+    $id_gabinete = $_POST['id_gabinete'];
+
+    $queries = new Queries;
+
+    $stmt = "DELETE FROM asteleco_accesos_erp.gabinetes WHERE id_gabinetes = $id_gabinete";
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        //$last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function updateCerradurasSitio()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $id_tipos_cerraduras = $_POST['id_tipos_cerraduras'];
+    $id_puertas_acceso = $_POST['id_puertas_acceso'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT * FROM asteleco_accesos_erp.cerraduras_sitios WHERE id_sitios = $id_sitio AND id_puertas_de_acceso = $id_puertas_acceso";
+    $getInfoRequest = $queries->getData($stmt);
+
+    if (!empty($getInfoRequest)) {
+        $stmt = "UPDATE asteleco_accesos_erp.cerraduras_sitios 
+        SET
+        id_tipos_cerraduras = $id_tipos_cerraduras
+        WHERE id_sitios = $id_sitio AND id_puertas_de_acceso = $id_puertas_acceso
+        ";
+    } else {
+        $stmt = "INSERT INTO 
+        asteleco_accesos_erp.cerraduras_sitios
+         (id_sitios, id_tipos_cerraduras, id_puertas_de_acceso) 
+         VALUES ($id_sitio, $id_tipos_cerraduras, $id_puertas_acceso)";
+    }
+
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        //$last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
         );
         //--- --- ---//
     }
