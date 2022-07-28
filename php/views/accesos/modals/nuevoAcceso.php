@@ -93,7 +93,7 @@
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="card-body">
                                 <!-- Single Select -->
-                                <div class="mb-3">
+                                <div class="mb-3" id="div_info_sitio" style="display:none">
                                     <label class="form-label">Información del Sitio</label>
                                     <div class="col-md-12">
                                         <div class="card" style="background-color: rgba(117, 170, 255, 0.2);">
@@ -145,39 +145,33 @@
                                                         <div class="mt-3">
                                                             <label class="form-label">Breaker Principal</label>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio1" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio1">Candado</label>
+                                                                <input class="breaker_principal" type="checkbox" id="chk_breaker_principal" checked data-switch="bool" />
+                                                                <label for="chk_breaker_principal" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
+                                                        </div>
+                                                        <div class="mt-3">
+                                                            <label class="form-label">¿Cuenta con planta de emergencia?</label>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Tarjeta electrónica</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio3" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio3">Llave</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Candado ATC</label>
+                                                                <input class="planta_emergencia" type="checkbox" id="chk_planta_emergencia" checked data-switch="bool" />
+                                                                <label for="chk_planta_emergencia" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                         </div>
                                                         <div class="mt-3">
                                                             <label class="form-label">Atterizajes</label>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio1" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio1">Candado</label>
+                                                                <h5>Torre</h5>
+                                                                <input class="at_torre" type="checkbox" id="chk_att_torre" checked data-switch="warning" />
+                                                                <label for="chk_att_torre" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Tarjeta electrónica</label>
+                                                                <h5>Centro de Carga</h5>
+                                                                <input class="at_centro_carga" type="checkbox" id="chk_at_centro_carga" checked data-switch="warning" />
+                                                                <label for="chk_at_centro_carga" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio3" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio3">Llave</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Candado ATC</label>
+                                                                <h5>Escalerilla</h5>
+                                                                <input class="at_escalerilla" type="checkbox" id="chk_escalerilla" checked data-switch="warning" />
+                                                                <label for="chk_escalerilla" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                         </div>
                                                         <br>
@@ -192,7 +186,7 @@
                                             </div> <!-- end card-body-->
                                         </div> <!-- end card-->
                                     </div>
-                                    <div class="col-md-12">
+                                    <!-- <div class="col-md-12">
                                         <div class="card" style="background-color: rgba(240, 146, 58, 0.2);">
                                             <div class="card-header" style="background-color: rgba(240, 146, 58, 0.6); color:white;">
                                                 Información Estructural
@@ -247,120 +241,63 @@
                                                         </div>
                                                     </div>
                                                 </blockquote>
-                                            </div> <!-- end card-body-->
-                                        </div> <!-- end card-->
-                                    </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                     <div class="col-md-12">
-                                        <div class="card" style="background-color: rgba(156, 103, 76, 0.2);">
-                                            <div class="card-header" style="background-color: rgba(156, 103, 76, 0.6); color:white;">
-                                                Información Estructural
+                                        <div class="card" style="background-color: rgba(255, 64, 64, 0.2);">
+                                            <div class="card-header" style="background-color: rgba(255, 64, 64, 0.6); color:white;">
+                                                Vandalismo
                                             </div>
                                             <div class="card-body">
                                                 <blockquote class="card-bodyquote">
                                                     <div class="row" id="div_gabinetes">
                                                         <div class="mt-3">
-                                                            <label class="form-label">Breaker Principal</label>
+                                                            <label class="form-label">¿El sitio está vandalizado? </label>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio1" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio1">Candado</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Tarjeta electrónica</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio3" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio3">Llave</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Candado ATC</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-3">
-                                                            <label class="form-label">Atterizajes</label>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio1" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio1">Candado</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Tarjeta electrónica</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio3" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio3">Llave</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Candado ATC</label>
+                                                                <input class="vandalismo" type="checkbox" id="chk_vandalismo" checked data-switch="danger" />
+                                                                <label for="chk_vandalismo" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                         </div>
                                                         <br>
-                                                        <div class="mt-3">
-                                                            <div class="form-floating mb-3">
-                                                                <input type="text" class="form-control" id="breakers_existentes" placeholder="Breakers existentes" />
-                                                                <label for="breakers_existentes">Breakers existentes</label>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </blockquote>
                                             </div> <!-- end card-body-->
                                         </div> <!-- end card-->
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="card" style="background-color: rgba(255, 120, 199, 0.2);">
-                                            <div class="card-header" style="background-color: rgba(255, 120, 199, 0.6); color:white;">
-                                                Información Estructural
+                                        <div class="card" style="background-color: rgba(179, 109, 71, 0.2);">
+                                            <div class="card-header" style="background-color: rgba(179, 109, 71, 0.6); color:white;">
+                                                Estructura y Limpieza
                                             </div>
                                             <div class="card-body">
                                                 <blockquote class="card-bodyquote">
                                                     <div class="row" id="div_gabinetes">
                                                         <div class="mt-3">
-                                                            <label class="form-label">Breaker Principal</label>
+                                                            <label class="form-label">Limpieza del sitio </label>
+                                                            <p id="txt_limpieza"></p>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio1" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio1">Candado</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Tarjeta electrónica</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio3" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio3">Llave</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Candado ATC</label>
+                                                                <select id="na_limpieza" class="form-control select2" data-toggle="select2">
+                                                                    <option selected disabled value="">Seleccione una opción</option>
+                                                                    <?php foreach ($getStatusLimpieza as $statusLimpieza) : ?>
+                                                                        <option value="<?= $statusLimpieza->id_tipos_limpieza ?>"><?= $statusLimpieza->descripcion ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <div class="mt-3">
-                                                            <label class="form-label">Atterizajes</label>
+                                                            <label class="form-label">Perímetro del sitio </label>
+                                                            <p id="txt_perimetro"></p>
                                                             <div class="form-check">
-                                                                <input type="radio" id="customRadio1" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio1">Candado</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Tarjeta electrónica</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio3" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio3">Llave</label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <input type="radio" id="customRadio2" name="customRadio" class="form-check-input">
-                                                                <label class="form-check-label" for="customRadio2">Candado ATC</label>
+                                                                <select id="na_perimetro" class="form-control select2" data-toggle="select2">
+                                                                    <option selected disabled value="">Seleccione una opción</option>
+                                                                    <?php foreach ($getPerimetros as $perimetro) : ?>
+                                                                        <option value="<?= $perimetro->id_tipo_perimetro ?>"><?= $perimetro->descripcion ?></option>
+                                                                    <?php endforeach; ?>
+                                                                </select>
                                                             </div>
                                                         </div>
                                                         <br>
-                                                        <div class="mt-3">
-                                                            <div class="form-floating mb-3">
-                                                                <input type="text" class="form-control" id="breakers_existentes" placeholder="Breakers existentes" />
-                                                                <label for="breakers_existentes">Breakers existentes</label>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </blockquote>
                                             </div> <!-- end card-body-->

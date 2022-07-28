@@ -693,6 +693,29 @@ $(document).ready(function () {
   });
   $(document).on("change", "#na_sitio", function () {
     loading();
+    $(".breaker_principal").prop("checked", false);
+    $(".planta_emergencia").prop("checked", false);
+    $(".at_torre").prop("disabled", true);
+    $(".at_centro_carga").prop("disabled", true);
+    $(".at_escalerilla").prop("disabled", true);
+    $("#breakers_existentes").val("");
+    $("#chk_vandalismo").prop("checked", false);
+    /* $("#na_perimetro").select2().val("").trigger("change");
+    $("#na_limpieza").select2().val("").trigger("change"); */
+
+    $("input[type=radio][name=acceso1]").each(function () {
+      $(this).prop("checked", false);
+    });
+    $("input[type=radio][name=acceso2]").each(function () {
+      $(this).prop("checked", false);
+    });
+    $("input[type=radio][name=acceso3]").each(function () {
+      $(this).prop("checked", false);
+    });
+    $("input[type=radio][name=acceso4]").each(function () {
+      $(this).prop("checked", false);
+    });
+    $("#div_info_sitio").show();
     var id_sitio = $(this).val();
     $(".btnAddGabinete").attr("disabled", false);
     $(".saveGabinete").attr("data-id-sitio", id_sitio);
@@ -707,11 +730,58 @@ $(document).ready(function () {
       var data = JSON.parse(data);
       //console.log(data);
       Swal.close();
+      console.log(data.perim_limp);
+      if (data.perim_limp.length > 0) {
+        $("#txt_limpieza").text(data.perim_limp[0].limpieza);
+        $("#txt_perimetro").text(data.perim_limp[0].perimetro);
+      }
       if (data.response == true) {
         var html_gabinetes = data.html_gabinetes;
+
+        for (let i = 0; i < data.access_gates.length; i++) {
+          console.log(data.access_gates[i].id_tipos_cerraduras);
+          $(
+            "#acc" +
+              data.access_gates[i].id_tipos_cerraduras +
+              "_group" +
+              data.access_gates[i].id_puertas_de_acceso +
+              ""
+          ).prop("checked", true);
+        }
+        /* for (let i = 0; i < .length; i++) { */
+        for (var index in data.electricity[0]) {
+          console.log(index);
+          var val_index = data.electricity[0][index];
+          console.log(val_index);
+          if (index == "status") {
+            if (val_index == 3) {
+              $("#chk_vandalismo").prop("checked", true);
+            } else {
+              $("#chk_vandalismo").prop("checked", false);
+            }
+          } else if (index == "breakers_existentes") {
+            $("#" + index).val(val_index);
+          } else {
+            if (val_index == 1) {
+              $("." + index).prop("checked", true);
+            } else {
+              $("." + index).prop("checked", false);
+            }
+          }
+        }
         $("#div_gabinetes").empty().append(html_gabinetes);
       } else {
         $("#div_gabinetes").empty().append(html_gabinetes);
+        for (let i = 0; i < data.access_gates.length; i++) {
+          console.log(data.access_gates[i].id_tipos_cerraduras);
+          $(
+            "#acc" +
+              data.access_gates[i].id_tipos_cerraduras +
+              "_group" +
+              data.access_gates[i].id_puertas_de_acceso +
+              ""
+          ).prop("checked", true);
+        }
       }
     });
   });
@@ -991,6 +1061,391 @@ $(document).ready(function () {
       });
     }
   });
+  $("#chk_breaker_principal").change(function () {
+    if (this.checked) {
+      attr_bd = "1";
+    } else {
+      attr_bd = "0";
+    }
+    table = "breaker_principal";
+    var id_sitio = $("#na_sitio").val();
+
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateSiteElectricity",
+          id_sitio: id_sitio,
+          attr_bd: attr_bd,
+          table: table,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("#chk_planta_emergencia").change(function () {
+    if (this.checked) {
+      attr_bd = "1";
+    } else {
+      attr_bd = "0";
+    }
+    table = "planta_emergencia";
+    var id_sitio = $("#na_sitio").val();
+
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateSiteElectricity",
+          id_sitio: id_sitio,
+          attr_bd: attr_bd,
+          table: table,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("#chk_att_torre").change(function () {
+    if (this.checked) {
+      attr_bd = "1";
+    } else {
+      attr_bd = "0";
+    }
+    table = "at_torre";
+    var id_sitio = $("#na_sitio").val();
+
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateSiteElectricity",
+          id_sitio: id_sitio,
+          attr_bd: attr_bd,
+          table: table,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("#chk_at_centro_carga").change(function () {
+    if (this.checked) {
+      attr_bd = "1";
+    } else {
+      attr_bd = "0";
+    }
+    table = "at_centro_carga";
+    var id_sitio = $("#na_sitio").val();
+
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateSiteElectricity",
+          id_sitio: id_sitio,
+          attr_bd: attr_bd,
+          table: table,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("#chk_escalerilla").change(function () {
+    if (this.checked) {
+      attr_bd = "1";
+    } else {
+      attr_bd = "0";
+    }
+    table = "at_escalerilla";
+    var id_sitio = $("#na_sitio").val();
+
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateSiteElectricity",
+          id_sitio: id_sitio,
+          attr_bd: attr_bd,
+          table: table,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("#chk_vandalismo").change(function () {
+    var id_user = $("#id_user").val();
+    if (this.checked) {
+      attr_bd = "1";
+      id_status_operaciones = "1";
+    } else {
+      attr_bd = "0";
+      id_status_operaciones = "5";
+    }
+    var id_sitio = $("#na_sitio").val();
+
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateStatusVandalismo",
+          id_sitio: id_sitio,
+          attr_bd: attr_bd,
+          id_status_operaciones: id_status_operaciones,
+          id_user: id_user,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $("#na_limpieza").change(function () {
+    var id_tipos_limpieza = $(this).val();
+    var id_sitio = $("#na_sitio").val();
+
+    table = "limpieza";
+    var id_sitio = $("#na_sitio").val();
+    if (id_tipos_limpieza != null) {
+      if (id_sitio != null) {
+        $.ajax({
+          url: "php/controllers/accesos/accesos_controller.php",
+          method: "POST",
+          data: {
+            mod: "updateSiteElectricity",
+            id_sitio: id_sitio,
+            attr_bd: id_tipos_limpieza,
+            table: table,
+          },
+        }).done(function (data) {
+          var data = JSON.parse(data);
+          //console.log(data);
+          if (data.response == true) {
+            $.NotificationApp.send(
+              "Propiedad Actualizada",
+              "",
+              "top-right",
+              "#ffffff",
+              "success"
+            );
+          } else {
+            $.NotificationApp.send(
+              "Propiedad Actualizada",
+              "",
+              "top-right",
+              "#ffffff",
+              "success"
+            );
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Debe seleccionar un sitio",
+          timer: 1500,
+        });
+      }
+    }
+  });
+  $("#na_perimetro").change(function () {
+    var id_tipo_perimetro = $(this).val();
+    var id_sitio = $("#na_sitio").val();
+
+    table = "perimetro";
+    var id_sitio = $("#na_sitio").val();
+    if (id_tipo_perimetro != null) {
+      if (id_sitio != null) {
+        $.ajax({
+          url: "php/controllers/accesos/accesos_controller.php",
+          method: "POST",
+          data: {
+            mod: "updateSiteElectricity",
+            id_sitio: id_sitio,
+            attr_bd: id_tipo_perimetro,
+            table: table,
+          },
+        }).done(function (data) {
+          var data = JSON.parse(data);
+          //console.log(data);
+          if (data.response == true) {
+            $.NotificationApp.send(
+              "Propiedad Actualizada",
+              "",
+              "top-right",
+              "#ffffff",
+              "success"
+            );
+          } else {
+            $.NotificationApp.send(
+              "Propiedad Actualizada",
+              "",
+              "top-right",
+              "#ffffff",
+              "success"
+            );
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Debe seleccionar un sitio",
+          timer: 1500,
+        });
+      }
+    }
+  });
 
   $("#estado_sitio").select2({
     dropdownParent: $("#nuevoSitio"),
@@ -1008,6 +1463,13 @@ $(document).ready(function () {
   $("#na_zona").select2({
     dropdownParent: $("#nuevoAcceso"),
   });
+  $("#na_limpieza").select2({
+    dropdownParent: $("#nuevoAcceso"),
+  });
+  $("#na_perimetro").select2({
+    dropdownParent: $("#nuevoAcceso"),
+  });
+
   $("#cerraduras_gabinetes").select2({
     dropdownParent: $("#newGabinete"),
   });

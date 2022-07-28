@@ -99,4 +99,22 @@ class Access
 
         return ($getCentral);
     }
+    public function getStatusLimpieza()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipos_limpieza order by descripcion ASC";
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
+    public function getPerimetros()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipo_perimetro order by descripcion ASC";
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
 }

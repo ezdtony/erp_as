@@ -5,8 +5,11 @@ $allCentrales = $accesos->getAllCentral();
 $getAllLockTypes = $accesos->getAllLockTypes();
 $getPuertasDeAcceso = $accesos->getPuertasDeAcceso();
 $getTiposCerraduraPA = $accesos->getTiposCerraduraPA();
-?>
+$getStatusLimpieza = $accesos->getStatusLimpieza();
+$getPerimetros  = $accesos->getPerimetros();
 
+?>
+<input type="hidden" id="id_user" value="<?= $_SESSION['id_user'] ?>">
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">

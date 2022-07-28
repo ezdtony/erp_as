@@ -566,11 +566,31 @@ function getGabinetesStio()
     $id_sitio = $_POST['id_sitio'];
 
     $queries = new Queries;
-
+    $getAccessGates = array();
     $stmt = "SELECT *, tip_cer.descripcion AS cerradura 
     FROM asteleco_accesos_erp.gabinetes AS gab
     INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tip_cer ON tip_cer.id_tipos_cerraduras = gab.id_tipos_cerraduras
     WHERE gab.id_sitios = $id_sitio";
+
+    $stmt_puertas_acceso = "SELECT * FROM asteleco_accesos_erp.cerraduras_sitios WHERE id_sitios = $id_sitio";
+    $getAccessGates = $queries->getData($stmt_puertas_acceso);
+
+    $stmt_electricidad = "SELECT at_torre, at_centro_carga, at_escalerilla,
+    planta_emergencia, breaker_principal, breakers_existentes, status
+                          FROM asteleco_accesos_erp.sitios WHERE id_sitios = $id_sitio";
+    $getElectricity = $queries->getData($stmt_electricidad);
+
+    $stmt_get_perimetro_limpieza = "SELECT 
+    per.id_tipo_perimetro,
+    lim.id_tipos_limpieza,
+    per.descripcion AS perimetro,
+    lim.descripcion AS limpieza
+    FROM asteleco_accesos_erp.sitios AS sit
+    INNER JOIN asteleco_accesos_erp.tipo_perimetro AS per ON per.id_tipo_perimetro = sit.perimetro
+    INNER JOIN asteleco_accesos_erp.tipos_limpieza AS lim ON lim.id_tipos_limpieza = sit.limpieza
+    WHERE id_sitios = $id_sitio";
+    $getPerimLimp = $queries->getData($stmt_get_perimetro_limpieza);
+
 
 
     $html_gabinetes = '';
@@ -599,14 +619,21 @@ function getGabinetesStio()
         //--- --- ---//
         $data = array(
             'response' => true,
-            'html_gabinetes' => $html_gabinetes
+            'html_gabinetes' => $html_gabinetes,
+            'access_gates' => $getAccessGates,
+            'electricity' => $getElectricity,
+            'perim_limp' => $getPerimLimp
         );
         //--- --- ---//
     } else {
         //--- --- ---//
         $data = array(
             'response' => false,
-            'html_gabinetes' => $html_gabinetes
+            'html_gabinetes' => $html_gabinetes,
+            'access_gates' => $getAccessGates,
+            'electricity' => $getElectricity,
+            'perim_limp' => $getPerimLimp,
+            'message' => 'No se encontraron gabinetes para este sitio'
         );
         //--- --- ---//
     }
@@ -677,5 +704,105 @@ function updateCerradurasSitio()
         //--- --- ---//
     }
 
+    echo json_encode($data);
+}
+function updateSiteElectricity()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $attr_bd = $_POST['attr_bd'];
+    $table = $_POST['table'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_accesos_erp.sitios SET $table = $attr_bd WHERE id_sitios = $id_sitio";
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        //$last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
+        );
+        //--- --- ---//
+    }
+    echo json_encode($data);
+}
+function updateStatusVandalismo()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $attr_bd = $_POST['attr_bd'];
+    $id_status_operaciones = $_POST['id_status_operaciones'];
+    $id_user = $_POST['id_user'];
+    $today = date("Y-m-d");
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_accesos_erp.sitios SET status = $id_status_operaciones WHERE id_sitios = $id_sitio";
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        $check_stmt = "SELECT * FROM asteleco_accesos_erp.vandalismos 
+        WHERE id_sitios = $id_sitio AND DATE(datelog) = '$today'";
+        $getInfoRequest = $queries->getData($check_stmt);
+        if (empty($getInfoRequest)) {
+            $stmt = "INSERT INTO asteleco_accesos_erp.vandalismos(
+                id_personal, status, id_sitios, id_status_operaciones, datelog
+            ) VALUES(
+                $id_user,
+                $attr_bd,
+                $id_sitio,
+                $id_status_operaciones,
+                NOW()
+            )";
+            if ($getInfoRequest = $queries->insertData($stmt)) {
+                //$last_id = $getInfoRequest['last_id'];
+                //--- --- ---//
+                $data = array(
+                    'response' => true
+                );
+                //--- --- ---//
+            } else {
+                //--- --- ---//
+                $data = array(
+                    'response' => false
+                );
+                //--- --- ---//
+            }
+        } else {
+            $stmt = "UPDATE asteleco_accesos_erp.vandalismos 
+            SET
+            id_personal = $id_user,
+            status = $attr_bd,
+            id_sitios = $id_sitio,
+            id_status_operaciones = $id_status_operaciones,
+            datelog = NOW()
+            WHERE id_sitios = $id_sitio AND DATE(datelog) = '$today'
+            ";
+            if ($getInfoRequest = $queries->insertData($stmt)) {
+                //$last_id = $getInfoRequest['last_id'];
+                //--- --- ---//
+                $data = array(
+                    'response' => true
+                );
+                //--- --- ---//
+            } else {
+                //--- --- ---//
+                $data = array(
+                    'response' => false
+                );
+                //--- --- ---//
+            }
+        }
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
+        );
+        //--- --- ---//
+    }
     echo json_encode($data);
 }
