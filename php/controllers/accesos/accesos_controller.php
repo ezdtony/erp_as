@@ -806,3 +806,91 @@ function updateStatusVandalismo()
     }
     echo json_encode($data);
 }
+function uploadStudentFiles()
+{
+    $response = 0;
+    
+    $folder = $_POST['folder'];
+    $module_name = $_POST['module_name'];
+    //$file_name = $_POST['name'];
+    $extension_file = basename($_FILES["formData"]["type"]);
+    $file_name = $folder . "_" . time() . ".$extension_file";
+
+    //$route = '/xampp/htdocs/documentos_alumnos/' . $_POST['student'] . '/' . $folder;
+    $route2 =  dirname(__DIR__ . '', 3) . '/uploads/'.$module_name."/" . $folder . "/";
+    $route =  dirname(__DIR__ . '', 3) . '/uploads/' .$module_name."/". $folder . "/" . $file_name;
+    $route_db = '/uploads/' . $folder . "/" . $file_name;
+    if (!file_exists($route2)) {
+        mkdir($route2, 0777, true);
+    }
+    if (move_uploaded_file($_FILES["formData"]["tmp_name"], $route)) {
+        
+        $queries = new Queries;
+        $data = array(
+            'response' => true,
+            'message' => 'Se cargó correctamente el archivo',
+        );
+        /* $stmt = "INSERT INTO absence_excuse.absence_vouchers (
+            id_absences_excuse,
+            file_name,
+            file_route,
+            file_type,
+            upload_date,
+            no_teacher_uplodaded
+        ) VALUES
+        (
+            '$id_absences_excused',
+            '$file_name',
+            '$route_db',
+            '$extension_file',
+            NOW(),
+            '$_SESSION[colab]')";
+
+        if ($queries->insertData($stmt)) {
+            $response = 1;
+            $data = array(
+                'response' => true,
+                'message' => 'Se cargó correctamente el archivo',
+            );
+        } else {
+            $response = 0;
+            $data = array(
+                'response' => false,
+                'message' => 'No se pudo cargar el archivo',
+            );
+        } */
+    } else {
+        //$response = 0;
+        $data = array(
+            'response' => false,
+            'message' => 'No se pudo cargar el archivo',
+        );
+    }
+    // echo $file_name;
+
+    //$move = '';
+
+    /* 
+    $file = $route . '/' . $file_name;
+
+    if (!file_exists($route)) {
+        mkdir($route, 0777, true);
+    }
+
+    if (move_uploaded_file($_FILES['formData']['tmp_name'], $file)) {
+
+        $response = 1;
+
+        $movement = array(
+            'movimiento'        => $move,
+            'curp'              => $_POST['student'],
+            'documento'         => $file_name
+        );
+        $movement = json_encode($movement);
+        setLog(module, $movement, $_SESSION['colab']);
+    }
+
+    $data['response'] = $response;
+     */
+    echo json_encode($data);
+}

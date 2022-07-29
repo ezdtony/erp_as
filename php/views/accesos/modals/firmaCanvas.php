@@ -154,6 +154,7 @@
 <div class="row">
     <div class="col-md-12" style="display:none">
         <textarea id="draw-dataUrl" class="form-control" rows="5">Para los que saben que es esto:</textarea>
+        <input type="text" name="" id="firma_b64">
     </div>
 </div>
 <br />

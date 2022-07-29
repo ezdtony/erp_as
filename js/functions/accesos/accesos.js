@@ -719,6 +719,7 @@ $(document).ready(function () {
     var id_sitio = $(this).val();
     $(".btnAddGabinete").attr("disabled", false);
     $(".saveGabinete").attr("data-id-sitio", id_sitio);
+    $(".bntGuardarAcceso").attr("data-id-sitio", id_sitio);
     $.ajax({
       url: "php/controllers/accesos/accesos_controller.php",
       method: "POST",
@@ -885,6 +886,200 @@ $(document).ready(function () {
       }
     });
   });
+  $(document).on("click", ".bntGuardarAcceso", function () {
+    // --- INFORMACIÓN DEL ACCESO ---//
+
+    var id_sitio = $(this).attr("data-id-sitio");
+    var empresa = $("#empresa").val();
+    var actividad = $("#actividad").val();
+    var hora_ingreso = $("#hora_ingreso").val();
+    var hora_salida = $("#hora_salida").val();
+    var proveedor = $("#proveedor").val();
+    var ayudantes = $("#ayudantes").val();
+    var comentarios = $("#comentarios").val();
+
+    // --- INFORMACIÓN DEL SITIO ---//
+
+    // --- GABINETES ---//
+
+    // --- PUERTAS DE ACCESO ---//
+
+    var id_tipos_cerraduras_1 = $(
+      "input[type=radio][name=acceso1]:checked"
+    ).val();
+    var id_puertas_acceso_1 = $("input[type=radio][name=acceso1]").attr(
+      "data-id-puertas-acceso"
+    );
+
+    var id_tipos_cerraduras_2 = $(
+      "input[type=radio][name=acceso2]:checked"
+    ).val();
+    var id_puertas_acceso_2 = $("input[type=radio][name=acceso2]").attr(
+      "data-id-puertas-acceso"
+    );
+
+    var id_tipos_cerraduras_3 = $(
+      "input[type=radio][name=acceso3]:checked"
+    ).val();
+    var id_puertas_acceso_3 = $("input[type=radio][name=acceso3]").attr(
+      "data-id-puertas-acceso"
+    );
+
+    var id_tipos_cerraduras_4 = $(
+      "input[type=radio][name=acceso4]:checked"
+    ).val();
+    var id_puertas_acceso_4 = $("input[type=radio][name=acceso4]").attr(
+      "data-id-puertas-acceso"
+    );
+
+    // --- INFORMACIÓN ADICIONAL DE PROVEEDOR ---//
+    firma_b64 = $("#firma_b64").val();
+    const file_input = document.querySelector("#fotografia_proveedor");
+    const file = file_input.files[0];
+    vidFileLength = file_input.files.length;
+    var file_n = file.name;
+    var f = file_n.split(".");
+    //--- --- ---//
+    var name = file_input.getAttribute("name");
+    //--- --- ---//
+    name += ".";
+    name += f[1];
+
+    if (vidFileLength == 0) {
+      /* $(".inputAddStudentDocument")
+        .siblings(".custom-file-label")
+        .removeClass("selected")
+        .html("Elegir un archivo"); */
+      //Swal.close();
+      Swal.fire("Atención!", "Debe elegir un archivo", "info");
+      file_input.value = "";
+    } else {
+      if (
+        f[f.length - 1] != "png" &&
+        f[f.length - 1] != "jpg" &&
+        f[f.length - 1] != "jpeg"
+      ) {
+        Swal.fire("Atención!", "El archivo debe ser una imagen", "info");
+        file_input.value = "";
+      } else {
+        if (file_input.files[0].size > 20000000) {
+          Swal.close();
+          Swal.fire(
+            "Atención!",
+            "El tamaño máximo del archivo a subir es de 20MB",
+            "info"
+          );
+          file_input.value = "";
+          return;
+        } else {
+          
+          folder = "identificaciones_proveedores";
+          module_name = "accesos";
+          var fData = new FormData();
+          fData.append("formData", file);
+          fData.append("name", name);
+          fData.append("folder", folder);
+          fData.append("module_name", module_name);
+          fData.append("mod", "uploadStudentFiles");
+          $.ajax({
+            url: "php/controllers/accesos/accesos_controller.php",
+            method: "POST",
+            data: fData,
+            contentType: false,
+            processData: false,
+          })
+            .done(function (response) {
+              //console.log(response);
+
+              var json = JSON.parse(response);
+              if (json.response) {
+                Swal.fire({
+                  title: "¡Archivo subido!",
+                  text: json.message,
+                  icon: "success",
+                  confirmButtonText: "Cerrar",
+                }).then((result) => {
+                  
+                });
+              } else {
+                Swal.fire(
+                  "Error!",
+                  "Ocurrió un error al intentar subir el documento, intentelo nuevamente por favor",
+                  "error"
+                );
+              }
+            })
+            .fail(function (error) {
+              Swal.fire(
+                "Error!",
+                "Ocurrió un error al intentar comunicarse con la base de datos :(",
+                "error"
+              );
+              console.log(error);
+            });
+          if (
+            id_sitio != "" &&
+            empresa != "" &&
+            actividad != "" &&
+            hora_ingreso != "" &&
+            proveedor != "" &&
+            ayudantes != "" &&
+            id_tipos_cerraduras_1 != undefined &&
+            id_tipos_cerraduras_2 != undefined &&
+            id_tipos_cerraduras_3 != undefined &&
+            id_tipos_cerraduras_4 != undefined &&
+            firma_b64 != ""
+          ) {
+            Swal.fire({
+              title: "¿Está seguro de guardar el acceso?",
+              text: "Asegurese que toda la información esté correcta",
+              icon: "info",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Si, guardar!",
+              cancelButtonText: "Cancelar",
+            }).then((result) => {
+              if (result.value) {
+                loading();
+                console.log("save sitio: " + id_sitio);
+                /*  $.ajax({
+              url: "php/controllers/accesos/accesos_controller.php",
+              method: "POST",
+              data: {
+                mod: "deleteGabinete",
+                id_gabinete: id_gabinete,
+              },
+            }).done(function (data) {
+              var data = JSON.parse(data);
+              //console.log(data);
+              if (data.response == true) {
+                Swal.close();
+                $("#divGabinete" + id_gabinete).remove();
+              } else {
+                Swal.close();
+                Swal.fire({
+                  icon: "error",
+                  title: "Ocurrió un error al eliminar el gabinete",
+                  timer: 1500,
+                });
+              }
+            }); */
+              } else {
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Asegurese de ingresar todos los datos obligatorios",
+              timer: 3500,
+            });
+          }
+        }
+      }
+    }
+  });
+
   $("input[type=radio][name=acceso1]").change(function () {
     var id_tipos_cerraduras = $(this).val();
     var id_puertas_acceso = $(this).attr("data-id-puertas-acceso");

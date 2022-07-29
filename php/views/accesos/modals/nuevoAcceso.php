@@ -21,7 +21,7 @@
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label class="form-label">Central</label>
+                                    <label class="form-label">Central <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <div class="input-group">
                                         <select id="na_central" class="form-control select2" data-toggle="select2">
                                             <option selected disabled value="">Seleccione una opción</option>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Zona</label>
+                                    <label class="form-label">Zona <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <div class="input-group">
                                         <select id="na_zona" disabled class="form-control select2" data-toggle="select2">
                                             <option selected disabled value="">Seleccione una opción</option>
@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Sitio</label>
+                                    <label class="form-label">Sitio <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <div class="input-group">
                                         <select id="na_sitio" disabled class="form-control select2" data-toggle="select2">
                                             <option selected disabled value="">Seleccione una opción</option>
@@ -49,34 +49,35 @@
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" id="empresa" placeholder="Empresa" />
-                                    <label for="empresa">Empresa</label>
+                                    <label for="empresa">Empresa <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="actividad" class="form-control" id="actividad" placeholder="Actividad" />
-                                    <label for="actividad">Actividad</label>
+                                    <label for="actividad">Actividad <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                 </div>
                                 <div class="form-floating row">
                                     <div class="col-md-6">
-                                        <label for="example-time" class="form-label">Hora de Ingreso</label>
+                                        <label for="example-time" class="form-label">Hora de Ingreso <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                         <input class="form-control" id="hora_ingreso" type="time" name="time" value="<?= date('h:i') ?>">
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="example-time" class="form-label">Hora de Salida</label>
+                                        <label for="example-time" class="form-label">Hora de Salida </label>
                                         <input class="form-control" id="hora_salida" type="time" name="time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="form-floating mb-3">
                                     <input type="proveedor" class="form-control" id="proveedor" placeholder="proveedor" />
-                                    <label for="proveedor">Nombre del proveedor</label>
+                                    <label for="proveedor">Nombre del proveedor <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="ayudantes" class="form-control" id="ayudantes" placeholder="ayudantes" />
-                                    <label for="ayudantes">Acompañantes del proveedor</label>
+                                    <label for="ayudantes">Acompañantes del proveedor <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                 </div>
-                                <div class="col-sm-12">
-                                    <label class="form-label">Fotografía / Identificación del proveedor</label>
-                                    <input class="form-control" type="file" id="fotografia_proveedor">
+                                <div>
+                                    <label class="form-label">Comentarios</label>
+                                    <p class="text-muted font-13"></p>
+                                    <textarea id="comentarios" name="comentarios" data-toggle="maxlength" class="form-control" maxlength="550" rows="4" placeholder="Dispone de un total de 550 caracteres."></textarea>
                                 </div>
                                 <br>
                             </div>
@@ -318,14 +319,13 @@
                         </div>
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                             <div class="card-body">
-                                <div>
-                                    <label class="form-label">Comentarios</label>
-                                    <p class="text-muted font-13"></p>
-                                    <textarea id="comentarios" name="comentarios" data-toggle="maxlength" class="form-control" maxlength="550" rows="4" placeholder="Dispone de un total de 550 caracteres."></textarea>
+                                <div class="col-sm-12">
+                                    <label class="form-label file_label">Fotografía / Identificación del proveedor  <span class="badge badge-danger-lighten">Obligatorio</span></label>
+                                    <input class="form-control" type="file" id="fotografia_proveedor">
                                 </div>
                                 <br>
                                 <div class="col-sm-12">
-                                    <label class="form-label">Firma del proveedor</label>
+                                    <label class="form-label">Firma del proveedor  <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <?php include 'firmaCanvas.php'; ?>
                                     <br>
                                 </div>
@@ -338,7 +338,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar Acceso</button>
+                <button type="button" class="btn btn-primary bntGuardarAcceso">Guardar Acceso</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

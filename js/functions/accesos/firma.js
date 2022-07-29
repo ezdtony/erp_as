@@ -48,6 +48,7 @@
     function (e) {
       var dataUrl = canvas.toDataURL();
       drawText.innerHTML = dataUrl;
+      $("#firma_b64").val(dataUrl);
       drawImage.setAttribute("src", dataUrl);
     },
     false
