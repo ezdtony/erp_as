@@ -27,7 +27,22 @@ class Access
 
         return ($getSites);
     }
+    public function getAccessList()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_sites = "SELECT 
+        acc.*,
+        sites.codigo_sitio,
+        sites.nombre_sitio
+        FROM asteleco_accesos_erp.accesos AS acc
+        INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios
+        ";
 
+        $getSites = $queries->getData($sql_sites);
+
+        return ($getSites);
+    }
     public function getAllCentral()
     {
         include_once('php/models/petitions.php');

@@ -806,10 +806,9 @@ function updateStatusVandalismo()
     }
     echo json_encode($data);
 }
-function uploadStudentFiles()
+function saveIdentificacionProveedor()
 {
-    $response = 0;
-    
+
     $folder = $_POST['folder'];
     $module_name = $_POST['module_name'];
     //$file_name = $_POST['name'];
@@ -817,50 +816,48 @@ function uploadStudentFiles()
     $file_name = $folder . "_" . time() . ".$extension_file";
 
     //$route = '/xampp/htdocs/documentos_alumnos/' . $_POST['student'] . '/' . $folder;
-    $route2 =  dirname(__DIR__ . '', 3) . '/uploads/'.$module_name."/" . $folder . "/";
-    $route =  dirname(__DIR__ . '', 3) . '/uploads/' .$module_name."/". $folder . "/" . $file_name;
-    $route_db = '/uploads/' . $folder . "/" . $file_name;
+    $route2 =  dirname(__DIR__ . '', 3) . '/uploads/' . $module_name . "/" . $folder . "/";
+    $route =  dirname(__DIR__ . '', 3) . '/uploads/' . $module_name . "/" . $folder . "/" . $file_name;
+    $route_db = '/uploads/' . $module_name . '/' . $folder . "/" . $file_name;
     if (!file_exists($route2)) {
         mkdir($route2, 0777, true);
     }
     if (move_uploaded_file($_FILES["formData"]["tmp_name"], $route)) {
-        
+
         $queries = new Queries;
         $data = array(
             'response' => true,
             'message' => 'Se cargó correctamente el archivo',
         );
-        /* $stmt = "INSERT INTO absence_excuse.absence_vouchers (
-            id_absences_excuse,
-            file_name,
-            file_route,
-            file_type,
-            upload_date,
-            no_teacher_uplodaded
+        $stmt = "INSERT INTO asteleco_accesos_erp.rutas_archivos_accesos (
+            nombre_archivo,
+            ruta_archivo,
+            tipo_archivo,
+            log_fecha_registro
         ) VALUES
         (
-            '$id_absences_excused',
             '$file_name',
             '$route_db',
             '$extension_file',
-            NOW(),
-            '$_SESSION[colab]')";
+            NOW())";
+        $last_id = 0;
+        $getInfoRequest = $queries->insertData($stmt);
+        $last_id = $getInfoRequest['last_id'];
 
-        if ($queries->insertData($stmt)) {
-            $response = 1;
+        if ($last_id = !0) {
+            $last_id_arch = $getInfoRequest['last_id'];
             $data = array(
                 'response' => true,
                 'message' => 'Se cargó correctamente el archivo',
+                'id_archivo' => $last_id_arch
             );
         } else {
-            $response = 0;
             $data = array(
                 'response' => false,
                 'message' => 'No se pudo cargar el archivo',
             );
-        } */
+        }
     } else {
-        //$response = 0;
         $data = array(
             'response' => false,
             'message' => 'No se pudo cargar el archivo',
@@ -892,5 +889,172 @@ function uploadStudentFiles()
 
     $data['response'] = $response;
      */
+    echo json_encode($data);
+}
+
+function saveAcceso()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $empresa = $_POST['empresa'];
+    $actividad = $_POST['actividad'];
+    $fecha = date('Y-m-d');
+    $hora_ingreso = $_POST['hora_ingreso'];
+    $proveedor = $_POST['proveedor'];
+    $ayudantes = $_POST['ayudantes'];
+    $firma_b64 = $_POST['firma_b64'];
+    $hora_salida = $_POST['hora_salida'];
+    $comentarios = $_POST['comentarios'];
+    $id_imagen = $_POST['id_imagen'];
+    $id_user = $_POST['id_user'];
+
+    $queries = new Queries;
+    
+    $stmt_get_info_site = "SELECT 
+        vandal.descripcion as descripcion_vandalismo,
+        tip.descripcion as limpieza_tipo,
+        breakers_existentes,
+        at_torre,
+        at_centro_carga,
+        at_escalerilla,
+        breaker_principal
+        FROM asteleco_accesos_erp.sitios AS sit
+        INNER JOIN asteleco_accesos_erp.tipos_limpieza AS tip ON tip.id_tipos_limpieza = sit.limpieza
+        INNER JOIN asteleco_accesos_erp.status_operaciones AS vandal ON vandal.id_status_operaciones = sit.status
+        WHERE sit.id_sitios = $id_sitio";
+    $get_info_site = $queries->getData($stmt_get_info_site);
+    if (!empty($get_info_site)) {
+        $status_acceso = "1";
+        $breaker_principal = $get_info_site[0]->breaker_principal;
+        $at_torre = $get_info_site[0]->at_torre;
+        $at_escalerilla = $get_info_site[0]->at_escalerilla;
+        $at_centro_carga = $get_info_site[0]->at_centro_carga;
+        $breakers_existentes = $get_info_site[0]->breakers_existentes;
+        $limpieza_tipo = $get_info_site[0]->limpieza_tipo;
+        $descripcion_vandalismo = $get_info_site[0]->descripcion_vandalismo;
+    }
+    $stmt_puertas_acceso_principal = "SELECT 
+       tc.descripcion 
+       FROM  asteleco_accesos_erp.cerraduras_sitios AS cs
+       INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tc ON tc.id_tipos_cerraduras = cs.id_tipos_cerraduras
+       WHERE cs.id_sitios = $id_sitio AND cs.id_puertas_de_acceso = 1";
+    $get_puertas_acceso_principal = $queries->getData($stmt_puertas_acceso_principal);
+    if (!empty($get_puertas_acceso_principal)) {
+        $puertas_acceso_principal = $get_puertas_acceso_principal[0]->descripcion;
+    } else {
+        $puertas_acceso_principal = "";
+    }
+
+    $stmt_puertas_acceso_vehicular = "SELECT 
+       tc.descripcion 
+       FROM  asteleco_accesos_erp.cerraduras_sitios AS cs
+       INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tc ON tc.id_tipos_cerraduras = cs.id_tipos_cerraduras
+       WHERE cs.id_sitios = $id_sitio AND cs.id_puertas_de_acceso = 2";
+    $get_puertas_acceso_vehicular = $queries->getData($stmt_puertas_acceso_vehicular);
+    if (!empty($get_puertas_acceso_vehicular)) {
+        $puertas_acceso_vehicular = $get_puertas_acceso_vehicular[0]->descripcion;
+    } else {
+        $puertas_acceso_vehicular = "";
+    }
+    $stmt_puertas_acceso_centro_carga = "SELECT 
+       tc.descripcion 
+       FROM  asteleco_accesos_erp.cerraduras_sitios AS cs
+       INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tc ON tc.id_tipos_cerraduras = cs.id_tipos_cerraduras
+       WHERE cs.id_sitios = $id_sitio AND cs.id_puertas_de_acceso = 3";
+    $get_puertas_acceso_centro_carga = $queries->getData($stmt_puertas_acceso_centro_carga);
+    if (!empty($get_puertas_acceso_centro_carga)) {
+        $puertas_acceso_centro_carga = $get_puertas_acceso_centro_carga[0]->descripcion;
+    } else {
+        $puertas_acceso_centro_carga = "";
+    }
+    $stmt_puertas_acceso_contenedor = "SELECT 
+       tc.descripcion 
+       FROM  asteleco_accesos_erp.cerraduras_sitios AS cs
+       INNER JOIN asteleco_accesos_erp.tipos_cerraduras AS tc ON tc.id_tipos_cerraduras = cs.id_tipos_cerraduras
+       WHERE cs.id_sitios = $id_sitio AND cs.id_puertas_de_acceso = 4";
+    $get_puertas_acceso_contenedor = $queries->getData($stmt_puertas_acceso_contenedor);
+    if (!empty($get_puertas_acceso_contenedor)) {
+        $puertas_acceso_contenedor = $get_puertas_acceso_contenedor[0]->descripcion;
+    } else {
+        $puertas_acceso_contenedor = "";
+    }
+
+    $stmt = "INSERT INTO asteleco_accesos_erp.accesos (
+            id_sitios,
+            id_personal_as,
+            empresa,
+            fecha,
+            hora,
+            hora_salida,
+            actividad,
+            lider_cuadrilla,
+            ayudantes,
+            status_acceso,
+            breaker_principal,
+            at_torre,
+            at_escalerilla,
+            at_centro_carga,
+            breakers_existentes,
+            comentarios,
+            limpieza,
+            vandalismo,
+            acceso_principal,
+            acceso_vehicular,
+            centro_carga,
+            contenedor,
+            id_rutas_archivos_accesos
+        ) VALUES
+        (
+            $id_sitio,
+            $id_user,
+            '$empresa',
+            '$fecha',
+            '$hora_ingreso',
+            '$hora_salida',
+            '$actividad',
+            '$proveedor',
+            '$ayudantes',
+            '$status_acceso',
+            '$breaker_principal',
+            '$at_torre',
+            '$at_escalerilla',
+            '$at_centro_carga',
+            '$breakers_existentes',
+            '$comentarios',
+            '$limpieza_tipo',
+            '$descripcion_vandalismo',
+            '$puertas_acceso_principal',
+            '$puertas_acceso_vehicular',
+            '$puertas_acceso_centro_carga',
+            '$puertas_acceso_contenedor',
+            $id_imagen
+        )";
+
+    $last_id = 0;
+    $getInfoRequest = $queries->insertData($stmt);
+    $id_accesos = $getInfoRequest['last_id'];
+    $last_id = $id_accesos;
+    $stmt = "INSERT INTO asteleco_accesos_erp.firmas_accesos (
+        id_accesos,
+        firma_base_64
+    ) VALUES(
+        '$id_accesos',
+        '$firma_b64'
+    )";
+    $getInfoRequest = $queries->insertData($stmt);
+
+    if ($last_id = !0) {
+        $data = array(
+            'response' => true,
+            'message' => 'Se registro el acceso correctamente',
+            'id_archivo' => $last_id
+        );
+    } else {
+        $data = array(
+            'response' => false,
+            'message' => 'No se pudo registrar el acceso'
+        );
+    }
+
     echo json_encode($data);
 }

@@ -52,16 +52,16 @@ $getPerimetros  = $accesos->getPerimetros();
 
                     <tbody>
                         <?php
-                        $allSites = $accesos->getAllSites();
+                        $allSites = $accesos->getAccessList();
 
                         foreach ($allSites as $sites) { ?>
                             <tr>
                                 <td><?= $sites->codigo_sitio ?></td>
                                 <td><?= $sites->nombre_sitio ?></td>
-                                <td>MTTO. PREVENTIVO</td>
-                                <td>ASTELECOM</td>
-                                <td>Manuel León</td>
-                                <td><?= date('Y-m-d') ?></td>
+                                <td><?= $sites->actividad ?></td>
+                                <td><?= $sites->empresa ?></td>
+                                <td><?= $sites->lider_cuadrilla ?></td>
+                                <td><?= $sites->fecha ?></td>
                                 <td>
                                     <button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-danger infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="dripicons-document"></i> </button>
                                 </td>

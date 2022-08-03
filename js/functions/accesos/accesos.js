@@ -737,6 +737,10 @@ $(document).ready(function () {
         $("#txt_perimetro").text(data.perim_limp[0].perimetro);
       }
       if (data.response == true) {
+        $(".at_torre").prop("disabled", false);
+        $(".at_centro_carga").prop("disabled", false);
+        $(".at_escalerilla").prop("disabled", false);
+
         var html_gabinetes = data.html_gabinetes;
 
         for (let i = 0; i < data.access_gates.length; i++) {
@@ -897,6 +901,7 @@ $(document).ready(function () {
     var proveedor = $("#proveedor").val();
     var ayudantes = $("#ayudantes").val();
     var comentarios = $("#comentarios").val();
+    var id_user = $("#id_user").val();
 
     // --- INFORMACIÓN DEL SITIO ---//
 
@@ -972,7 +977,6 @@ $(document).ready(function () {
           file_input.value = "";
           return;
         } else {
-          
           folder = "identificaciones_proveedores";
           module_name = "accesos";
           var fData = new FormData();
@@ -980,7 +984,7 @@ $(document).ready(function () {
           fData.append("name", name);
           fData.append("folder", folder);
           fData.append("module_name", module_name);
-          fData.append("mod", "uploadStudentFiles");
+          fData.append("mod", "saveIdentificacionProveedor");
           $.ajax({
             url: "php/controllers/accesos/accesos_controller.php",
             method: "POST",
@@ -989,22 +993,90 @@ $(document).ready(function () {
             processData: false,
           })
             .done(function (response) {
-              //console.log(response);
+              console.log(response);
 
               var json = JSON.parse(response);
               if (json.response) {
-                Swal.fire({
-                  title: "¡Archivo subido!",
-                  text: json.message,
-                  icon: "success",
-                  confirmButtonText: "Cerrar",
-                }).then((result) => {
-                  
-                });
+                var id_imagen = json.id_archivo;
+                if (
+                  id_sitio != "" &&
+                  empresa != "" &&
+                  actividad != "" &&
+                  hora_ingreso != "" &&
+                  proveedor != "" &&
+                  ayudantes != "" &&
+                  id_tipos_cerraduras_1 != undefined &&
+                  id_tipos_cerraduras_2 != undefined &&
+                  id_tipos_cerraduras_3 != undefined &&
+                  id_tipos_cerraduras_4 != undefined &&
+                  firma_b64 != ""
+                ) {
+                  Swal.fire({
+                    title: "¿Está seguro de guardar el acceso?",
+                    text: "Asegurese que toda la información esté correcta",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Si, guardar!",
+                    cancelButtonText: "Cancelar",
+                  }).then((result) => {
+                    if (result.value) {
+                      loading();
+                      console.log("save sitio: " + id_sitio);
+                      $.ajax({
+                        url: "php/controllers/accesos/accesos_controller.php",
+                        method: "POST",
+                        data: {
+                          mod: "saveAcceso",
+                          id_sitio: id_sitio,
+                          empresa: empresa,
+                          actividad: actividad,
+                          hora_ingreso: hora_ingreso,
+                          proveedor: proveedor,
+                          ayudantes: ayudantes,
+                          firma_b64: firma_b64,
+                          hora_salida: hora_salida,
+                          comentarios: comentarios,
+                          id_imagen: id_imagen,
+                          id_user: id_user,
+                        },
+                      }).done(function (data) {
+                        var data = JSON.parse(data);
+                        //console.log(data);
+                        if (data.response == true) {
+                          Swal.close();
+                          Swal.fire(
+                            "¡Guardado!",
+                            "El acceso se ha guardado correctamente",
+                            "success"
+                          ).then((result) => {
+                            loading();
+                            location.reload();
+                          });
+                        } else {
+                          Swal.close();
+                          Swal.fire({
+                            icon: "error",
+                            title: "Ocurrió un error al eliminar el gabinete",
+                            timer: 1500,
+                          });
+                        }
+                      });
+                    } else {
+                    }
+                  });
+                } else {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Asegurese de ingresar todos los datos obligatorios",
+                    timer: 3500,
+                  });
+                }
               } else {
                 Swal.fire(
                   "Error!",
-                  "Ocurrió un error al intentar subir el documento, intentelo nuevamente por favor",
+                  "Ocurrió un error al intentar subir la fotografía, intentelo nuevamente por favor",
                   "error"
                 );
               }
@@ -1017,64 +1089,6 @@ $(document).ready(function () {
               );
               console.log(error);
             });
-          if (
-            id_sitio != "" &&
-            empresa != "" &&
-            actividad != "" &&
-            hora_ingreso != "" &&
-            proveedor != "" &&
-            ayudantes != "" &&
-            id_tipos_cerraduras_1 != undefined &&
-            id_tipos_cerraduras_2 != undefined &&
-            id_tipos_cerraduras_3 != undefined &&
-            id_tipos_cerraduras_4 != undefined &&
-            firma_b64 != ""
-          ) {
-            Swal.fire({
-              title: "¿Está seguro de guardar el acceso?",
-              text: "Asegurese que toda la información esté correcta",
-              icon: "info",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Si, guardar!",
-              cancelButtonText: "Cancelar",
-            }).then((result) => {
-              if (result.value) {
-                loading();
-                console.log("save sitio: " + id_sitio);
-                /*  $.ajax({
-              url: "php/controllers/accesos/accesos_controller.php",
-              method: "POST",
-              data: {
-                mod: "deleteGabinete",
-                id_gabinete: id_gabinete,
-              },
-            }).done(function (data) {
-              var data = JSON.parse(data);
-              //console.log(data);
-              if (data.response == true) {
-                Swal.close();
-                $("#divGabinete" + id_gabinete).remove();
-              } else {
-                Swal.close();
-                Swal.fire({
-                  icon: "error",
-                  title: "Ocurrió un error al eliminar el gabinete",
-                  timer: 1500,
-                });
-              }
-            }); */
-              } else {
-              }
-            });
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Asegurese de ingresar todos los datos obligatorios",
-              timer: 3500,
-            });
-          }
         }
       }
     }
