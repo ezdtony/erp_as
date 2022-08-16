@@ -126,7 +126,7 @@
                     </ul>
                 </div>
             </li>
-            <!--  
+            
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                     <i class="uil-shopping-trolley"></i>
@@ -136,9 +136,9 @@
                 <div class="collapse" id="sidebarCompras">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="apps-email-inbox.html">Cotizaciones</a>
+                        <a href="?submodule=compras_cotizaciones">Cotizaciones</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#">Solicitudes</a>
                         </li>
                         <li>
@@ -149,10 +149,13 @@
                         </li>
                         <li>
                             <a href="#">Proveedores</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </li>
+            
+            <!--
+                
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarInventarios" aria-expanded="false" aria-controls="sidebarInventarios" class="side-nav-link">
                     <i class="uil-clipboard-notes"></i>

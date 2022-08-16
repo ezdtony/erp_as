@@ -107,6 +107,9 @@ include_once('php/views/topbar.php');
             case 'reporte_viaticos_6':
                 $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_6.php';
                 break;
+            case 'compras_cotizaciones':
+                $include_file = 'php/views/compras/cotizaciones.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

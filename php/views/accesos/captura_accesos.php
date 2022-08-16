@@ -63,7 +63,7 @@ $getPerimetros  = $accesos->getPerimetros();
                                 <td><?= $sites->lider_cuadrilla ?></td>
                                 <td><?= $sites->fecha ?></td>
                                 <td>
-                                    <button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-danger infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="dripicons-document"></i> </button>
+                                    <button data-id-site="<?= $sites->id_accesos ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-danger checkListSite"><i class="dripicons-document"></i> </button>
                                 </td>
                             </tr>
                         <?php } ?>
