@@ -152,7 +152,7 @@ $(document).ready(function () {
       });
     }
   });
-  $(document).on("click", ".btn_quitar_partida_add_partida", function () {
+  $(document).on("click", ".btn_quitar_partida", function () {
     $(this).closest("tr").remove();
     $.NotificationApp.send(
       "Eliminado",
@@ -161,6 +161,105 @@ $(document).ready(function () {
       "#dddddd",
       "warning"
     );
+  });
+  $(document).on("click", ".btn_save_solicitud_list", function () {
+    var solicitud_index = [];
+    loading();
+    var id_proyecto = $("#id_proyecto option:selected").val();
+    var txt_proyecto = $("#id_proyecto option:selected").text();
+    var id_utilizacion = $("#id_utilizacion option:selected").val();
+    var txt_utilizacion = $("#id_utilizacion option:selected").text();
+
+    console.log("id_proyecto" + id_proyecto);
+    console.log("txt_proyecto" + txt_proyecto);
+
+    console.log("id_utilizacion" + id_utilizacion);
+    console.log("txt_utilizacion" + txt_utilizacion);
+    
+    if (id_proyecto != "" && id_utilizacion != "") {
+      if ($("#tablaPreviaSolicitud tr").length > 1) {
+        var valores = [];
+        $("#tablaPreviaSolicitud tr:last th:first").html();
+        $("#tablaPreviaSolicitud tr").each(function () {
+          var no_partida = $(this).find("th:first").html();
+          var material = $(this).find("td:eq(0)").html();
+          var utilizacion = $(this).find("td:eq(1)").html();
+          var u_medida = $(this).find("td:eq(2)").html();
+          var cantidad = $(this).find("td:eq(3)").html();
+          var observaciones = $(this).find("td:eq(4)").html();
+          valores.push([
+            [no_partida],
+            [material],
+            [u_medida],
+            [cantidad],
+            [observaciones],
+            [utilizacion],
+          ]);
+        });
+        solicitud_index.push(
+          [id_proyecto],
+          [valores]
+        );
+        console.log(solicitud_index);
+        $.ajax({
+          url: "php/controllers/compras/compras_controller.php",
+          method: "POST",
+          data: {
+            mod: "guardarCotizacion",
+            arr_data: solicitud_index,
+          },
+        })
+          .done(function (data) {
+            var data = JSON.parse(data);
+            console.log(data);
+
+            if (data.response == true) {
+              Swal.fire({
+                title: "¡Registro exitoso!",
+                text: "Se  regisrtaron todas las partidas!!!",
+                icon: "success",
+                timer: 1500,
+              }).then((result) => {
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Ocurrio un error al enviar la solicitud",
+              });
+            }
+          })
+          .fail(function (message) {
+            Swal.fire({
+              title: "Datos no registrados!",
+              text: "Ocurrió un error al guardar la información",
+              icon: "info",
+            });
+          });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Debe agregar al menos una partida!!",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then((result) => {
+          $("#createSolicitud").find("input,textarea,select,select2").val("");
+          $("#createSolicitud input[type='checkbox']")
+            .prop("checked", false)
+            .change();
+          $("#createSolicitud").modal("hide");
+          $("#divTablaSolicitudes").empty();
+          location.reload();
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un proyecto y una utilización!!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
   });
 
   $("#id_proyecto").select2({

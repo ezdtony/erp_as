@@ -34,6 +34,7 @@
                             <th>Sitio</th>
                             <th>Importe</th>
                             <th>Clasificación</th>
+                            <th>T Gasto</th>
                             <th>Ap. Contabilidad</th>
                             <th>Ap. Coordinación</th>
                             <th>Status</th>
@@ -54,7 +55,7 @@
                         $statusTypes = $viatics->getStatusTypes();
 
                         foreach ($allGastos as $deposits) {
-                            
+
                             $clasificacion = $deposits->clasificacion;
                             if ($clasificacion == 1) {
                                 $folio_fiscal = 'N/A';
@@ -105,6 +106,8 @@
                                 <td><?= $deposits->localidad ?></td>
                                 <td>$ <?= $deposits->importe ?></td>
                                 <td><?= $txt_clasifiacion ?></td>
+                                <td><?= $deposits->tipo_gasto ?></td>
+
                                 <td tabindex="0">
                                     <input type="checkbox" id="conta<?= $deposits->id_gastos ?>" id-gasto="<?= $deposits->id_gastos ?>" class="check_ap_contabilidad" <?= $ap_contabilidad ?> <?= $enab_check_contabilidad ?> data-switch="success">
                                     <label for="conta<?= $deposits->id_gastos ?>" data-on-label="Si" data-off-label="No"></label>
@@ -139,7 +142,7 @@
                                 </td>
                                 <td class="table-action">
                                     <div>
-                                        <?php 
+                                        <?php
                                         $ruta_img = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_img);
                                         ?>
                                         <a href="<?= $ruta_img ?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
@@ -152,8 +155,8 @@
                                     <?php if ($deposits->ruta_pdf == '') : ?>
                                         <td><button id="<?= $deposits->id_gastos ?>" class="btn btn-secondary addFactura" proyect-code="<?= $deposits->codigo_proyecto ?> - <?= $deposits->nombre_proyecto ?>" title="Agregar factura" data-bs-toggle="modal" data-bs-target="#agregarFactura"><i class="mdi mdi-file-upload-outline"></i> </button></td>
                                     <?php else :
-                                       $ruta_pdf = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_pdf);
-                                        ?>
+                                        $ruta_pdf = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_pdf);
+                                    ?>
                                         <td><a href="<?= $ruta_pdf ?>" target="_blank" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </a></td>
                                     <?php endif; ?>
                                 <?php endif; ?>
@@ -193,13 +196,14 @@ include_once('php/views/viaticos/modals/editarGasto.php');
         btn_reset: true,
         col_2: 'select',
         col_6: "select",
-        col_7: "none",
+        col_7: "select",
         col_8: "none",
-        col_9: "select",
-        col_10: "none",
+        col_9: "none",
+        col_10: "select",
         col_11: "none",
-        col_13: "none",
+        col_12: "none",
         col_14: "none",
+        col_15: "none",
     });
     tGastos.init();
 </script>

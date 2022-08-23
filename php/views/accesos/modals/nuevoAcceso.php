@@ -21,7 +21,7 @@
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="mb-3">
-                                    <label class="form-label">Central <span class="badge badge-danger-lighten">Obligatorio</span></label>
+                                    <label class="form-label">Zona <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <div class="input-group">
                                         <select id="na_central" class="form-control select2" data-toggle="select2">
                                             <option selected disabled value="">Seleccione una opción</option>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Zona <span class="badge badge-danger-lighten">Obligatorio</span></label>
+                                    <label class="form-label">Central <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <div class="input-group">
                                         <select id="na_zona" disabled class="form-control select2" data-toggle="select2">
                                             <option selected disabled value="">Seleccione una opción</option>

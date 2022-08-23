@@ -36,7 +36,24 @@ class Access
         sites.codigo_sitio,
         sites.nombre_sitio
         FROM asteleco_accesos_erp.accesos AS acc
-        INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios
+        INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios 
+        WHERE id_personal_as = $_SESSION[id_user]
+        ";
+
+        $getSites = $queries->getData($sql_sites);
+
+        return ($getSites);
+    }
+    public function getAccessListAdmin()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_sites = "SELECT 
+        acc.*,
+        sites.codigo_sitio,
+        sites.nombre_sitio
+        FROM asteleco_accesos_erp.accesos AS acc
+        INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios LIMIT 200
         ";
 
         $getSites = $queries->getData($sql_sites);

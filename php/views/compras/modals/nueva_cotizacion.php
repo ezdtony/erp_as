@@ -201,7 +201,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Guardar Cotización</button>
+                <button type="button" class="btn btn-primary btn_save_solicitud_list">Guardar Cotización</button>
             </div>
         </div>
     </div>

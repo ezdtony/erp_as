@@ -108,8 +108,20 @@ include_once('php/views/topbar.php');
                 $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_6.php';
                 break;
             case 'compras_cotizaciones':
-                $include_file = 'php/views/compras/cotizaciones.php';
+                if ($id_area >= 4){
+                    $include_file = 'php/views/compras/cotizaciones.php';
+                }else {
+                    $include_file = 'php/views/compras/cotizaciones_admin.php';
+                }
+                
                 break;
+                case 'desglose_cotizacion':
+                    if ($id_area >= 4){
+                    $include_file = 'php/views/compras/desglose_cotizacion.php';
+                    }else{
+                        $include_file = 'php/views/compras/desglose_cotizacion_admin.php';
+                    }
+                    break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;
