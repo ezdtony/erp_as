@@ -38,6 +38,7 @@ class Access
         FROM asteleco_accesos_erp.accesos AS acc
         INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios 
         WHERE id_personal_as = $_SESSION[id_user]
+        ORDER BY id_accesos DESC
         ";
 
         $getSites = $queries->getData($sql_sites);
@@ -51,9 +52,13 @@ class Access
         $sql_sites = "SELECT 
         acc.*,
         sites.codigo_sitio,
-        sites.nombre_sitio
+        sites.nombre_sitio,
+        CONCAT(nombres, ' ', apellido_paterno, ' ', apellido_materno) AS pesonal_as
         FROM asteleco_accesos_erp.accesos AS acc
-        INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios LIMIT 200
+        INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios 
+        INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = acc.id_personal_as
+        ORDER BY id_accesos DESC
+        LIMIT 200
         ";
 
         $getSites = $queries->getData($sql_sites);

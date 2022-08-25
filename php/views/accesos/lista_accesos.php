@@ -20,7 +20,7 @@ $getPerimetros  = $accesos->getPerimetros();
                          </a> -->
                 </form>
             </div>
-            <h4 class="page-title">Accesos | Mis accesos</h4>
+            <h4 class="page-title">Accesos | Coordinación | Lista de Accesos</h4>
         </div>
     </div>
 </div>
@@ -31,12 +31,12 @@ $getPerimetros  = $accesos->getPerimetros();
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Accesos Registrados</h4>
                 <div class="button-list">
-                    <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoAcceso">Registrar Acceso</button>
+                    <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoAcceso">Registrar Acceso</button> -->
                     <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#informacionSitio">Información de Sitios</button> -->
                 </div>
                 <br>
 
-                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                <table id="datatable-buttons" class="table table-striped dt-responsive  w-100">
                     <thead>
                         <tr>
                             <td>ID</td>
@@ -46,6 +46,7 @@ $getPerimetros  = $accesos->getPerimetros();
                             <th>Actividad</th>
                             <th>Empresa</th>
                             <th>Proveedor</th>
+                            <th>Personal AS</th>
                             <th>Aciones</th>
                             <th>Check-List</th>
                         </tr>
@@ -54,7 +55,7 @@ $getPerimetros  = $accesos->getPerimetros();
 
                     <tbody>
                         <?php
-                        $allSites = $accesos->getAccessList();
+                        $allSites = $accesos->getAccessListAdmin();
 
                         foreach ($allSites as $sites) { ?>
                             <tr id="tr_<?= $sites->id_accesos ?>">
@@ -65,6 +66,7 @@ $getPerimetros  = $accesos->getPerimetros();
                                 <td><?= $sites->actividad ?></td>
                                 <td><?= $sites->empresa ?></td>
                                 <td><?= $sites->lider_cuadrilla ?></td>
+                                <td><?= $sites->pesonal_as ?></td>
                                 <td class="table-action">
                                     <a id="<?= $sites->id_accesos ?>" title="Información detallada" class="action-icon infoAcceso" data-bs-toggle="modal" data-bs-target="#infoAcceso"> <i class="mdi mdi-information-outline"></i></a>
                                     <!-- <a id="<?= $sites->id_accesos ?>" title="Editar hora salida" class="action-icon editHoraSalida"> <i class="mdi mdi-calendar-clock"></i></a> -->

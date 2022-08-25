@@ -108,9 +108,12 @@
                             <li>
                                 <a href="?submodule=sitios">Sitios</a>
                             </li>
+                            <li>
+                                <a href="?submodule=lista_accesos">Lista de accesos</a>
+                            </li>
                         <?php else : ?>
                             <li>
-                                <a href="?submodule=captura_accesos">Captura</a>
+                                <a href="?submodule=captura_accesos">Mis accesos</a>
                             </li>
                         <?php endif; ?>
 

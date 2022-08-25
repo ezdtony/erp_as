@@ -909,7 +909,7 @@ function saveAcceso()
     $id_user = $_POST['id_user'];
 
     $queries = new Queries;
-    
+
     $stmt_get_info_site = "SELECT 
         vandal.descripcion as descripcion_vandalismo,
         tip.descripcion as limpieza_tipo,
@@ -979,6 +979,10 @@ function saveAcceso()
         $puertas_acceso_contenedor = "";
     }
 
+    $stmt_gabinetes = "SELECT *
+    FROM  asteleco_accesos_erp.gabinetes WHERE id_sitios = $id_sitio";
+    $get_gabinetes = $queries->getData($stmt_gabinetes);
+
     $stmt = "INSERT INTO asteleco_accesos_erp.accesos (
             id_sitios,
             id_personal_as,
@@ -1034,6 +1038,26 @@ function saveAcceso()
     $getInfoRequest = $queries->insertData($stmt);
     $id_accesos = $getInfoRequest['last_id'];
     $last_id = $id_accesos;
+
+    foreach ($get_gabinetes as $gabinetes) {
+        $id_tipos_cerraduras = $gabinetes->id_tipos_cerraduras;
+        $nombre_gabinete = $gabinetes->nombre_gabinete;
+        $baterias_gabinete = $gabinetes->baterias_gabinete;
+
+        $stmt_insert_gabinetes_log = "INSERT INTO asteleco_accesos_erp.log_gabinetes_accesos (
+            accesos_id_accesos,
+            id_tipos_cerraduras,
+            nombre_gabinete,
+            baterias_gabinete) VALUES (
+                '$last_id',
+                '$id_tipos_cerraduras',
+                '$nombre_gabinete',
+                '$baterias_gabinete'
+                )";
+        $queries->insertData($stmt_insert_gabinetes_log);
+    }
+
+
     $stmt = "INSERT INTO asteleco_accesos_erp.firmas_accesos (
         id_accesos,
         firma_base_64
@@ -1054,6 +1078,81 @@ function saveAcceso()
             'response' => false,
             'message' => 'No se pudo registrar el acceso'
         );
+    }
+
+    echo json_encode($data);
+}
+function getinfoAcceso()
+{
+    $id_acceso = $_POST['id_acceso'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT acc.*, CONCAT(sit.codigo_sitio, ' | ', sit.nombre_sitio) AS sitio, 
+    nombre_central, zon.descripcion AS zona, CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno) AS personal_as
+    FROM asteleco_accesos_erp.accesos AS acc
+    INNER JOIN asteleco_accesos_erp.sitios AS sit ON sit.id_sitios = acc.id_sitios
+    INNER JOIN asteleco_accesos_erp.centrales AS ces ON ces.id_centrales = sit.id_centrales
+    INNER JOIN asteleco_accesos_erp.zonas_central AS zon ON zon.id_zonas_central = sit.id_zonas_central
+    INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = acc.id_personal_as
+    WHERE id_accesos = $id_acceso";
+
+    $getInfoRequest = $queries->getData($stmt);
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($getInfoRequest)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function deleteAcceso()
+{
+    $id_acceso = $_POST['id_acceso'];
+
+    $queries = new Queries;
+    
+    $stmt = "DELETE FROM asteleco_accesos_erp.firmas_accesos
+    WHERE id_accesos = $id_acceso";
+    $queries->InsertData($stmt);
+
+    $stmt = "DELETE FROM asteleco_accesos_erp.log_gabinetes_accesos
+    WHERE accesos_id_accesos = $id_acceso";
+    $queries->InsertData($stmt);
+    
+    $stmt = "DELETE FROM asteleco_accesos_erp.accesos
+    WHERE id_accesos = $id_acceso";
+
+
+    //$last_id = $getInfoRequest['last_id'];
+    if ($queries->InsertData($stmt)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
     }
 
     echo json_encode($data);

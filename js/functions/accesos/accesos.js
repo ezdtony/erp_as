@@ -1656,6 +1656,137 @@ $(document).ready(function () {
     }
   });
 
+  $(document).on("click", ".infoAcceso", function () {
+    var id_acceso = $(this).attr("id");
+    $("#divInfoAcceso").empty();
+    loading();
+
+    $.ajax({
+      url: "php/controllers/accesos/accesos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getinfoAcceso",
+        id_acceso: id_acceso,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          var html = "";
+
+          html += "<h3>Sitio: " + data.data[0].sitio + " </h3>";
+          html += "<h4>Fecha: " + data.data[0].fecha + " </h4>";
+          html += "<h4>Hora de entrado: " + data.data[0].hora + " </h4>";
+          html += "<h4>Hora de salida: " + data.data[0].hora_salida + " </h4>";
+          html += "<h5>Registrado por: " + data.data[0].personal_as + " </h5>";
+          html += "<hr>";
+          html += "<h4>Empresa: " + data.data[0].empresa + " </h4>";
+          html += "<h4>Actividad: " + data.data[0].actividad + " </h4>";
+          html +=
+            "<h4>Lider de Cuadrilla: " +
+            data.data[0].lider_cuadrilla +
+            " </h4>";
+          html += "<h4>Acompañantes: " + data.data[0].ayudantes + " </h4>";
+          html += "<hr>";
+          html += "<h4>Comentarios: " + data.data[0].comentarios + " </h4>";
+          $("#divInfoAcceso").append(html);
+          Swal.close();
+          /*
+         $("#municipio_sitio").empty();
+          $("#municipio_sitio").append(
+            '<option value="">Seleccione un municipio *</option>'
+          );
+          for (var i = 0; i < data.data.length; i++) {
+            $("#municipio_sitio").append(
+              '<option value="' +
+                data.data[i].id +
+                '">' +
+                data.data[i].municipio +
+                "</option>"
+            );
+          }
+          $("#municipio_sitio").prop("disabled", false); */
+        } else {
+          Swal.close();
+          Swal.fire({
+            icon: "error",
+            title: "Al parecer este estado no tiene municipios",
+          });
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        Swal.close();
+        Swal.fire({
+          icon: "error",
+          title: "Ocurrió un error al obtener la información del acceso",
+          timer: 1500,
+        });
+      });
+  });
+
+  $(document).on("click", ".deleteAcceso", function () {
+    var id_acceso = $(this).attr("id");
+    Swal.fire({
+      icon: "question",
+      title: "¿Está seguro que desea eliminar este registro?",
+      text: "Esta acción no puede ser revertida",
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        loading();
+
+        $.ajax({
+          url: "php/controllers/accesos/accesos_controller.php",
+          method: "POST",
+          data: {
+            mod: "deleteAcceso",
+            id_acceso: id_acceso,
+          },
+        })
+          .done(function (data) {
+            var data = JSON.parse(data);
+            console.log(data);
+
+            if (data.response == true) {
+              Swal.close();
+              Swal.fire({
+                icon: "success",
+                title: "Se eliminó el registro con éxito",
+              });
+              $("#tr_"+id_acceso).remove();
+            } else {
+              Swal.close();
+              Swal.fire({
+                icon: "error",
+                title: "Ocurrió un error al eliminar el registro",
+              });
+            }
+
+            //--- --- ---//
+            //--- --- ---//
+          })
+          .fail(function (message) {
+            Swal.close();
+            Swal.fire({
+              icon: "error",
+              title: "Ocurrió un error al obtener la información del acceso",
+              timer: 1500,
+            });
+          });
+      }
+    });
+  });
+
   $("#estado_sitio").select2({
     dropdownParent: $("#nuevoSitio"),
   });
