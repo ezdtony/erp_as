@@ -74,7 +74,8 @@ $getPerimetros  = $accesos->getPerimetros();
 
                                 </td>
                                 <td>
-                                    <button data-id-site="<?= $sites->id_accesos ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-danger checkListSite"><i class="dripicons-document"></i> </button>
+                                
+                                <a href="php/views/fpdf/generate_check_list.php?id_acceso=<?=$sites->id_accesos ?>" target="_blank"><button data-id-site="<?= $sites->id_accesos ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-danger checkListSite"><i class="dripicons-document"></i> </button></a>
                                 </td>
                             </tr>
                         <?php } ?>
