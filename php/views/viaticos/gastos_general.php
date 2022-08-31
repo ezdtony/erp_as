@@ -19,7 +19,7 @@
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Gastos</h4>
                 <br>
-                <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#registrarGasto">Registrar Gasto</button>
+                <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#registrarGasto">Registrar Gasto</button> -->
                 <br>
                 <br>
                 <br>
@@ -102,7 +102,7 @@
                                 <td><?= $deposits->id_gastos ?></td>
                                 <td><?= $deposits->fecha_registro ?></td>
                                 <td><?= $deposits->usuario_gasto ?></td>
-                                <td><?= $deposits->string_proyecto ?></td>
+                                <td><?= $deposits->nombre_proyecto ?></td>
                                 <td><?= $deposits->localidad ?></td>
                                 <td>$ <?= $deposits->importe ?></td>
                                 <td><?= $txt_clasifiacion ?></td>
@@ -149,7 +149,7 @@
                                     </div>
                                 </td>
                                 <td><?= $folio_fiscal ?></td>
-                                <?php if ($clasificacion === 1) : ?>
+                                <?php if ($clasificacion == 1) : ?>
                                     <td><?= $factura ?></td>
                                 <?php else : ?>
                                     <?php if ($deposits->ruta_pdf == '') : ?>

@@ -15,6 +15,33 @@ getGastos();
 
     $id_estado = $_POST['id_estado'];
  */
+
+function getProyectosTipos()
+{
+    $queries = new Queries;
+
+    $stmt = "SELECT distinct tipo_proyecto
+        FROM asteleco_viaticos.proyectos WHERE tipo_proyecto != ''";
+
+    $getProyectos = $queries->getData($stmt);
+
+    if (!empty($getProyectos)) {
+        foreach ($getProyectos as $proyectos) {
+            $tipo_proyecto = $proyectos->tipo_proyecto;
+
+
+            echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong><br>";
+
+            $stmt = "INSERT INTO asteleco_proyectos.tipos_proyecto (descripcion_tipo) VALUES ('$tipo_proyecto')";
+
+            if ($queries->InsertData($stmt)) {
+                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> agregado<br>";
+            } else {
+                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> no agregado<br>";
+            }
+        }
+    }
+}
 function getProyectos()
 {
     $queries = new Queries;
@@ -120,135 +147,7 @@ function getProyectos()
         }
     }
 }
-function getProyectosTipos()
-{
-    $queries = new Queries;
 
-    $stmt = "SELECT distinct tipo_proyecto
-        FROM asteleco_viaticos.proyectos WHERE tipo_proyecto != ''";
-
-    $getProyectos = $queries->getData($stmt);
-
-    if (!empty($getProyectos)) {
-        foreach ($getProyectos as $proyectos) {
-            $tipo_proyecto = $proyectos->tipo_proyecto;
-
-
-            echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong><br>";
-
-            $stmt = "INSERT INTO asteleco_proyectos.tipos_proyecto (descripcion_tipo) VALUES ('$tipo_proyecto')";
-
-            if ($queries->InsertData($stmt)) {
-                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> agregado<br>";
-            } else {
-                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> no agregado<br>";
-            }
-        }
-    }
-}
-function getUsers()
-{
-    $queries = new Queries;
-
-    $stmt = "SELECT DISTINCT destinatario FROM asteleco_viaticos.`depositos`  WHERE destinatario != '' ORDER by destinatario asc";
-
-    $getUsers = $queries->getData($stmt);
-
-    if (!empty($getUsers)) {
-        foreach ($getUsers as $Users) {
-            $destinatario = $Users->destinatario;
-            $arr_nombre = explode(' ', $destinatario);
-            $count_name = count($arr_nombre);
-            if ($count_name > 4) {
-                $nombre = $arr_nombre[0] . " " . $arr_nombre[1];
-                $apellido = $arr_nombre[2] . " " . $arr_nombre[3] . " " . $arr_nombre[4];
-                $ap_paterno = $arr_nombre[2];
-                $ap_materno = $arr_nombre[3] . " " . $arr_nombre[4];
-            } else if ($count_name > 3) {
-                $nombre = $arr_nombre[0] . " " . $arr_nombre[1];
-                $apellido = $arr_nombre[2] . " " . $arr_nombre[3];
-                $ap_paterno = $arr_nombre[2];
-                $ap_materno = $arr_nombre[3];
-            } else {
-                $nombre = $arr_nombre[0];
-                $apellido = $arr_nombre[1] . " " . $arr_nombre[2];
-                $ap_paterno = $arr_nombre[1];
-                $ap_materno = $arr_nombre[2];
-            }
-            $nombre_completo = $nombre . " " . $apellido;
-            $str_nombre = strtoupper(substr($nombre, 0, 2));
-            $str_ap_paterno = substr($ap_paterno, 0, 1);
-            $str_ap_materno = substr($ap_materno, 0, 1);
-            $int_user = rand(10, 99);
-            $codigo_usuario = $str_nombre  . $str_ap_paterno . $str_ap_materno . "-0" . $int_user;
-            $correo_login = strtolower(eliminar_acentos($nombre . "." . $ap_paterno . "@astelecom.com.mx"));
-            $correo_login = str_replace(" ", "", $correo_login);
-
-            $password = generatePassword(6);
-
-            $id_niveles_area  = 15;
-            $id_niveles_academicos = 2;
-            $id_direcciones_personal = 1;
-            $id_contacto_personal = 1;
-            $fecha_nacimiento = '1999-01-01';
-
-            echo "<h2>Nombre de Usuario: <strong>" . $nombre . "</strong></h2>";
-            echo "<h2>Apellido de Usuario: <strong>" . $apellido . "</strong></h2>";
-            echo "<h3>Nombre Completo de Usuario: <strong>" . $nombre_completo . "</strong></h3>";
-            echo "<h3>Correo de Usuario: <strong>" . $correo_login . "</strong></h3>";
-            echo "<h3>Codigo de Usuario: <strong>" . $codigo_usuario . "</strong></h3>";
-            echo "<h3>Password: <strong>" . $password . "</strong></h3>";
-            echo "<hr>";
-
-            $stmt_insert_user = " INSERT INTO asteleco_personal.lista_personal 
-            (
-                id_niveles_areas,
-                id_niveles_academicos,
-                id_direcciones_personal,
-                id_contacto_personal,
-                nombres,
-                apellido_paterno,
-                apellido_materno,
-                codigo_usuario,
-                correo_sesion,
-                password,
-                fecha_nacimiento
-            ) VALUES(
-                '$id_niveles_area',
-                '$id_niveles_academicos',
-                '$id_direcciones_personal',
-                '$id_contacto_personal',
-                '$nombre',
-                '$ap_paterno',
-                '$ap_materno',
-                '$codigo_usuario',
-                '$correo_login',
-                '$password',
-                '$fecha_nacimiento'
-                );
-            ";
-            if ($queries->InsertData($stmt_insert_user)) {
-                $id_usuario = $queries->getLastId();
-                $stmt_insert_saldo_usuario = "INSERT INTO asteleco_viaticos_erp.saldos (id_personal, saldo) VALUES ('$id_usuario', '0')";
-                $queries->InsertData($stmt_insert_saldo_usuario);
-                echo "Usuario: <strong>" . $nombre . "</strong> agregado<br>";
-            } else {
-                echo "Usuario: <strong>" . $nombre . "</strong> no agregado<br>";
-            }
-
-            echo "<hr>";
-
-            echo "<hr>";
-            /* $stmt = "INSERT INTO asteleco_proyectos.tipos_proyecto (descripcion_tipo) VALUES ('$destinatario')";
-
-            if ($queries->InsertData($stmt)) {
-                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> agregado<br>";
-            } else {
-                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> no agregado<br>";
-            } */
-        }
-    }
-}
 function getSaldos()
 {
     $queries = new Queries;
@@ -276,12 +175,25 @@ function getSaldos()
                     $saldo = number_format($saldo, 2, '.');
                     $saldo = str_replace(",", "", $saldo);
                     echo "<h3>Saldo: <strong>" . $saldo . "</strong></h3>";
-                    $stmt_update_saldo_erp = "UPDATE asteleco_viaticos_erp.saldos 
-                    SET saldo = '$saldo' WHERE id_personal = '$id_lista_personal'";
-                    if ($queries->insertData($stmt_update_saldo_erp)) {
-                        echo "Saldo actualizado<br>";
+                    $stmt_update_saldo_erp = "SELECT * FROM asteleco_viaticos_erp.saldos 
+                     WHERE id_personal = '$id_lista_personal'";
+                    $getSaldo = $queries->getData($stmt_update_saldo_erp);
+                    if (!empty($getSaldo)) {
+                        $stmt_update_saldo_erp = "UPDATE asteleco_viaticos_erp.saldos 
+                        SET saldo = '$saldo' WHERE id_personal = '$id_lista_personal'";
+                        if ($queries->insertData($stmt_update_saldo_erp)) {
+                            echo "Saldo actualizado<br>";
+                        } else {
+                            echo "Saldo no actualizado<br>";
+                        }
                     } else {
-                        echo "Saldo no actualizado<br>";
+                        $stmt_update_saldo_erp = "INSERT INTO asteleco_viaticos_erp.saldos 
+                        (saldo, id_personal) VALUES('$saldo','$id_lista_personal')";
+                        if ($queries->insertData($stmt_update_saldo_erp)) {
+                            echo "Saldo INSERTADO<br>";
+                        } else {
+                            echo "Saldo no INSERTADO<br>";
+                        }
                     }
                 }
             } else {
@@ -424,7 +336,7 @@ function getGastos()
 
             if (!empty($getUsers)) {
                 foreach ($getUsers as $Users) {
-                   
+
                     $proyecto = $Users->proyecto;
 
                     $stmt_get_proyecto = "SELECT * from asteleco_proyectos.proyectos WHERE codigo_proyecto = '$proyecto'";
@@ -546,7 +458,7 @@ function getGastos()
                     }
 
                     $tipo_gasto = $Users->tgasto;
-                    
+
 
                     $stmt_get_tipo_gasto = "SELECT * FROM asteleco_viaticos_erp.tipos_gasto WHERE descripcion LIKE '$tipo_gasto'";
                     $get_tipo_gasto = $queries->getData($stmt_get_tipo_gasto);
@@ -715,4 +627,109 @@ function eliminar_acentos($cadena)
     );
 
     return $cadena;
+}
+
+
+function getUsers()
+{
+    $queries = new Queries;
+
+    $stmt = "SELECT DISTINCT destinatario FROM asteleco_viaticos.`depositos`  WHERE destinatario != '' ORDER by destinatario asc";
+
+    $getUsers = $queries->getData($stmt);
+
+    if (!empty($getUsers)) {
+        foreach ($getUsers as $Users) {
+            $destinatario = $Users->destinatario;
+            $arr_nombre = explode(' ', $destinatario);
+            $count_name = count($arr_nombre);
+            if ($count_name > 4) {
+                $nombre = $arr_nombre[0] . " " . $arr_nombre[1];
+                $apellido = $arr_nombre[2] . " " . $arr_nombre[3] . " " . $arr_nombre[4];
+                $ap_paterno = $arr_nombre[2];
+                $ap_materno = $arr_nombre[3] . " " . $arr_nombre[4];
+            } else if ($count_name > 3) {
+                $nombre = $arr_nombre[0] . " " . $arr_nombre[1];
+                $apellido = $arr_nombre[2] . " " . $arr_nombre[3];
+                $ap_paterno = $arr_nombre[2];
+                $ap_materno = $arr_nombre[3];
+            } else {
+                $nombre = $arr_nombre[0];
+                $apellido = $arr_nombre[1] . " " . $arr_nombre[2];
+                $ap_paterno = $arr_nombre[1];
+                $ap_materno = $arr_nombre[2];
+            }
+            $nombre_completo = $nombre . " " . $apellido;
+            $str_nombre = strtoupper(substr($nombre, 0, 2));
+            $str_ap_paterno = substr($ap_paterno, 0, 1);
+            $str_ap_materno = substr($ap_materno, 0, 1);
+            $int_user = rand(10, 99);
+            $codigo_usuario = $str_nombre  . $str_ap_paterno . $str_ap_materno . "-0" . $int_user;
+            $correo_login = strtolower(eliminar_acentos($nombre . "." . $ap_paterno . "@astelecom.com.mx"));
+            $correo_login = str_replace(" ", "", $correo_login);
+
+            $password = generatePassword(6);
+
+            $id_niveles_area  = 15;
+            $id_niveles_academicos = 2;
+            $id_direcciones_personal = 1;
+            $id_contacto_personal = 1;
+            $fecha_nacimiento = '1999-01-01';
+
+            echo "<h2>Nombre de Usuario: <strong>" . $nombre . "</strong></h2>";
+            echo "<h2>Apellido de Usuario: <strong>" . $apellido . "</strong></h2>";
+            echo "<h3>Nombre Completo de Usuario: <strong>" . $nombre_completo . "</strong></h3>";
+            echo "<h3>Correo de Usuario: <strong>" . $correo_login . "</strong></h3>";
+            echo "<h3>Codigo de Usuario: <strong>" . $codigo_usuario . "</strong></h3>";
+            echo "<h3>Password: <strong>" . $password . "</strong></h3>";
+            echo "<hr>";
+
+            $stmt_insert_user = " INSERT INTO asteleco_personal.lista_personal 
+            (
+                id_niveles_areas,
+                id_niveles_academicos,
+                id_direcciones_personal,
+                id_contacto_personal,
+                nombres,
+                apellido_paterno,
+                apellido_materno,
+                codigo_usuario,
+                correo_sesion,
+                password,
+                fecha_nacimiento
+            ) VALUES(
+                '$id_niveles_area',
+                '$id_niveles_academicos',
+                '$id_direcciones_personal',
+                '$id_contacto_personal',
+                '$nombre',
+                '$ap_paterno',
+                '$ap_materno',
+                '$codigo_usuario',
+                '$correo_login',
+                '$password',
+                '$fecha_nacimiento'
+                );
+            ";
+            if ($queries->InsertData($stmt_insert_user)) {
+                $id_usuario = $queries->getLastId();
+                $stmt_insert_saldo_usuario = "INSERT INTO asteleco_viaticos_erp.saldos (id_personal, saldo) VALUES ('$id_usuario', '0')";
+                $queries->InsertData($stmt_insert_saldo_usuario);
+                echo "Usuario: <strong>" . $nombre . "</strong> agregado<br>";
+            } else {
+                echo "Usuario: <strong>" . $nombre . "</strong> no agregado<br>";
+            }
+
+            echo "<hr>";
+
+            echo "<hr>";
+            /* $stmt = "INSERT INTO asteleco_proyectos.tipos_proyecto (descripcion_tipo) VALUES ('$destinatario')";
+
+            if ($queries->InsertData($stmt)) {
+                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> agregado<br>";
+            } else {
+                echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> no agregado<br>";
+            } */
+        }
+    }
 }

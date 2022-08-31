@@ -44,7 +44,7 @@ class ViaticsInformation
         INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type
         INNER JOIN asteleco_viaticos_erp.tipos_gasto AS ti_gas ON ti_gas.id_tipos_gasto = gas.id_tipos_gasto
         LEFT JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = gas.id_asignaciones_proyectos
-        LEFT JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
+        LEFT JOIN asteleco_proyectos.proyectos AS proy ON gas.id_proyectos = proy.id_proyectos
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf
         order by gas.id_gastos desc";
@@ -59,9 +59,8 @@ class ViaticsInformation
         $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, rut.ruta_archivo AS ruta_img
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type
-        INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = gas.id_asignaciones_proyectos
-        INNER JOIN asteleco_proyectos.proyectos AS proy ON asig.id_proyectos = proy.id_proyectos
-        INNER JOIN asteleco_viaticos_erp.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON gas.id_proyectos = proy.id_proyectos
+        LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf
          WHERE id_personal = '$id_user'";
         $getSaldo = $queries->getData($sql_saldo);

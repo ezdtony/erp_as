@@ -96,6 +96,7 @@
                     </ul>
                 </div>
             </li>
+            <?php if ($id_area <= 3) : ?>
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
                     <i class="uil-keyhole-circle"></i>
@@ -130,6 +131,7 @@
                 </div>
             </li>
             
+            
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                     <i class="uil-shopping-trolley"></i>
@@ -156,7 +158,7 @@
                     </ul>
                 </div>
             </li>
-            
+            <?php  endif; ?>
             <!--
                 
             <li class="side-nav-item">

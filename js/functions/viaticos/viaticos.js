@@ -455,9 +455,10 @@ $(document).ready(function () {
     console.log("comentario_gasto: " + comentario_gasto);
     var coordenadas_gasto = $("#coordenadas").val();
     console.log("coordenadas_gasto: " + coordenadas_gasto);
+    console.log("id_proyecto: " + id_proyecto);
     /*  
     console.log("id_asignacion: " + id_asignacion);
-    console.log("id_proyecto: " + id_proyecto);
+    
     console.log("id_author: " + id_author);
     console.log("sitio_gasto: " + sitio_gasto);
     console.log("tipos_gasto: " + tipos_gasto);
@@ -466,7 +467,7 @@ $(document).ready(function () {
     if (
       fecha_compra != "" &&
       id_asignacion != "" &&
-      id_proyecto != "" &&
+      id_proyecto != undefined &&
       id_author != "" &&
       sitio_gasto != "" &&
       tipos_gasto != "" &&
