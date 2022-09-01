@@ -810,15 +810,33 @@ $(document).ready(function () {
     $("#input_id_gastos").val(id_gastos);
     $("#input_codigo_proyecto").val(codigo_proyecto);
   });
+  $(document).on("click", ".addFotografia", function () {
+    var id_gastos = $(this).attr("id");
+    var codigo_proyecto = $(this).attr("proyect-code");
+
+    console.log(id_gastos);
+    console.log(codigo_proyecto);
+    $("#input_id_gastos_foto").val(id_gastos);
+    $("#input_codigo_proyecto_foto").val(codigo_proyecto);
+  });
 
   $(document).on("click", "#guardar_factura", function () {
     var last_id = $("#input_id_gastos").val();
     var codigo_proyecto = $("#input_codigo_proyecto").val();
     saveLateFacturaDocument(last_id, codigo_proyecto);
 
-    console.log(id_gastos);
+    console.log(last_id);
     console.log(codigo_proyecto);
-    $("#input_id_gastos").val(id_gastos);
+    $("#input_id_gastos").val(last_id);
+  });
+  $(document).on("click", "#guardar_fotografia", function () {
+    var last_id = $("#input_id_gastos_foto").val();
+    var codigo_proyecto = $("#input_codigo_proyecto_foto").val();
+    saveLateFotoDocument(last_id, codigo_proyecto);
+
+    console.log(last_id);
+    console.log(codigo_proyecto);
+    $("#input_id_gastos").val(last_id);
   });
   $(document).on("click", ".deleteGasto", function () {
     var id_gasto = $(this).attr("id");
@@ -1059,6 +1077,37 @@ $(document).ready(function () {
           Swal.fire({
             title: "¡Archivo guardado!",
             text: "Se  cargó la factura correctamente!!!",
+            icon: "success",
+            timer: 1500,
+          }).then((result) => {
+            location.reload();
+          });
+        });
+    }
+  }
+  function saveLateFotoDocument(last_id, proyect) {
+    const fotografia = document.querySelector("#fotografia_late");
+    const user_name = $("#user_name_gasto").val();
+    const proyecto = proyect;
+    if (fotografia.files.length > 0) {
+      console.log("foto");
+      let formData = new FormData();
+      formData.append("fotografia", fotografia.files[0]);
+      formData.append("user_name", user_name);
+      formData.append("last_id", last_id);
+      formData.append("proyecto", proyecto);
+
+      fetch("php/controllers/viaticos/saveLateFotografia.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((respuesta) => respuesta.json())
+        .then((decodificado) => {
+          Swal.close();
+          console.log(decodificado.last_id);
+          Swal.fire({
+            title: "¡Archivo guardado!",
+            text: "Se  cargó la fotografía correctamente!!!",
             icon: "success",
             timer: 1500,
           }).then((result) => {

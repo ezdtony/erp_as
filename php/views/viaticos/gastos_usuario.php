@@ -70,13 +70,17 @@
                                 <td><?= $deposits->localidad ?></td>
                                 <td>$ <?= $deposits->importe ?></td>
                                 <td><i class="mdi mdi-circle text-<?= $deposits->clase_css ?>"></i><?= $deposits->estatus ?></td>
+                                <?php if ($deposits->ruta_img !=NULL) : ?>
                                 <td class="table-action">
                                     <div>
                                     <a href="<?=$deposits->ruta_img?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
                                     </div>
                                 </td>
+                                <?php else: ?>
+                                    <td><button id="<?= $deposits->id_gastos ?>" class="btn btn-secondary addFotografia" proyect-code="<?=$deposits->codigo_proyecto?> - <?=$deposits->nombre_proyecto?>" title="Agregar fotografía" data-bs-toggle="modal" data-bs-target="#agregarFotograia"><i class="mdi mdi-camera-enhance"></i> </button></td>
+                                <?php endif ?>
                                 <td><?= $folio_fiscal ?></td>
-                                <?php if ($clasificacion === 1) : ?>
+                                <?php if ($clasificacion == 1) : ?>
                                 <td><?=$factura?></td>
                                 <?php else : ?>
                                     <?php if ($deposits->ruta_pdf=='') : ?>
@@ -106,6 +110,7 @@
 include_once('php/views/viaticos/modals/addFactura.php');
 include_once('php/views/viaticos/modals/registrarGasto.php');
 include_once('php/views/viaticos/modals/editarGasto.php');
+include_once('php/views/viaticos/modals/addFotografia.php');
 
 ?>
 <script src="js/functions/viaticos/viaticos.js"></script>

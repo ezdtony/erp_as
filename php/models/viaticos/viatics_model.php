@@ -56,10 +56,21 @@ class ViaticsInformation
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, rut.ruta_archivo AS ruta_img
+        $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, stat.id_status_type, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, 
+        rut.ruta_archivo AS ruta_img, CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS usuario_gasto,
+        CASE
+        WHEN proy.nombre_proyecto = '' THEN string_proyecto
+        WHEN proy.nombre_proyecto IS NULL THEN string_proyecto
+        ELSE proy.nombre_proyecto 
+        END
+        AS nombre_proyecto,
+        ti_gas.descripcion AS tipo_gasto
         FROM asteleco_viaticos_erp.gastos AS gas
+        INNER JOIN asteleco_personal.lista_personal AS pers ON pers.id_lista_personal = gas.id_personal
         INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type
-        INNER JOIN asteleco_proyectos.proyectos AS proy ON gas.id_proyectos = proy.id_proyectos
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS ti_gas ON ti_gas.id_tipos_gasto = gas.id_tipos_gasto
+        LEFT JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_asignaciones_proyectos = gas.id_asignaciones_proyectos
+        LEFT JOIN asteleco_proyectos.proyectos AS proy ON gas.id_proyectos = proy.id_proyectos
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut ON rut.id_rutas_archivos = gas.id_ruta_img
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rut_fac ON rut_fac.id_rutas_archivos = gas.id_ruta_pdf
          WHERE id_personal = '$id_user'";
@@ -125,5 +136,25 @@ class ViaticsInformation
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);
+    }
+    public function monthlyDepositsUser($id_user)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $month = date("m");
+        $sql_saldo = "SELECT SUM(cantidad) AS total FROM asteleco_viaticos_erp.depositos WHERE id_personal = '$id_user' AND MONTH(fecha) = '$month'";
+        $getSaldo = $queries->getData($sql_saldo);
+        
+        return ($getSaldo);
+    }
+    public function monthlyViaticsUser($id_user)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $month = date("m");
+        $sql_saldo = "SELECT SUM(importe) AS total FROM asteleco_viaticos_erp.gastos WHERE id_personal = '$id_user' AND MONTH(fecha_registro) = '$month'";
+        $getSaldo = $queries->getData($sql_saldo);
+
+        return ($getSaldo);
     }
 }

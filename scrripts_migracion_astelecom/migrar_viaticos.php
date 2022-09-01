@@ -8,7 +8,7 @@ date_default_timezone_set('America/Mexico_City');
     $function = $_POST['mod'];
     $function();
 } */
-getGastos();
+//getDepositos();
 
 /* 
 
@@ -237,6 +237,7 @@ function getDepositos()
                 foreach ($getUsers as $Users) {
                     $importe = $Users->importe;
                     $importe = number_format($importe, 2, '.');
+                    $importe = str_replace(',', '', $importe);
                     $codigo_proyecto = $Users->proyecto;
                     $sitio = $Users->sitio;
                     $tipo_gasto = $Users->tgasto;
@@ -309,6 +310,7 @@ function getDepositos()
                 echo "Tipo de Proyecto: <strong>" . $tipo_proyecto . "</strong> no agregado<br>";
             } */
         }
+        getGastos();
     }
 }
 function getGastos()
@@ -355,6 +357,7 @@ function getGastos()
                     $id_status_type = 4;
 
                     $importe = $Users->importe;
+                    $importe = str_replace(',', '', $importe);
                     $importe = number_format($importe, 2, '.');
                     $fecha = $Users->fecha;
                     $str_clasificacion = $Users->clasificacion;
