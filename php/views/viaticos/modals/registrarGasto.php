@@ -33,7 +33,7 @@
                         $getAllProyectsByUser = $viatics->getProyectsByUser($id_user);
                         foreach ($getAllProyectsByUser as $proyecto) {
                         ?>
-                            <option id="<?= $proyecto->id_proyectos ?>" value="<?= $proyecto->id_asignaciones_proyectos ?>"><?= $proyecto->codigo_proyecto . " - " . $proyecto->nombre_proyecto ?></option>
+                            <option id-proyecto="<?= $proyecto->id_proyectos ?>" value="<?= $proyecto->id_asignaciones_proyectos ?>"><?= $proyecto->codigo_proyecto . " - " . $proyecto->nombre_proyecto ?></option>
                         <?php } ?>
                     </select>
                 </div>

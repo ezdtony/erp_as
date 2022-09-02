@@ -438,6 +438,7 @@ $(document).ready(function () {
     }
   });
   $(document).on("click", "#guardar_gasto", function () {
+    loading();
     var clasificacion_gasto = $(
       "input[type=radio][name=clasificacion_gasto]:checked"
     ).val();
@@ -445,7 +446,9 @@ $(document).ready(function () {
 
     var fecha_compra = $("#fecha_compra").val();
     var id_asignacion = $("#proyecto_gasto").val();
-    var id_proyecto = $("#proyecto_gasto").find("option:selected").attr("id");
+    var id_proyecto = $("#proyecto_gasto")
+      .find("option:selected")
+      .attr("id-proyecto");
     var id_author = $("#id_autor").val();
     var sitio_gasto = $("#sitio_gasto").val();
     var tipos_gasto = $("#tipos_gasto_gasto").val();
@@ -821,6 +824,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#guardar_factura", function () {
+    loading();
     var last_id = $("#input_id_gastos").val();
     var codigo_proyecto = $("#input_codigo_proyecto").val();
     saveLateFacturaDocument(last_id, codigo_proyecto);
@@ -897,33 +901,32 @@ $(document).ready(function () {
       /* document.getElementById("coordenadas").value =
         position.coords.latitude + " " + position.coords.longitude; */
       //console.log(position);
-      $("#coordenadas").val( position.coords.latitude + ", " + position.coords.longitude);
+      $("#coordenadas").val(
+        position.coords.latitude + ", " + position.coords.longitude
+      );
     }
     function setCoorenadas(lat, lon) {}
     function positionError(error) {
       Swal.close();
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          document.getElementById("theError").innerHTML =
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "No se ha permitido obtener la ubicación",
-              timer: 2000,
-            });
+          document.getElementById("theError").innerHTML = Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se ha permitido obtener la ubicación",
+            timer: 2000,
+          });
           break;
         case error.POSITION_UNAVAILABLE:
-          document.getElementById("theError").innerHTML =
-            Swal.fire({
-              icon: "error",
-              title: "Error",
-              text: "La ubicación no está disponible",
-              timer: 2000,
-            });
+          document.getElementById("theError").innerHTML = Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "La ubicación no está disponible",
+            timer: 2000,
+          });
           break;
         case error.TIMEOUT:
-          document.getElementById("theError").innerHTML =
-           Swal.fire({
+          document.getElementById("theError").innerHTML = Swal.fire({
             icon: "error",
             title: "Error",
             text: "El tiempo de espera ha expirado",
@@ -1014,16 +1017,40 @@ $(document).ready(function () {
         .then((decodificado) => {
           Swal.close();
           console.log(decodificado.last_id);
-          /*  $.NotificationApp.send(
-            "Se subió la fotografía del ticket!!!",
-            "",
-            "top-left",
-            "#06996f",
-            "success"
-          ); */
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: "Registro guardado exitosamente!!!",
+            timer: 3000,
+          }).then((result) => {
+            location.reload();
+          });
         });
     }
   }
+  function saveTicketDocumentAndFactura(last_id) {
+    const img_payment = document.querySelector("#fotografia_ticket_gasto");
+    const user_name = $("#user_name_gasto").val();
+    const proyecto = $("#proyecto_gasto option:selected").text();
+    if (img_payment.files.length > 0) {
+      let formData = new FormData();
+      formData.append("img_payment", img_payment.files[0]);
+      formData.append("user_name", user_name);
+      formData.append("last_id", last_id);
+      formData.append("proyecto", proyecto);
+
+      fetch("php/controllers/viaticos/saveTicketDocument.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((respuesta) => respuesta.json())
+        .then((decodificado) => {
+          loading();
+          saveFacturaDocument(last_id);
+        });
+    }
+  }
+
   function saveFacturaDocument(last_id) {
     const factura = document.querySelector("#factura");
     const user_name = $("#user_name_gasto").val();
@@ -1043,13 +1070,14 @@ $(document).ready(function () {
         .then((decodificado) => {
           Swal.close();
           console.log(decodificado.last_id);
-          /*  $.NotificationApp.send(
-            "Se subió la fotografía del ticket!!!",
-            "",
-            "top-left",
-            "#06996f",
-            "success"
-          ); */
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: "Registro guardado exitosamente",
+            timer: 3000,
+          }).then((result) => {
+            location.reload();
+          });
         });
     }
   }
@@ -1111,6 +1139,7 @@ $(document).ready(function () {
             icon: "success",
             timer: 1500,
           }).then((result) => {
+            loading();
             location.reload();
           });
         });
@@ -1151,23 +1180,8 @@ $(document).ready(function () {
         if (data.response == true) {
           var last_id = data.id_gasto;
           //console.log(last_id);
-          saveTicketDocument(last_id);
-          saveFacturaDocument(last_id);
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: data.message,
-            timer: 3000,
-          }).then((result) => {
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: data.message,
-            timer: 2000,
-          });
+          loading();
+          saveTicketDocumentAndFactura(last_id);
         }
       })
       .fail(function (message) {
@@ -1214,21 +1228,6 @@ $(document).ready(function () {
           var last_id = data.id_gasto;
           //console.log(last_id);
           saveTicketDocument(last_id);
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: data.message,
-            timer: 3000,
-          }).then((result) => {
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: data.message,
-            timer: 2000,
-          });
         }
       })
       .fail(function (message) {
@@ -1275,21 +1274,6 @@ $(document).ready(function () {
           var last_id = data.id_gasto;
           console.log(last_id);
           saveTicketDocument(last_id);
-          Swal.fire({
-            icon: "success",
-            title: "Éxito",
-            text: data.message,
-            timer: 3000,
-          }).then((result) => {
-            location.reload();
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: data.message,
-            timer: 2000,
-          });
         }
       })
       .fail(function (message) {

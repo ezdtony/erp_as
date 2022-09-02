@@ -142,7 +142,8 @@ class ViaticsInformation
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $month = date("m");
-        $sql_saldo = "SELECT SUM(cantidad) AS total FROM asteleco_viaticos_erp.depositos WHERE id_personal = '$id_user' AND MONTH(fecha) = '$month'";
+        $year = date("Y");
+        $sql_saldo = "SELECT SUM(cantidad) AS total FROM asteleco_viaticos_erp.depositos WHERE id_personal = '$id_user' AND MONTH(fecha) = '$month' AND YEAR(fecha) = '$year'";
         $getSaldo = $queries->getData($sql_saldo);
         
         return ($getSaldo);
@@ -152,7 +153,8 @@ class ViaticsInformation
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $month = date("m");
-        $sql_saldo = "SELECT SUM(importe) AS total FROM asteleco_viaticos_erp.gastos WHERE id_personal = '$id_user' AND MONTH(fecha_registro) = '$month'";
+        $year = date("Y");
+        $sql_saldo = "SELECT SUM(importe) AS total FROM asteleco_viaticos_erp.gastos WHERE id_personal = '$id_user' AND MONTH(fecha_registro) = '$month' AND YEAR(fecha_registro) = '$year'";
         $getSaldo = $queries->getData($sql_saldo);
 
         return ($getSaldo);

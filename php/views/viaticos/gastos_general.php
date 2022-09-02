@@ -140,14 +140,18 @@
                                         </select>
                                     </div>
                                 </td>
-                                <td class="table-action">
-                                    <div>
-                                        <?php
-                                        $ruta_img = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_img);
-                                        ?>
-                                        <a href="<?= $ruta_img ?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
-                                    </div>
-                                </td>
+                                <?php if ($deposits->ruta_img != NULL) : ?>
+                                    <td class="table-action">
+                                        <div>
+                                            <?php
+                                            $ruta_img = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_img);
+                                            ?>
+                                            <a href="<?= $ruta_img ?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>
+                                        </div>
+                                    </td>
+                                <?php else : ?>
+                                    <td><button id="<?= $deposits->id_gastos ?>" class="btn btn-secondary addFotografia" proyect-code="<?= $deposits->codigo_proyecto ?> - <?= $deposits->nombre_proyecto ?>" title="Agregar fotografía" data-bs-toggle="modal" data-bs-target="#agregarFotograia"><i class="mdi mdi-camera-enhance"></i> </button></td>
+                                <?php endif ?>
                                 <td><?= $folio_fiscal ?></td>
                                 <?php if ($clasificacion == 1) : ?>
                                     <td><?= $factura ?></td>
