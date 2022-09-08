@@ -22,6 +22,27 @@ class ViaticsInformation
 
         return ($getDeposits);
     }
+    public function getAllDepositsUser($id_user)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT
+        CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS nombre_completo,
+        CONCAT( aut.nombres,' ', aut.apellido_paterno, ' ', aut.apellido_materno) AS author,
+        proy.nombre_proyecto,
+        tg.descripcion AS descripcion_tipo_gasto,
+        dep.*
+        FROM asteleco_viaticos_erp.depositos AS dep	
+        INNER JOIN asteleco_personal.lista_personal AS pers ON dep.id_personal = pers.id_lista_personal
+        INNER JOIN asteleco_personal.lista_personal AS aut ON dep.id_personal_registro = aut.id_lista_personal
+        left JOIN asteleco_proyectos.proyectos AS proy ON dep.id_proyectos = proy.id_proyectos
+        INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tg ON dep.id_tipos_gasto = tg.id_tipos_gasto
+        WHERE dep.id_personal = '$id_user'
+        ORDER BY dep.fecha DESC";
+        $getDeposits = $queries->getData($sql_deposits);
+
+        return ($getDeposits);
+    }
 
     public function getSaldoPorUsuario($id_user)
     {

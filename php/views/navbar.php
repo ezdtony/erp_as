@@ -9,7 +9,6 @@
             <img src="images/aslogo.png" alt="" height="16" />
         </span>
     </a>
-
     <!-- LOGO -->
     <a href="index.html" class="logo text-center logo-dark">
         <span class="logo-lg">
@@ -86,6 +85,9 @@
                                         <li>
                                             <a href="?submodule=gastos_usuario">Gastos</a>
                                         </li>
+                                        <li>
+                                            <a href="?submodule=depositos_viaticos">Depósitos</a>
+                                        </li>
                                         <!-- <li>
                                         <a href="#">Mis depósitos</a>
                                     </li> -->
@@ -96,29 +98,30 @@
                     </ul>
                 </div>
             </li>
-            <?php if ($id_area <= 3) : ?>
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
-                    <i class="uil-keyhole-circle"></i>
-                    <span> Accesos </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarAccesos">
-                    <ul class="side-nav-second-level">
-                        <?php if ($id_area <= 3) : ?>
-                            <li>
-                                <a href="?submodule=sitios">Sitios</a>
-                            </li>
-                            <li>
-                                <a href="?submodule=lista_accesos">Lista de accesos</a>
-                            </li>
-                        <?php else : ?>
-                            <li>
-                                <a href="?submodule=captura_accesos">Mis accesos</a>
-                            </li>
-                        <?php endif; ?>
+            <?php if (($_SESSION['id_areas_level']) == 19 || $_SESSION['id_area']<= 3  )  : ?>
 
-                        <!-- <li>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
+                        <i class="uil-keyhole-circle"></i>
+                        <span> Accesos </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarAccesos">
+                        <ul class="side-nav-second-level">
+                            <?php if ($id_area <= 3) : ?>
+                                <li>
+                                    <a href="?submodule=sitios">Sitios</a>
+                                </li>
+                                <li>
+                                    <a href="?submodule=lista_accesos">Lista de accesos</a>
+                                </li>
+                            <?php else : ?>
+                                <li>
+                                    <a href="?submodule=captura_accesos">Mis accesos</a>
+                                </li>
+                            <?php endif; ?>
+
+                            <!-- <li>
                             <a href="#">Aprobados</a>
                         </li>
                         <li>
@@ -127,23 +130,24 @@
                         <li>
                             <a href="#">Concentrado</a>
                         </li> -->
-                    </ul>
-                </div>
-            </li>
-            
-            
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
-                    <i class="uil-shopping-trolley"></i>
-                    <span> Compras </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarCompras">
-                    <ul class="side-nav-second-level">
-                        <li>
-                        <a href="?submodule=compras_cotizaciones">Cotizaciones</a>
-                        </li>
-                        <!-- <li>
+                        </ul>
+                    </div>
+                </li>
+            <?php endif ?>
+
+            <?php if ($id_area <= 3) : ?>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
+                        <i class="uil-shopping-trolley"></i>
+                        <span> Compras </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarCompras">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="?submodule=compras_cotizaciones">Cotizaciones</a>
+                            </li>
+                            <!-- <li>
                             <a href="#">Solicitudes</a>
                         </li>
                         <li>
@@ -155,10 +159,10 @@
                         <li>
                             <a href="#">Proveedores</a>
                         </li> -->
-                    </ul>
-                </div>
-            </li>
-            <?php  endif; ?>
+                        </ul>
+                    </div>
+                </li>
+            <?php endif; ?>
             <!--
                 
             <li class="side-nav-item">

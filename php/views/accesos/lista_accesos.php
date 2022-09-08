@@ -3,6 +3,7 @@ include_once('php/models/accesos/accesos_model.php');
 $accesos = new Access();
 $allCentrales = $accesos->getAllCentral();
 $getAllLockTypes = $accesos->getAllLockTypes();
+$getAllLockTypesGabinetes = $accesos->getAllLockTypesGabinetes();
 $getPuertasDeAcceso = $accesos->getPuertasDeAcceso();
 $getTiposCerraduraPA = $accesos->getTiposCerraduraPA();
 $getStatusLimpieza = $accesos->getStatusLimpieza();
@@ -15,24 +16,20 @@ $getPerimetros  = $accesos->getPerimetros();
         <div class="page-title-box">
             <div class="page-title-right">
                 <form class="d-flex">
-                    <!-- <a href="javascript: void(0);" class="btn btn-primary ms-2">
                              <i class="mdi mdi-autorenew"></i>
-                         </a> -->
+                         </a>
                 </form>
             </div>
             <h4 class="page-title">Accesos | Coordinación | Lista de Accesos</h4>
         </div>
     </div>
-</div>
-<!-- end page title -->
+</div
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Accesos Registrados</h4>
                 <div class="button-list">
-                    <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoAcceso">Registrar Acceso</button> -->
-                    <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#informacionSitio">Información de Sitios</button> -->
                 </div>
                 <br>
 
@@ -69,8 +66,6 @@ $getPerimetros  = $accesos->getPerimetros();
                                 <td><?= $sites->pesonal_as ?></td>
                                 <td class="table-action">
                                     <a id="<?= $sites->id_accesos ?>" title="Información detallada" class="action-icon infoAcceso" data-bs-toggle="modal" data-bs-target="#infoAcceso"> <i class="mdi mdi-information-outline"></i></a>
-                                    <!-- <a id="<?= $sites->id_accesos ?>" title="Editar hora salida" class="action-icon editHoraSalida"> <i class="mdi mdi-calendar-clock"></i></a> -->
-                                    <!-- <a id="<?= $sites->id_accesos ?>" title="Editar acceso" class="action-icon editAcceso"> <i class="mdi mdi-pencil"></i></a> -->
                                     <a id="<?= $sites->id_accesos ?>" title="Eliminar reigstro" class="action-icon deleteAcceso"> <i class="mdi mdi-delete"></i></a>
 
 
@@ -84,13 +79,9 @@ $getPerimetros  = $accesos->getPerimetros();
                 </table>
                 <br>
             </div>
-            <!-- end card-body-->
         </div>
-        <!-- end card-->
     </div>
-    <!-- end col-->
-</div>
-<!-- end row -->
+</div
 <?php
 include_once('php/views/accesos/modals/nuevoAcceso.php');
 include_once('php/views/accesos/modals/actualizarInfoSitio.php');

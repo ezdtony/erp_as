@@ -5,6 +5,7 @@ $allCentrales = $accesos->getAllCentral();
 $getAllLockTypes = $accesos->getAllLockTypes();
 $getPuertasDeAcceso = $accesos->getPuertasDeAcceso();
 $getTiposCerraduraPA = $accesos->getTiposCerraduraPA();
+$getAllLockTypesGabinetes = $accesos->getAllLockTypesGabinetes();
 $getStatusLimpieza = $accesos->getStatusLimpieza();
 $getPerimetros  = $accesos->getPerimetros();
 

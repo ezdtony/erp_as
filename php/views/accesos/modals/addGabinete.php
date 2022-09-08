@@ -21,7 +21,7 @@
                 <div class="form-floating mb-3">
                     <select class="form-control select2" id="cerraduras_gabinetes" data-toggle="select2">
                         <option value="" selected disabled>Seleccione una cerradura</option>
-                        <?php foreach ($getAllLockTypes as $lockType) : ?>
+                        <?php foreach ($getAllLockTypesGabinetes as $lockType) : ?>
                             <option value="<?= $lockType->id_tipos_cerraduras ?>"><?= $lockType->descripcion ?></option>
                         <?php endforeach; ?>
                     </select>

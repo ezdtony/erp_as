@@ -146,7 +146,7 @@ foreach ($getAccesos as $acceso) {
 
 
         $pdf->Cell(45, 5, utf8_decode(' Acceso Prinicpal:'), 'LT', 0, 'C', 0);
-        $pdf->Cell(46, 5, utf8_decode(' N/A'), 'LTBR', 1, 'C', 0);
+        $pdf->Cell(46, 5, utf8_decode('N/A'), 'LTBR', 1, 'C', 0);
 
 
         $getAPRIinfo = $accesos->getAPinfo($acceso->id_sitios, '2');
@@ -155,7 +155,7 @@ foreach ($getAccesos as $acceso) {
         } else {
             $acc_vh = "SIN INFO.";
         }
-        $pdf->Cell(45, 5, utf8_decode($acceso->acceso_vehicular), 'LTR', 0, 'C', 0);
+        $pdf->Cell(45, 5, utf8_decode(' Acceso Vehícular:'), 'LTR', 0, 'C', 0);
         $pdf->Cell(45, 5, utf8_decode($acc_vh), 'LTB', 0, 'C', 0);
 
         $pdf->Cell(45, 5, utf8_decode(' Acceso Vehícular:'), 'LT', 0, 'C', 0);

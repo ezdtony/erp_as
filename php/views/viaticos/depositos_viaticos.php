@@ -19,7 +19,9 @@
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Depósitos</h4>
                 <br>
-                <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#depositarViatico">Nuevo Depósito</button>
+                <?php if ($id_area <= 3) : ?>
+                    <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#depositarViatico">Nuevo Depósito</button>
+                <?php endif; ?>
                 <br>
                 <br>
                 <br>
@@ -34,7 +36,9 @@
                             <th>Sitio</th>
                             <th>Proyecto</th>
                             <th>Registrado por</th>
-                            <th>Acciones</th>
+                            <?php if ($id_area <= 3) : ?>
+                                <th>Acciones</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
 
@@ -43,7 +47,12 @@
                         <?php
                         include_once('php/models/viaticos/viatics_model.php');
                         $viatics = new ViaticsInformation();
-                        $allDeposits = $viatics->getAllDeposits();
+                        if ($id_area <= 3) {
+                            $allDeposits = $viatics->getAllDeposits();
+                        } else {
+                            $allDeposits = $viatics->getAllDepositsUser($_SESSION['id_user']);
+                        }
+
 
                         foreach ($allDeposits as $deposits) {
 
@@ -57,10 +66,12 @@
                                 <td><?= $deposits->sitio ?></td>
                                 <td><?= $deposits->nombre_proyecto ?></td>
                                 <td><?= $deposits->author ?></td>
-                                <td class="table-action">
-                                    <a id="<?=$deposits->id_depositos?>" class="action-icon btnEditDeposits" data-id-destinatario="<?=$deposits->nombre_completo?>" data-bs-toggle="modal" data-bs-target="#editarDeposito"> <i class="mdi mdi-pencil editDeposit"></i></a>
-                                    <a id="<?=$deposits->id_depositos?>" class="action-icon deleteDeposit"> <i class="mdi mdi-delete "></i></a>
-                                </td>
+                                <?php if ($id_area <= 3) : ?>
+                                    <td class="table-action">
+                                        <a id="<?= $deposits->id_depositos ?>" class="action-icon btnEditDeposits" data-id-destinatario="<?= $deposits->nombre_completo ?>" data-bs-toggle="modal" data-bs-target="#editarDeposito"> <i class="mdi mdi-pencil editDeposit"></i></a>
+                                        <a id="<?= $deposits->id_depositos ?>" class="action-icon deleteDeposit"> <i class="mdi mdi-delete "></i></a>
+                                    </td>
+                                <?php endif; ?>
                             </tr>
                         <?php } ?>
                     </tbody>

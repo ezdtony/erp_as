@@ -1758,12 +1758,13 @@ $(document).ready(function () {
             console.log(data);
 
             if (data.response == true) {
+              $("#tr_"+id_acceso).remove();
               Swal.close();
               Swal.fire({
                 icon: "success",
                 title: "Se eliminó el registro con éxito",
               });
-              $("#tr_"+id_acceso).remove();
+              
             } else {
               Swal.close();
               Swal.fire({

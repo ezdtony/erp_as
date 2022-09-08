@@ -85,6 +85,16 @@ class Access
 
         return ($getCentral);
     }
+    public function getAllLockTypesGabinetes()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipos_cerraduras WHERE apply_gabinete = 1 ORDER BY id_tipos_cerraduras asc";
+
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
     public function getAllPerimeterTypes()
     {
         include_once('php/models/petitions.php');
