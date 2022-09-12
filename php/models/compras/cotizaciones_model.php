@@ -73,4 +73,35 @@ class Compras
 
         return ($getDeposits);
     }
+    public function getCatalogoMaterial()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT cat.*, umed.*, clascat.*
+        FROM asteleco_compras.catalogo_material AS cat
+        INNER JOIN asteleco_compras.unidades_medida AS umed ON umed.id_unidades_medida = cat.id_unidades_medida
+        INNER JOIN asteleco_compras.clasificaciones_catalogo AS clascat ON clascat.id_clasificaciones_catalogo = cat.id_clasificaciones_catalogo
+        ";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getClasificacionesMaterial()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_compras.clasificaciones_catalogo";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getUnidadesMedida()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_compras.unidades_medida";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
 }

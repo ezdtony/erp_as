@@ -151,3 +151,69 @@ function deletePartida()
 
     echo json_encode($data);
 }
+
+function guardarNuevoConceptoCatalogo()
+{
+    $queries = new Queries;
+
+    $nombre_material = $_POST['nombre_material'];
+    $id_clasificacion = $_POST['id_clasificacion'];
+    $id_unidad_medida = $_POST['id_unidad_medida'];
+    $apply_ul = $_POST['apply_ul'];
+
+
+    //GENERAR CÓDIGO DE MATERIAL
+    $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    
+    $additional_chars = substr(str_shuffle($permitted_chars), 0, 3);
+
+    $stmt_get_clasif_details = "SELECT * FROM asteleco_compras.clasificaciones_catalogo";
+    $getClasifDetails = $queries->getData($stmt_get_clasif_details);
+    $getClasifDetails = $getClasifDetails[0];
+    $nombre_corto = $getClasifDetails->nombre_corto;
+
+
+
+    $stmt = "INSERT INTO asteleco_compras.catalogo_material 
+    (id_clasificaciones_catalogo,
+    id_unidades_medida,
+    descripcion_material,
+    aplica_ul,
+    date_log)
+    VALUES(
+        '$id_clasificacion',
+        '$id_unidad_medida',
+        '$nombre_material',
+        '$apply_ul',
+        NOW()
+    )";
+
+    if ($guardar_material = $queries->insertData($stmt)) {
+        $last_id = $guardar_material['last_id'];
+
+        $codigo_material = $nombre_corto . "-" . $additional_chars . "-00" . $last_id;
+        $stmt_update = "UPDATE asteleco_compras.catalogo_material SET codigo_astelecom = '$codigo_material' WHERE id_catalogo_material = '$last_id'";
+
+        if ($queries->insertData($stmt_update)) {
+            //--- --- ---//
+            $data = array(
+                'response' => true,
+                'message' => 'Se guardó el nuevo material correctamente'
+            );
+        } else {
+            $data = array(
+                'response' => true,
+                'message' => 'Se guardó el nuevo material correctamente, pero no se actualizó el código'
+            );
+        }
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al eliminar la partida'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}

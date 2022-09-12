@@ -98,7 +98,7 @@
                     </ul>
                 </div>
             </li>
-            <?php if (($_SESSION['id_areas_level']) == 19 || $_SESSION['id_area']<= 3  )  : ?>
+            <?php if (($_SESSION['id_areas_level']) == 19 || $id_user <= 2) : ?>
 
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
@@ -135,7 +135,7 @@
                 </li>
             <?php endif ?>
 
-            <?php if ($id_area <= 3) : ?>
+            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                         <i class="uil-shopping-trolley"></i>
@@ -144,6 +144,9 @@
                     </a>
                     <div class="collapse" id="sidebarCompras">
                         <ul class="side-nav-second-level">
+                            <li>
+                                <a href="?submodule=catalogo_material">Catálogo de material</a>
+                            </li>
                             <li>
                                 <a href="?submodule=compras_cotizaciones">Cotizaciones</a>
                             </li>
