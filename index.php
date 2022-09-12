@@ -56,7 +56,7 @@ include_once('php/views/topbar.php');
         $submodule = $_GET['submodule'];
         switch ($submodule) {
             case 'sitios':
-                $include_file = 'php\views\accesos\sitios.php';
+                $include_file = 'php/views/accesos/sitios.php';
                 break;
             case 'saldos':
                 $include_file = 'php/views/viaticos/saldos_usuarios.php';

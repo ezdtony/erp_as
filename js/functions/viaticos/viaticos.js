@@ -108,6 +108,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", "#guardar_deposito", function () {
+    loading();
     var id_user = $("#destinatario").val();
     var fecha = $("#fecha_deposito").val();
     var id_asingacion = $("#proyecto").val();
@@ -163,6 +164,7 @@ $(document).ready(function () {
               text: data.message,
               timer: 2000,
             }).then((result) => {
+              loading();
               location.reload();
             });
           } else {

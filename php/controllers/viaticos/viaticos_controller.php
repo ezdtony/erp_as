@@ -23,39 +23,39 @@ function saveDeposit()
 
     $queries = new Queries;
 
-    $stmt = "UPDATE asteleco_viaticos_erp.saldos 
-    SET 
-    saldo = saldo + $importe
-    WHERE id_personal = $id_user";
-
-    $updateSaldo = $queries->insertData($stmt);
+    $sql_insertar_deposito = "INSERT INTO asteleco_viaticos_erp.depositos (
+        id_personal,
+        id_asignacion_proyecto,
+        id_tipos_gasto,
+        id_personal_registro,
+        sitio,
+        cantidad,
+        fecha,
+        log_date,
+        id_proyectos
+    ) VALUES (
+        '$id_user',
+        '$id_asingacion',
+        '$tipos_gasto',
+        '$id_author',
+        '$sitio',
+        '$importe',
+        '$fecha',
+        NOW(),
+        '$id_proyecto'
+        )";
+    //--- --- ---//
     //$last_id = $getInfoRequest['last_id'];
-    if (!empty($updateSaldo)) {
+    if ($queries->insertData($sql_insertar_deposito)) {
 
-        $sql_insertar_deposito = "INSERT INTO asteleco_viaticos_erp.depositos (
-            id_personal,
-            id_asignacion_proyecto,
-            id_tipos_gasto,
-            id_personal_registro,
-            sitio,
-            cantidad,
-            fecha,
-            log_date,
-            id_proyectos
-        ) VALUES (
-            '$id_user',
-            '$id_asingacion',
-            '$tipos_gasto',
-            '$id_author',
-            '$sitio',
-            '$importe',
-            '$fecha',
-            NOW(),
-            '$id_proyecto'
-            )";
-        //--- --- ---//
-        $insertar_deposito = $queries->insertData($sql_insertar_deposito);
-        if (!empty($insertar_deposito)) {
+
+
+        $stmt = "UPDATE asteleco_viaticos_erp.saldos
+        SET 
+        saldo = saldo + $importe
+        WHERE id_personal = $id_user";
+
+        if ($queries->insertData($stmt)) {
             $data = array(
                 'response' => true,
                 'message'                => 'El depósito se registró correctamente!!'
@@ -125,8 +125,8 @@ function editDeposit()
             WHERE id_depositos = $id_deposito";
         //--- --- ---//
         $insertar_deposito = $queries->insertData($sql_insertar_deposito);
-        
-        
+
+
         if (!empty($insertar_deposito)) {
             $data = array(
                 'response' => true,
