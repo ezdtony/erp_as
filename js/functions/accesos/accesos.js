@@ -695,9 +695,9 @@ $(document).ready(function () {
     loading();
     $(".breaker_principal").prop("checked", false);
     $(".planta_emergencia").prop("checked", false);
-    $(".at_torre").prop("disabled", true);
-    $(".at_centro_carga").prop("disabled", true);
-    $(".at_escalerilla").prop("disabled", true);
+    $(".at_torre").prop("disabled", false);
+    $(".at_centro_carga").prop("disabled", false);
+    $(".at_escalerilla").prop("disabled", false);
     $("#breakers_existentes").val("");
     $("#chk_vandalismo").prop("checked", false);
     /* $("#na_perimetro").select2().val("").trigger("change");

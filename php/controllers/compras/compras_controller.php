@@ -167,7 +167,7 @@ function guardarNuevoConceptoCatalogo()
     
     $additional_chars = substr(str_shuffle($permitted_chars), 0, 3);
 
-    $stmt_get_clasif_details = "SELECT * FROM asteleco_compras.clasificaciones_catalogo";
+    $stmt_get_clasif_details = "SELECT * FROM asteleco_compras.clasificaciones_catalogo WHERE id_clasificaciones_catalogo = '$id_unidad_medida'";
     $getClasifDetails = $queries->getData($stmt_get_clasif_details);
     $getClasifDetails = $getClasifDetails[0];
     $nombre_corto = $getClasifDetails->nombre_corto;

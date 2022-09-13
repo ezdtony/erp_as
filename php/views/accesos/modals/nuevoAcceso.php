@@ -161,17 +161,17 @@
                                                             <label class="form-label">Atterizajes</label>
                                                             <div class="form-check">
                                                                 <h5>Torre</h5>
-                                                                <input class="at_torre" type="checkbox" id="chk_att_torre" checked data-switch="warning" />
+                                                                <input class="at_torre" type="checkbox" id="chk_att_torre"  data-switch="warning" />
                                                                 <label for="chk_att_torre" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <h5>Centro de Carga</h5>
-                                                                <input class="at_centro_carga" type="checkbox" id="chk_at_centro_carga" checked data-switch="warning" />
+                                                                <input class="at_centro_carga" type="checkbox" id="chk_at_centro_carga"  data-switch="warning" />
                                                                 <label for="chk_at_centro_carga" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <h5>Escalerilla</h5>
-                                                                <input class="at_escalerilla" type="checkbox" id="chk_escalerilla" checked data-switch="warning" />
+                                                                <input class="at_escalerilla" type="checkbox" id="chk_escalerilla"  data-switch="warning" />
                                                                 <label for="chk_escalerilla" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                         </div>
