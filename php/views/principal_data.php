@@ -54,7 +54,7 @@ if (!isset($_SESSION['user'])) {
     FROM asteleco_proyectos.`proyectos`AS proy
     INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
     INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
-    WHERE proy.id_tipos_proyecto !=9 AND proy.show_proyect = 1 $parametro_busqueda ORDER BY proy.fecha_inicio DESC";
+    WHERE proy.show_proyect = 1 $parametro_busqueda ORDER BY proy.fecha_inicio DESC";
     $getAllProyects = $queries->getData($todos_proyectos);
 
     $id_user_proy = $_SESSION['id_user'];

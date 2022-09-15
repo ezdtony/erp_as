@@ -25,20 +25,19 @@
                 <br>
 
                 <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
-                    <thead>
+                <thead class="table-dark">
                         <tr>
                             <th>ID</th>
                             <th>Código</th>
                             <th>Fecha</th>
                             <th>Proyecto</th>
-                            <th>Cotización</th>
+                            <th>Progreso</th>
                             <th>Status</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
 
                     <?php
-                    include_once('php/models/viaticos/viatics_model.php');
                     include_once('php/models/compras/cotizaciones_model.php');
 
                     $compras = new Compras();
@@ -48,37 +47,37 @@
 
                     <tbody>
                         <?php foreach ($getCotizaciones as $cotizaciones) :
-                            $partidas = $cotizaciones->partidas;
-                            $partidas_completas = $cotizaciones->partidas_completas;
-                            if ($partidas == 0) {
-                                $porcentaje = 0;
-                            } else {
-                                $porcentaje = $partidas_completas / $partidas * 100;
-                            };
-
-                            if ($porcentaje == 100) {
-                                $bg_barra = 'bg-success';
-                            } else if ($porcentaje >= 50 && $porcentaje < 100) {
-                                $bg_barra = 'bg-primary';
-                            } else if ($porcentaje < 50 && $porcentaje > 15) {
-                                $bg_barra = 'bg-warning';
-                            } else if ($porcentaje <= 15) {
-                                $bg_barra = 'bg-danger';
-                            } else {
-                                $bg_barra = 'bg-info';
-                            }
+                             $partidas = $cotizaciones->partidas;
+                             $partidas_completas = $cotizaciones->partidas_completas;
+                             if ($partidas == 0) {
+                                 $porcentaje = 0;
+                             } else {
+                                 $porcentaje = $partidas_completas / $partidas * 100;
+                             };
+ 
+                             if ($porcentaje == 100) {
+                                 $bg_barra = 'bg-success';
+                             } else if ($porcentaje >= 50 && $porcentaje < 100) {
+                                 $bg_barra = 'bg-primary';
+                             } else if ($porcentaje < 50 && $porcentaje > 15) {
+                                 $bg_barra = 'bg-warning';
+                             } else if ($porcentaje <= 15) {
+                                 $bg_barra = 'bg-danger';
+                             } else {
+                                 $bg_barra = 'bg-info';
+                             }
                         ?>
                             <tr>
                                 <td><?= $cotizaciones->id_cotizaciones; ?></td>
-                                <td><?= mb_strtoupper($cotizaciones->codigo_cotizacion); ?></td>
-                                <td><?= $cotizaciones->fecha; ?></td>
-                                <td><?= $cotizaciones->nombre_proyecto; ?></td>
+                                <td><?= mb_strtoupper($cotizaciones->codigo_solicitud); ?></td>
+                                <td><?= $cotizaciones->fecha_index; ?></td>
+                                <td><?= $cotizaciones->proyecto; ?></td>
                                 <td>
                                     <div class="progress progress-sm">
                                         <div class="progress-bar progress-lg <?= $bg_barra ?>" role="progressbar" style="width: <?= $porcentaje ?>%" aria-valuenow="<?= $porcentaje ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
-                                <td id="td_status_<?= $cotizaciones->id_cotizaciones ?>"><i class="mdi mdi-circle text-<?= $cotizaciones->class_bootstrap ?>"></i> <?= $cotizaciones->status_descripcion ?></td>
+                                <td id="td_status_<?= $cotizaciones->id_cotizaciones ?>"><i class="mdi mdi-circle text-<?= $cotizaciones->class_bootstrap_cotizaciones ?>"></i> <?= $cotizaciones->descripcion_status_cotizaciones ?></td>
                                 <td class="table-action">
                                     <a href="?submodule=desglose_cotizacion&id_cotizacion=<?= $cotizaciones->id_cotizaciones ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Desglose de cotización"> <i class="mdi mdi-beaker-alert-outline"></i></a>
                                 </td>

@@ -135,7 +135,7 @@
                 </li>
             <?php endif ?>
 
-            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
+            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2  || ($id_area >= 4)) : ?>
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                         <i class="uil-shopping-trolley"></i>
@@ -144,9 +144,11 @@
                     </a>
                     <div class="collapse" id="sidebarCompras">
                         <ul class="side-nav-second-level">
-                            <li>
-                                <a href="?submodule=catalogo_material">Catálogo de material</a>
-                            </li>
+                            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
+                                <li>
+                                    <a href="?submodule=catalogo_material">Catálogo de material</a>
+                                </li>
+                            <?php endif; ?>
                             <li>
                                 <a href="?submodule=compras_cotizaciones">Cotizaciones</a>
                             </li>

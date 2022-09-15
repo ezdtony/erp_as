@@ -21,20 +21,20 @@ function guardarCotizacion()
     $cd1 = (substr(str_shuffle($permitted_chars), 0, 3));
     $cd2 = (substr(str_shuffle($permitted_chars), 0, 3));
     $cd3 = (substr(str_shuffle($permitted_chars), 0, 3));
-    $random_code = "PY" . $id_proyecto . "-" . $cd1 . "-" . $cd2;
+    $random_code = "CMPY" . $id_proyecto . "-" . $cd1 . "-" . $cd2;
     $fyh = date('Y-m-d H:i:s');
     $stmt = "INSERT INTO asteleco_compras.cotizaciones 
                  (
+                    id_status_cotizaciones,
                     id_proyecto,
-                    codigo_cotizacion,
-                    status_cotizacion,
-                    id_usuario_created,
+                    codigo_solicitud,
+                    id_personal_registro,
                     date_log
                  )
                  VALUES(
+                    '1',
                     '$id_proyecto',
                     '$random_code',
-                    '1',
                      $_SESSION[id_user],
                      NOW()
                  )";
@@ -45,33 +45,38 @@ function guardarCotizacion()
 
     for ($i = 1; $i < count($arr_data[1][0]); $i++) {
 
-        $num_partida        = $arr_data[1][0][$i][0][0];
-        $txt_material       = $arr_data[1][0][$i][1][0];
-        $unidad_medicion    = $arr_data[1][0][$i][2][0];
-        $cantidad           = $arr_data[1][0][$i][3][0];
-        $observaciones      = $arr_data[1][0][$i][4][0];
-        $utilizacion        = $arr_data[1][0][$i][5][0];
+
+        $id_catalogo_material         = $arr_data[1][0][$i][0][0];
+        $id_medidas_de_longitud       = $arr_data[1][0][$i][1][0];
+        $id_marcas                    = $arr_data[1][0][$i][2][0];
+        $no_partida                   = $arr_data[1][0][$i][3][0];
+        $cantidad                     = $arr_data[1][0][$i][4][0];
+        $observaciones                = $arr_data[1][0][$i][5][0];
 
 
         $stmt_desgloce = "INSERT INTO asteleco_compras.desglose_cotizacion
                  (
                     id_cotizaciones,
+                    id_catalogo_material,
+                    id_medidas_de_longitud,
+                    id_status_partidas,
+                    id_marcas,
+                    id_proveedores,
                     no_partida,
-                    descripcion_partida,
                     cantidad,
-                    unidad_medida,
                     comentarios,
-                    utilizacion,
                     date_log
                  ) 
                  VALUES(
                     '$id_index',
-                    '$num_partida',
-                    '$txt_material',
+                    '$id_catalogo_material',
+                    '$id_medidas_de_longitud',
+                    '1',
+                    '$id_marcas',
+                    '1',
+                    '$no_partida',
                     '$cantidad',
-                    '$unidad_medicion',
                     '$observaciones',
-                    '$utilizacion',
                     NOW()
                  )";
         $insertPartida = $queries->insertData($stmt_desgloce);
@@ -164,7 +169,7 @@ function guardarNuevoConceptoCatalogo()
 
     //GENERAR CÓDIGO DE MATERIAL
     $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    
+
     $additional_chars = substr(str_shuffle($permitted_chars), 0, 3);
 
     $stmt_get_clasif_details = "SELECT * FROM asteleco_compras.clasificaciones_catalogo WHERE id_clasificaciones_catalogo = '$id_unidad_medida'";
@@ -211,6 +216,60 @@ function guardarNuevoConceptoCatalogo()
         $data = array(
             'response' => false,
             'message'                => 'Ocurrió un error al eliminar la partida'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function getMaterialesPorClasificacion()
+{
+    $queries = new Queries;
+
+    $id_clasificacion = $_POST['id_clasificacion'];
+
+    $stmt = "SELECT * FROM asteleco_compras.catalogo_material WHERE id_clasificaciones_catalogo= '$id_clasificacion'";
+    $getMateriales = $queries->getData($stmt);
+    if (!empty($getMateriales)) {
+        $data = array(
+            'response' => true,
+            'data' => $getMateriales
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Al parecer no hay material registrado bajo esta clasificación'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function getMedidasLongitud()
+{
+    $queries = new Queries;
+
+    $id_unidad_longitud = $_POST['id_unidad_longitud'];
+
+    $stmt = "SELECT ul.*, ml.* 
+    FROM asteleco_compras.medidas_de_longitud AS ml
+    INNER JOIN asteleco_compras.unidades_de_longitud AS ul ON ml.id_unidades_de_longitud = ul.id_unidades_de_longitud
+    WHERE ml.id_unidades_de_longitud = '$id_unidad_longitud'";
+    $getMateriales = $queries->getData($stmt);
+    if (!empty($getMateriales)) {
+        $data = array(
+            'response' => true,
+            'data' => $getMateriales
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Al parecer no hay material registrado bajo esta clasificación'
         );
         //--- --- ---//
     }

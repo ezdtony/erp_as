@@ -29,49 +29,56 @@ $getCotizacionInfo = $compras->getCotizacionInfo($id_cotizaciones);
             <div class="card-body">
                 <h4 id="nombre_informe" class="header-title mb-3">Desglose de Cotización</h4>
                 <br>
-                <?php if(!empty($getDesgloseCotizacion)) : ?>
-                <h4 id="fecha_solicitud">Fecha de solicitud: <?= mb_strtoupper($getCotizacionInfo[0]->fecha) ?></h4>
-                <h4 id="obra">Proyecto: <?= mb_strtoupper($getCotizacionInfo[0]->nombre_proyecto) ?></h4>
-                <h4 id="codigo_solicitud">Código de solicitud: <?= mb_strtoupper($getCotizacionInfo[0]->codigo_cotizacion) ?></h4>
-                <h4 id="solicitante">Solicitante: <?= mb_strtoupper($getCotizacionInfo[0]->nombre) ?></h4>
-                <input type="hidden" id="id_cotizacion" value="<?= $id_solicitud ?>">
+                <?php if (!empty($getDesgloseCotizacion)) : ?>
+                    <h4 id="fecha_solicitud">Fecha de solicitud: <?= mb_strtoupper($getCotizacionInfo[0]->fecha) ?></h4>
+                    <h4 id="obra">Proyecto: <?= mb_strtoupper($getCotizacionInfo[0]->nombre_proyecto) ?></h4>
+                    <h4 id="codigo_solicitud">Código de solicitud: <?= mb_strtoupper($getCotizacionInfo[0]->codigo_solicitud) ?></h4>
+                    <h4 id="solicitante">Solicitante: <?= mb_strtoupper($getCotizacionInfo[0]->nombre) ?></h4>
+                    <input type="hidden" id="id_cotizacion" value="<?= $id_solicitud ?>">
 
 
-                <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevaCotizacion">Nueva cotización</button> -->
-                <br>
-                <br>
-                <br>
+                    <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevaCotizacion">Nueva cotización</button> -->
+                    <br>
+                    <br>
+                    <br>
 
-                <table id="datatable-buttons" class="table table-striped dt-responsive w-100 tabla_editar_solicitud dataTable no-footer dtr-inline">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>No° de Partida</th>
-                            <th>Descripción</th>
-                            <th>Cantidad <span class="badge bg-success rounded-pill">Editable</span></th>
-                            <th>U.M.</th>
-                            <th>Utilización</th>
-                            <th>Comentarios  <span class="badge bg-success rounded-pill">Editable</span></th>
-                            <th>Borrar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($getDesgloseCotizacion as $desglose) : ?>
-                            <tr id="<?= $desglose->id_desglose_cotizacion?>">
-                                <td><?= $desglose->no_partida; ?></td>
-                                <td><?=($desglose->descripcion_partida); ?></td>
-                                <td class="td_editable" column_name="cantidad"><?= $desglose->cantidad; ?></td>
-                                <td><?= $desglose->unidad_medida; ?></td>
-                                <td><?= $desglose->utilizacion; ?></td>
-                                <td class="td_editable" column_name="comentarios"><?= $desglose->comentarios; ?></td>
-                                <td><button type="button" class="btn btn-danger btn-sm btn_borrar_partida_desglose" id="<?= $desglose->id_desglose_cotizacion?>"><i class="mdi mdi-window-close"></i> </button></td>
-                               
+                    <table id="datatable-buttons" class="table table-striped dt-responsive w-100 tabla_editar_solicitud dataTable no-footer dtr-inline">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Cotizada</th>
+                                <th>No° de Partida</th>
+                                <th>Descripción</th>
+                                <th>Cantidad <span class="badge bg-success rounded-pill">Editable</span></th>
+                                <th>U.M.</th>
+                                <th>Marca</th>
+                                <th>Proveedor</th>
+                                <th>Comentarios <span class="badge bg-success rounded-pill">Editable</span></th>
+                                <th>Borrar</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-                <br>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($getDesgloseCotizacion as $desglose) : ?>
+                                <tr id="<?= $desglose->id_desglose_cotizacion ?>">
+                                    <td>
+                                        <input type="checkbox" id="switch<?= $desglose->id_desglose_cotizacion; ?>" data-switch="none" />
+                                        <label for="switch<?= $desglose->id_desglose_cotizacion; ?>" data-on-label="" data-off-label=""></label>
+                                    </td>
+                                    <td><?= $desglose->no_partida; ?></td>
+                                    <td><?= ($desglose->descripcion_material); ?></td>
+                                    <td class="td_editable" column_name="cantidad"><?= $desglose->cantidad; ?></td>
+                                    <td><?= $desglose->unidades_medida_long; ?></td>
+                                    <td><?= ($desglose->nombre_marca); ?></td>
+                                    <td><?= ($desglose->empresa_proveedor); ?></td>
+                                    <td class="td_editable" column_name="comentarios"><?= $desglose->comentarios; ?></td>
+                                    <td><button type="button" class="btn btn-danger btn-sm btn_borrar_partida_desglose" id="<?= $desglose->id_desglose_cotizacion ?>"><i class="mdi mdi-window-close"></i> </button></td>
+
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <br>
                 <?php else : ?>
-                <h4>No hay un desglose registrado para esta cotización </h4>
+                    <h4>No hay un desglose registrado para esta cotización </h4>
                 <?php endif; ?>
             </div>
             <!-- end card-body-->

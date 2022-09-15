@@ -31,7 +31,7 @@
                             <th>Código</th>
                             <th>Fecha</th>
                             <th>Proyecto</th>
-                            <th>Cotización</th>
+                            <th>Progreso</th>
                             <th>Status</th>
                             <th>Actualizar Status</th>
                             <th>Acciones</th>
@@ -72,24 +72,28 @@
                         ?>
                             <tr>
                                 <td><?= $cotizaciones->id_cotizaciones; ?></td>
-                                <td><?= mb_strtoupper($cotizaciones->codigo_cotizacion); ?></td>
-                                <td><?= $cotizaciones->fecha; ?></td>
-                                <td><?= $cotizaciones->nombre_proyecto; ?></td>
+                                <td><?= mb_strtoupper($cotizaciones->codigo_solicitud); ?></td>
+                                <td><?= $cotizaciones->fecha_index; ?></td>
+                                <td><?= $cotizaciones->proyecto; ?></td>
                                 <td>
                                     <div class="progress progress-sm">
                                         <div class="progress-bar progress-lg <?= $bg_barra ?>" role="progressbar" style="width: <?= $porcentaje ?>%" aria-valuenow="<?= $porcentaje ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
-                                <td id="td_status_<?= $cotizaciones->id_cotizaciones ?>"><i class="mdi mdi-circle text-<?= $cotizaciones->class_bootstrap ?>"></i> <?= $cotizaciones->status_descripcion ?></td>
+                                <td id="td_status_<?= $cotizaciones->id_cotizaciones ?>"><i class="mdi mdi-circle text-<?= $cotizaciones->class_bootstrap_cotizaciones ?>"></i> <?= $cotizaciones->descripcion_status_cotizaciones ?></td>
                                 <td>
 
-                                    <select id="example-multiselect"  class="form-select mb-3">
+                                    <select id="example-multiselect" class="form-select mb-3">
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <?php foreach ($getStatusTypes as $statusType) : ?>
-                                            <option value="<?= $statusType->id_status_cotizaciones ?>"><?= $statusType->descripcion ?></option>
+                                            <?php if ($statusType->id_status_cotizaciones == $cotizaciones->id_status_cotizaciones) : ?>
+                                                <option selected value="<?= $statusType->id_status_cotizaciones ?>"><?= $statusType->descripcion_status_cotizaciones ?></option>
+                                            <?php else : ?>
+                                                <option value="<?= $statusType->id_status_cotizaciones ?>"><?= $statusType->descripcion_status_cotizaciones ?></option>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                     </select>
-                                   
+
                                 </td>
                                 <td class="table-action">
                                     <a href="?submodule=desglose_cotizacion&id_cotizacion=<?= $cotizaciones->id_cotizaciones ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Desglose de cotización"> <i class="mdi mdi-beaker-alert-outline"></i></a>

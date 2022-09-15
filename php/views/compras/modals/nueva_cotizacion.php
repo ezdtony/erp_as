@@ -1,3 +1,10 @@
+<?php
+$getClasificacionesMaterial = $compras->getClasificacionesMaterial();
+$getUnidadesMedida = $compras->getUnidadesMedida();
+$getUnidadesLongitud = $compras->getUnidadesLongitud();
+$getMarcas = $compras->getMarcas();
+
+?>
 <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="nuevaCotizacion" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-full-width" role="document">
         <div class="modal-content">
@@ -12,16 +19,13 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h1 class="display-6">Información General</h1>
-                                    <p class="text-muted font-14">
-                                        Por favor ingrese todos los datos marcados con un asterísco (*).
-                                    </p>
                                     <div class="row">
                                         <div class="col-6">
-                                            <h4 class="header-title">Proyecto: </h4>
+                                            <h4 class="header-title">Proyecto:     <span class="badge badge-danger-lighten">Obligatorio</span></h4>
                                             <div class="tab-content">
                                                 <div class="tab-pane show active" id="select2-preview">
-                                                    <select id="id_proyecto" class="form-control select2" data-toggle="select2">
-                                                        <option>Seleccione un proyecto *</option>
+                                                    <select id="id_proyecto_cotizacion" class="form-control select2" data-toggle="select2">
+                                                        <option value="" selected disabled>Seleccione un proyecto *</option>
                                                         <optgroup label="Proyectos">
                                                             <?php foreach ($getAllProyectsByUser as $proyects) : ?>
                                                                 <option value="<?= $proyects->id_proyectos; ?>"><?= $proyects->nombre_proyecto; ?></option>
@@ -32,7 +36,7 @@
                                             </div>
                                         </div>
                                         <br>
-                                        <div class="col-6">
+                                        <!--  <div class="col-6">
                                             <h4 class="header-title">Utilización: </h4>
                                             <div class="tab-content">
                                                 <div class="tab-pane show active" id="select2-preview">
@@ -46,7 +50,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-6">
 
                                             <!-- <div class="tab-content">
@@ -66,31 +70,84 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <!-- <div class="col-12" id="desglose_cotizacion" style="display:none"> -->
+                        <div class="col-12" id="desglose_cotizacion">
                             <div class="card">
                                 <div class="card-body">
                                     <h1 class="display-6">Partidas de Material</h1>
-                                    <p class="text-muted font-14">
+                                    <!-- <p class="text-muted font-14">
                                         Por favor ingrese todos los datos marcados con un asterísco (*).
-                                    </p>
+                                    </p> -->
                                     <div class="form-floating mb-3">
                                         <br>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="card border-secondary border">
                                                     <div class="card-body">
-                                                        <h4 class="header-title">Agregar partida</h4>
+                                                        <h4 class="header-title">Agregar una partida</h4>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <h5 class="card-title">Clasificación de material     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="select2-preview">
+                                                                        <select class="form-control select2" data-toggle="select2" id="select_clasificacion_cotizacion">
+                                                                            <option id="" value="" selected disabled>Seleccione una opción</option>
+                                                                            <?php foreach ($getClasificacionesMaterial as $clasificacion) : ?>
+                                                                                <option value="<?= $clasificacion->id_clasificaciones_catalogo ?>"><?= $clasificacion->clasificacion ?></option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
                                                         <br>
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <h5 class="card-title">Material</h5>
-                                                                <div class="mb-3">
-                                                                    <label for="example-palaceholder" class="form-label"></label>
-                                                                    <input type="text" id="articulo" class="form-control" placeholder="Ingrese la descripción completa del artículo">
+                                                                <h5 class="card-title">Material     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane show active" id="select2-preview">
+                                                                        <select class="form-control select2" disabled data-toggle="select2" id="material_cotizacion">
+                                                                            <option id="" value="" selected disabled>Seleccione una opción</option>
+
+                                                                        </select>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            <br>
+                                                            <br>
+                                                            <br>
+                                                            <br>
+                                                            <div class="row" id="div_unidades_longitud" style="display:none">
 
+                                                                <div class="col-6">
+                                                                    <h5 class="card-title">Unidad de longitud     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                    <div class="tab-content">
+                                                                        <div class="tab-pane show active" id="select2-preview">
+                                                                            <select id="id_unidad_longitud" class="form-control select2" data-toggle="select2">
+                                                                                <option value="" selected disabled>Seleccione una opción * </option>
+                                                                                <?php foreach ($getUnidadesLongitud as $unidad_longitud) : ?>
+                                                                                    <option  value="<?= $unidad_longitud->id_unidades_de_longitud ?>"><?= $unidad_longitud->uindad_longitud ?></option>
+                                                                                <?php endforeach; ?>
+                                                                                </optgroup>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <h5 class="card-title">Medida de longitud     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                    <div class="tab-content">
+                                                                        <div class="tab-pane show active" id="select2-preview">
+                                                                            <select id="id_medida_longitud" disabled class="form-control select2" data-toggle="select2">
 
+                                                                                </optgroup>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <!-- SELECTORES MATERIAL CON DIMENCIONES -->
                                                             <!-- 
                                                         <div class="col-6">
@@ -129,46 +186,48 @@
                                                         </div> -->
 
                                                             <!-- FIN SELECTORES MATERIAL CON DIMENCIONES -->
-
-
-
                                                         </div>
                                                         <br>
                                                         <div class="row">
                                                             <div class="col-6">
-                                                                <h5 class="card-title">Unidad de medida</h5>
+                                                                <h5 class="card-title">Unidad de medida     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
                                                                 <div class="tab-content">
                                                                     <div class="tab-pane show active" id="select2-preview">
                                                                         <select id="id_unidad_medida" class="form-control select2" data-toggle="select2">
-                                                                            <option>Seleccione una opción * </option>
-                                                                            <optgroup label="Unidad de Medida">
-                                                                                <option value="1">PIEZAS</option>
-                                                                                <option value="2">METROS LINEALES</option>
-                                                                                <option value="3">KILOGRAMOS</option>
-                                                                                <option value="4">TONELADAS</option>
-                                                                                <option value="6">METROS</option>
-                                                                                <option value="7">TBO</option>
-                                                                                <option value="8">CAR</option>
-                                                                                <option value="9">MT3</option>
-                                                                                <option value="10">GALON</option>
-                                                                                <option value="11">CAJAS</option>
-                                                                                <option value="12">ROLLO</option>
-                                                                                <option value="13">CUBETA</option>
-                                                                                <option value="14">BULTO</option>
-                                                                                <option value="15">HOJA</option>
-                                                                                <option value="16">LITRO</option>
-                                                                                <option value="17">CU</option>
-                                                                            </optgroup>
+                                                                            <option value="" selected disabled>Seleccione una opción * </option>
+                                                                            <?php foreach ($getUnidadesMedida as $unidad_medida) : ?>
+                                                                                <option value="<?= $unidad_medida->id_unidades_medida ?>"><?= $unidad_medida->unidades_medida_long ?></option>
+                                                                            <?php endforeach; ?>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
-                                                                <h5 class="card-title">Cantidad</h5>
+                                                                <h5 class="card-title">Elegir una marca en específico (Opcional)</h5>
                                                                 <div class="tab-content">
                                                                     <div class="tab-pane show active" id="select2-preview">
-                                                                        <input id="cantidad" type="text" value="1">
+                                                                        <select id="select_marca_cotizacion" class="form-control select2" data-toggle="select2">
+                                                                            <option>Seleccione una opción * </option>
+                                                                            <?php foreach ($getMarcas as $marca) : ?>
+                                                                                <?php if ($marca->id_marcas == 1): ?>
+                                                                                <option selected value="<?= $marca->id_marcas ?>"><?= $marca->nombre_marca ?></option>
+                                                                                <?php else: ?>
+                                                                                <option value="<?= $marca->id_marcas ?>"><?= $marca->nombre_marca ?></option>
+                                                                                <?php endif; ?>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+
+                                                            <div class="col-6">
+                                                                <h5 class="card-title">Cantidad</h5>
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="email" class="form-control" id="canitdad_cotizacion" placeholder="Cantidad" />
+                                                                    <label for="canitdad_cotizacion">Cantidad     <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                                                 </div>
                                                             </div>
                                                         </div>
