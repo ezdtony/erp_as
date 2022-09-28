@@ -68,6 +68,7 @@ $getPerimetros  = $accesos->getPerimetros();
                                 <td><?= $sites->lider_cuadrilla ?></td>
                                 <td class="table-action">
                                     <a id="<?= $sites->id_accesos ?>" title="Información detallada" class="action-icon infoAcceso" data-bs-toggle="modal" data-bs-target="#infoAcceso"> <i class="mdi mdi-information-outline"></i></a>
+                                    <a data-id-acceso="<?= $sites->id_accesos ?>" title="Editar hora de salida" class="action-icon editarHoraSalida" data-bs-toggle="modal" data-bs-target="#editarHoraSalida"> <i class="mdi mdi-book-clock-outline"></i></a>
                                     <!-- <a id="<?= $sites->id_accesos ?>" title="Editar hora salida" class="action-icon editHoraSalida"> <i class="mdi mdi-calendar-clock"></i></a> -->
                                     <!-- <a id="<?= $sites->id_accesos ?>" title="Editar acceso" class="action-icon editAcceso"> <i class="mdi mdi-pencil"></i></a> -->
                                     <a id="<?= $sites->id_accesos ?>" title="Eliminar reigstro" class="action-icon deleteAcceso"> <i class="mdi mdi-delete"></i></a>
@@ -96,6 +97,7 @@ include_once('php/views/accesos/modals/nuevoAcceso.php');
 include_once('php/views/accesos/modals/actualizarInfoSitio.php');
 include_once('php/views/accesos/modals/addGabinete.php');
 include_once('php/views/accesos/modals/infoAcceso.php');
+include_once('php/views/accesos/modals/editarHoraSalida.php');
 
 
 ?>

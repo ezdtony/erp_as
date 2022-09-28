@@ -75,6 +75,8 @@
                                         <div>
                                             <?php if (str_contains($deposits->ruta_img, '../')) {
                                                 $ruta_img = str_replace("..", "http://astelecom.com.mx/viaticos", $deposits->ruta_img);
+                                            }else{
+                                                $ruta_img = $deposits->ruta_img;
                                             }
                                             ?>
                                             <a href="<?= $ruta_img ?>" target="_blank" class="btn btn-info"><i class="mdi mdi-account-cash-outline"></i> </a>

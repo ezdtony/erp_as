@@ -86,9 +86,9 @@ foreach ($getAccesos as $acceso) {
 
 
     $pdf->SetFont('Helvetica', 'B', 10);
-    $pdf->Cell(31, 7, utf8_decode(' Actividad:'), 'LTB', 0, 'L', 0);
-    $pdf->SetFont('Helvetica', '', 10);
-    $pdf->Cell(50, 7, "" . utf8_decode($acceso->actividad), 'RTB', 0, 'L', 0);
+    $pdf->Cell(18, 7, utf8_decode(' Actividad:'), 'LTB', 0, 'L', 0);
+    $pdf->SetFont('Helvetica', '', 7);
+    $pdf->Cell(63, 7, "" . utf8_decode($acceso->actividad), 'RTB', 0, 'L', 0);
 
     $pdf->SetFont('Helvetica', 'B', 10);
     $pdf->Cell(30, 7, "" . utf8_decode('Hora de entrada:'), 'LTB', 0, 'L', 0);
@@ -105,9 +105,9 @@ foreach ($getAccesos as $acceso) {
     $pdf->Cell(50, 7, "" . utf8_decode($acceso->personal_as), 'RTB', 0, 'L', 0);
 
     $pdf->SetFont('Helvetica', 'B', 10);
-    $pdf->Cell(43, 7, utf8_decode(' Responsable Proveedor:'), 'LTB', 0, 'L', 0);
-    $pdf->SetFont('Helvetica', '', 10);
-    $pdf->Cell(41, 7, "" . utf8_decode($acceso->lider_cuadrilla), 'RTB', 1, 'L', 0);
+    $pdf->Cell(31, 7, utf8_decode(' Resp. Proveedor:'), 'LTB', 0, 'L', 0);
+    $pdf->SetFont('Helvetica', '', 8);
+    $pdf->Cell(53, 7, "" . utf8_decode($acceso->lider_cuadrilla), 'RTB', 1, 'L', 0);
 
     $pdf->SetFont('Helvetica', 'B', 10);
     $pdf->Cell(18, 7, utf8_decode(' Empresa:'), 'LTB', 0, 'L', 0);
@@ -326,7 +326,9 @@ $pdf->Cell(200, 3, utf8_decode(' '), '', 1, 'L', 0);
 $pdf->SetFont('Helvetica', 'B', 12);
 $pdf->Cell(181, 7, utf8_decode('COMENTARIOS DEL ACCESO'), 'LBTR', 1, 'C', 0);
 $pdf->SetFont('Helvetica', 'I', 8);
-$pdf->Cell(181, 15, utf8_decode($acceso->comentarios), 'LBTR', 0, 'C', 0);
+$pdf->Cell(181, 15, utf8_decode($acceso->comentarios), 'LBTR', 1, 'C', 0);
+$pdf->Cell(30, 7, "Planta de emergencia:", 'LBTR', 0, 'L', 0);
+$pdf->Cell(10, 7, "Si", 'LBTR', 0, 'L', 0);
 
 
 
@@ -366,10 +368,10 @@ if ($acceso->id_rutas_archivos_accesos == '') {
         $ruta_identificacion = "../../../" . $getIdentificacionProveedor[0]->ruta_archivo;
         $tipo_archivo = $getIdentificacionProveedor[0]->tipo_archivo;
         if (file_exists($ruta_identificacion)) {
-            $pdf->Image($ruta_identificacion, 100, 210, 0, 20, $tipo_archivo);
+            /* $pdf->Image($ruta_identificacion, 100, 220, 0, 20, $tipo_archivo); */
         } else {
             $ruta_identificacion = "../../../images/no-fotos.png";
-            $pdf->Image($ruta_identificacion, 100, 210, 0, 20, 'png');
+            $pdf->Image($ruta_identificacion, 100, 220, 0, 20, 'png');
         }
     }
 }

@@ -1157,3 +1157,53 @@ function deleteAcceso()
 
     echo json_encode($data);
 }
+function updateTypeSite()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $id_type_site = $_POST['id_type_site'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_accesos_erp.sitios SET id_tipos_sitio = $id_type_site WHERE id_sitios = $id_sitio";
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        //$last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
+        );
+        //--- --- ---//
+    }
+    echo json_encode($data);
+}
+function saveEditarHora()
+{
+
+    $id_acceso = $_POST['id_acceso'];
+    $hora_salida = $_POST['hora_salida'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_accesos_erp.accesos SET hora_salida = '$hora_salida' WHERE id_accesos = $id_acceso";
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        //$last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
+        );
+        //--- --- ---//
+    }
+    echo json_encode($data);
+}

@@ -98,7 +98,7 @@
                     </ul>
                 </div>
             </li>
-            <?php if (($_SESSION['id_areas_level']) == 19 || $id_user <= 2) : ?>
+            <?php if (($_SESSION['id_areas_level']) == 19 || $_SESSION['id_areas_level'] == 21 || $id_user <= 2) : ?>
 
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">

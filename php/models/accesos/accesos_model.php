@@ -164,4 +164,14 @@ class Access
 
         return ($getCentral);
     }
+    public function GetTipoSitio()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.tipos_sitio order by id_tipos_sitio ASC";
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
+    
 }

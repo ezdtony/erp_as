@@ -1093,6 +1093,89 @@ $(document).ready(function () {
       }
     }
   });
+  $(document).on("change", ".selectTipoSitio", function () {
+    var id_sitio = $(this).attr("id");
+    var id_type_site = $(this).find("option:selected").val();
+
+    loading();
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateTypeSite",
+          id_sitio: id_sitio,
+          id_type_site: id_type_site,
+        },
+      }).done(function (data) {
+        Swal.close();
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  $(document).on("click", ".saveEditarHora", function () {
+    var id_acceso = $(this).attr("data-id-acceso");
+    var hora_salida = $("#hora_salida_edit").val();
+console.log(hora_salida);
+    loading();
+    if (id_acceso != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "saveEditarHora",
+          id_acceso: id_acceso,
+          hora_salida: hora_salida,
+        },
+      }).done(function (data) {
+        Swal.fire({
+          icon: "success",
+          title: "Se actualizó la hora correctamente",
+          timer: 1500,
+        }).then((result) => {
+          loading();
+          location.reload();
+        });
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Ocurrió un error al intentar actualizar la información!!!",
+        timer: 1500,
+      });
+    }
+  });
+  $(document).on("click", ".editarHoraSalida", function () {
+    var id_acceso = $(this).attr("data-id-acceso");
+
+    loading();
+    $(".saveEditarHora").attr("data-id-acceso", id_acceso);
+    Swal.close();
+  });
 
   $("input[type=radio][name=acceso1]").change(function () {
     var id_tipos_cerraduras = $(this).val();
@@ -1736,10 +1819,10 @@ $(document).ready(function () {
       title: "¿Está seguro que desea eliminar este registro?",
       text: "Esta acción no puede ser revertida",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'Cancelar',
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
@@ -1758,13 +1841,12 @@ $(document).ready(function () {
             console.log(data);
 
             if (data.response == true) {
-              $("#tr_"+id_acceso).remove();
+              $("#tr_" + id_acceso).remove();
               Swal.close();
               Swal.fire({
                 icon: "success",
                 title: "Se eliminó el registro con éxito",
               });
-              
             } else {
               Swal.close();
               Swal.fire({

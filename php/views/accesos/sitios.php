@@ -1,6 +1,7 @@
 <?php
 include_once('php/models/accesos/accesos_model.php');
 $accesos = new Access();
+$getTiposSitio = $accesos->GetTipoSitio();
 
 ?>
 <input type="hidden" id="id_user" value="<?= $_SESSION['id_user'] ?>">
@@ -53,7 +54,17 @@ $accesos = new Access();
                             <td><?= ($sites->codigo_sitio) ?></td>
                             <td><?= ($sites->nombre_sitio) ?></td>
                             <td><?= ($sites->empresa_responsable) ?></td>
-                            <td><?= ($sites->tipo_sitio) ?></td>
+                            <td>
+                                <select class="form-select selectTipoSitio" id="<?=$sites->id_sitios?>">
+                                    <?php foreach ($getTiposSitio as $type_sites) : ?>
+                                        <?php if ($sites->id_tipos_sitio ==  $type_sites->id_tipos_sitio) : ?>
+                                            <option selected value="<?= $type_sites->id_tipos_sitio ?>"><?= $type_sites->descripcion ?></option>
+                                        <?php else : ?>
+                                            <option  value="<?= $type_sites->id_tipos_sitio ?>"><?= $type_sites->descripcion ?></option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
                             <td><?= ($sites->nombre_central) ?></td>
                             <td><?= ($sites->zona) ?></td>
                             <td><?= ($sites->status_sitio) ?></td>
@@ -69,14 +80,14 @@ $accesos = new Access();
         </div>
     </div>
 </div>
-<</div>
-<!-- end row -->
-<?php
-/* 
+<< /div>
+    <!-- end row -->
+    <?php
+    /* 
 include_once('php/views/accesos/modals/nuevoSitio.php');
 include_once('php/views/accesos/modals/infoSitio.php');
  */
 
-?>
-<script src="js/functions/accesos/accesos.js"></script>
-<script src="js/loading.js"></script>
+    ?>
+    <script src="js/functions/accesos/accesos.js"></script>
+    <script src="js/loading.js"></script>
