@@ -19,12 +19,12 @@
             <div class="card-body">
                 <h4 class="header-title mb-3">Lista de Cotizaciones</h4>
                 <br>
-                <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevaCotizacion">Nueva cotización</button>
+                <!-- <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevaCotizacion">Nueva cotización</button> -->
                 <br>
                 <br>
                 <br>
 
-                <table id="datatable-buttons" class="table table-striped dt-responsive w-100 tabla_editar_solicitud dataTable no-footer dtr-inline">
+                <table id="tablaGastos" class="table table-striped dt-responsive nowrap w-100 ">
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>
@@ -80,10 +80,10 @@
                                         <div class="progress-bar progress-lg <?= $bg_barra ?>" role="progressbar" style="width: <?= $porcentaje ?>%" aria-valuenow="<?= $porcentaje ?>" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </td>
-                                <td id="td_status_<?= $cotizaciones->id_cotizaciones ?>"><i class="mdi mdi-circle text-<?= $cotizaciones->class_bootstrap_cotizaciones ?>"></i> <?= $cotizaciones->descripcion_status_cotizaciones ?></td>
+                                <td id="td_status_<?= $cotizaciones->id_cotizaciones ?>"><i class="mdi mdi-circle lblStatusCotizacion<?= $cotizaciones->id_cotizaciones ?> text-<?= $cotizaciones->class_bootstrap_cotizaciones ?>"></i> <?= $cotizaciones->descripcion_status_cotizaciones ?></td>
                                 <td>
 
-                                    <select id="example-multiselect" class="form-select mb-3">
+                                    <select id="statusCotizaciones" class="form-select mb-3" data-id-cotizacion="<?= $cotizaciones->id_cotizaciones ?>">
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <?php foreach ($getStatusTypes as $statusType) : ?>
                                             <?php if ($statusType->id_status_cotizaciones == $cotizaciones->id_status_cotizaciones) : ?>
@@ -117,3 +117,20 @@ include_once('php/views/compras/modals/nueva_cotizacion.php');
 ?>
 <script src="js/functions/compras/cotizaciones.js"></script>
 <script src="js/loading.js"></script>
+<script>
+    var tGastos = new TableFilter(document.querySelector("#tablaGastos"), {
+        base_path: "js/tablefilter/",
+        paging: {
+            results_per_page: ['Records: ', [10, 25, 50, 100]]
+        },
+        responsive: true,
+        rows_counter: true,
+        btn_reset: true,
+        col_3: "select",
+        col_4: "none",
+        col_5: "select",
+        col_6: "none",
+        col_7: "none"
+    });
+    tGastos.init();
+</script>

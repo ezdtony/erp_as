@@ -1140,7 +1140,7 @@ $(document).ready(function () {
   $(document).on("click", ".saveEditarHora", function () {
     var id_acceso = $(this).attr("data-id-acceso");
     var hora_salida = $("#hora_salida_edit").val();
-console.log(hora_salida);
+    console.log(hora_salida);
     loading();
     if (id_acceso != null) {
       $.ajax({

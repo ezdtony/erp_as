@@ -276,3 +276,66 @@ function getMedidasLongitud()
 
     echo json_encode($data);
 }
+function updateStatusCotizacion()
+{
+    $queries = new Queries;
+
+    $id_cotizacion = $_POST['id_cotizacion'];
+    $column_name = 'id_status_cotizaciones';
+    $value = $_POST['id_status_cotizacion'];
+
+    $stmt = "UPDATE asteleco_compras.cotizaciones
+    SET $column_name = '$value'
+    WHERE id_cotizaciones = '$id_cotizacion'";
+
+    if ($queries->insertData($stmt)) {
+        $stmt_get_properties = "SELECT *
+        FROM  asteleco_compras.status_cotizaciones
+        WHERE id_status_cotizaciones = '$value'";
+        $getInfoRequest = $queries->getData($stmt_get_properties);
+        $data = array(
+            'response' => true,
+            'message' => 'Se actualizó la partida',
+            'data' => $getInfoRequest
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al actualizar la cotización'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function updateStatusPartida()
+{
+    $queries = new Queries;
+
+    $id_partida = $_POST['id_partida'];
+    $cotizada = $_POST['cotizada'];
+
+    $stmt = "UPDATE asteleco_compras.desglose_cotizacion
+    SET cotizada = '$cotizada'
+    WHERE id_desglose_cotizacion = '$id_partida'";
+
+    if ($data_sql=$queries->insertData($stmt)) {
+
+        $data = array(
+            'response' => true,
+            'message' => 'Se actualizó la partida'
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al actualizar la partida'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}

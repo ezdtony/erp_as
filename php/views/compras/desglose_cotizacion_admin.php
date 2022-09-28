@@ -42,7 +42,7 @@ $getCotizacionInfo = $compras->getCotizacionInfo($id_cotizaciones);
                     <br>
                     <br>
 
-                    <table id="datatable-buttons" class="table table-striped dt-responsive w-100 tabla_editar_solicitud dataTable no-footer dtr-inline">
+                    <table id="tablaGastos" class="table table-striped dt-responsive nowrap w-100 ">
                         <thead class="table-dark">
                             <tr>
                                 <th>Cotizada</th>
@@ -57,10 +57,15 @@ $getCotizacionInfo = $compras->getCotizacionInfo($id_cotizaciones);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($getDesgloseCotizacion as $desglose) : ?>
+                            <?php foreach ($getDesgloseCotizacion as $desglose) :
+                                $txt_checked = '';
+                                if ($desglose->cotizada == 1) {
+                                    $txt_checked = 'checked';
+                                }
+                            ?>
                                 <tr id="<?= $desglose->id_desglose_cotizacion ?>">
                                     <td>
-                                        <input type="checkbox" id="switch<?= $desglose->id_desglose_cotizacion; ?>" data-switch="none" />
+                                        <input class="chckPartidaCotizada" type="checkbox" data-id-partida="<?= $desglose->id_desglose_cotizacion; ?>" id="switch<?= $desglose->id_desglose_cotizacion; ?>" data-switch="none" <?=$txt_checked?> >
                                         <label for="switch<?= $desglose->id_desglose_cotizacion; ?>" data-on-label="" data-off-label=""></label>
                                     </td>
                                     <td><?= $desglose->no_partida; ?></td>
@@ -94,3 +99,20 @@ include_once('php/views/compras/modals/nueva_cotizacion.php');
 ?>
 <script src="js/functions/compras/desglose_cotizacion.js"></script>
 <script src="js/loading.js"></script>
+<script>
+    var tGastos = new TableFilter(document.querySelector("#tablaGastos"), {
+        base_path: "js/tablefilter/",
+        paging: {
+            results_per_page: ['Records: ', [10, 25, 50, 100]]
+        },
+        responsive: true,
+        rows_counter: true,
+        btn_reset: true,
+        col_3: "select",
+        col_4: "none",
+        col_5: "select",
+        col_6: "none",
+        col_7: "none"
+    });
+    tGastos.init();
+</script>

@@ -166,4 +166,70 @@ $(document).ready(function () {
       }
     });
   });
+
+  $(".chckPartidaCotizada").change(function () {
+    loading();
+    var id_partida = $(this).attr("data-id-partida");
+    if (this.checked) {
+      var cotizada = "1";
+    } else {
+      var cotizada = "0";
+    }
+
+    $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "updateStatusPartida",
+        id_partida: id_partida,
+        cotizada: cotizada,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        /* console.log(data); */
+
+        if (data.response == true) {
+        /*   $.NotificationApp.send(
+            "Actualziado",
+            "Se actualizó la partida correctamente",
+            "top-right",
+            "#dddddd",
+            "success"
+          ); */
+          Swal.close();
+        } else {
+          Swal.fire({
+            title: "Atención!",
+            text: data.message,
+            icon: "info",
+          });
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      });
+    Swal.close();
+  });
 });
+
+function loading() {
+  Swal.fire({
+    title: "Cargando...",
+    html: '<img src="images/loading.gif" width="300" height="175">',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    showCloseButton: false,
+    showCancelButton: false,
+    showConfirmButton: false,
+  });
+}

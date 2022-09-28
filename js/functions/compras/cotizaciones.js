@@ -257,12 +257,12 @@ $(document).ready(function () {
             [id_marcas],
             [no_partida],
             [cantidad],
-            [observaciones]
+            [observaciones],
           ]);
         });
         solicitud_index.push([id_proyecto], [valores]);
         console.log(solicitud_index);
-         $.ajax({
+        $.ajax({
           url: "php/controllers/compras/compras_controller.php",
           method: "POST",
           data: {
@@ -450,6 +450,120 @@ $(document).ready(function () {
     }
     Swal.close();
   });
+
+  $(document).on("change", "#statusCotizaciones", function () {
+    loading();
+    var id_status_cotizacion = $(this).val();
+    var id_cotizacion = $(this).attr("data-id-cotizacion");
+    $("#id_medida_longitud").empty();
+    $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "updateStatusCotizacion",
+        id_status_cotizacion: id_status_cotizacion,
+        id_cotizacion: id_cotizacion,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        /* console.log(data); */
+
+        if (data.response == true) {
+          console.log(data);
+          $("#td_status_" + id_cotizacion).empty();
+          $("#td_status_" + id_cotizacion).html(
+            '<i class="mdi mdi-circle  text-' +
+              data.data[0].class_bootstrap_cotizaciones +
+              '"></i> ' +
+              data.data[0].descripcion_status_cotizaciones
+          );
+          $.NotificationApp.send(
+            "Actualziado",
+            "Se actualizó correctamente",
+            "top-right",
+            "#dddddd",
+            "success"
+          );
+          Swal.close();
+        } else {
+          Swal.fire({
+            title: "Atención!",
+            text: data.message,
+            icon: "info",
+          });
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      });
+    Swal.close();
+  });
+
+  $(".chckPartidaCotizada").change(function () {
+    loading();
+    var id_partida = $(this).attr("data-id-partida");
+    if (this.checked) {
+      var cotizada = "1";
+    } else {
+      var cotizada = "0";
+    }
+
+    $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "updateStatusPartida",
+        id_partida: id_partida,
+        cotizada: cotizada,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        /* console.log(data); */
+
+        if (data.response == true) {
+          
+          $.NotificationApp.send(
+            "Actualziado",
+            "Se actualizó la partida correctamente",
+            "top-right",
+            "#dddddd",
+            "success"
+          );
+          Swal.close();
+        } else {
+          Swal.fire({
+            title: "Atención!",
+            text: data.message,
+            icon: "info",
+          });
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      });
+    Swal.close();
+  });
+
   $("#id_proyecto_cotizacion").select2({
     dropdownParent: $("#nuevaCotizacion"),
   });
