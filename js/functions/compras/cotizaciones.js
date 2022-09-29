@@ -67,7 +67,7 @@ $(document).ready(function () {
     var id_unidad_longitud = $("#id_unidad_longitud").val();
     var id_medida_longitud = $("#id_medida_longitud").val();
     var id_unidad_medida = $("#id_unidad_medida").val();
-    var select_marca_cotizacion = $("#select_marca_cotizacion").val();
+    var marca = $("#marca").val();
     var canitdad_cotizacion = $("#canitdad_cotizacion").val();
     var observaciones = $("#observaciones").val();
 
@@ -79,9 +79,7 @@ $(document).ready(function () {
     var txt_ul = $("#id_medida_longitud option:selected").text();
 
     var txt_unidad_medida = $("#id_unidad_medida option:selected").text();
-    var txt_marca_cotizacion = $(
-      "#select_marca_cotizacion option:selected"
-    ).text();
+    
     var descripcion_material = "";
 
     if (apply_ul != 1) {
@@ -110,7 +108,6 @@ $(document).ready(function () {
       id_unidad_longitud != null &&
       id_medida_longitud != null &&
       id_unidad_medida != null &&
-      select_marca_cotizacion != null &&
       canitdad_cotizacion != ""
     ) {
       if ($("#tablaPreviaSolicitud").length == 0) {
@@ -143,14 +140,14 @@ $(document).ready(function () {
           id_material +
           '" data-id-medida-longitud="' +
           id_medida_longitud +
-          '" data-id-marcas="' +
-          select_marca_cotizacion +
+          '" data-marca="' +
+          marca +
           '" scope="row">1</th>';
         html += "<td>" + descripcion_material + "</td>";
         html += "<td>" + txt_clasificacion + "</td>";
         html += "<td>" + txt_unidad_medida + "</td>";
         html += "<td>" + canitdad_cotizacion + "</td>";
-        html += "<td>" + txt_marca_cotizacion + "</td>";
+        html += "<td>" + marca + "</td>";
         html += "<td>" + observaciones + "</td>";
         html +=
           '<td><button type="button" class="btn btn-danger btn_quitar_partida"><i class="mdi mdi-window-close "></i> </button></td>';
@@ -186,8 +183,8 @@ $(document).ready(function () {
           id_material +
           '" data-id-medida-longitud="' +
           id_medida_longitud +
-          '" data-id-marcas="' +
-          select_marca_cotizacion +
+          '" data-marca="' +
+          marca +
           '" scope="row">' +
           no_partida +
           "</th>";
@@ -195,7 +192,7 @@ $(document).ready(function () {
         html_tabla += "<td>" + txt_clasificacion + "</td>";
         html_tabla += "<td>" + txt_unidad_medida + "</td>";
         html_tabla += "<td>" + canitdad_cotizacion + "</td>";
-        html_tabla += "<td>" + txt_marca_cotizacion + "</td>";
+        html_tabla += "<td>" + marca + "</td>";
         html_tabla += "<td>" + observaciones + "</td>";
         html_tabla +=
           '<td><button type="button" class="btn btn-danger btn_quitar_partida"><i class="mdi mdi-window-close "></i> </button></td>';
@@ -247,14 +244,14 @@ $(document).ready(function () {
           var id_medidas_de_longitud = $(this)
             .find("th:first")
             .attr("data-id-medida-longitud");
-          var id_marcas = $(this).find("th:first").attr("data-id-marcas");
+          var marca = $(this).find("th:first").attr("data-marca");
           var no_partida = $(this).find("th:first").html();
           var cantidad = $(this).find("td:eq(3)").html();
           var observaciones = $(this).find("td:eq(5)").html();
           valores.push([
             [id_catalogo_material],
             [id_medidas_de_longitud],
-            [id_marcas],
+            [marca],
             [no_partida],
             [cantidad],
             [observaciones],
@@ -532,7 +529,6 @@ $(document).ready(function () {
         /* console.log(data); */
 
         if (data.response == true) {
-          
           $.NotificationApp.send(
             "Actualziado",
             "Se actualizó la partida correctamente",

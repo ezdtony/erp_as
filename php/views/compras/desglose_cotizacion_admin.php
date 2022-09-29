@@ -108,11 +108,12 @@ include_once('php/views/compras/modals/nueva_cotizacion.php');
         responsive: true,
         rows_counter: true,
         btn_reset: true,
-        col_3: "select",
-        col_4: "none",
+        col_0: "none",
+        col_3: "none",
+        col_4: "select",
         col_5: "select",
-        col_6: "none",
-        col_7: "none"
+        col_7: "none",
+        col_8: "none"
     });
     tGastos.init();
 </script>

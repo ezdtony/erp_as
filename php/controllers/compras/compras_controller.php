@@ -48,7 +48,7 @@ function guardarCotizacion()
 
         $id_catalogo_material         = $arr_data[1][0][$i][0][0];
         $id_medidas_de_longitud       = $arr_data[1][0][$i][1][0];
-        $id_marcas                    = $arr_data[1][0][$i][2][0];
+        $marca                        = $arr_data[1][0][$i][2][0];
         $no_partida                   = $arr_data[1][0][$i][3][0];
         $cantidad                     = $arr_data[1][0][$i][4][0];
         $observaciones                = $arr_data[1][0][$i][5][0];
@@ -65,6 +65,7 @@ function guardarCotizacion()
                     no_partida,
                     cantidad,
                     comentarios,
+                    marca,
                     date_log
                  ) 
                  VALUES(
@@ -72,11 +73,12 @@ function guardarCotizacion()
                     '$id_catalogo_material',
                     '$id_medidas_de_longitud',
                     '1',
-                    '$id_marcas',
+                    '1',
                     '1',
                     '$no_partida',
                     '$cantidad',
                     '$observaciones',
+                    '$marca',
                     NOW()
                  )";
         $insertPartida = $queries->insertData($stmt_desgloce);
@@ -321,7 +323,7 @@ function updateStatusPartida()
     SET cotizada = '$cotizada'
     WHERE id_desglose_cotizacion = '$id_partida'";
 
-    if ($data_sql=$queries->insertData($stmt)) {
+    if ($data_sql = $queries->insertData($stmt)) {
 
         $data = array(
             'response' => true,

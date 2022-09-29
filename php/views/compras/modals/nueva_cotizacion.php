@@ -21,7 +21,7 @@ $getMarcas = $compras->getMarcas();
                                     <h1 class="display-6">Información General</h1>
                                     <div class="row">
                                         <div class="col-6">
-                                            <h4 class="header-title">Proyecto:     <span class="badge badge-danger-lighten">Obligatorio</span></h4>
+                                            <h4 class="header-title">Proyecto: <span class="badge badge-danger-lighten">Obligatorio</span></h4>
                                             <div class="tab-content">
                                                 <div class="tab-pane show active" id="select2-preview">
                                                     <select id="id_proyecto_cotizacion" class="form-control select2" data-toggle="select2">
@@ -88,7 +88,7 @@ $getMarcas = $compras->getMarcas();
                                                         <br>
                                                         <div class="row">
                                                             <div class="col-6">
-                                                                <h5 class="card-title">Clasificación de material     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                <h5 class="card-title">Clasificación de material <span class="badge badge-danger-lighten">Obligatorio</span></h5>
                                                                 <div class="tab-content">
                                                                     <div class="tab-pane show active" id="select2-preview">
                                                                         <select class="form-control select2" data-toggle="select2" id="select_clasificacion_cotizacion">
@@ -105,7 +105,7 @@ $getMarcas = $compras->getMarcas();
                                                         <br>
                                                         <div class="row">
                                                             <div class="col-12">
-                                                                <h5 class="card-title">Material     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                <h5 class="card-title">Material <span class="badge badge-danger-lighten">Obligatorio</span></h5>
                                                                 <div class="tab-content">
                                                                     <div class="tab-pane show active" id="select2-preview">
                                                                         <select class="form-control select2" disabled data-toggle="select2" id="material_cotizacion">
@@ -123,13 +123,13 @@ $getMarcas = $compras->getMarcas();
                                                             <div class="row" id="div_unidades_longitud" style="display:none">
 
                                                                 <div class="col-6">
-                                                                    <h5 class="card-title">Unidad de longitud     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                    <h5 class="card-title">Unidad de longitud <span class="badge badge-danger-lighten">Obligatorio</span></h5>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane show active" id="select2-preview">
                                                                             <select id="id_unidad_longitud" class="form-control select2" data-toggle="select2">
                                                                                 <option value="" selected disabled>Seleccione una opción * </option>
                                                                                 <?php foreach ($getUnidadesLongitud as $unidad_longitud) : ?>
-                                                                                    <option  value="<?= $unidad_longitud->id_unidades_de_longitud ?>"><?= $unidad_longitud->uindad_longitud ?></option>
+                                                                                    <option value="<?= $unidad_longitud->id_unidades_de_longitud ?>"><?= $unidad_longitud->uindad_longitud ?></option>
                                                                                 <?php endforeach; ?>
                                                                                 </optgroup>
                                                                             </select>
@@ -137,7 +137,7 @@ $getMarcas = $compras->getMarcas();
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
-                                                                    <h5 class="card-title">Medida de longitud     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                    <h5 class="card-title">Medida de longitud <span class="badge badge-danger-lighten">Obligatorio</span></h5>
                                                                     <div class="tab-content">
                                                                         <div class="tab-pane show active" id="select2-preview">
                                                                             <select id="id_medida_longitud" disabled class="form-control select2" data-toggle="select2">
@@ -190,7 +190,7 @@ $getMarcas = $compras->getMarcas();
                                                         <br>
                                                         <div class="row">
                                                             <div class="col-6">
-                                                                <h5 class="card-title">Unidad de medida     <span class="badge badge-danger-lighten">Obligatorio</span></h5>
+                                                                <h5 class="card-title">Unidad de medida <span class="badge badge-danger-lighten">Obligatorio</span></h5>
                                                                 <div class="tab-content">
                                                                     <div class="tab-pane show active" id="select2-preview">
                                                                         <select id="id_unidad_medida" class="form-control select2" data-toggle="select2">
@@ -203,20 +203,10 @@ $getMarcas = $compras->getMarcas();
                                                                 </div>
                                                             </div>
                                                             <div class="col-6">
-                                                                <h5 class="card-title">Elegir una marca en específico (Opcional)</h5>
-                                                                <div class="tab-content">
-                                                                    <div class="tab-pane show active" id="select2-preview">
-                                                                        <select id="select_marca_cotizacion" class="form-control select2" data-toggle="select2">
-                                                                            <option>Seleccione una opción * </option>
-                                                                            <?php foreach ($getMarcas as $marca) : ?>
-                                                                                <?php if ($marca->id_marcas == 1): ?>
-                                                                                <option selected value="<?= $marca->id_marcas ?>"><?= $marca->nombre_marca ?></option>
-                                                                                <?php else: ?>
-                                                                                <option value="<?= $marca->id_marcas ?>"><?= $marca->nombre_marca ?></option>
-                                                                                <?php endif; ?>
-                                                                            <?php endforeach; ?>
-                                                                        </select>
-                                                                    </div>
+                                                                <h5 class="card-title">Ingrese una marca (Opcional)</h5>
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control" id="marca" placeholder="Marca (Opcional)" />
+                                                                    <label for="marca">Marca (Opcional) </label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -227,7 +217,7 @@ $getMarcas = $compras->getMarcas();
                                                                 <h5 class="card-title">Cantidad</h5>
                                                                 <div class="form-floating mb-3">
                                                                     <input type="email" class="form-control" id="canitdad_cotizacion" placeholder="Cantidad" />
-                                                                    <label for="canitdad_cotizacion">Cantidad     <span class="badge badge-danger-lighten">Obligatorio</span></label>
+                                                                    <label for="canitdad_cotizacion">Cantidad <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                                                 </div>
                                                             </div>
                                                         </div>

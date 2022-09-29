@@ -47,16 +47,16 @@ class Compras
         $queries = new Queries;
         $sql_deposits = "SELECT dc.id_desglose_cotizacion, dc.no_partida, dc.cantidad, dc.comentarios, dc.cotizada,
         CONCAT (cm.codigo_astelecom, ' | ', cm.descripcion_material, ' ', ul.medida_de_longitud_long, udl.simbolo) AS descripcion_material,
-        um.unidades_medida_long, marc.nombre_marca, status_partidas, class_bootstrap_status_partidas, empresa_proveedor
+        um.unidades_medida_long, marca as nombre_marca, status_partidas, class_bootstrap_status_partidas, empresa_proveedor
          FROM asteleco_compras.desglose_cotizacion AS dc
          INNER JOIN asteleco_compras.catalogo_material AS cm ON (cm.id_catalogo_material = dc.id_catalogo_material)
          INNER JOIN asteleco_compras.medidas_de_longitud AS ul ON (dc.id_medidas_de_longitud = ul.id_medidas_de_longitud)
          INNER JOIN asteleco_compras.unidades_de_longitud AS udl ON udl.id_unidades_de_longitud = ul.id_unidades_de_longitud
          INNER JOIN asteleco_compras.unidades_medida AS um ON (um.id_unidades_medida = cm.id_unidades_medida)
          INNER JOIN asteleco_compras.status_partidas AS stp ON (stp.id_status_partidas = dc.id_status_partidas)
-         INNER JOIN asteleco_compras.marcas AS marc ON (marc.id_marcas = dc.id_marcas)
          INNER JOIN asteleco_compras.proveedores AS prov ON (dc.id_proveedores = prov.id_proveedores)
          WHERE id_cotizaciones = '$id_cotizaciones'";
+         //INNER JOIN asteleco_compras.marcas AS marc ON (marc.id_marcas = dc.id_marcas)
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);
