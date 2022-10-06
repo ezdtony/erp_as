@@ -428,7 +428,7 @@ $(document).ready(function () {
       data: {
         mod: "changeStatusProyect",
         id_proyect: id_proyect,
-        status: real_status
+        status: real_status,
       },
     })
       .done(function (data) {
@@ -437,18 +437,21 @@ $(document).ready(function () {
 
         if (data.response == true) {
           if (status_proyect == 1) {
-          
-            $("#card_proyect_" + id_proyect).removeClass("bg-primary text-white");
-            $("#card_proyect_" + id_proyect).addClass("bg-secondary text-white");
-            $("#change_"+id_proyect).attr("data-status-proyecto", 0);
-          }
-          else{
-
-            $("#card_proyect_" + id_proyect).removeClass("bg-secondary text-white");
+            $("#card_proyect_" + id_proyect).removeClass(
+              "bg-primary text-white"
+            );
+            $("#card_proyect_" + id_proyect).addClass(
+              "bg-secondary text-white"
+            );
+            $("#change_" + id_proyect).attr("data-status-proyecto", 0);
+          } else {
+            $("#card_proyect_" + id_proyect).removeClass(
+              "bg-secondary text-white"
+            );
             $("#card_proyect_" + id_proyect).addClass("bg-primary text-white");
-            $("#change_"+id_proyect).attr("data-status-proyecto", 1);
+            $("#change_" + id_proyect).attr("data-status-proyecto", 1);
           }
-          
+
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -473,6 +476,54 @@ $(document).ready(function () {
       })
       .fail(function (message) {});
   });
+  $(".chckProyectoStatus").change(function () {
+    loading();
+    id_proyect = $(this).attr("id-proy-change");
+    if (this.checked) {
+      real_status = "1";
+    } else {
+      real_status = "0";
+    }
+    console.log(real_status);
+    $.ajax({
+      url: "php/controllers/proyectos/proyects_controller.php",
+      method: "POST",
+      data: {
+        mod: "changeStatusProyect",
+        id_proyect: id_proyect,
+        status: real_status,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "info",
+            title: "Se realizó la petición con éxito!!",
+          });
+        } else {
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {});
+  });
+
   $(document).on("click", ".infoProyect", function () {
     var id_proyecto = $(this).attr("id");
     loading();
@@ -565,6 +616,66 @@ $(document).ready(function () {
           icon: "info",
         });
       });
+
+    /*   */
+  });
+  $(document).on("change", ".selectCreadorProyecto", function () {
+    var id_proyecto = $(this).attr("data-id-proyecto");
+    var id_personal = $(this).val();
+
+    loading();
+    $.ajax({
+      url: "php/controllers/proyectos/proyects_controller.php",
+      method: "POST",
+      data: {
+        mod: "updateProyectCreator",
+        id_proyecto: id_proyecto,
+        id_personal: id_personal,
+      },
+    }).done(function (data) {
+      var data = JSON.parse(data);
+      console.log(data);
+
+      if (data.response == true) {
+        Swal.close();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "info",
+          title: "Se realizó la petición con éxito!!",
+        });
+      } else {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: "eroor",
+          title: "Ocurrió un error :c",
+        });
+      }
+
+      //--- --- ---//
+      //--- --- ---//
+    });
 
     /*   */
   });

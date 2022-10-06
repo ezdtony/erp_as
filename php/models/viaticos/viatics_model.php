@@ -17,7 +17,7 @@ class ViaticsInformation
         INNER JOIN asteleco_personal.lista_personal AS aut ON dep.id_personal_registro = aut.id_lista_personal
         left JOIN asteleco_proyectos.proyectos AS proy ON dep.id_proyectos = proy.id_proyectos
         INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tg ON dep.id_tipos_gasto = tg.id_tipos_gasto
-        ORDER BY dep.fecha DESC";
+        ORDER BY dep.id_depositos DESC";
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);
@@ -38,7 +38,7 @@ class ViaticsInformation
         left JOIN asteleco_proyectos.proyectos AS proy ON dep.id_proyectos = proy.id_proyectos
         INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tg ON dep.id_tipos_gasto = tg.id_tipos_gasto
         WHERE dep.id_personal = '$id_user'
-        ORDER BY dep.fecha DESC";
+        ORDER BY dep.id_depositos DESC";
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);

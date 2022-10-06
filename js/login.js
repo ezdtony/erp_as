@@ -11,7 +11,15 @@ $(document).on("click", "#login", function () {
   } else {
     var user = $("#user").val();
     var password = $("#password").val();
-
+    Swal.fire({
+      title: "Cargando...",
+      html: '<img src="images/loading.gif" width="300" height="175">',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      showCloseButton: false,
+      showCancelButton: false,
+      showConfirmButton: false,
+    });
     $.ajax({
       url: "php/controllers/login.php",
       method: "POST",
@@ -44,6 +52,15 @@ $(document).on("click", "#login", function () {
               showConfirmButton: false,
               timer: 2000,
             }).then((result) => {
+              Swal.fire({
+                title: "Cargando...",
+                html: '<img src="images/loading.gif" width="300" height="175">',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showCloseButton: false,
+                showCancelButton: false,
+                showConfirmButton: false,
+              });
               location.href = "index.php";
             });
           }

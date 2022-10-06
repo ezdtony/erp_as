@@ -1,6 +1,7 @@
 //|console.log("load_creditos");
 $(document).ready(function () {
   $(document).on("change", "#destinatario", function () {
+    loading();
     var id_user = this.value;
     $("#proyecto").empty();
     $.ajax({
@@ -16,13 +17,14 @@ $(document).ready(function () {
         console.log(data);
 
         if (data.response == true) {
+          Swal.close();
           $("#proyecto").empty();
           $("#proyecto").append(
-            '<option value"" disabled selected>Elija una opción</option><optgroup label="Proyecto">'
+            '<option  value="" disabled selected>Elija una opción</option><optgroup label="Proyecto">'
           );
           for (var i = 0; i < data.data.length; i++) {
             $("#proyecto").append(
-              '<option value="' +
+              '<option codigo_proyecto = "'+data.data[i].codigo_proyecto+'" value="' +
                 data.data[i].id_proyectos +
                 '">' +
                 data.data[i].nombre_proyecto +
@@ -32,6 +34,7 @@ $(document).ready(function () {
           $("#proyecto").append("</optgroup>");
           $("#proyecto").prop("disabled", false);
         } else {
+          Swal.close();
           $("#proyecto").prop("disabled", true);
           Swal.fire({
             icon: "error",
@@ -112,6 +115,8 @@ $(document).ready(function () {
     var id_user = $("#destinatario").val();
     var fecha = $("#fecha_deposito").val();
     var id_asingacion = $("#proyecto").val();
+    var txt_proyecto = $("#proyecto option:selected").text();
+    var cod_proyecto = $("#proyecto option:selected").attr("codigo_proyecto");
     var sitio = $("#sitio").val();
     var tipos_gasto = $("#tipos_gasto").val();
     var importe = $("#importe").val();
@@ -152,6 +157,8 @@ $(document).ready(function () {
           id_author: id_author,
           importe: importe,
           id_proyecto: id_proyecto,
+          txt_proyecto: txt_proyecto,
+          cod_proyecto: cod_proyecto,
         },
       })
         .done(function (data) {
@@ -161,8 +168,7 @@ $(document).ready(function () {
             Swal.fire({
               icon: "success",
               title: "Éxito",
-              text: data.message,
-              timer: 2000,
+              html: data.message,
             }).then((result) => {
               loading();
               location.reload();

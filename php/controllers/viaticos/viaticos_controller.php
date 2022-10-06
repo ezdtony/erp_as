@@ -20,6 +20,13 @@ function saveDeposit()
     $importe = $_POST['importe'];
     $id_author = $_POST['id_author'];
     $id_proyecto = $_POST['id_proyecto'];
+    $txt_proyecto = $_POST['txt_proyecto'];
+    $cod_proyecto = $_POST['cod_proyecto'];
+
+    $cod_proy = "";
+    if (strlen($cod_proyecto > 0)) {
+        $cod_proy = "<br>Consecutivo de proyecto: " . $cod_proyecto;
+    }
 
     $queries = new Queries;
 
@@ -58,7 +65,7 @@ function saveDeposit()
         if ($queries->insertData($stmt)) {
             $data = array(
                 'response' => true,
-                'message'                => 'El depósito se registró correctamente!!'
+                'message'                => '<h2>El depósito se registró correctamente!!</h2>' . $cod_proy . ''
             );
             //--- --- ---//
 

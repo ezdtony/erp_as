@@ -46,6 +46,7 @@ $getCotizacionInfo = $compras->getCotizacionInfo($id_cotizaciones);
                         <thead class="table-dark">
                             <tr>
                                 <th>No° de Partida</th>
+                                <th>Cotizada</th>
                                 <th>Descripción</th>
                                 <th>Cantidad <span class="badge bg-success rounded-pill">Editable</span></th>
                                 <th>U.M.</th>
@@ -58,8 +59,18 @@ $getCotizacionInfo = $compras->getCotizacionInfo($id_cotizaciones);
                         <tbody>
                             <?php foreach ($getDesgloseCotizacion as $desglose) : ?>
                                 <tr id="<?= $desglose->id_desglose_cotizacion ?>">
-                                    
                                     <td><?= $desglose->no_partida; ?></td>
+                                    <td>
+                                        <div class="form-check form-checkbox-success mb-2">
+                                            <?php if ($desglose->cotizada == 1) : ?>
+                                                <input type="checkbox" class="form-check-input" id="customCheckcolor2" checked disabled>
+                                                <label class="form-check-label" for="customCheckcolor2"></label>
+                                            <?php else : ?>
+                                                <input type="checkbox" class="form-check-input" id="customCheckcolor2" disabled>
+                                                <label class="form-check-label" for="customCheckcolor2"></label>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
                                     <td><?= ($desglose->descripcion_material); ?></td>
                                     <td class="td_editable" column_name="cantidad"><?= $desglose->cantidad; ?></td>
                                     <td><?= $desglose->unidades_medida_long; ?></td>

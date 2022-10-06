@@ -457,3 +457,37 @@ function changeStatusProyect()
 
     echo json_encode($data);
 }
+
+function updateProyectCreator()
+{
+
+    $id_proyecto = $_POST['id_proyecto'];
+    $id_personal = $_POST['id_personal'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_proyectos.proyectos 
+    SET  id_personal_creador = '$id_personal'
+    WHERE id_proyectos = $id_proyecto";
+
+    $setInactivo = $queries->insertData($stmt);
+
+    if (!empty($setInactivo)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}

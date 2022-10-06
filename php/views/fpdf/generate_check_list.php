@@ -250,17 +250,17 @@ foreach ($getAccesos as $acceso) {
     $getLogGabinetes = $accesos->getLogGabinetes($acceso->id_accesos);
 }
 if (empty($getLogGabinetes)) {
-    $pdf->Cell(61, 8, utf8_decode(' -'), 'LTB', 0, 'C', 0);
-    $pdf->Cell(61, 8, utf8_decode(' -'), 'LTB', 0, 'C', 0);
-    $pdf->Cell(59, 8, utf8_decode(' -'), 'LTBR', 1, 'C', 0);
+    $pdf->Cell(61, 5, utf8_decode(' -'), 'LTB', 0, 'C', 0);
+    $pdf->Cell(61, 5, utf8_decode(' -'), 'LTB', 0, 'C', 0);
+    $pdf->Cell(59, 5, utf8_decode(' -'), 'LTBR', 1, 'C', 0);
 
-    $pdf->Cell(61, 8, utf8_decode(' -'), 'LTB', 0, 'C', 0);
-    $pdf->Cell(61, 8, utf8_decode(' -'), 'LTB', 0, 'C', 0);
-    $pdf->Cell(59, 8, utf8_decode(' -'), 'LTBR', 1, 'C', 0);
+    $pdf->Cell(61, 5, utf8_decode(' -'), 'LTB', 0, 'C', 0);
+    $pdf->Cell(61, 5, utf8_decode(' -'), 'LTB', 0, 'C', 0);
+    $pdf->Cell(59, 5, utf8_decode(' -'), 'LTBR', 1, 'C', 0);
 
-    $pdf->Cell(61, 8, utf8_decode(' -'), 'LTB', 0, 'C', 0);
-    $pdf->Cell(61, 8, utf8_decode(' -'), 'LTB', 0, 'C', 0);
-    $pdf->Cell(59, 8, utf8_decode(' -'), 'LTBR', 1, 'C', 0);
+    $pdf->Cell(61, 5, utf8_decode(' -'), 'LTB', 0, 'C', 0);
+    $pdf->Cell(61, 5, utf8_decode(' -'), 'LTB', 0, 'C', 0);
+    $pdf->Cell(59, 5, utf8_decode(' -'), 'LTBR', 1, 'C', 0);
 } else {
     foreach ($getLogGabinetes as $gabinetes) {
         $pdf->Cell(61, 8, utf8_decode($gabinetes->nombre_gabinete), 'LTB', 0, 'C', 0);

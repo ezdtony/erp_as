@@ -39,10 +39,27 @@
                 </li>
             <?php endif; ?>
             <li class="side-nav-item">
-                <a href="?submodule=proyectos" class="side-nav-link">
+                <a data-bs-toggle="collapse" href="#sidebarProyectos" aria-expanded="false" aria-controls="sidebarProyectos" class="side-nav-link">
                     <i class="uil-suitcase"></i>
                     <span> Proyectos </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse" id="sidebarProyectos">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="?submodule=proyectos">Operaciones</a>
+                        </li>
+                        <li>
+                            <a href="?submodule=proyectos_unidades">Unidades</a>
+                        </li>
+                        <?php if ($id_area <= 3) : ?>
+                        <li>
+                            <a href="?submodule=proyectos_inactivos">Inactivos</a>
+                        </li>
+                        <?php endif ; ?>
+                    </ul>
+                </div>
+
 
             </li>
             <li class="side-nav-item">

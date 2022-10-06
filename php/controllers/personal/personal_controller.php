@@ -258,7 +258,7 @@ function getUserProyects()
 
     $queries = new Queries;
 
-    $stmt = "SELECT pas.id_asignaciones_proyectos,proy.id_proyectos, proy.nombre_proyecto
+    $stmt = "SELECT pas.id_asignaciones_proyectos,proy.id_proyectos, proy.nombre_proyecto, proy.codigo_proyecto
     FROM asteleco_proyectos.asignaciones_proyectos  AS pas
     INNER JOIN asteleco_proyectos.proyectos AS proy ON pas.id_proyectos = proy.id_proyectos
     WHERE pas.id_lista_personal = '$id_user' AND pas.status = 1";

@@ -71,6 +71,12 @@ include_once('php/views/topbar.php');
             case 'proyectos':
                 $include_file = 'php/views/proyectos/index_proyectos.php';
                 break;
+            case 'proyectos_unidades':
+                $include_file = 'php/views/proyectos/proyectos_unidades.php';
+                break;
+            case 'proyectos_inactivos':
+                $include_file = 'php/views/proyectos/proyectos_inactivos.php';
+                break;
             case 'personal':
                 $include_file = 'php/views/personal/index_personal.php';
                 break;
@@ -110,7 +116,7 @@ include_once('php/views/topbar.php');
             case 'lista_accesos':
                 $include_file = 'php/views/accesos/lista_accesos.php';
                 break;
-                
+
             case 'compras_cotizaciones':
                 if ($id_area >= 4) {
                     $include_file = 'php/views/compras/cotizaciones.php';
@@ -126,9 +132,9 @@ include_once('php/views/topbar.php');
                     $include_file = 'php/views/compras/desglose_cotizacion_admin.php';
                 }
                 break;
-                case 'catalogo_material':
-                    $include_file = 'php/views/compras/catalogo_material.php';
-                    break;
+            case 'catalogo_material':
+                $include_file = 'php/views/compras/catalogo_material.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

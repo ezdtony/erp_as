@@ -17,7 +17,7 @@ if (!isset($_SESSION['user'])) {
 
 
     $queries = new Queries;
-    
+
 
 
     $sql_proyect_types = "SELECT * FROM asteleco_proyectos.tipos_proyecto";
@@ -33,10 +33,10 @@ if (!isset($_SESSION['user'])) {
     $getStates = $queries->getData($estados);
     $parametro_busqueda = "";
     //$parametro_busqueda = " AND id_personal_creador = $id_user";
-    if ($id_user==2 || $id_user==1) {
+    if ($id_user == 2 || $id_user == 1) {
         $parametro_busqueda = "";
     }
-    
+
     $todos_proyectos = "SELECT 
     proy.id_proyectos,
     proy.`codigo_proyecto`,
@@ -44,6 +44,8 @@ if (!isset($_SESSION['user'])) {
     proy.`descripcion`,
     proy.`fecha_inicio`,
     proy.`status`,
+    date(proy.log_creacion) AS fecha_creacion_proy,
+    proy.id_personal_creador,
     reg.nombre_region,
     CONCAT(
         direc.direccion_estado, ', ') AS direccion_local,
@@ -56,6 +58,73 @@ if (!isset($_SESSION['user'])) {
     INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
     WHERE proy.show_proyect = 1 $parametro_busqueda ORDER BY proy.fecha_inicio DESC";
     $getAllProyects = $queries->getData($todos_proyectos);
+
+    $todos_proyectos_activos = "SELECT 
+    proy.id_proyectos,
+    proy.`codigo_proyecto`,
+    proy.`nombre_proyecto`,
+    date(proy.log_creacion) AS fecha_creacion_proy,
+    proy.`descripcion`,
+    proy.`fecha_inicio`,
+    proy.`status`,
+    proy.id_personal_creador,
+    reg.nombre_region,
+    CONCAT(
+        direc.direccion_estado, ', ') AS direccion_local,
+    CONCAT (
+        direc.direccion_estado, ', '
+    ) AS direccion_zona,
+    direc.*
+    FROM asteleco_proyectos.`proyectos`AS proy
+    INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
+    INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
+    WHERE proy.status = 1 AND proy.id_tipos_proyecto != 9 AND proy.show_proyect = 1 $parametro_busqueda ORDER BY fecha_creacion_proy DESC";
+    $getAllProyectsActivos = $queries->getData($todos_proyectos_activos);
+
+    $todos_proyectos_unidades = "SELECT 
+    proy.id_proyectos,
+    proy.`codigo_proyecto`,
+    proy.`nombre_proyecto`,
+    date(proy.log_creacion) AS fecha_creacion_proy,
+    proy.`descripcion`,
+    proy.`fecha_inicio`,
+    proy.`status`,
+    proy.id_personal_creador,
+    reg.nombre_region,
+    CONCAT(
+        direc.direccion_estado, ', ') AS direccion_local,
+    CONCAT (
+        direc.direccion_estado, ', '
+    ) AS direccion_zona,
+    direc.*
+    FROM asteleco_proyectos.`proyectos`AS proy
+    INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
+    INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
+    WHERE proy.status = 1 AND proy.id_tipos_proyecto = 9 AND proy.show_proyect = 1 $parametro_busqueda ORDER BY fecha_creacion_proy DESC";
+    $getAllProyectsUnidadesActivos = $queries->getData($todos_proyectos_unidades);
+
+    $todos_proyectos_inactivos = "SELECT 
+    proy.id_proyectos,
+    proy.`codigo_proyecto`,
+    proy.`nombre_proyecto`,
+    date(proy.log_creacion) AS fecha_creacion_proy,
+    proy.`descripcion`,
+    proy.`fecha_inicio`,
+    proy.`status`,
+    proy.id_personal_creador,
+    reg.nombre_region,
+    CONCAT(
+        direc.direccion_estado, ', ') AS direccion_local,
+    CONCAT (
+        direc.direccion_estado, ', '
+    ) AS direccion_zona,
+    direc.*
+    FROM asteleco_proyectos.`proyectos`AS proy
+    INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
+    INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
+    WHERE proy.status = 0 AND proy.show_proyect = 1 $parametro_busqueda ORDER BY fecha_creacion_proy DESC";
+
+    $getAllProyectsInactivos = $queries->getData($todos_proyectos_inactivos);
 
     $id_user_proy = $_SESSION['id_user'];
     $todos_proyectos_usuario = "SELECT 
@@ -77,9 +146,33 @@ if (!isset($_SESSION['user'])) {
     INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
     INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
     INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_proyectos = proy.id_proyectos
-    WHERE  proy.show_proyect = 1 AND asig.id_lista_personal = '$id_user_proy'
+    WHERE  proy.show_proyect = 1  AND proy.id_tipos_proyecto != 9 AND asig.id_lista_personal = '$id_user_proy'
     ";
     $getAllProyectsByUser = $queries->getData($todos_proyectos_usuario);
+
+    $id_user_proy = $_SESSION['id_user'];
+    $todos_proyectos_usuario_unidades = "SELECT 
+    proy.id_proyectos,
+    proy.`codigo_proyecto`,
+    proy.`nombre_proyecto`,
+    proy.`descripcion`,
+    proy.`fecha_inicio`,
+    proy.`status`,
+    reg.nombre_region,
+    CONCAT(
+        direc.direccion_estado, ', '
+    ) AS direccion_local,
+    CONCAT (
+        direc.direccion_estado, ', '
+    ) AS direccion_zona,
+    direc.*
+    FROM asteleco_proyectos.`proyectos`AS proy
+    INNER JOIN asteleco_proyectos.regiones AS reg ON proy.id_regiones = reg.id_regiones
+    INNER JOIN asteleco_proyectos.direcciones_proyecto AS direc ON proy.id_direcciones_proyecto = direc.id_direcciones_proyecto
+    INNER JOIN asteleco_proyectos.asignaciones_proyectos AS asig ON asig.id_proyectos = proy.id_proyectos
+    WHERE  proy.show_proyect = 1 AND proy.id_tipos_proyecto = 9 AND asig.id_lista_personal = '$id_user_proy'
+    ";
+    $getAllProyectsByUserUnidades = $queries->getData($todos_proyectos_usuario_unidades);
     /* CONCAT(
         direc.direccion_calle, ', ',
         direc.direccion_numero_ext, ', ',
@@ -110,6 +203,17 @@ if (!isset($_SESSION['user'])) {
     ";
     $getArchivesTableStructure = $queries->getData($sql_archives_table_structure);
 
+    $sql_get_coordinatiors = "SELECT 
+    ar.id_areas,
+    ar.descripcion_area,
+    CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo,
+    niv_ar.descripcion_niveles_areas AS puesto_area, usr.*
+    FROM asteleco_personal.lista_personal AS usr
+    INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas
+    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
+    WHERE ar.id_areas <= 3
+    ";
+    $getCoordinatiors = $queries->getData($sql_get_coordinatiors);
     /* 
     $queries = new Queries;
    
