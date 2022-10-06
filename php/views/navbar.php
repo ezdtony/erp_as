@@ -1,5 +1,5 @@
-<!-- ========== Left Sidebar Start ========== -->
 <div class="leftside-menu">
+    <!-- <?php var_dump($_SESSION) ?> -->
     <!-- LOGO -->
     <a href="index.html" class="logo text-center logo-light">
         <span class="logo-lg">
@@ -53,10 +53,10 @@
                             <a href="?submodule=proyectos_unidades">Unidades</a>
                         </li>
                         <?php if ($id_area <= 3) : ?>
-                        <li>
-                            <a href="?submodule=proyectos_inactivos">Inactivos</a>
-                        </li>
-                        <?php endif ; ?>
+                            <li>
+                                <a href="?submodule=proyectos_inactivos">Inactivos</a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
 
@@ -78,6 +78,8 @@
                                 </a>
                                 <div class="collapse" id="sidebarSecondLevel">
                                     <ul class="side-nav-third-level">
+
+
                                         <li>
                                             <a href="?submodule=saldos">Saldos</a>
                                         </li>
@@ -105,6 +107,11 @@
                                         <li>
                                             <a href="?submodule=depositos_viaticos">Depósitos</a>
                                         </li>
+                                        <?php if ($_SESSION['id_area'] == 5) : ?>
+                                            <li>
+                                                <a href="?submodule=send_mails">Envíar correos</a>
+                                            </li>
+                                        <?php endif; ?>
                                         <!-- <li>
                                         <a href="#">Mis depósitos</a>
                                     </li> -->

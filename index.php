@@ -83,6 +83,9 @@ include_once('php/views/topbar.php');
             case 'detalle_info':
                 $include_file = 'php/views/personal/detalle_info.php';
                 break;
+            case 'send_mails':
+                $include_file = 'php/views/viaticos/send_mails.php';
+                break;
             case 'depositos_viaticos':
                 $include_file = 'php/views/viaticos/depositos_viaticos.php';
                 break;
