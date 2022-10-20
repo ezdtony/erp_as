@@ -180,8 +180,12 @@ if (!isset($_SESSION['user'])) {
         direc.direccion_zipcode, '. ',
         direc.direccion_estado, ', ') AS direccion_local, */
 
-    $sql_lista_personal = "SELECT ar.id_areas, ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
-    FROM asteleco_personal.lista_personal AS usr INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas";
+    $sql_lista_personal = "SELECT ar.id_areas, correo_personal,
+    ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+    FROM asteleco_personal.lista_personal AS usr 
+    INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas
+    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
+    ORDER BY correo_personal ASC";
 
     $getAllUsers = $queries->getData($sql_lista_personal);
 
@@ -193,7 +197,8 @@ if (!isset($_SESSION['user'])) {
 
 
     $viatics_types = "SELECT tg.*
-    FROM asteleco_viaticos_erp.tipos_gasto AS tg";
+    FROM asteleco_viaticos_erp.tipos_gasto AS tg
+    ORDER BY descripcion ASC";
     $getViaticsTypes = $queries->getData($viatics_types);
 
 

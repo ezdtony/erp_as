@@ -10,6 +10,14 @@ class Compras
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);
+    }public function getClasificaciones()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_compras.clasificaciones_catalogo";
+        $getDeposits = $queries->getData($sql_deposits);
+
+        return ($getDeposits);
     }
 
     public function getCotizaciones($id_user)
@@ -37,7 +45,8 @@ class Compras
         (SELECT COUNT(*) FROM asteleco_compras.desglose_cotizacion AS desg WHERE desg.`id_cotizaciones` = cotiz_index.id_cotizaciones AND cotizada='1') AS partidas_completas
         FROM asteleco_compras.cotizaciones AS cotiz_index 
         INNER JOIN asteleco_proyectos.proyectos AS proy ON cotiz_index.id_proyecto = proy.id_proyectos
-        INNER JOIN asteleco_compras.status_cotizaciones AS stt_ct ON cotiz_index.id_status_cotizaciones = stt_ct.id_status_cotizaciones";
+        INNER JOIN asteleco_compras.status_cotizaciones AS stt_ct ON cotiz_index.id_status_cotizaciones = stt_ct.id_status_cotizaciones
+        ORDER BY cotiz_index.id_cotizaciones DESC";
         $getCotizaciones = $queries->getData($sql_cotizaciones);
         return ($getCotizaciones);
     }
@@ -125,11 +134,42 @@ class Compras
 
         return ($getCatalogo);
     }
+    public function getMedidasLongitud()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT ml.*, ul.simbolo FROM asteleco_compras.medidas_de_longitud AS ml
+        INNER JOIN asteleco_compras.unidades_de_longitud AS ul ON ul.id_unidades_de_longitud = ml.id_unidades_de_longitud
+        WHERE ml.id_unidades_de_longitud >1";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getProveeddores()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_compras.proveedores";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
     public function getMarcas()
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
         $sql_deposits = "SELECT * FROM asteleco_compras.marcas";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getArchivesCountCotizacion($id_cotizaciones)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT *
+        FROM asteleco_compras.documentos_cotizacion 
+        WHERE id_cotizaciones = '$id_cotizaciones'";
         $getCatalogo = $queries->getData($sql_deposits);
 
         return ($getCatalogo);

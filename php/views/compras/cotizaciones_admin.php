@@ -74,7 +74,7 @@
                                 <td><?= $cotizaciones->id_cotizaciones; ?></td>
                                 <td><?= mb_strtoupper($cotizaciones->codigo_solicitud); ?></td>
                                 <td><?= $cotizaciones->fecha_index; ?></td>
-                                <td><?= $cotizaciones->proyecto; ?></td>
+                                <td><?= mb_strtoupper($cotizaciones->proyecto); ?></td>
                                 <td>
                                     <div class="progress progress-sm">
                                         <div class="progress-bar progress-lg <?= $bg_barra ?>" role="progressbar" style="width: <?= $porcentaje ?>%" aria-valuenow="<?= $porcentaje ?>" aria-valuemin="0" aria-valuemax="100"></div>
@@ -97,6 +97,12 @@
                                 </td>
                                 <td class="table-action">
                                     <a href="?submodule=desglose_cotizacion&id_cotizacion=<?= $cotizaciones->id_cotizaciones ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Desglose de cotización"> <i class="mdi mdi-beaker-alert-outline"></i></a>
+
+                                    <?php $getArchivesCountCotizacion = $compras->getArchivesCountCotizacion($cotizaciones->id_cotizaciones); ?>
+                                    <a data-bs-toggle="modal" data-bs-target="#uploadArchiveCotizacion" data-id-cotizacion="<?= $cotizaciones->id_cotizaciones ?>" class="action-icon uploadArchiveCotizacion" data-bs-placement="top" title="Adjuntar documentos"> <i class="mdi mdi-cloud-upload"></i></a>
+                                    <?php if (!empty($getArchivesCountCotizacion)) : ?>
+                                        <a data-bs-toggle="modal" data-bs-target="#archivosCotizacion" data-id-cotizacion="<?= $cotizaciones->id_cotizaciones ?>" class="action-icon archivosCotizacion" data-bs-placement="top" title="Archivos de cotización"> <i class="mdi mdi-cloud-check"></i></a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -113,6 +119,8 @@
 <!-- end row -->
 <?php
 include_once('php/views/compras/modals/nueva_cotizacion.php');
+include_once('php/views/compras/modals/archivosCotizacion.php');
+include_once('php/views/compras/modals/subirArchivos.php');
 
 ?>
 <script src="js/functions/compras/cotizaciones.js"></script>

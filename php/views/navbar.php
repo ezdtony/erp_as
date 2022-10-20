@@ -30,12 +30,16 @@
                     <span> Inicio </span>
                 </a>
             </li>
-            <?php if ($id_area <= 3) : ?>
+            <?php if ($id_area <= 3 || $_SESSION['id_area'] == 5) : ?>
                 <li class="side-nav-item">
-                    <a href="?submodule=personal" class="side-nav-link">
-                        <i class="uil-users-alt"></i>
-                        <span> Personal </span>
-                    </a>
+                    <?php if ($_SESSION['id_area'] == 5) : ?>
+                        <a href="?submodule=personal_dev" class="side-nav-link">
+                        <?php else : ?>
+                            <a href="?submodule=personal" class="side-nav-link">
+                            <?php endif; ?>
+                            <i class="uil-users-alt"></i>
+                            <span> Personal </span>
+                            </a>
                 </li>
             <?php endif; ?>
             <li class="side-nav-item">
@@ -168,14 +172,19 @@
                     </a>
                     <div class="collapse" id="sidebarCompras">
                         <ul class="side-nav-second-level">
+                            <li>
+                                <a href="?submodule=compras_cotizaciones">Compra de Material</a>
+                            </li>
                             <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
                                 <li>
                                     <a href="?submodule=catalogo_material">Catálogo de material</a>
                                 </li>
+                                <li>
+                                    <a href="?submodule=info_auxiliar">Información Auxiliar</a>
+                                </li>
                             <?php endif; ?>
-                            <li>
-                                <a href="?submodule=compras_cotizaciones">Cotizaciones</a>
-                            </li>
+
+
                             <!-- <li>
                             <a href="#">Solicitudes</a>
                         </li>

@@ -80,6 +80,9 @@ include_once('php/views/topbar.php');
             case 'personal':
                 $include_file = 'php/views/personal/index_personal.php';
                 break;
+            case 'personal_dev':
+                $include_file = 'php/views/personal/personal_dev.php';
+                break;
             case 'detalle_info':
                 $include_file = 'php/views/personal/detalle_info.php';
                 break;
@@ -127,6 +130,9 @@ include_once('php/views/topbar.php');
                     $include_file = 'php/views/compras/cotizaciones_admin.php';
                 }
 
+                break;
+            case 'info_auxiliar':
+                $include_file = 'php/views/compras/info_auxiliar.php';
                 break;
             case 'desglose_cotizacion':
                 if ($id_area >= 4) {

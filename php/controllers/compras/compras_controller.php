@@ -278,6 +278,102 @@ function getMedidasLongitud()
 
     echo json_encode($data);
 }
+function getListaArchivosCotizacion()
+{
+    $queries = new Queries;
+
+    $id_cotizacion = $_POST['id_cotizacion'];
+
+    $stmt = "SELECT doc.*, coti.codigo_solicitud, proy.codigo_proyecto, proy.nombre_proyecto, DATE(coti.date_log) AS fecha_cotizacion, descripcion_status_cotizaciones,
+    CONCAT(per.nombres,' ',per.apellido_paterno,' ',per.apellido_materno) AS nombre_usuario
+    FROM asteleco_compras.documentos_cotizacion AS doc
+    INNER JOIN asteleco_compras.cotizaciones AS coti ON doc.id_cotizaciones = coti.id_cotizaciones
+    INNER JOIN asteleco_compras.status_cotizaciones AS status ON coti.id_status_cotizaciones = status.id_status_cotizaciones
+    INNER JOIN asteleco_proyectos.proyectos AS proy ON coti.id_proyecto = proy.id_proyectos
+    INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = doc.id_personal_registro
+    WHERE doc.id_cotizaciones = '$id_cotizacion'";
+    $getMateriales = $queries->getData($stmt);
+    if (!empty($getMateriales)) {
+        $getMateriales_archives = $getMateriales[0];
+        $html_table = '';
+        $html_table .= '<p class="h1">Código cotización: ' . mb_strtoupper($getMateriales_archives->codigo_solicitud) . '</p>';
+        $html_table .= '<p class="h2">Proyecto: ' . mb_strtoupper($getMateriales_archives->codigo_proyecto) . ' | ' . mb_strtoupper($getMateriales_archives->nombre_proyecto) . '</p>';
+        $html_table .= '<p class="h2">Status: ' . mb_strtoupper($getMateriales_archives->descripcion_status_cotizaciones) . '</p>';
+        $html_table .= '<br>';
+
+        $html_table .= '<table id="table_archives_cotizacion" class="table table-bordered table-centered mb-0 table-responsive">';
+        $html_table .= '            <thead>';
+        $html_table .= '                <tr>';
+        $html_table .= '                    <th>Descripción del archivo</th>';
+        $html_table .= '                    <th>Tipo de archivo</th>';
+        $html_table .= '                    <th>Subido por</th>';
+        $html_table .= '                    <th>Fecha de carga</th>';
+        $html_table .= '                    <th>Descargar</th>';
+        $html_table .= '                    <th class="text-center">Eliminar</th>';
+        $html_table .= '                </tr>';
+        $html_table .= '            </thead>';
+        $html_table .= '            <tbody>';
+        for ($i = 0; $i < count($getMateriales); $i++) {
+
+            $html_table .= '                <tr>';
+            $html_table .= '                    <td>' . $getMateriales[$i]->nombre_documento . '</td>';
+            $html_table .= '                    <td>' . $getMateriales[$i]->tipo_archivo . '</td>';
+            $html_table .= '                    <td>' . $getMateriales[$i]->nombre_usuario . '</td>';
+            $html_table .= '                    <td>' . $getMateriales[$i]->logdate . '</td>';
+            $html_table .= '                    <td class="table-action text-center">';
+            $html_table .= '                        <a href="/erp/' . $getMateriales[$i]->ruta_documento . '" target="_blank" class="btn btn-primary btn-sm"><i class="mdi mdi-cloud-download"></i></a>';
+            $html_table .= '                    </td>';
+            $html_table .= '                    <td class="table-action text-center">';
+            $html_table .= '                        <a class="action-icon delete_doc_cotizacion" id="doc-cotizacion' . $getMateriales[$i]->id_documentos_cotizacion . '" id-doc-cotizacion="' . $getMateriales[$i]->id_documentos_cotizacion . '"> <i class="mdi mdi-delete"></i></a>';
+            $html_table .= '                    </td>';
+            $html_table .= '                </tr>';
+        }
+
+        $html_table .= '            </tbody>';
+        $html_table .= '        </table>';
+        $data = array(
+            'response' => true,
+            'data' => $getMateriales,
+            'html_table' => $html_table
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Al parecer no hay material registrado bajo esta clasificación'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function deleteDocCotizacion()
+{
+    $queries = new Queries;
+
+    $id_documentos_cotizacion = $_POST['id_documentos_cotizacion'];
+
+    $stmt = "DELETE FROM asteleco_compras.documentos_cotizacion
+    WHERE id_documentos_cotizacion = '$id_documentos_cotizacion'";
+    if (!empty($queries->insertData($stmt))) {
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al eliminar el archivo'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+
 function updateStatusCotizacion()
 {
     $queries = new Queries;
@@ -335,6 +431,227 @@ function updateStatusPartida()
         $data = array(
             'response' => false,
             'message'                => 'Ocurrió un error al actualizar la partida'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function saveDocumentosCotizaciones()
+{
+
+    $folder = $_POST['folder'];
+    $module_name = $_POST['module_name'];
+    $id_cotizacion = $_POST['id_cotizacion'];
+    $file_name_usr = $_POST['name'];
+    $extension_file = basename($_FILES["formData"]["type"]);
+    $file_name = $folder . "_" . time() . ".$extension_file";
+
+    //$route = '/xampp/htdocs/documentos_alumnos/' . $_POST['student'] . '/' . $folder;
+    $route2 =  dirname(__DIR__ . '', 3) . '/uploads/' . $module_name . "/" . $folder . "/";
+    $route =  dirname(__DIR__ . '', 3) . '/uploads/' . $module_name . "/" . $folder . "/" . $file_name;
+    $route_db = '/uploads/' . $module_name . '/' . $folder . "/" . $file_name;
+    if (!file_exists($route2)) {
+        mkdir($route2, 0777, true);
+    }
+    if (move_uploaded_file($_FILES["formData"]["tmp_name"], $route)) {
+
+        $queries = new Queries;
+        $data = array(
+            'response' => true,
+            'message' => 'Se cargó correctamente el archivo',
+        );
+        $stmt = "INSERT INTO asteleco_compras.documentos_cotizacion (
+            id_cotizaciones,
+            nombre_documento,
+            tipo_archivo,
+            ruta_documento,
+            id_personal_registro,
+            logdate
+        ) VALUES
+        (
+            '$id_cotizacion',
+            '$file_name_usr',
+            '$extension_file',
+            '$route_db',
+            '$_SESSION[id_user]',
+            NOW())";
+        $last_id = 0;
+        $getInfoRequest = $queries->insertData($stmt);
+        $last_id = $getInfoRequest['last_id'];
+
+        if ($last_id = !0) {
+            $last_id_arch = $getInfoRequest['last_id'];
+            $data = array(
+                'response' => true,
+                'message' => 'Se cargó correctamente el archivo',
+                'id_archivo' => $last_id_arch
+            );
+        } else {
+            $data = array(
+                'response' => false,
+                'message' => 'No se pudo cargar el archivo',
+            );
+        }
+    } else {
+        $data = array(
+            'response' => false,
+            'message' => 'No se pudo cargar el archivo',
+        );
+    }
+    // echo $file_name;
+
+    //$move = '';
+
+    /* 
+    $file = $route . '/' . $file_name;
+
+    if (!file_exists($route)) {
+        mkdir($route, 0777, true);
+    }
+
+    if (move_uploaded_file($_FILES['formData']['tmp_name'], $file)) {
+
+        $response = 1;
+
+        $movement = array(
+            'movimiento'        => $move,
+            'curp'              => $_POST['student'],
+            'documento'         => $file_name
+        );
+        $movement = json_encode($movement);
+        setLog(module, $movement, $_SESSION['colab']);
+    }
+
+    $data['response'] = $response;
+     */
+    echo json_encode($data);
+}
+function saveProveedor()
+{
+    $queries = new Queries;
+    $nombre_proveedor = $_POST['nombre_proveedor'];
+    $mail_proveedor = $_POST['mail_proveedor'];
+    $telefono_proveedor = $_POST['telefono_proveedor'];
+    $empresa_proveedor = $_POST['empresa_proveedor'];
+
+    $stmt = "INSERT INTO asteleco_compras.proveedores (
+        nombre_contacto,
+        correo_contacto,
+        telefono_contacto,
+        empresa_proveedor
+    ) VALUES
+    (
+        '$nombre_proveedor',
+        '$mail_proveedor',
+        '$telefono_proveedor',
+        '$empresa_proveedor')";
+
+    if ($queries->insertData($stmt)) {
+
+        $data = array(
+            'response' => true,
+            'message' => 'Se agregó correctamente el proveedor'
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al agregar el proveedor'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function saveClasificacion()
+{
+    $queries = new Queries;
+    $abreviatura_clasi = $_POST['abreviatura_clasi'];
+    $clasificacion = $_POST['clasificacion'];
+
+    $stmt = "INSERT INTO asteleco_compras.clasificaciones_catalogo (
+        nombre_corto,
+        clasificacion
+    ) VALUES
+    (
+        '$abreviatura_clasi',
+        '$clasificacion')";
+
+    if ($queries->insertData($stmt)) {
+
+        $data = array(
+            'response' => true,
+            'message' => 'Se agregó correctamente la clasificación'
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al agregar la clasificación'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function saveUnidadMedidaLongitud()
+{
+    $queries = new Queries;
+    $medida = $_POST['medida'];
+    $select_um = $_POST['select_um'];
+
+
+    $stmt = "INSERT INTO asteleco_compras.medidas_de_longitud (
+        id_unidades_de_longitud,
+        medida_de_longitud_long
+    ) VALUES
+    (
+        '$select_um',
+        '$medida')";
+
+    if ($queries->insertData($stmt)) {
+
+        $data = array(
+            'response' => true,
+            'message' => 'Se agregó correctamente la medida'
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error  al agregar la medida'
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function updateUserInfo()
+{
+    $queries = new Queries;
+
+    $id_personal = $_POST['id_personal'];
+    $column_name = $_POST['column_name'];
+    $value = $_POST['value'];
+
+    $stmt = "UPDATE asteleco_personal.lista_personal SET $column_name = '$value' WHERE id_lista_personal = '$id_personal'"; 
+
+    if ($queries->insertData($stmt)) {
+        $data = array(
+            'response' => true,
+            'message' => 'Se actualizó la información correctamente'
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Ocurrió un error al actualizar la información'
         );
         //--- --- ---//
     }

@@ -79,7 +79,7 @@ $(document).ready(function () {
     var txt_ul = $("#id_medida_longitud option:selected").text();
 
     var txt_unidad_medida = $("#id_unidad_medida option:selected").text();
-    
+
     var descripcion_material = "";
 
     if (apply_ul != 1) {
@@ -447,7 +447,400 @@ $(document).ready(function () {
     }
     Swal.close();
   });
+  $(document).on("click", ".uploadArchiveCotizacion", function () {
+    var id_cotizacion = $(this).attr("data-id-cotizacion");
+    console.log(id_cotizacion);
+    $("#btnSubirArchivoCotizacion").attr("data-id-cotizacion", id_cotizacion);
+  });
+  /* $(document).on("click", "#uploadArchiveCotizacion", function () {
+    var id_cotizacion = $(this).attr("data-id-cotizacion");
+    loading();
+    $("#btnSubirArchivoCotizacion").attr("data-id-cotizacion", id_cotizacion);
+  }); */
 
+  $(document).on("click", ".archivosCotizacion", function () {
+    var id_cotizacion = $(this).attr("data-id-cotizacion");
+    loading();
+
+    $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "getListaArchivosCotizacion",
+        id_cotizacion: id_cotizacion,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          Swal.close();
+          $("#divArchivosCotizacion").empty();
+          html_table = data.html_table;
+          $("#divArchivosCotizacion").append(html_table);
+        } else {
+          Swal.fire(
+            "Atención!",
+            "No se encontraron archivos para esta cotización",
+            "info"
+          );
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      });
+  });
+  $(document).on("click", ".delete_doc_cotizacion", function () {
+    var id_documentos_cotizacion = $(this).attr("id-doc-cotizacion");
+    Swal.fire({
+      title: "¿Está seguro?",
+      text: "Se eliminará el archivo de la cotización",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        loading();
+        $.ajax({
+          url: "php/controllers/compras/compras_controller.php",
+          method: "POST",
+          data: {
+            mod: "deleteDocCotizacion",
+            id_documentos_cotizacion: id_documentos_cotizacion,
+          },
+        })
+          .done(function (data) {
+            var data = JSON.parse(data);
+            console.log(data);
+
+            if (data.response == true) {
+              Swal.fire(
+                "¡Eliminado!",
+                "El archivo se eliminó correctamente",
+                "success"
+              );
+            } else {
+              Swal.fire("Atención!", data.message, "info");
+            }
+
+            $("#doc-cotizacion" + id_documentos_cotizacion)
+              .closest("tr")
+              .remove();
+            //--- --- ---//
+            //--- --- ---//
+          })
+          .fail(function (message) {
+            VanillaToasts.create({
+              title: "Error",
+              text: "Ocurrió un error, intentelo nuevamente",
+              type: "error",
+              timeout: 1200,
+              positionClass: "topRight",
+            });
+          });
+      }
+    });
+
+    /*  $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "getListaArchivosCotizacion",
+        id_cotizacion: id_cotizacion,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          Swal.close();
+          $("#divArchivosCotizacion").empty();
+          html_table = data.html_table;
+          $("#divArchivosCotizacion").append(html_table);
+        } else {
+          Swal.fire(
+            "Atención!",
+            "No se encontraron archivos para esta cotización",
+            "info"
+          );
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      }); */
+  });
+  $(document).on("click", ".saveProveedor", function () {
+    loading();
+    var nombre_proveedor = $("#nombre_proveedor").val();
+    var mail_proveedor = $("#mail_proveedor").val();
+    var telefono_proveedor = $("#telefono_proveedor").val();
+    var empresa_proveedor = $("#empresa_proveedor").val();
+
+    if (
+      nombre_proveedor == "" ||
+      mail_proveedor == "" ||
+      telefono_proveedor == "" ||
+      empresa_proveedor == ""
+    ) {
+      Swal.fire("Atención!", "Todos los campos son obligatorios", "info");
+    } else {
+      $.ajax({
+        url: "php/controllers/compras/compras_controller.php",
+        method: "POST",
+        data: {
+          mod: "saveProveedor",
+          nombre_proveedor: nombre_proveedor,
+          mail_proveedor: mail_proveedor,
+          telefono_proveedor: telefono_proveedor,
+          empresa_proveedor: empresa_proveedor,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+
+          if (data.response == true) {
+            Swal.fire("Éxito!", data.message, "success");
+            var htmlTags =
+              "<tr>" +
+              "<td>" +
+              nombre_proveedor +
+              "</td>" +
+              "<td>" +
+              mail_proveedor +
+              "</td>" +
+              "<td>" +
+              empresa_proveedor +
+              "</td>" +
+              "<td>" +
+              telefono_proveedor +
+              "</td>" +
+              "</tr>";
+
+            $(".table_Proveedores tbody").append(htmlTags);
+
+            $("#nuevoProveedor").modal("hide");
+            $("#nuevoProveedor").find("input,textarea,select").val("");
+            $("#nuevoProveedor input[type='checkbox']")
+              .prop("checked", false)
+              .change();
+          } else {
+            Swal.fire("Atención!", data.message, "info");
+          }
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    }
+
+    /*  $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "getListaArchivosCotizacion",
+        id_cotizacion: id_cotizacion,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          Swal.close();
+          $("#divArchivosCotizacion").empty();
+          html_table = data.html_table;
+          $("#divArchivosCotizacion").append(html_table);
+        } else {
+          Swal.fire(
+            "Atención!",
+            "No se encontraron archivos para esta cotización",
+            "info"
+          );
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      }); */
+  });
+  $(document).on("click", ".saveClasificacion", function () {
+    loading();
+    var abreviatura_clasi = $("#abreviatura_clasi").val();
+    var clasificacion = $("#clasificacion").val();
+
+    if (abreviatura_clasi == "" || clasificacion == "") {
+      Swal.fire("Atención!", "Todos los campos son obligatorios", "info");
+    } else {
+      $.ajax({
+        url: "php/controllers/compras/compras_controller.php",
+        method: "POST",
+        data: {
+          mod: "saveClasificacion",
+          abreviatura_clasi: abreviatura_clasi,
+          clasificacion: clasificacion,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+
+          if (data.response == true) {
+            Swal.fire("Éxito!", data.message, "success");
+            var htmlTags =
+              "<tr>" +
+              "<td>" +
+              abreviatura_clasi +
+              "</td>" +
+              "<td>" +
+              clasificacion +
+              "</td>" +
+              "</tr>";
+
+            $(".table_Clasificaciones tbody").append(htmlTags);
+
+            $("#nuevaClasificacion").modal("hide");
+            $("#nuevaClasificacion").find("input,textarea,select").val("");
+            $("#nuevaClasificacion input[type='checkbox']")
+              .prop("checked", false)
+              .change();
+          } else {
+            Swal.fire("Atención!", data.message, "info");
+          }
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    }
+
+    /*  $.ajax({
+      url: "php/controllers/compras/compras_controller.php",
+      method: "POST",
+      data: {
+        mod: "getListaArchivosCotizacion",
+        id_cotizacion: id_cotizacion,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          Swal.close();
+          $("#divArchivosCotizacion").empty();
+          html_table = data.html_table;
+          $("#divArchivosCotizacion").append(html_table);
+        } else {
+          Swal.fire(
+            "Atención!",
+            "No se encontraron archivos para esta cotización",
+            "info"
+          );
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      }); */
+  });
+  $(document).on("click", ".saveUnidadLongitud", function () {
+    loading();
+    var medida = $("#medida").val();
+    var select_um = $("#select_um").val();
+
+    if (select_um == "" || medida == "") {
+      Swal.fire("Atención!", "Todos los campos son obligatorios", "info");
+    } else {
+      $.ajax({
+        url: "php/controllers/compras/compras_controller.php",
+        method: "POST",
+        data: {
+          mod: "saveUnidadMedidaLongitud",
+          medida: medida,
+          select_um: select_um,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+
+          if (data.response == true) {
+            Swal.fire("Éxito!", data.message, "success").then((result) => {
+              if (result.isConfirmed) {
+                loading();
+                location.reload();
+              }
+            });
+          } else {
+            Swal.fire("Atención!", data.message, "info");
+          }
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    }
+  });
   $(document).on("change", "#statusCotizaciones", function () {
     loading();
     var id_status_cotizacion = $(this).val();
@@ -584,6 +977,114 @@ $(document).ready(function () {
   $("#select_marca_cotizacion").select2({
     dropdownParent: $("#nuevaCotizacion"),
   });
+});
+
+$(document).on("click", "#btnSubirArchivoCotizacion", function () {
+  // --- INFORMACIÓN DEL ACCESO ---//
+  loading();
+  var id_cotizacion = $(this).attr("data-id-cotizacion");
+
+  const file_input = document.querySelector("#documento_cotizacion");
+  const file = file_input.files[0];
+  vidFileLength = file_input.files.length;
+  console.log(vidFileLength);
+
+  if (vidFileLength == 0) {
+    /* $(".inputAddStudentDocument")
+      .siblings(".custom-file-label")
+      .removeClass("selected")
+      .html("Elegir un archivo"); */
+    //Swal.close();
+    Swal.fire("Atención!", "Debe elegir un archivo", "info");
+    file_input.value = "";
+  } else {
+    var file_n = file.name;
+    var f = file_n.split(".");
+    //--- --- ---//
+    var name = file_input.getAttribute("name");
+    var archive_name = $("#archive_description").val();
+    //--- --- ---//
+    name += ".";
+    name += f[1];
+
+    if (
+      f[f.length - 1] != "png" &&
+      f[f.length - 1] != "pdf" &&
+      f[f.length - 1] != "jpg" &&
+      f[f.length - 1] != "jpeg"
+    ) {
+      Swal.fire(
+        "Atención!",
+        "El archivo debe ser una imagen o documento PDF",
+        "info"
+      );
+      file_input.value = "";
+    } else {
+      if (file_input.files[0].size > 20000000) {
+        Swal.close();
+        Swal.fire(
+          "Atención!",
+          "El tamaño máximo del archivo a subir es de 20MB",
+          "info"
+        );
+        file_input.value = "";
+        return;
+      } else {
+        if (archive_name != "" && archive_name != undefined) {
+          folder = "documentos_cotizaciones";
+          module_name = "compras";
+          var fData = new FormData();
+          fData.append("formData", file);
+          fData.append("name", archive_name);
+          fData.append("folder", folder);
+          fData.append("module_name", module_name);
+          fData.append("id_cotizacion", id_cotizacion);
+          fData.append("mod", "saveDocumentosCotizaciones");
+          $.ajax({
+            url: "php/controllers/compras/compras_controller.php",
+            method: "POST",
+            data: fData,
+            contentType: false,
+            processData: false,
+          })
+            .done(function (response) {
+              console.log(response);
+
+              var json = JSON.parse(response);
+              if (json.response) {
+                var id_imagen = json.id_archivo;
+                Swal.fire({
+                  title: "Éxito!",
+                  text: "Archivo guardado correctamente",
+                  icon: "success",
+                  timer: 3000,
+                }).then((result) => {
+                  loading();
+                  location.reload();
+                });
+              } else {
+                Swal.fire(
+                  "Error!",
+                  "Ocurrió un error al intentar subir la fotografía, intentelo nuevamente por favor",
+                  "error"
+                );
+              }
+            })
+            .fail(function (error) {
+              Swal.fire(
+                "Error!",
+                "Ocurrió un error al intentar comunicarse con la base de datos :(",
+                "error"
+              );
+              console.log(error);
+            });
+        } else {
+          Swal.fire("Atención!", "Debe agregar una descripción", "info");
+          return;
+        }
+      }
+    }
+  }
 });
 /* Swal.fire({
       title: "¿Estás seguro?",
