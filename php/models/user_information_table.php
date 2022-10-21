@@ -38,4 +38,14 @@ class UserArchives
 
         return $ruta_profile;
     }
+    public function getInfoTableSendMail($id_user)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+
+        $sql_get_profile_picture = "SELECT * FROM asteleco_viaticos_erp.enviar_correos WHERE id_personal = '$id_user' AND enviar = '1'";
+        $getProfilePicture = $queries->getData($sql_get_profile_picture);
+
+        return $getProfilePicture;
+    }
 }

@@ -419,6 +419,93 @@ $(document).ready(function () {
         });
     }
   });
+  $(".send_viatics_mail").change(function () {
+    var id_user = $(this).attr("data-id-user");
+    loading();
+    if (this.checked) {
+      $.ajax({
+        url: "php/controllers/personal/personal_controller.php",
+        method: "POST",
+        data: {
+          mod: "changeSendViaticsMail",
+          id_user: id_user,
+          status: 1,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          if (data.response == true) {
+            Swal.close();
+            $.NotificationApp.send(
+              data.message,
+              "",
+              "top-left",
+              "#06996f",
+              "success"
+            );
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Verifique los datos ingresados",
+            });
+          }
+
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          Swal.close();
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    } else {
+      $.ajax({
+        url: "php/controllers/personal/personal_controller.php",
+        method: "POST",
+        data: {
+          mod: "changeSendViaticsMail",
+          id_user: id_user,
+          status: 0,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          if (data.response == true) {
+            Swal.close();
+            $.NotificationApp.send(
+              data.message,
+              "",
+              "top-left",
+              "#06996f",
+              "success"
+            );
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Verifique los datos ingresados",
+            });
+          }
+
+          //--- --- ---//
+          //--- --- ---//
+        })
+        .fail(function (message) {
+          Swal.close();
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    }
+  });
 
   $("#id_area").select2({
     dropdownParent: $("#registrarUsuario"),

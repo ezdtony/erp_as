@@ -22,6 +22,9 @@
                 <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#registrarUsuario">Nuevo Usuario</button>
                 <br>
                 <br>
+                <button type="button" class="btn btn-info rounded-pill sendMailsViatics">Enviar correos viaticos</button>
+
+                <br>
                 <br>
                 <div class="table-responsive">
                     <table id="" class="table table-striped dt-responsive nowrap w-100 tablaUsuarios">
@@ -38,6 +41,7 @@
                                 <th>Correo personal</th>
                                 <th>Password</th>
                                 <th>Acciones</th>
+                                <th>¿Envío de correo viaticos?</th>
                                 <th>Enviar correo Viaticos</th>
                             </tr>
                         </thead>
@@ -75,6 +79,22 @@
                                         <a href="?submodule=detalle_info&id_user=<?= $user->id_lista_personal ?>" target="_blank" class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
                                         <a class="action-icon editUser" id=<?= $user->id_lista_personal ?>" data-bs-container="#tooltip-container2" data-bs-toggle="modal" data-bs-target="#editarUsuario" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
                                         <a class="action-icon deleteUser" id=<?= $user->id_lista_personal ?>" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>
+                                    </td>
+                                    <td>
+                                        <!-- Switch-->
+                                        <div>
+                                            <?php
+                                            $getInfoTableSendMail = $user_information_table->getInfoTableSendMail($user->id_lista_personal);
+                                            $statusSendMail = '';
+                                            if (!empty($getInfoTableSendMail)) {
+                                                if ($getInfoTableSendMail[0]->enviar == 1) {
+                                                    $statusSendMail = 'checked';
+                                                }
+                                            }
+                                            ?>
+                                            <input class="send_viatics_mail" type="checkbox" data-id-user="<?= $user->id_lista_personal ?>" id="sndmail<?= $user->id_lista_personal ?>" data-switch="success" <?= $statusSendMail ?> />
+                                            <label for="sndmail<?= $user->id_lista_personal ?>" data-on-label="Si" data-off-label="No" class="mb-0 d-block"></label>
+                                        </div>
                                     </td>
                                     <td>
                                         <a class="action-icon sendEmail" id-personal="<?= $user->id_lista_personal ?>" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Enviar correo"> <i class="mdi mdi-email"></i></a>
@@ -261,6 +281,52 @@ include_once('php/views/personal/modals/editar_usuario.php');
             });
 
     });
+    $(document).on("click", ".sendMailsViatics", function() {
+        loading();
+        var id_personal = $(this).attr("id-personal");
+        $.ajax({
+                url: "php/controllers/personal/personal_controller.php",
+                method: "POST",
+                data: {
+                    mod: "sendViaticsMailMasive"
+                },
+            })
+            .done(function(data) {
+                var data = JSON.parse(data);
+                console.log(data);
+
+                if (data.response == true) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Correo enviado",
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                    /*  Swal.fire("Éxito!", data.message, "success").then((result) => {
+                       if (result.isConfirmed) {
+                         loading();
+                         location.reload();
+                       }
+                     }); */
+                } else {
+                    Swal.fire("Atención!", data.message, "info");
+                }
+                //--- --- ---//
+                //--- --- ---//
+            })
+            .fail(function(message) {
+                VanillaToasts.create({
+                    title: "Error",
+                    text: "Ocurrió un error, intentelo nuevamente",
+                    type: "error",
+                    timeout: 1200,
+                    positionClass: "topRight",
+                });
+            });
+
+    });
+
 
     function loading() {
         Swal.fire({
