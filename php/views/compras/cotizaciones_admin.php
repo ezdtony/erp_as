@@ -96,7 +96,8 @@
 
                                 </td>
                                 <td class="table-action">
-                                    <a href="?submodule=desglose_cotizacion&id_cotizacion=<?= $cotizaciones->id_cotizaciones ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Desglose de cotización"> <i class="mdi mdi-beaker-alert-outline"></i></a>
+                                    <a href="?submodule=desglose_cotizacion&id_cotizacion=<?= $cotizaciones->id_cotizaciones ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Editar partidas cotización"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                    <a href="?submodule=imprimir_cotizacion&id_cotizacion=<?= $cotizaciones->id_cotizaciones ?>" target="_blank" class="action-icon" data-bs-placement="top" title="Imprimir"> <i class="mdi mdi-printer"></i></a>
 
                                     <?php $getArchivesCountCotizacion = $compras->getArchivesCountCotizacion($cotizaciones->id_cotizaciones); ?>
                                     <a data-bs-toggle="modal" data-bs-target="#uploadArchiveCotizacion" data-id-cotizacion="<?= $cotizaciones->id_cotizaciones ?>" class="action-icon uploadArchiveCotizacion" data-bs-placement="top" title="Adjuntar documentos"> <i class="mdi mdi-cloud-upload"></i></a>

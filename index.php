@@ -141,6 +141,9 @@ include_once('php/views/topbar.php');
                     $include_file = 'php/views/compras/desglose_cotizacion_admin.php';
                 }
                 break;
+            case 'imprimir_cotizacion':
+                $include_file = 'php/views/compras/imprimir_cotizacion.php';
+                break;
             case 'catalogo_material':
                 $include_file = 'php/views/compras/catalogo_material.php';
                 break;

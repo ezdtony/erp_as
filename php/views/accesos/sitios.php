@@ -47,8 +47,14 @@ $getTiposSitio = $accesos->GetTipoSitio();
 
 
                 <tbody>
-                    <?php $allSites = $accesos->getAllSites(); ?>
-                    <?php foreach ($allSites as $sites) : ?>
+                    <?php $allSites = $accesos->getAllSites(); 
+                    set_time_limit(0);
+
+
+                    ?>
+                    <?php foreach ($allSites as $sites) : 
+                        $getZonasSitios = $accesos->getZonasSitios($sites->id_centrales);
+                        ?>
                         <tr>
                             <td><?= ($sites->id_sitios) ?></td>
                             <td><?= ($sites->codigo_sitio) ?></td>
@@ -65,7 +71,17 @@ $getTiposSitio = $accesos->GetTipoSitio();
                                     <?php endforeach; ?>
                                 </select>
                             </td>
-                            <td><?= ($sites->nombre_central) ?></td>
+                            <td>
+                                <select class="form-select selectZonaSitio" id="<?=$sites->id_sitios?>">
+                                    <?php foreach ($getZonasSitios as $zone_sites) : ?>
+                                        <?php if ($sites->id_zonas_central ==  $zone_sites->id_zonas_central) : ?>
+                                            <option selected value="<?= $zone_sites->id_zonas_central ?>"><?= $zone_sites->descripcion ?></option>
+                                        <?php else : ?>
+                                            <option  value="<?= $zone_sites->id_zonas_central ?>"><?= $zone_sites->descripcion ?></option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
                             <td><?= ($sites->zona) ?></td>
                             <td><?= ($sites->status_sitio) ?></td>
                             <td>

@@ -173,5 +173,14 @@ class Access
 
         return ($getCentral);
     }
+    public function getZonasSitios($id_central)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.zonas_central WHERE id_centrales ='$id_central' order by descripcion ASC";
+        $getCentral = $queries->getData($sql_Central);
+
+        return ($getCentral);
+    }
     
 }
