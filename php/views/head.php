@@ -35,6 +35,11 @@ $id_user = $_SESSION['id_user'];
   <!-- TABLE FILTER -->
   <script src="js/tablefilter/tablefilter.js"></script>
   <script src="https://kit.fontawesome.com/e568464256.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 </head>
 
 <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>

@@ -24,9 +24,15 @@ $user_viatics = number_format($user_viatics, 2, '.');
 
 $month = date("m");
 $mes = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-$mes_actual = $mes[$month-1];
+$mes_actual = $mes[$month - 1];
 
 ?>
+<style>
+    .chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
 
 <div class="row">
     <div class="col-12">
@@ -35,28 +41,29 @@ $mes_actual = $mes[$month-1];
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xl-5 col-lg-6">
+<?php if ($id_area > 3) : ?>
+    <div class="row">
+        <div class="col-xl-12 col-lg-6">
 
 
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card widget-flat">
-                    <div class="card-body">
-                        <div class="float-end">
-                            <i class="mdi mdi-currency-usd widget-icon"></i>
-                        </div>
-                        <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Saldo Actual</h5>
-                        <h3 class="mt-3 mb-3">$ <?= $saldo ?> </h3>
-                        <p class="mb-0 text-muted">
-                            <span class="text-danger me-2"></span>
-                            <span class="text-nowrap"></span>
-                        </p>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card widget-flat">
+                        <div class="card-body">
+                            <div class="float-end">
+                                <i class="mdi mdi-currency-usd widget-icon"></i>
+                            </div>
+                            <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Saldo Actual</h5>
+                            <h3 class="mt-3 mb-3">$ <?= $saldo ?> </h3>
+                            <p class="mb-0 text-muted">
+                                <span class="text-danger me-2"></span>
+                                <span class="text-nowrap"></span>
+                            </p>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
 
-            <!-- <div class="col-sm-6">
+                <!-- <div class="col-sm-6">
                 <div class="card widget-flat">
                     <div class="card-body">
                         <div class="float-end">
@@ -71,200 +78,90 @@ $mes_actual = $mes[$month-1];
                     </div> 
                 </div>
             </div> -->
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card widget-flat">
+                        <div class="card-body">
+                            <div class="float-end">
+                                <i class="mdi mdi-cash-plus widget-icon"></i>
+                            </div>
+                            <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Depositado</h5>
+                            <h3 class="mt-3 mb-3">$ <?= $user_deposits ?></h3>
+                            <p class="mb-0 text-muted">
+                                <!-- <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span> -->
+                                <span class="text-nowrap">En el mes actual</span>
+                            </p>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
+
+                <div class="col-sm-6">
+                    <div class="card widget-flat">
+                        <div class="card-body">
+                            <div class="float-end">
+                                <i class="mdi mdi-cart-plus widget-icon"></i>
+                            </div>
+                            <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Comporbado</h5>
+                            <h3 class="mt-3 mb-3">$ <?= $user_viatics ?></h3>
+                            <p class="mb-0 text-muted">
+                                <!-- <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 1.08%</span> -->
+                                <span class="text-nowrap">En el mes actual</span>
+                            </p>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
+            </div> <!-- end row -->
+
+        </div> <!-- end col -->
+
+
+    </div>
+<?php elseif ($id_area <= 3) : ?>
+    <div class="row">
+
+        <div class="col-xl-6 col-lg-6">
+            <div class="card card-h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="header-title">Depositado vs Comprobado</h4>
+                        <br>
+                        <h5>Últimos 3 meses</h5>
+                    </div>
+
+                    <div dir="ltr">
+                        <div class="chartdiv"  id="bar__chart_index"></div>
+                    </div>
+
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+
+        </div> <!-- end col -->
+        <div class="col-xl-6 col-lg-6">
+            <div class="card card-h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="header-title">Tipos de Gasto</h4>
+                        <br>
+                        <h5><?= $mes_actual ?> <?= date('Y') ?></h5>
+                    </div>
+
+                    <div dir="ltr">
+                        <div id="dashboardChart2" class="apex-charts" data-colors="#727cf5,#e3eaef" style="min-height: 257px;">
+                            <div class="chartdiv" id="pie_chart_index">
+
+                                </divi>
+                            </div>
+                        </div>
+
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+
+            </div> <!-- end col -->
         </div>
-
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card widget-flat">
-                    <div class="card-body">
-                        <div class="float-end">
-                            <i class="mdi mdi-cash-plus widget-icon"></i>
-                        </div>
-                        <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Depositado</h5>
-                        <h3 class="mt-3 mb-3">$ <?= $user_deposits ?></h3>
-                        <p class="mb-0 text-muted">
-                            <!-- <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span> -->
-                            <span class="text-nowrap">En el mes actual</span>
-                        </p>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
-
-            <div class="col-sm-6">
-                <div class="card widget-flat">
-                    <div class="card-body">
-                        <div class="float-end">
-                            <i class="mdi mdi-cart-plus widget-icon"></i>
-                        </div>
-                        <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Comporbado</h5>
-                        <h3 class="mt-3 mb-3">$ <?= $user_viatics ?></h3>
-                        <p class="mb-0 text-muted">
-                            <!-- <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 1.08%</span> -->
-                            <span class="text-nowrap">En el mes actual</span>
-                        </p>
-                    </div> <!-- end card-body-->
-                </div> <!-- end card-->
-            </div> <!-- end col-->
-        </div> <!-- end row -->
-
-    </div> <!-- end col -->
-
-    <div class="col-xl-7 col-lg-6">
-        <div class="card card-h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h4 class="header-title">Depositado vs Comprobado</h4>
-                    <br>
-                    <h5>Últimos 3 meses</h5>
-                </div>
-
-                <div dir="ltr">
-                    <div id="dashboardChart1" class="apex-charts" data-colors="#727cf5,#e3eaef" style="min-height: 257px;">
-
-
-                    </div>
-                </div>
-
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-
-    </div> <!-- end col -->
-</div>
-<div class="row">
-
-
-    <div class="col-xl-7 col-lg-6">
-        <div class="card card-h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h4 class="header-title">Tipos de Gasto</h4>
-                    <br>
-                    <h5><?=$mes_actual?> <?=date('Y')?></h5>
-                </div>
-
-                <div dir="ltr">
-                    <div id="dashboardChart2" class="apex-charts" data-colors="#727cf5,#e3eaef" style="min-height: 257px;">
-
-
-                    </div>
-                </div>
-
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-
-    </div> <!-- end col -->
-    <div class="col-xl-5 col-lg-12  order-lg-2 order-xl-1">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h4 class="header-title">Últimos registros (Gastos)</h4>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="table table-centered table-nowrap table-hover mb-0">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">ASOS Ridley High Waist</h5>
-                                    <span class="text-muted font-13">07 April 2018</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$79.49</h5>
-                                    <span class="text-muted font-13">Price</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">82</h5>
-                                    <span class="text-muted font-13">Quantity</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$6,518.18</h5>
-                                    <span class="text-muted font-13">Amount</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">Marco Lightweight Shirt</h5>
-                                    <span class="text-muted font-13">25 March 2018</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$128.50</h5>
-                                    <span class="text-muted font-13">Price</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">37</h5>
-                                    <span class="text-muted font-13">Quantity</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$4,754.50</h5>
-                                    <span class="text-muted font-13">Amount</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">Half Sleeve Shirt</h5>
-                                    <span class="text-muted font-13">17 March 2018</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$39.99</h5>
-                                    <span class="text-muted font-13">Price</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">64</h5>
-                                    <span class="text-muted font-13">Quantity</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$2,559.36</h5>
-                                    <span class="text-muted font-13">Amount</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">Lightweight Jacket</h5>
-                                    <span class="text-muted font-13">12 March 2018</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$20.00</h5>
-                                    <span class="text-muted font-13">Price</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">184</h5>
-                                    <span class="text-muted font-13">Quantity</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$3,680.00</h5>
-                                    <span class="text-muted font-13">Amount</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">Marco Shoes</h5>
-                                    <span class="text-muted font-13">05 March 2018</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$28.49</h5>
-                                    <span class="text-muted font-13">Price</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">69</h5>
-                                    <span class="text-muted font-13">Quantity</span>
-                                </td>
-                                <td>
-                                    <h5 class="font-14 my-1 fw-normal">$1,965.81</h5>
-                                    <span class="text-muted font-13">Amount</span>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div> <!-- end table-responsive-->
-            </div> <!-- end card-body-->
-        </div> <!-- end card-->
-    </div> <!-- end col-->
-</div>
-<?php
-
-
-?>
+    </div>
+<?php endif; ?>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script src="js/functions/principal/inicio/graficas/chart.js"></script>
+<script src="js/charts/index_charts/index_charts.js"></script>
 <script src="js/loading.js"></script>

@@ -65,12 +65,7 @@ $(document).ready(function () {
     $(document).on("change", "#rango_fechas", function () {
      
     });
-    $('#tablaRegistros').DataTable( {
-      dom: 'Bfrtip',
-      buttons: [
-          'copy', 'csv', 'excel', 'pdf', 'print'
-      ]
-  } );
+   
     function loading() {
       $(document).ready(function () {
         Swal.fire({

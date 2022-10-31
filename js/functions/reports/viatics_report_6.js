@@ -23,12 +23,7 @@ $(document).ready(function () {
         //--- --- ---//
       }
     });
-    $('#tablaRegistros2').DataTable( {
-      dom: 'Bfrtip',
-      buttons: [
-          'copy', 'csv', 'excel', 'pdf', 'print'
-      ]
-    } );
+   
     $(document).on("change", "#tgasto", function () {
       var tgasto = $(this).val();
       var txt_colaborador = $("#colaborador option:selected").val();
@@ -67,10 +62,7 @@ $(document).ready(function () {
       }
     });
     $(document).on("change", "#rango_fechas", function () {});
-    $("#tablaRegistros").DataTable({
-      dom: "Bfrtip",
-      buttons: ["copy", "csv", "excel", "pdf", "print"],
-    });
+   
     function loading() {
       $(document).ready(function () {
         Swal.fire({

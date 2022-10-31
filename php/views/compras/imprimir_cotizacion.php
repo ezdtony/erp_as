@@ -43,7 +43,7 @@ $getCotizacionInfo = $compras->getCotizacionInfo($id_cotizaciones);
                     <br>
                     <br>
 
-                    <table id="dataTableReport" class="table table-striped dt-responsive nowrap w-100 tablaGastos">
+                    <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100 tablaGastos">
                         <thead class="table-dark">
                             <tr>
                                 <th>No° de Partida</th>

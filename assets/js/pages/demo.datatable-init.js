@@ -14,7 +14,7 @@ $(document).ready(function () {
   });
   var a = $("#datatable-buttons").DataTable({
     lengthChange: !1,
-    buttons: ["copy", "print", "excel", "pdf"],
+    buttons: ["excel", "print", "copy", "pdf"],
     language: {
       paginate: {
         previous: "<i class='mdi mdi-chevron-left'>",

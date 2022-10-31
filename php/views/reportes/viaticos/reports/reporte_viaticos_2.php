@@ -119,7 +119,7 @@ $viaticos_reports = new Viatics;
                     <br>
                     <br>
                     <div class="table-responsive">
-                        <table id="tablaRegistros" class="table table-centered mb-0 table-striped table-responsive-sm">
+                    <table id="datatable-buttons" class="table table-centered mb-0 table-striped table-responsive-sm">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -194,14 +194,6 @@ $viaticos_reports = new Viatics;
 <?php
 
 ?>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
 <script src="js/functions/reports/viatics_report_2.js"></script>
 <script src="js/loading.js"></script>
