@@ -174,13 +174,25 @@
                         <ul class="side-nav-second-level">
                             <li>
                                 <a href="?submodule=compras_cotizaciones">Compra de Material</a>
-                            </li>
+                            </li><!-- 
+                            <li>
+                                <a href="?submodule=solicitudes_herramienta">Compra de Herramienta</a>
+                            </li> -->
                             <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
                                 <li>
                                     <a href="?submodule=catalogo_material">Catálogo de material</a>
                                 </li>
                                 <li>
-                                    <a href="?submodule=info_auxiliar">Información Auxiliar</a>
+                                    <a href="?submodule=inventario_material">Inventario de herramienta</a>
+                                </li>
+                                <li>
+                                    <a href="?submodule=asignaciones_herramienta">Asignaciones de herramienta</a>
+                                </li>
+                                <li>
+                                    <a href="?submodule=info_auxiliar_herramienta">Información Auxiliar Herramientas</a>
+                                </li>
+                                <li>
+                                    <a href="?submodule=info_auxiliar_material">Información Auxiliar Material</a>
                                 </li>
                             <?php endif; ?>
 

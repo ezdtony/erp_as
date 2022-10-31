@@ -92,8 +92,20 @@ include_once('php/views/topbar.php');
             case 'depositos_viaticos':
                 $include_file = 'php/views/viaticos/depositos_viaticos.php';
                 break;
-            case 'reportes':
-                $include_file = 'php/views/reportes/index_reportes.php';
+            case 'detalle_info':
+                $include_file = 'php/views/personal/detalle_info.php';
+                break;
+            case 'inventario_material':
+                $include_file = 'php/views/compras/inventario_material.php';
+                break;
+            case 'asignaciones_herramienta':
+                $include_file = 'php/views/compras/asignaciones_herramienta.php';
+                break;
+            case 'info_auxiliar_herramienta':
+                $include_file = 'php/views/compras/info_auxiliar_herramienta.php';
+                break;
+            case 'almacenes':
+                $include_file = 'php/views/compras/almacenes.php';
                 break;
             case 'reporte_viaticos':
                 $include_file = 'php/views/reportes/viaticos/index_reporte_viaticos.php';
@@ -131,8 +143,8 @@ include_once('php/views/topbar.php');
                 }
 
                 break;
-            case 'info_auxiliar':
-                $include_file = 'php/views/compras/info_auxiliar.php';
+            case 'info_auxiliar_material':
+                $include_file = 'php/views/compras/info_auxiliar_material.php';
                 break;
             case 'desglose_cotizacion':
                 if ($id_area >= 4) {

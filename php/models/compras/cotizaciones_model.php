@@ -10,7 +10,8 @@ class Compras
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);
-    }public function getClasificaciones()
+    }
+    public function getClasificaciones()
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
@@ -65,12 +66,12 @@ class Compras
          INNER JOIN asteleco_compras.status_partidas AS stp ON (stp.id_status_partidas = dc.id_status_partidas)
          INNER JOIN asteleco_compras.proveedores AS prov ON (dc.id_proveedores = prov.id_proveedores)
          WHERE id_cotizaciones = '$id_cotizaciones'";
-         //INNER JOIN asteleco_compras.marcas AS marc ON (marc.id_marcas = dc.id_marcas)
+        //INNER JOIN asteleco_compras.marcas AS marc ON (marc.id_marcas = dc.id_marcas)
         $getDeposits = $queries->getData($sql_deposits);
 
         return ($getDeposits);
     }
-    
+
     public function getCotizacionInfo($id_cotizaciones)
     {
         include_once('php/models/petitions.php');
@@ -170,6 +171,45 @@ class Compras
         $sql_deposits = "SELECT *
         FROM asteleco_compras.documentos_cotizacion 
         WHERE id_cotizaciones = '$id_cotizaciones'";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getKitsHerramienta()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.kits_herramienta";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getTiposKitsHerramienta()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT *
+        FROM asteleco_herramienta.tipos_kits_herramienta ORDER BY descripcion_tipo ASC";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    /* public function getTiposKitsHerramienta()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT kh.*, tkh.descripcion_tipo AS descripcion_tipo_kit_herramienta
+        FROM asteleco_herramienta.kits_herramienta AS kh
+        INNER JOIN asteleco_herramienta.tipos_kits_herramienta AS tkh ON tkh.id_tipos_kits_herramienta = kh.id_tipos_kits_herramienta";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    } */
+    public function getAlmacenes()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.almacenes";
         $getCatalogo = $queries->getData($sql_deposits);
 
         return ($getCatalogo);
