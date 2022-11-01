@@ -82,13 +82,14 @@
                                 </a>
                                 <div class="collapse" id="sidebarSecondLevel">
                                     <ul class="side-nav-third-level">
-
-
                                         <li>
                                             <a href="?submodule=saldos">Saldos</a>
                                         </li>
                                         <li>
                                             <a href="?submodule=depositos_viaticos">Depósitos</a>
+                                        </li>
+                                        <li>
+                                            <a href="?submodule=gastos_recientes">Gastos recientes</a>
                                         </li>
                                         <li>
                                             <a href="?submodule=gastos">Todos los gastos</a>
@@ -174,7 +175,8 @@
                         <ul class="side-nav-second-level">
                             <li>
                                 <a href="?submodule=compras_cotizaciones">Compra de Material</a>
-                            </li><!-- 
+                            </li>
+                            <!-- 
                             <li>
                                 <a href="?submodule=solicitudes_herramienta">Compra de Herramienta</a>
                             </li> -->

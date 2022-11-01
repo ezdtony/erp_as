@@ -65,6 +65,10 @@ include_once('php/views/topbar.php');
             case 'gastos':
                 $include_file = 'php/views/viaticos/gastos_general.php';
                 break;
+            case 'gastos_recientes':
+                $include_file = 'php/views/viaticos/gastos_recientes.php';
+                break;
+
             case 'gastos_usuario':
                 $include_file = 'php/views/viaticos/gastos_usuario.php';
                 break;
