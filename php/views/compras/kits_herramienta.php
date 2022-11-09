@@ -5,7 +5,12 @@ include_once('php/models/compras/cotizaciones_model.php');
 $compras = new Compras();
 $getInventarioHerramientaAdmin = $compras->getInventarioHerramientaAdmin();
 $getStatusHerramienta = $compras->getStatusHerramienta();
-$getKitsHerramienta = $compras->getKitsHerramienta();
+if ($id_area <= 3){
+
+    $getKitsHerramienta = $compras->getKitsHerramienta();
+}else{
+    $getKitsHerramienta = $compras->getKitsHerramientaUser($_SESSION['id_user']);
+}
 $getAlmacenesHerramienta = $compras->getAlmacenesHerramienta();
 ?>
 <div class="row">
@@ -44,8 +49,17 @@ $getAlmacenesHerramienta = $compras->getAlmacenesHerramienta();
                             </div>
                             <div id="collapse<?= $kit->id_kits_herramienta ?>" class="collapse" aria-labelledby="heading<?= $kit->id_kits_herramienta ?>" data-bs-parent="#custom-accordion-<?= $kit->id_kits_herramienta ?>">
                                 <div class="card-body table-responsive">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <button type="button" data-bs-toggle="modal" data-bs-target="#addHerramientaKit" class="btn btn-primary btnAddHerramientaKit" title="Agregar Kit" data-id-kit="<?= $kit->id_kits_herramienta ?>"><i class="mdi mdi-plus-thick"></i></button>
+                                        </div>
+                                        <?php if ($id_area <= 3) : ?>
+                                            <div class="col-md-1">
+                                                <button type="button" data-bs-toggle="modal" data-bs-target="#asignarKitHerramienta" class="btn btn-primary btnAsignarKit" title="Asignar Kit" data-id-kit="<?= $kit->id_kits_herramienta ?>"><i class="dripicons-user-group"></i></button>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
 
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#addHerramientaKit" class="btn btn-primary btnAddHerramientaKit" data-id-kit="<?= $kit->id_kits_herramienta ?>"><i class="mdi mdi-plus-thick"></i></button>
                                     <br>
                                     <br>
                                     <table id="tablaHerramienta<?= $kit->id_kits_herramienta ?>" class="table table-striped dt-responsive nowrap w-100 ">
@@ -153,6 +167,7 @@ $getAlmacenesHerramienta = $compras->getAlmacenesHerramienta();
 <!-- end row -->
 <?php
 include_once 'modals/agregarHerramientaKit.php';
+include_once 'modals/asignarKitHerramienta.php';
 ?>
 <script src="js/functions/compras/herramienta.js"></script>
 <script src="js/loading.js"></script>

@@ -184,6 +184,17 @@ class Compras
 
         return ($getCatalogo);
     }
+    public function getKitsHerramientaUser($id_user)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT kh.* FROM asteleco_herramienta.kits_herramienta AS kh
+                INNER JOIN asteleco_herramienta.asignaciones_kits  AS ask ON kh.id_kits_herramienta = ask.id_kits_herramienta
+                 WHERE id_personal = '$id_user'";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
     public function getTiposKitsHerramienta()
     {
         include_once('php/models/petitions.php');

@@ -303,6 +303,131 @@ $(document).ready(function () {
       }
     });
   });
+  $(document).on("click", ".btnAsignarKit", function () {
+    loading();
+    var id_kit = $(this).attr("data-id-kit");
+    $(".asignarKits").attr("data-id-kit", id_kit);
+
+    $.ajax({
+      url: "php/controllers/compras/herramientas_controller.php",
+      method: "POST",
+      data: {
+        mod: "getPersonalAssignedKit",
+        id_kit: id_kit,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+
+        if (data.response == true) {
+          Swal.close();
+          $("#personal_kit_modal_as").empty();
+          for (var i = 0; i < data.data.length; i++) {
+            $("#personal_kit_modal_as").append(
+              '<li id="li_' +
+                data.data[i].id_asignaciones_material +
+                '" class="list-group-item"><i class="uil-constructor"> ' +
+                data.data[i].nombre_completo +
+                '</i>      <button type="button" class="btn btn-danger float-right btn-sm unassign_personal_kit" id="' +
+                data.data[i].id_asignaciones_material +
+                '"><i class="mdi mdi-window-close"></i> </button>'
+            );
+          }
+        } else {
+          $("#personal_kit_modal_as").empty();
+          $("#personal_kit_modal_as").append(
+            '<li class="list-group-item"><i class="uil-constructor"> AÚN NO SE HA ASIGNADO A NADIE </i>'
+          );
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {});
+    Swal.close();
+  });
+  $(document).on("click", ".unassign_personal_kit", function () {
+    var id_asingacion = $(this).attr("id");
+    loading();
+    $.ajax({
+      url: "php/controllers/compras/herramientas_controller.php",
+      method: "POST",
+      data: {
+        mod: "unassignPersonalKit",
+        id_asingacion: id_asingacion,
+      },
+    })
+      .done(function (data) {
+        Swal.close();
+        var data = JSON.parse(data);
+        console.log(data);
+
+        if (data.response == true) {
+          $("#li_" + id_asingacion).remove();
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: "info",
+            title: "Se realizó la petición con éxito!!",
+          });
+        } else {
+        }
+
+        //--- --- ---//
+        //--- --- ---//
+      })
+      .fail(function (message) {});
+  });
+  $(document).on("click", ".asignarKits", function () {
+    loading();
+    var id_kit = $(this).attr("data-id-kit");
+    var ids_personal = $("#select_asignar_kit").val();
+
+    console.log(ids_personal);
+
+    $.ajax({
+      url: "php/controllers/compras/herramientas_controller.php",
+      method: "POST",
+      data: {
+        mod: "asignarKit",
+        id_kit: id_kit,
+        ids_personal: ids_personal,
+      },
+    })
+      .done(function (data) {
+        Swal.fire({
+          title: "¡Asignado!",
+          text: "El kit ha sido asignado.",
+          icon: "success",
+          timer: 1200,
+        }).then((result) => {
+          loading();
+          location.reload();
+        });
+
+        //--- --- ---//
+      })
+      .fail(function (message) {
+        VanillaToasts.create({
+          title: "Error",
+          text: "Ocurrió un error, intentelo nuevamente",
+          type: "error",
+          timeout: 1200,
+          positionClass: "topRight",
+        });
+      });
+    Swal.close();
+  });
 
   $(document).on("change", "#statusHerramienta", function () {
     loading();
@@ -382,6 +507,10 @@ $(document).ready(function () {
   $("#selectAlmacenHerramienta").select2({
     dropdownParent: $("#addHerramientaKit"),
   });
+  $("#select_asignar_kit").select2({
+    dropdownParent: $("#asignarKitHerramienta"),
+  });
+
   function loading() {
     Swal.fire({
       title: "Cargando...",

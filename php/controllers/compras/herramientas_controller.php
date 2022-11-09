@@ -315,3 +315,105 @@ function deleteHerramienta()
 
     echo json_encode($data);
 }
+function getPersonalAssignedKit()
+{
+    $id_kit = $_POST['id_kit'];
+
+    $queries = new Queries;
+
+    $stmt = "SELECT 
+    asp.id_asignaciones_material,
+    psn.id_lista_personal AS id_personal,
+    CONCAT(
+    acad.shortname_nivel, ' ', 
+    psn.nombres, ' ', 
+    psn.apellido_paterno, ' ',
+        psn.apellido_materno
+    ) AS nombre_completo
+    
+    FROM asteleco_personal.lista_personal AS psn
+    INNER JOIN asteleco_personal.niveles_academicos AS acad ON psn.id_niveles_academicos = acad.id_niveles_academicos
+    INNER JOIN asteleco_herramienta.asignaciones_kits AS asp ON psn.id_lista_personal = asp.id_personal AND asp.id_kits_herramienta = $id_kit
+        ";
+
+    $getPersonalAviable = $queries->getData($stmt);
+
+    if (!empty($getPersonalAviable)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getPersonalAviable
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function unassignPersonalKit()
+{
+    $id_asingacion = $_POST['id_asingacion'];
+
+    $queries = new Queries;
+
+    $stmt = "DELETE FROM asteleco_herramienta.asignaciones_kits WHERE id_asignaciones_material = $id_asingacion";
+
+
+    if ($queries->insertData($stmt)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+
+function asignarKit()
+{
+    $queries = new Queries;
+
+    $id_kit = $_POST['id_kit'];
+    $ids_personal = $_POST['ids_personal'];
+
+    foreach ($ids_personal as $id_personal) {
+        $stmt = "INSERT INTO asteleco_herramienta.asignaciones_kits (id_kits_herramienta, id_personal, fecha_asignacion) 
+        VALUES ('$id_kit', 
+        '$id_personal',
+        NOW())";
+
+        if ($queries->insertData($stmt)) {
+            $data = array(
+                'response' => true,
+            );
+            //--- --- ---//
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false,
+                'message'                => 'Ocurrió un error al actualizar el status'
+            );
+            //--- --- ---//
+        }
+    }
+
+    echo json_encode($data);
+}
