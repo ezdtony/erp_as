@@ -1,4 +1,3 @@
-<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#archivosCotizacion">Large Modal</button>
 <div class="modal fade" id="archivosCotizacion" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

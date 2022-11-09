@@ -214,4 +214,63 @@ class Compras
 
         return ($getCatalogo);
     }
+
+    public function getInventarioHerramientaAdmin()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.herramienta";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getStatusHerramienta()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.status_herramienta";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    public function getAlmacenesHerramienta()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.almacenes";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+    
+    public function getInventarioHerramientaPorKit($id_kit)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.herramienta WHERE id_kits_herramienta = $id_kit";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+
+    public function getAlmacenesByID($id_almacenes)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.almacenes WHERE id_almacenes = $id_almacenes";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+
+    public function getStatusHerramientaByID($id_status_herramienta)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_herramienta.status_herramienta WHERE id_status_herramienta = $id_status_herramienta";
+        $getCatalogo = $queries->getData($sql_deposits);
+
+        return ($getCatalogo);
+    }
+
 }

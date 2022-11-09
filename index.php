@@ -163,6 +163,12 @@ include_once('php/views/topbar.php');
             case 'catalogo_material':
                 $include_file = 'php/views/compras/catalogo_material.php';
                 break;
+            case 'inventario_herramienta':
+                $include_file = 'php/views/compras/inventario_herramienta.php';
+                break;
+            case 'kits_herramienta':
+                $include_file = 'php/views/compras/kits_herramienta.php';
+                break;
             default:
                 $include_file = 'php/views/principal.php';
                 break;

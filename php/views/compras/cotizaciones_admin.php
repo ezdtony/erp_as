@@ -8,7 +8,7 @@
                          </a> -->
                 </form>
             </div>
-            <h4 class="page-title">Compras | Coordinación | Cotizaciones</h4>
+            <h4 class="page-title">Compras | Coordinación | Solicitudes de Material</h4>
         </div>
     </div>
 </div>
