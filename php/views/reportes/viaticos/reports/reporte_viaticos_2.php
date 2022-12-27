@@ -114,72 +114,77 @@ $viaticos_reports = new Viatics;
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?> para el proyecto <?= $proyecto ?></h4>
-                    <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
-                    <br>
-                    <br>
-                    <div class="table-responsive">
-                    <table id="datatable-buttons" class="table table-centered mb-0 table-striped table-responsive-sm">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th class="text-center">ID</th>
-                                    <th class="text-center">Fecha</th>
-                                    <th class="text-center">Proyecto</th>
-                                    <th class="text-center">Importe</th>
-                                    <th class="text-center">T. Gasto</th>
-                                    <th class="text-center">Clasificación</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">F. Fiscal</th>
-                                    <th class="text-center">Comprobante</th>
-                                    <th class="text-center">Factura</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($getUserRegisters as $registers) :
+                    <?php if (!empty($getUserRegisters)) : ?>
+                        <h4 id="nombre_informe" class="header-title mb-3">Gastos Registrados de <?= $nombre_usuario ?> para el proyecto <?= $proyecto ?></h4>
+                        <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
+                        <br>
+                        <br>
+                        <div class="table-responsive">
 
-                                    $ruta_factura = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_pdf);
-                                    if ($registers->clasificacion == '1') {
-                                        $str_clasificacion = 'No deducible';
-                                    } else {
-                                        $str_clasificacion = 'Deducible';
-                                    }
-                                ?>
+                            <table id="datatable-buttons" data-table-name="Gastos <?= $nombre_usuario ?> del proyecto <?= $proyecto ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
+                                <thead class="table-dark">
                                     <tr>
-                                        <td class="text-center"><?= $registers->id_gastos ?></td>
-                                        <td class="text-center"><?= $registers->fecha_registro ?></td>
-                                        <td class="text-center"><?= $registers->codigo_proyecto ?></td>
-                                        <td class="text-center"><?= $registers->importe ?></td>
-                                        <td class="text-center"><?= $registers->tipo_gasto ?></td>
-                                        <td class="text-center"><?= $str_clasificacion ?></td>
-                                        <td class="text-center"><?= $registers->estatus ?></td>
-                                        <td class="text-center"><?= $registers->folio_fiscal ?></td>
-                                        <td class="table-action text-center">
-                                            <div>
-                                                <?php
-                                                $ruta_comprobante = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_img);
-                                                ?>
-                                                <a href="<?= $ruta_comprobante ?>" target="_blank"><button type="button" class="btn btn-info"><i class="mdi mdi-image"></i> </button></a>
-                                            </div>
-                                        </td>
-                                        <td class="table-action text-center">
-                                            <?php if ($ruta_factura == '') : ?>
-                                                <?php if ($ruta_factura == '' && $registers->clasificacion == '1') : ?>
-                                                    N/A
-                                                <?php else : ?>
-                                                    PENDIENTE
-                                                <?php endif; ?>
-                                            <?php else : ?>
-                                                <div>
-                                                    <a href="<?= $ruta_factura ?>" target="_blank"><button type="button" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </button></a>
-                                                </div>
-                                            <?php endif; ?>
-                                        </td>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">Fecha</th>
+                                        <th class="text-center">Proyecto</th>
+                                        <th class="text-center">Importe</th>
+                                        <th class="text-center">T. Gasto</th>
+                                        <th class="text-center">Clasificación</th>
+                                        <th class="text-center">Status</th>
+                                        <th class="text-center">F. Fiscal</th>
+                                        <th class="text-center">Comprobante</th>
+                                        <th class="text-center">Factura</th>
                                     </tr>
-                                <?php $total_depositos =  $total_depositos + floatval($registers->importe);
-                                endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($getUserRegisters as $registers) :
+
+                                        $ruta_factura = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_pdf);
+                                        if ($registers->clasificacion == '1') {
+                                            $str_clasificacion = 'No deducible';
+                                        } else {
+                                            $str_clasificacion = 'Deducible';
+                                        }
+                                    ?>
+                                        <tr>
+                                            <td class="text-center"><?= $registers->id_gastos ?></td>
+                                            <td class="text-center"><?= $registers->fecha_registro ?></td>
+                                            <td class="text-center"><?= $registers->codigo_proyecto ?></td>
+                                            <td class="text-center"><?= $registers->importe ?></td>
+                                            <td class="text-center"><?= $registers->tipo_gasto ?></td>
+                                            <td class="text-center"><?= $str_clasificacion ?></td>
+                                            <td class="text-center"><?= $registers->estatus ?></td>
+                                            <td class="text-center"><?= $registers->folio_fiscal ?></td>
+                                            <td class="table-action text-center">
+                                                <div>
+                                                    <?php
+                                                    $ruta_comprobante = str_replace("..", "http://astelecom.com.mx/viaticos", $registers->ruta_img);
+                                                    ?>
+                                                    <a href="<?= $ruta_comprobante ?>" target="_blank"><button type="button" class="btn btn-info"><i class="mdi mdi-image"></i> </button></a>
+                                                </div>
+                                            </td>
+                                            <td class="table-action text-center">
+                                                <?php if ($ruta_factura == '') : ?>
+                                                    <?php if ($ruta_factura == '' && $registers->clasificacion == '1') : ?>
+                                                        N/A
+                                                    <?php else : ?>
+                                                        PENDIENTE
+                                                    <?php endif; ?>
+                                                <?php else : ?>
+                                                    <div>
+                                                        <a href="<?= $ruta_factura ?>" target="_blank"><button type="button" class="btn btn-danger"><i class="mdi mdi-file-pdf-box"></i> </button></a>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php $total_depositos =  $total_depositos + floatval($registers->importe);
+                                    endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php else : ?>
+                        <h4 class="header-title mb-3">No se encontraron registros</h4>
+                    <?php endif; ?>
                     <h2 id="obra">Total: $ <?= $total_depositos; ?> </h2>
                     <br>
                 </div>

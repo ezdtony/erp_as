@@ -122,7 +122,7 @@ $viaticos_reports = new Viatics;
                     <br>
                     <br>
                     <div class="table-responsive">
-                        <table id="datatable-buttons" class="table table-centered mb-0 table-striped table-responsive-sm">
+                    <table id="datatable-buttons" data-table-name="Gastos <?= $nombre_usuario ?> de <?= $tipo_gasto ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>

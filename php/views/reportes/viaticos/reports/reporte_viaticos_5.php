@@ -112,7 +112,7 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                     <br>
                     <br>
                     <div class="table-responsive">
-                        <table id="datatable-buttons" class="table table-centered mb-0 table-striped table-responsive-sm">
+                    <table data-table-name="Depósitos del proyecto <?= $nombre_proy ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport2">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -154,7 +154,7 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                     <br>
                     <br>
                     <div class="table-responsive">
-                        <table id="tablaRegistros" class="table table-centered mb-0 table-striped table-responsive-sm">
+                    <table data-table-name="Gastos del proyecto <?= $nombre_proy ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>

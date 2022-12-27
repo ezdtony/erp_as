@@ -104,7 +104,7 @@ $getExpensesTypes = $viaticos_reports->getExpensesTypes();
                     <br>
                     <br>
                     <div class="table-responsive">
-                        <table id="datatable-buttons" class="table table-centered mb-0 table-striped table-responsive-sm">
+                    <table id="datatable-buttons" data-table-name="Gastos de <?= $tipo_gasto ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>

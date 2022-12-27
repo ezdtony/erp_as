@@ -562,11 +562,12 @@ function updateSpent()
 
     $queries = new Queries;
 
-    $sql_get_importe_og = "SELECT importe FROM asteleco_viaticos_erp.gastos WHERE id_gastos = $id_gasto";
+    $sql_get_importe_og = "SELECT importe, id_personal FROM asteleco_viaticos_erp.gastos WHERE id_gastos = $id_gasto";
     $get_importe_og = $queries->getData($sql_get_importe_og);
     $importe_og = $get_importe_og[0]->importe;
+    $id_personal_og = $get_importe_og[0]->id_personal;
 
-    $sql_update_saldo = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo + '$importe_og' WHERE id_personal = $id_author";
+    $sql_update_saldo = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo + '$importe_og' WHERE id_personal = $id_personal_og";
     $update_saldo = $queries->insertData($sql_update_saldo);
 
     if (!empty($update_saldo)) {

@@ -7,7 +7,7 @@
         <script>
           document.write(new Date().getFullYear());
         </script>
-        © ERP ASTELECOM  - Developed By GO-Tech 
+        © ERP ASTELECOM - Developed By GO-Tech
       </div>
     </div>
   </div>
@@ -56,9 +56,11 @@
 <!-- init js -->
 <script src="assets/js/ui/component.fileupload.js"></script>
 
-<!-- demo app -->
-<!-- end demo js-->
 
+
+<script src="assets/FileSaver/FileSaver.js"></script>
+<script src="assets/sheetjs/dist/xlsx.core.min.js"></script>
+<script src="assets/TableExport/src/stable/js/tableexport.js"></script>
 
 
 </body>

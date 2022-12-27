@@ -27,7 +27,6 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                         <div class="col">
                             <label class="form-label">Rango de fechas:</label>
                             <input type="text" class="form-control date" id="rango_fechas" data-toggle="date-picker" data-cancel-class="btn-warning">
-
                         </div>
                         <div class="col">
                             <label class="form-label">Colaborador:</label>
@@ -51,7 +50,6 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                             </select>
                         </div>
                         <div class="col">
-
                         </div>
                     </div>
                 </div>
@@ -86,13 +84,15 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                     <h5 id="fecha_solicitud" class="header-title mb-3">Entre fechas: <?= $fecha_1 ?> y <?= $fecha_2 ?></h5>
                     <br>
                     <br>
+                    <br>
+                    <br>
                     <div class="table-responsive">
-                        <table id="datatable-buttons" class="table table-centered mb-0 table-striped table-responsive-sm">
+                        <table id="datatable-buttons" data-table-name="Gastos <?= $nombre_usuario ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
                                     <th class="text-center">Fecha</th>
-                                    <th class="text-center">Proyecto</th>
+                                    <th class="text-center">Importe</th>
                                     <th class="text-center">T. Gasto</th>
                                     <th class="text-center">Clasificación</th>
                                     <th class="text-center">Status</th>

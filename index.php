@@ -111,15 +111,22 @@ include_once('php/views/topbar.php');
             case 'almacenes':
                 $include_file = 'php/views/compras/almacenes.php';
                 break;
+            case 'reportes':
+                $include_file = 'php/views/reportes/index_reportes.php';
+                break;
             case 'reporte_viaticos':
                 $include_file = 'php/views/reportes/viaticos/index_reporte_viaticos.php';
                 break;
             case 'captura_accesos':
                 $include_file = 'php/views/accesos/captura_accesos.php';
                 break;
+            case 'administrar_checklist':
+                $include_file = 'php/views/vehiculos/administrar_checklist.php';
+                break;
             case 'reporte_viaticos_1':
                 $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_1.php';
                 break;
+
             case 'reporte_viaticos_2':
                 $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_2.php';
                 break;
