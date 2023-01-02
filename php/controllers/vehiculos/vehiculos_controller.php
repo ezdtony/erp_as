@@ -266,7 +266,7 @@ function deletePregunta()
         //--- --- ---//
         $data = array(
             'response' => true,
-            'message'                => 'Pregunta guardada correctamente'
+            'message'                => 'Pregunta eliminada correctamente'
         );
         //--- --- ---//
 
@@ -282,8 +282,6 @@ function deletePregunta()
 
     echo json_encode($data);
 }
-
-
 
 function saveFamilyQuestion()
 {
@@ -308,6 +306,349 @@ function saveFamilyQuestion()
             'response' => true,
             'id_familias_preguntas'                => $id_familias_preguntas,
             'message'                => 'Familia de preguntas guardado correctamente'
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+    echo json_encode($data);
+}
+function saveVehiculo()
+{
+
+    $placas = $_POST['placas'];
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $color = $_POST['color'];
+    $nombre = $_POST['nombre'];
+    $observaciones = $_POST['observaciones'];
+
+
+    $queries = new Queries;
+
+    $stmt_gpp = "INSERT INTO asteleco_vehiculos.vehiculos 
+                    (nombre_vehiculo ,
+                    marca,
+                    placas,
+                    modelo,
+                    color,
+                    observaciones)
+            VALUES (
+                '$nombre',
+                '$marca',
+                '$placas',
+                '$modelo',
+                '$color',
+                '$observaciones'
+            )
+    ";
+
+    $insertarGrpoPreg = $queries->InsertData($stmt_gpp);
+    if (!empty($insertarGrpoPreg)) {
+        $id_vehiculos = $insertarGrpoPreg['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'id_vehiculos'                => $id_vehiculos,
+            'message'                => 'Unidad registrada correctamente'
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+    echo json_encode($data);
+}
+
+function getInfoVehiculo()
+{
+
+    $queries = new Queries;
+
+    $id_vehiculos = $_POST['id_vehiculos'];
+
+    $stmt = "SELECT * FROM asteleco_vehiculos.vehiculos WHERE id_vehiculos = $id_vehiculos";
+
+    $getTypeQuestions = $queries->getData($stmt);
+
+    if (!empty($getTypeQuestions)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getTypeQuestions
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function updateUnidad()
+{
+
+    $placas = $_POST['placas'];
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $color = $_POST['color'];
+    $nombre = $_POST['nombre'];
+    $observaciones = $_POST['observaciones'];
+    $id_vehiculos = $_POST['id_vehiculos'];
+
+
+    $queries = new Queries;
+
+    $stmt_gpp = "UPDATE asteleco_vehiculos.vehiculos 
+                    SET 
+                    nombre_vehiculo  = '$nombre',
+                    marca = '$marca',
+                    placas = '$placas',
+                    modelo = '$modelo',
+                    color = '$color',
+                    observaciones = '$observaciones'
+                    WHERE id_vehiculos = $id_vehiculos
+    ";
+
+    $insertarGrpoPreg = $queries->InsertData($stmt_gpp);
+    if (!empty($insertarGrpoPreg)) {
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'message'                => 'Unidad actualizada correctamente'
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+    echo json_encode($data);
+}
+
+function deleteVehiculo()
+{
+
+    $id_vehiculos = $_POST['id_vehiculos'];
+
+
+    $queries = new Queries;
+
+    $stmt_gpp = "DELETE FROM asteleco_vehiculos.vehiculos WHERE id_vehiculos = $id_vehiculos";
+
+    $insertarGrpoPreg = $queries->InsertData($stmt_gpp);
+    if (!empty($insertarGrpoPreg)) {
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'message'                => 'Unidad eliminada correctamente'
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+    echo json_encode($data);
+}
+
+function getAviablePersonalVehiculos()
+{
+
+    $queries = new Queries;
+
+    $stmt = "SELECT 
+    asu.id_asignaciones_unidades,
+    psn.id_lista_personal AS id_personal,
+    CONCAT(
+    acad.shortname_nivel, ' ', 
+    psn.nombres, ' ', 
+    psn.apellido_paterno, ' ',
+        psn.apellido_materno
+    ) AS nombre_completo
+    
+    FROM asteleco_personal.lista_personal AS psn
+    INNER JOIN asteleco_personal.niveles_academicos AS acad ON psn.id_niveles_academicos = acad.id_niveles_academicos
+    INNER JOIN asteleco_personal.niveles_areas AS niveles_areas ON psn.id_niveles_areas = niveles_areas.id_niveles_areas
+    LEFT JOIN asteleco_vehiculos.asignaciones_unidades AS asu ON psn.id_lista_personal = asu.id_personal AND asu.activa = 1
+    WHERE  niveles_areas.id_areas > 3
+        ";
+
+    $getPersonalAviable = $queries->getData($stmt);
+
+    $id_vehiculos = $_POST['id_vehiculos'];
+    $id_asignado = "";
+    $stmt_asigned = "SELECT 
+    asu.id_asignaciones_unidades,
+    psn.id_lista_personal AS id_personal,
+    CONCAT(
+    acad.shortname_nivel, ' ', 
+    psn.nombres, ' ', 
+    psn.apellido_paterno, ' ',
+        psn.apellido_materno
+    ) AS nombre_completo
+    
+    FROM asteleco_personal.lista_personal AS psn
+    INNER JOIN asteleco_personal.niveles_academicos AS acad ON psn.id_niveles_academicos = acad.id_niveles_academicos
+    INNER JOIN asteleco_personal.niveles_areas AS niveles_areas ON psn.id_niveles_areas = niveles_areas.id_niveles_areas
+    LEFT JOIN asteleco_vehiculos.asignaciones_unidades AS asu ON psn.id_lista_personal = asu.id_personal AND asu.activa = 1
+    WHERE asu.id_vehiculos ='$id_vehiculos'
+        ";
+
+    $getUserAsignado = $queries->getData($stmt_asigned);
+
+    if (!empty($getUserAsignado)) {
+        $id_asignado = $getUserAsignado[0]->id_personal;
+    }
+
+    if (!empty($getPersonalAviable)) {
+
+
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getPersonalAviable,
+            'id_asignado'                => $id_asignado
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+}
+function asignarVehiculosPersonal()
+{
+
+    $id_vehiculos = $_POST['id_vehiculos'];
+    $id_personal = $_POST['id_personal'];
+
+
+    $queries = new Queries;
+
+    $stmt_get_au = "SELECT * FROM asteleco_vehiculos.asignaciones_unidades WHERE id_vehiculos = $id_vehiculos AND activa = 1";
+    $getAU = $queries->getData($stmt_get_au);
+    if (empty($getAU)) {
+        $stmt_gpp = "INSERT INTO asteleco_vehiculos.asignaciones_unidades (id_vehiculos, id_personal, activa) VALUES ($id_vehiculos, $id_personal, 1)";
+        $insertarGrpoPreg = $queries->InsertData($stmt_gpp);
+    } else {
+        $stmt_gpp = "UPDATE asteleco_vehiculos.asignaciones_unidades SET activa = '0' WHERE id_vehiculos = $id_vehiculos";
+        $setAU = $queries->InsertData($stmt_gpp);
+
+        $stmt_gpp = "INSERT INTO asteleco_vehiculos.asignaciones_unidades (id_vehiculos, id_personal, activa) VALUES ($id_vehiculos, $id_personal, 1)";
+        $insertarGrpoPreg = $queries->InsertData($stmt_gpp);
+    }
+
+    if (!empty($insertarGrpoPreg)) {
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'message'                => 'Unidad asignada correctamente'
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+    echo json_encode($data);
+}
+function guardarRevision()
+{
+
+    $arr_questions = $_POST['arr_questions'];
+    $id_vehiculos = $_POST['id_vehiculos'];
+    $today_date = date("Y-m-d");
+
+
+    $queries = new Queries;
+    $stmt_update_past = "UPDATE asteleco_vehiculos.index_checlist_log SET activo = 0 WHERE id_vehiculo = $id_vehiculos AND DATE(date_log) = '$today_date'";
+    $updatePast = $queries->InsertData($stmt_update_past);
+
+    $stmt_gpp = "INSERT INTO asteleco_vehiculos.index_checlist_log 
+                    (date_log,
+                    id_personal,
+                    activo,
+                    id_vehiculo)
+            VALUES (
+                NOW(),
+                $_SESSION[id_user],
+                1,
+                $id_vehiculos
+            )
+    ";
+
+    $insertarIndex = $queries->InsertData($stmt_gpp);
+    if (!empty($insertarIndex)) {
+        $id_index = $insertarIndex['last_id'];
+
+        for ($i = 0; $i < count($arr_questions); $i++) {
+            $id_pregunta = $arr_questions[$i]['id_preguntas'];
+            $pregunta = $arr_questions[$i]['pregunta'];
+            $value = $arr_questions[$i]['value'];
+            $stmt_gpp = "INSERT INTO asteleco_vehiculos.checklist_log 
+                            (id_index_checlist_log,
+                            id_pregunta,
+                            pregunta,
+                            respuesta_sys)
+                    VALUES (
+                        $id_index,
+                        '$id_pregunta',
+                        '$pregunta',
+                        '$value'
+                    )
+            ";
+
+            $insertarIndex = $queries->InsertData($stmt_gpp);
+        }
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'id_index'                => $id_index
         );
         //--- --- ---//
 

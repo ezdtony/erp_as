@@ -123,6 +123,12 @@ include_once('php/views/topbar.php');
             case 'administrar_checklist':
                 $include_file = 'php/views/vehiculos/administrar_checklist.php';
                 break;
+            case 'unidades_admin':
+                $include_file = 'php/views/vehiculos/unidades_admin.php';
+                break;
+            case 'unidades_user':
+                $include_file = 'php/views/vehiculos/unidades_user.php';
+                break;
             case 'reporte_viaticos_1':
                 $include_file = 'php/views/reportes/viaticos/reports/reporte_viaticos_1.php';
                 break;

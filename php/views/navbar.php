@@ -293,31 +293,36 @@
             <?php } ?> -->
 
 
-            <?php if ($id_area <= 3) { ?>
-                <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarMantenimiento" aria-expanded="false" aria-controls="sidebarMantenimiento" class="side-nav-link">
-                        <i class="uil-car-sideview"></i>
-                        <span> Vehículos </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarMantenimiento">
-                        <ul class="side-nav-second-level">
+
+            <li class="side-nav-item">
+                <a data-bs-toggle="collapse" href="#sidebarMantenimiento" aria-expanded="false" aria-controls="sidebarMantenimiento" class="side-nav-link">
+                    <i class="uil-car-sideview"></i>
+                    <span> Vehículos </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="sidebarMantenimiento">
+                    <ul class="side-nav-second-level">
+                        <?php if ($id_area <= 3) : ?>
                             <li>
-                                <a href="#">Unidades</a>
+                                <a href="?submodule=unidades_admin">Unidades</a>
                             </li>
                             <li>
                                 <a href="?submodule=administrar_checklist">Administrar Check - List</a>
                             </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="side-nav-item">
-                    <a href="?submodule=reportes" class="side-nav-link">
-                        <i class=" uil-file-medical-alt"></i>
-                        <span> Reportes </span>
-                    </a>
-                </li>
-            <?php } ?>
+                        <?php else : ?>
+                            <li>
+                                <a href="?submodule=unidades_user">Unidades</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </li>
+            <li class="side-nav-item">
+                <a href="?submodule=reportes" class="side-nav-link">
+                    <i class=" uil-file-medical-alt"></i>
+                    <span> Reportes </span>
+                </a>
+            </li>
         </ul>
 
         <!-- Help Box -->

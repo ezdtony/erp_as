@@ -29,6 +29,16 @@ class ModeloVehiculos
 
         return ($getDeposits);
     }
+
+    public function getVehiculos()
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT * FROM asteleco_vehiculos.vehiculos";
+        $getDeposits = $queries->getData($sql_deposits);
+
+        return ($getDeposits);
+    }
     
     public function getPreguntas($id_grupos_preguntas)
     {
@@ -42,4 +52,27 @@ class ModeloVehiculos
 
         return ($getDeposits);
     }
+
+    public function getVehiculosUser($id_personal)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT veh.*, au.id_asignaciones_unidades FROM asteleco_vehiculos.vehiculos AS veh
+                            INNER JOIN asteleco_vehiculos.asignaciones_unidades AS au ON au.id_vehiculos = veh.id_vehiculos
+                            WHERE au.id_personal = $id_personal AND au.activa = 1";
+        $getDeposits = $queries->getData($sql_deposits);
+
+        return ($getDeposits);
+    }
+    public function getPosiblesRespuestas($id_tipos_preguntas)
+    {
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_deposits = "SELECT pr.* FROM asteleco_vehiculos.posibles_respuestas AS pr
+                            WHERE pr.id_tipos_preguntas = $id_tipos_preguntas";
+        $getDeposits = $queries->getData($sql_deposits);
+
+        return ($getDeposits);
+    }
+    
 }
