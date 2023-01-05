@@ -664,3 +664,143 @@ function guardarRevision()
 
     echo json_encode($data);
 }
+
+function getRevisiones()
+{
+
+    $id_vehiculos = $_POST['id_vehiculos'];
+    $today_date = date("Y-m-d");
+
+
+    $queries = new Queries;
+    $stmt_update_past = "SELECT icl.*, DATE(icl.date_log) AS fecha, CONCAT(psn.nombres, ' ', psn.apellido_paterno, ' ', psn.apellido_materno) AS nombre_completo,
+    CONCAT(veh.nombre_vehiculo, ' ', veh.modelo, ' PLACAS:', veh.placas) AS vehiculo
+    FROM asteleco_vehiculos.index_checlist_log AS icl
+    INNER JOIN asteleco_personal.lista_personal AS psn ON icl.id_personal = psn.id_lista_personal
+    INNER JOIN asteleco_vehiculos.vehiculos AS veh ON icl.id_vehiculo = veh.id_vehiculos
+    WHERE activo = 1 AND id_vehiculo = $id_vehiculos";
+    $getPast = $queries->getData($stmt_update_past);
+    if (!empty($getPast)) {
+        //--- --- ---//
+        $data = array(
+            'response' => true,
+            'data'                => $getPast
+        );
+        //--- --- ---//
+
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => ''
+        );
+        //--- --- ---//
+    }
+
+
+    echo json_encode($data);
+}
+
+function reportVehicleRevision()
+{
+    //--- --- ---//
+    $id_index_checlist = $_POST['id_index_checlist'];
+    $id_vehiculo = $_POST['id_vehiculo'];
+
+
+    $results = false;
+
+    $vehicleInfo = array();
+    $indexInfo = array();
+    $familiaPreguntas = array();
+
+
+    $queries = new Queries;
+    //--- --- ---//
+    $sqlGetVehicleInfo = "SELECT * FROM asteleco_vehiculos.vehiculos WHERE id_vehiculos = $id_vehiculo";
+    $vehicleInfo = $queries->getData($sqlGetVehicleInfo);
+    //--- --- ---//
+
+    //--- --- ---//
+    $sqlGetIndexInfo = "SELECT icl.*, DATE(icl.date_log) AS fecha, CONCAT(psn.nombres, ' ', psn.apellido_paterno, ' ', psn.apellido_materno) AS nombre_completo
+    FROM asteleco_vehiculos.index_checlist_log AS icl
+    INNER JOIN asteleco_personal.lista_personal AS psn ON icl.id_personal = psn.id_lista_personal
+    WHERE icl.id_index_checlist_log = $id_index_checlist";
+    $indexInfo = $queries->getData($sqlGetIndexInfo);
+    //--- --- ---//
+
+    //--- --- ---//
+    $sqlGetFamiliaPreguntas = "SELECT * FROM asteleco_vehiculos.familias_preguntas";
+    $familiaPreguntas = $queries->getData($sqlGetFamiliaPreguntas);
+    //--- --- ---//
+
+    //--- --- ---//
+    $dataFamilies = array();
+    foreach ($familiaPreguntas as $familias_preguntas) {
+        $resultsGroups = array();
+        $gruposPreguntas = array();
+        $id_familias_preguntas = $familias_preguntas->id_familias_preguntas;
+        $family = $familias_preguntas->descripcion;
+
+        $sqlGetGruposPreguntas = "SELECT * FROM asteleco_vehiculos.grupos_preguntas WHERE id_familias_preguntas = $id_familias_preguntas";
+        $gruposPreguntas = $queries->getData($sqlGetGruposPreguntas);
+
+        foreach ($gruposPreguntas as $grupos_preguntas) {
+            $grupoAndPreguntas = array();
+            $preguntas = array();
+            $id_grupos_preguntas = $grupos_preguntas->id_grupos_preguntas;
+            $group = $grupos_preguntas->descripcion;
+
+            $sqlGetPreguntas = "SELECT * FROM asteleco_vehiculos.preguntas WHERE id_grupos_preguntas = $id_grupos_preguntas";
+            $preguntas = $queries->getData($sqlGetPreguntas);
+
+            foreach ($preguntas as $pregunta) {
+                $respuestas = array();
+                $id_preguntas = $pregunta->id_preguntas;
+                $question = $pregunta->pregunta;
+
+                $sqlGetChecklistLog = "SELECT * FROM asteleco_vehiculos.checklist_log WHERE id_index_checlist_log = $id_index_checlist AND id_pregunta = $id_preguntas";
+                $checklistLog = $queries->getData($sqlGetChecklistLog);
+
+                foreach ($checklistLog as $checklist_log) {
+                    $id_checklist_log = $checklist_log->id_checklist_log;
+                    $respuesta_sys = $checklist_log->respuesta_sys;
+                    if ($respuesta_sys == '') {
+                        $respuesta_sys = '-';
+                    }
+
+                    $results_log = array(
+                        'pregunta' => $question,
+                        'respuesta_sys' => $respuesta_sys,
+                    );
+                    $respuestas[] = $results_log;
+                }
+                $grupoAndPreguntas[] = array(
+                    'pregunta' => $question,
+                    'respuestas' => $respuestas,
+                );
+            }
+            $resultsGroups[] = array(
+                'grupo' => $group,
+                'preguntas' => $grupoAndPreguntas,
+            );
+        }
+
+        $dataFamilies[] = array(
+            'familia' => $family,
+            'grupos' => $resultsGroups,
+        );
+    }
+
+
+    $results = array(
+        'response' => true,
+        'data' => array(
+            'vehicleInfo' => $vehicleInfo,
+            'indexInfo' => $indexInfo,
+            'dataFamilies' => $dataFamilies,
+        )
+    );
+
+    echo json_encode($results);
+}

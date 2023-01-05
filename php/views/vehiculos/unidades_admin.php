@@ -24,56 +24,57 @@
                 <br>
                 <br>
                 <!-- <div style="overflow-x: auto;"> -->
-                    <table id="tablaUnidades" class="table table-striped dt-responsive nowrap w-100 ">
-                        <thead>
-                            <tr>
-                                <th>Placas</th>
-                                <th>Nombre</th>
-                                <th>Marca</th>
-                                <th>Modelo (Año)</th>
-                                <th>Color</th>
-                                <th>Observaciones</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            include_once('php/models/vehiculos/vehiculos_model.php');
-                            $vehiculos_model = new ModeloVehiculos;
-                            $getVehiculos = $vehiculos_model->getVehiculos();
-                            ?>
-                            <?php if (!empty($getVehiculos)) : ?>
-                                <?php foreach ($getVehiculos as $vehiculos) : ?>
-                                    <tr id="trVehiculo<?= $vehiculos->id_vehiculos ?>">
-                                        <td id="tdPlacas<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->placas ?></td>
-                                        <td id="tdNombre<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->nombre_vehiculo ?></td>
-                                        <td id="tdMarca<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->marca ?></td>
-                                        <td id="tdModelo<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->modelo ?></td>
-                                        <td id="tdColor<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->color ?></td>
-                                        <td id="tdObservaciones<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->observaciones ?></td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Opciones
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <a class="dropdown-item asignarUnidad" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#asignarUnidad" data-id="<?= $vehiculos->id_vehiculos ?>">Asignar Unidad</a>
-                                                    <a class="dropdown-item registrarRevision" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#registrarRevision" data-id="<?= $vehiculos->id_vehiculos ?>">Registrar revisión</a>
-                                                    <a class="dropdown-item historicoRevisiones" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#historicoRevisiones" data-id="<?= $vehiculos->id_vehiculos ?>">Histórico de revisiones</a>
-                                                    <a class="dropdown-item editarUnidad" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#editarUnidad" data-id="<?= $vehiculos->id_vehiculos ?>">Editar Unidad</a>
-                                                    <a class="dropdown-item deleteUnidad" data-id="<?= $vehiculos->id_vehiculos ?>">Eliminar unidad</a>
-                                                </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else : ?>
-                                <tr class="emptytable">
-                                    <td colspan="100%" class="text-center">No hay registros</td>
-                                </tr>
-                            <?php endif; ?>
+                <table id="tablaUnidades" class="table table-striped dt-responsive nowrap w-100 ">
+                    <thead>
+                        <tr>
+                            <th>Placas</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Modelo (Año)</th>
+                            <th>Color</th>
+                            <th>Observaciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        include_once('php/models/vehiculos/vehiculos_model.php');
+                        $vehiculos_model = new ModeloVehiculos;
+                        $getVehiculos = $vehiculos_model->getVehiculos();
+                        ?>
+                        <?php if (!empty($getVehiculos)) : ?>
+                            <?php foreach ($getVehiculos as $vehiculos) : ?>
+                                <tr id="trVehiculo<?= $vehiculos->id_vehiculos ?>">
+                                    <td id="tdPlacas<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->placas ?></td>
+                                    <td id="tdNombre<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->nombre_vehiculo ?></td>
+                                    <td id="tdMarca<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->marca ?></td>
+                                    <td id="tdModelo<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->modelo ?></td>
+                                    <td id="tdColor<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->color ?></td>
+                                    <td id="tdObservaciones<?= $vehiculos->id_vehiculos ?>"><?= $vehiculos->observaciones ?></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Opciones
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item asignarUnidad" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#asignarUnidad" data-id="<?= $vehiculos->id_vehiculos ?>">Asignar Unidad</a>
+                                                <a class="dropdown-item registrarRevision" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#registrarRevision" data-id="<?= $vehiculos->id_vehiculos ?>">Registrar revisión</a>
+                                                <a class="dropdown-item historialRevisiones" data-id="<?= $vehiculos->id_vehiculos ?>" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-target="#historialRevisiones" data-bs-toggle="modal" data-bs-placement="top" title="Histórico de revisiones">Histórico de revisiones</a>
 
-                        </tbody>
-                    </table>
+                                                <a class="dropdown-item editarUnidad" data-tipo-pregunta="<? $vehiculos->id_vehiculos ?>" data-bs-toggle="modal" data-bs-target="#editarUnidad" data-id="<?= $vehiculos->id_vehiculos ?>">Editar Unidad</a>
+                                                <a class="dropdown-item deleteUnidad" data-id="<?= $vehiculos->id_vehiculos ?>">Eliminar unidad</a>
+                                            </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr class="emptytable">
+                                <td colspan="100%" class="text-center">No hay registros</td>
+                            </tr>
+                        <?php endif; ?>
+
+                    </tbody>
+                </table>
                 <!-- </div> -->
 
                 <br>
@@ -89,6 +90,15 @@
 include_once('php/views/vehiculos/modals/registrarUnidad.php');
 include_once('php/views/vehiculos/modals/editarUnidad.php');
 include_once('php/views/vehiculos/modals/asignarUnidad.php');
+
+
+include_once('php/views/vehiculos/modals/modalCheckList.php');
+include_once('php/views/vehiculos/modals/historialRevisiones.php');
 ?>
+<script src="js/jsPDF/jspdf.umd.min.js"></script>
+<script src="js/jsPDF/jspdf.plugin.autotable.js"></script>
 <script src="js/functions/vehiculos/vehiculos.js"></script>
+<script src="js/functions/vehiculos/getLogos.js"></script>
+<script src="js/functions/vehiculos/generatePDFRevision.js"></script>
+<script src="js/functions/vehiculos/downloadPDFRevision.js"></script>
 <script src="js/loading.js"></script>

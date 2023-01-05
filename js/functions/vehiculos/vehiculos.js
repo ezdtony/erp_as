@@ -908,6 +908,12 @@ $(document).ready(function () {
               id_vehiculos +
               '">Histórico de revisiones</a>';
             html +=
+              '<a class="dropdown-item historialRevisiones" data-id="' +
+              id_vehiculos +
+              '" data-tipo-pregunta="' +
+              id_vehiculos +
+              '" data-bs-target="#historialRevisiones" data-bs-toggle="modal" data-bs-placement="top" title="Histórico de revisiones">Histórico de revisiones</a>';
+            html +=
               '<a class="dropdown-item deleteUnidad" data-id="' +
               id_vehiculos +
               '">Eliminar unidad</a>';
@@ -1066,6 +1072,13 @@ $(document).ready(function () {
           Swal.fire({
             title: "Gracias por responder las preguntas",
           });
+          $("#registrarRevision input").val("");
+          $("#registrarRevision textarea").val("");
+          $("#registrarRevision select").val("");
+          $("#registrarRevision input[type='checkbox']")
+            .prop("checked", false)
+            .change();
+          $("#registrarRevision").modal("hide");
         } else {
         }
       });
@@ -1091,6 +1104,62 @@ $(document).ready(function () {
        
       }
     }); */
+  });
+  $(document).on("click", ".historialRevisiones", function () {
+    loading();
+    var id_vehiculos = $(this).attr("data-id");
+    $("#tableRevisiones").find("tr:gt(0)").remove();
+
+    $.ajax({
+      url: "php/controllers/vehiculos/vehiculos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getRevisiones",
+        id_vehiculos: id_vehiculos,
+      },
+    }).done(function (info_revisiones) {
+      var info_revisiones = JSON.parse(info_revisiones);
+
+      $("#vehiculoHistorial").html("");
+      if (info_revisiones.response == true) {
+        var vehicle_name = info_revisiones.data[0].vehiculo;
+        $("#vehiculoHistorial").html(vehicle_name);
+        var html = "";
+        for (var i = 0; i < info_revisiones.data.length; i++) {
+          var fecha = info_revisiones.data[i].fecha;
+          var nombre = info_revisiones.data[i].nombre_completo;
+          var fecha = fecha.split(" ");
+          var fecha = fecha[0];
+          var fecha = fecha.split("-");
+          var fecha = fecha[2] + "/" + fecha[1] + "/" + fecha[0];
+
+          html += "<tr>";
+          html += "<td>" + fecha + "</td>";
+          html += "<td>" + nombre + "</td>";
+          html +=
+            '<td><button class="btn btn-danger btn-sm generarPDFRevision" data-id-vehiculo="' +
+            id_vehiculos +
+            '" data-id="' +
+            info_revisiones.data[i].id_index_checlist_log +
+            '"><i class="fa-solid fa-file-pdf"></i></button></td>';
+          html += "</tr>";
+        }
+        $("#tableRevisiones").append(html);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se encontraron revisiones",
+          timer: 2000,
+        });
+        var html2 = "";
+        html2 += "<tr>";
+        html2 += '<td colspan="3">No se encontraron revisiones</td>';
+        html2 += "</tr>";
+        $("#tableRevisiones").append(html2);
+      }
+    });
+    Swal.close();
   });
 
   $("#personalVehiculo").select2({

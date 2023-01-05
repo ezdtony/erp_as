@@ -46,7 +46,7 @@
                                 </div>
                         </td>
                     </tr> -->
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <!-- Portlet card -->
                         <div id="card_proyect_<?= $vehiculos->id_vehiculos ?>" class="card bg-primary text-white">
                             <div class="card-body">
@@ -66,7 +66,8 @@
                                     </p>
                                     <br> -->
 
-                                    <button type="button" class="btn btn-success registrarRevision" data-id="<?= $vehiculos->id_vehiculos ?>" data-bs-target="#registrarRevision" data-bs-toggle="modal" data-bs-placement="top" title="Detalle de proyecto">REGISTRAR REVISIÓN <i class="mdi mdi-information-outline"></i> </button>
+                                    <button type="button" style="margin: 5px 3px 5px 5px;" class="btn btn-success registrarRevision" data-id="<?= $vehiculos->id_vehiculos ?>" data-bs-target="#registrarRevision" data-bs-toggle="modal" data-bs-placement="top" title="Registrar revisión">REGISTRAR REVISIÓN <i class="mdi mdi-information-outline"></i> </button>
+                                    <button type="button" style="margin: 5px 3px 5px 5px;" class="btn btn-info historialRevisiones" data-id="<?= $vehiculos->id_vehiculos ?>" data-bs-target="#historialRevisiones" data-bs-toggle="modal" data-bs-placement="top" title="Histórico de revisiones"><i class="mdi mdi-book-open-page-variant"></i> </button>
                                 </div>
                             </div>
                         </div> <!-- end card-->
@@ -85,6 +86,13 @@
 </div>
 <?php
 include_once('php/views/vehiculos/modals/modalCheckList.php');
+include_once('php/views/vehiculos/modals/historialRevisiones.php');
 ?>
+
+<script src="js/jsPDF/jspdf.umd.min.js"></script>
+<script src="js/jsPDF/jspdf.plugin.autotable.js"></script>
 <script src="js/functions/vehiculos/vehiculos.js"></script>
+<script src="js/functions/vehiculos/getLogos.js"></script>
+<script src="js/functions/vehiculos/generatePDFRevision.js"></script>
+<script src="js/functions/vehiculos/downloadPDFRevision.js"></script>
 <script src="js/loading.js"></script>
