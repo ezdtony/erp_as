@@ -14,7 +14,7 @@ $getTiposPreguntas = $vehiculos_model->getTiposPreguntas();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body ">
-                <h3>REVISIÓN DE UNIDAD LOBO 2003</h3>
+                <h3>REVISIÓN DE UNIDAD</h3>
                 <div class="form-floating mb-3">
                     <div class="row" id="rowFamiliasPreguntas">
                         <?php foreach ($getFamiliasPreguntas as $familia_preguntas) : ?>
@@ -46,7 +46,7 @@ $getTiposPreguntas = $vehiculos_model->getTiposPreguntas();
                                                                         </div>
 
                                                                         <br>
-
+                                                                        <div class="table-responsive">
                                                                         <table class="table table-hover table-centered mb-0 table-responsive tablePreguntasFamilia<?= $familia_preguntas->id_familias_preguntas ?>" id="preguntasGrupo<?= $grupos_preguntas->id_grupos_preguntas ?>">
                                                                             <thead>
                                                                                 <tr>
@@ -92,6 +92,7 @@ $getTiposPreguntas = $vehiculos_model->getTiposPreguntas();
                                                                                 <?php endif; ?>
                                                                             </tbody>
                                                                         </table>
+                                                                        </div>
                                                                     </div>
                                                                     <br>
                                                                     <br>

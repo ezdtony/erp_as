@@ -194,8 +194,7 @@ function downloadReportVehicleRevision(data) {
           for (let q = 0; q < questions.length; q++) {
             var question = questions[q].pregunta;
             if (
-              questions[q].respuestas[0].respuesta_sys == null ||
-              questions[q].respuestas[0].respuesta_sys == ""
+              questions[q].respuestas.length==0
             ) {
               var answer = "No hay respuesta registrada";
             } else {
