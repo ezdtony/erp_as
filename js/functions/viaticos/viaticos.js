@@ -879,7 +879,8 @@ $(document).ready(function () {
               text: data.message,
               timer: 2000,
             }).then((result) => {
-              location.reload();
+              $("#trGasto"+id_gasto).remove();
+            //  location.reload();
             });
           } else {
             Swal.fire({

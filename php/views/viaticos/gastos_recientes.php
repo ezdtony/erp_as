@@ -98,7 +98,7 @@
                             }
 
                         ?>
-                            <tr>
+                            <tr id="trGasto<?= $deposits->id_gastos ?>">
                                 <td><?= $deposits->id_gastos ?></td>
                                 <td><?= $deposits->fecha_registro ?></td>
                                 <td><?= $deposits->usuario_gasto ?></td>
