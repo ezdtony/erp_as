@@ -53,7 +53,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Importe *</label>
-                    <input data-toggle="touchspin" id="importe" type="number" data-bts-max="10000000" data-step="0.1" data-decimals="2" data-bts-prefix="$">
+                    <input data-toggle="touchspin" id="importe" type="number" data-bts-max="10000000" data-step="0.01" data-decimals="2" data-bts-prefix="$">
                 </div>
             </div>
             <div class="modal-footer">
