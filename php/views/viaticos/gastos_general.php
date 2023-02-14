@@ -205,14 +205,15 @@ include_once('php/views/viaticos/modals/seguimientoGastos.php');
         col_2: 'select',
         col_6: "select",
         col_7: "select",
-        col_8: "none",
+        col_8: "select",
         col_9: "none",
-        col_10: "select",
-        col_11: "none",
+        col_10: "none",
+        col_11: "select",
         col_12: "none",
         col_13: "none",
-        col_15: "none",
+        col_14: "none",
         col_16: "none",
+        col_17: "none",
     });
     tGastos.init();
 </script>
