@@ -749,3 +749,226 @@ function changeSpentStatus()
 
     echo json_encode($data);
 }
+
+function getSeguimientoGasto()
+{
+
+
+    $id_gasto = $_POST['id_gasto'];
+
+    $queries = new Queries;
+
+
+    $sqlGetSeguimientos = "SELECT sgl.*, CONCAT(pers.nombres, ' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS nombre
+    FROM  asteleco_viaticos_erp.seguimiento_gastos AS sg
+    INNER JOIN asteleco_viaticos_erp.seguimiento_gastos_log AS sgl ON sg.id_seguimiento_gastos = sgl.id_seguimiento_gastos
+    INNER JOIN asteleco_personal.lista_personal AS pers ON pers.id_lista_personal = sgl.id_personal
+     WHERE sg.id_gastos = $id_gasto ORDER BY sgl.date_log ASC";
+    $getSeguimientos = $queries->getData($sqlGetSeguimientos);
+    $html_chat = "";
+
+    if (!empty($getSeguimientos)) {
+
+        foreach ($getSeguimientos as $seguimientos) {
+
+            $mensaje = $seguimientos->mensaje;
+            $id_personal = $seguimientos->id_personal;
+            $nombre = $seguimientos->nombre;
+            $date_log = $seguimientos->date_log;
+            $id_seguimiento_gastos_log = $seguimientos->id_seguimiento_gastos_log;
+            $arr_date_log = explode(" ", $date_log);
+            $arr_date_only = explode("-", $arr_date_log[0]);
+
+            $date = $arr_date_only[2] . " / " . $arr_date_only[1] . " / " . $arr_date_only[0];
+            $time = $arr_date_log[1];
+
+            if ($seguimientos->id_personal == $_SESSION['id_user']) {
+
+                $html_chat .= '<li class="clearfix odd" id="divComentario'.$id_seguimiento_gastos_log.'">';
+                $html_chat .= '<div class="chat-avatar">';
+                $html_chat .= '<img src="images/user_default_chat.png" class="rounded" alt="dominic">';
+                $html_chat .= '<i></i>';
+                $html_chat .= '</div>';
+                $html_chat .= '<div class="conversation-text">';
+                $html_chat .= '<div class="ctext-wrap">';
+                $html_chat .= '<i>' . $nombre . '</i>';
+                $html_chat .= '<p>';
+                $html_chat .= '' . $mensaje . '';
+                $html_chat .= '</p><br>';
+                $html_chat .= '<figcaption class="blockquote-footer">' . $date . '  ' . $time . '</figcaption>';
+                $html_chat .= '</p>';
+                $html_chat .= '</div>';
+                $html_chat .= '</div>';
+                $html_chat .= '<div class="conversation-actions dropdown">';
+                $html_chat .= '<button class="btn btn-sm btn-link" data-bs-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>';
+                $html_chat .= '';
+                $html_chat .= '<div class="dropdown-menu">';
+                /* $html_chat .= '<a data-id-comentario="' . $id_seguimiento_gastos_log . '" class="dropdown-item editarCommentarioGasto" href="#">Editar</a>'; */
+                $html_chat .= '<a data-id-comentario="' . $id_seguimiento_gastos_log . '" class="dropdown-item borrarCommentarioGasto" href="#">Borrar</a>';
+                $html_chat .= '</div>';
+                $html_chat .= '</div>';
+                $html_chat .= '</li>';
+            } else {
+                $html_chat .= '<li class="clearfix">';
+                $html_chat .= '<div class="chat-avatar">';
+                $html_chat .= '<img src="images/user_chat.png" class="rounded" alt="Shreyu N">';
+                $html_chat .= '<i></i>';
+                $html_chat .= '</div>';
+                $html_chat .= '<div class="conversation-text">';
+                $html_chat .= '<div class="ctext-wrap">';
+                $html_chat .= '<i>' . $nombre . '</i>';
+                $html_chat .= '<p>';
+                $html_chat .= '' . $mensaje . '';
+                $html_chat .= '</p><br>';
+                $html_chat .= '<figcaption class="blockquote-footer">' . $date . '  ' . $time . '</figcaption>';
+                $html_chat .= '</div>';
+                $html_chat .= '</div>';
+                $html_chat .= '</li>';
+            }
+        }
+    }
+    if (!empty($getSeguimientos)) {
+        $data = array(
+            'response' => true,
+            'message'                => 'Petición realizada con éxito!!',
+            'html' => $html_chat
+        );
+    } else {
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al obtener la información',
+        );
+    }
+
+
+    echo json_encode($data);
+}
+
+function saveSeguimientoGasto()
+{
+    $id_gasto = $_POST['id_gasto'];
+    $comentario_gasto = $_POST['comentario_gasto'];
+
+    $queries = new Queries;
+
+    $sql_get_index = "SELECT * FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gasto";
+    $get_index = $queries->getData($sql_get_index);
+    if (!empty($get_index)) {
+        $id_seguimiento_gastos = $get_index[0]->id_seguimiento_gastos;
+
+        $sql_insertar_comentario = "INSERT INTO asteleco_viaticos_erp.seguimiento_gastos_log(
+            id_seguimiento_gastos,
+            mensaje,
+            id_personal,
+            date_log
+            )VALUES(
+            '$id_seguimiento_gastos',
+            '$comentario_gasto',
+            $_SESSION[id_user],
+            NOW()
+            )";
+        $insertCommentary = $queries->insertData($sql_insertar_comentario);
+
+
+
+        //$last_id = $getInfoRequest['last_id'];
+        if (!empty($insertCommentary)) {
+            $id_seguimiento_gastos_log = $insertCommentary['last_id'];
+
+            $data = array(
+                'response' => true,
+                'message'                => 'Se registró el comentario!!',
+                'id_seguimiento_gastos_log' => $id_seguimiento_gastos_log
+            );
+            //--- --- ---//
+
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false,
+                'message'                => 'Error al registrar el comentario :('
+            );
+            //--- --- ---//
+        }
+    } else {
+
+        $sql_insert_index = "INSERT INTO asteleco_viaticos_erp.seguimiento_gastos (id_gastos, date_log) VALUES(
+            $id_gasto,
+            NOW()
+        )";
+        $insert_index = $queries->insertData($sql_insert_index);
+        if (!empty($insert_index)) {
+            $id_seguimiento_gastos = $insert_index['last_id'];
+
+            $sql_insertar_comentario = "INSERT INTO asteleco_viaticos_erp.seguimiento_gastos_log(
+            id_seguimiento_gastos,
+            mensaje,
+            id_personal,
+            date_log
+            )VALUES(
+            '$id_seguimiento_gastos',
+            '$comentario_gasto',
+            $_SESSION[id_user],
+            NOW()
+            )";
+            $insertCommentary = $queries->insertData($sql_insertar_comentario);
+
+
+
+            //$last_id = $getInfoRequest['last_id'];
+            if (!empty($insertCommentary)) {
+                $id_seguimiento_gastos_log = $insertCommentary['last_id'];
+
+                $data = array(
+                    'response' => true,
+                    'message'                => 'Se registró el comentario!!',
+                    'id_seguimiento_gastos_log' => $id_seguimiento_gastos_log
+                );
+                //--- --- ---//
+            } else {
+                //--- --- ---//
+                $data = array(
+                    'response' => false,
+                    'message'                => 'Error al actualizar el saldo del destinatario :('
+                );
+                //--- --- ---//
+            }
+        }
+    }
+
+
+    echo json_encode($data);
+}
+function deleteSeguimientoGasto()
+{
+    $id_comentario = $_POST['id_comentario'];
+
+    $queries = new Queries;
+
+        $sql_insertar_comentario = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos_log WHERE id_seguimiento_gastos_log = $id_comentario;";
+        $insertCommentary = $queries->insertData($sql_insertar_comentario);
+
+
+
+        //$last_id = $getInfoRequest['last_id'];
+        if (!empty($insertCommentary)) {
+
+            $data = array(
+                'response' => true,
+                'message'                => 'Se eliminó el comentario!!',
+            );
+            //--- --- ---//
+
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false,
+                'message'                => 'Error al eliminar el comentario :('
+            );
+            //--- --- ---//
+        }
+  
+
+
+    echo json_encode($data);
+}

@@ -24,7 +24,9 @@ $(document).ready(function () {
           );
           for (var i = 0; i < data.data.length; i++) {
             $("#proyecto").append(
-              '<option codigo_proyecto = "'+data.data[i].codigo_proyecto+'" value="' +
+              '<option codigo_proyecto = "' +
+                data.data[i].codigo_proyecto +
+                '" value="' +
                 data.data[i].id_proyectos +
                 '">' +
                 data.data[i].nombre_proyecto +
@@ -879,8 +881,8 @@ $(document).ready(function () {
               text: data.message,
               timer: 2000,
             }).then((result) => {
-              $("#trGasto"+id_gasto).remove();
-            //  location.reload();
+              $("#trGasto" + id_gasto).remove();
+              //  location.reload();
             });
           } else {
             Swal.fire({
@@ -953,6 +955,219 @@ $(document).ready(function () {
       }
     }
     navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+  });
+  $(document).on("click", ".addSeguimientoGasto", function () {
+    loading();
+    $(".chatSeguimientoGasto").empty();
+    var id_gasto = $(this).attr("data-id-gasto");
+    var user_commentary = $("#user_commentary").val();
+    $(".enviarComentarioSeguimiento").attr("data-id-gasto", id_gasto);
+    $("#seguimientoGastoLabel").text(
+      "Seguimiento de Gasto. Folio: " + id_gasto
+    );
+    html = "";
+
+    $(".chatSeguimientoGasto").append(html);
+
+    $.ajax({
+      url: "php/controllers/viaticos/viaticos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getSeguimientoGasto",
+        id_gasto: id_gasto,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+        //--- --- ---//
+        $(".chatSeguimientoGasto").html(data.html);
+        //--- --- ---//
+      })
+      .fail(function (message) {});
+
+    Swal.close();
+  });
+  $(document).on("click", ".enviarComentarioSeguimiento", function () {
+    loading();
+    var id_gasto = $(this).attr("data-id-gasto");
+    var comentario_gasto = $(".comentario_gasto").val();
+    var user_commentary = $("#user_commentary").val();
+    var today = new Date();
+
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var date =
+      today.getDate() +
+      " / " +
+      (today.getMonth() + 1) +
+      " / " +
+      today.getFullYear();
+
+    if (comentario_gasto.length > 0) {
+      $.ajax({
+        url: "php/controllers/viaticos/viaticos_controller.php",
+        method: "POST",
+        data: {
+          mod: "saveSeguimientoGasto",
+          id_gasto: id_gasto,
+          comentario_gasto: comentario_gasto,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          //console.log(data);
+          var id_seguimiento_gastos_log = data.id_seguimiento_gastos;
+          //--- --- ---//
+          html = "";
+          html +=
+            '<li class="clearfix odd" id="divComentario' +
+            id_seguimiento_gastos_log +
+            ">";
+          html += '<div class="chat-avatar">';
+          html +=
+            '<img src="images/user_default_chat.png" class="rounded" alt="dominic">';
+          html += "</div>";
+          html += '<div class="conversation-text">';
+          html += '<div class="ctext-wrap">';
+          html += "<i>" + user_commentary + "</i>";
+          html += "<p>";
+          html += comentario_gasto;
+          html += "</p><br>";
+          html +=
+            '<figcaption class="blockquote-footer">' +
+            date +
+            "  " +
+            time +
+            "</figcaption>";
+          html += "</div>";
+          html += "</div>";
+          html += '<div class="conversation-actions dropdown">';
+          html +=
+            '<button class="btn btn-sm btn-link" data-bs-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>';
+          html += '<div class="dropdown-menu">';
+         /*  html +=
+            '<a data-id-comentario="' +
+            id_seguimiento_gastos_log +
+            '" class="dropdown-item editarCommentarioGasto">Editar</a>'; */
+          html +=
+            '<a data-id-comentario="' +
+            id_seguimiento_gastos_log +
+            '" class="dropdown-item borrarCommentarioGasto">Borrar</a>';
+          html += "</div>";
+          html += "</div>";
+          html += "</li>";
+          $(".chatSeguimientoGasto").append(html);
+          $(".comentario_gasto").val("");
+
+          //--- --- ---//
+        })
+        .fail(function (message) {});
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Por favor ingrese un comentario...",
+      });
+    }
+    /* $.ajax({
+      url: "php/controllers/viaticos/viaticos_controller.php",
+      method: "POST",
+      data: {
+        mod: "getSeguimientoGasto",
+        id_gasto: id_gasto,
+      },
+    })
+      .done(function (data) {
+        var data = JSON.parse(data);
+        console.log(data);
+        //--- --- ---//
+        $(".chatSeguimientoGasto").html(data.html);
+        //--- --- ---//
+      })
+      .fail(function (message) {}); */
+
+    Swal.close();
+  });
+
+  $(document).on("click", ".borrarCommentarioGasto", function () {
+    var id_comentario = $(this).attr("data-id-comentario");
+    Swal.fire({
+      title: "¿Está seguro de eliminar este registro?",
+      text: "No podrá revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        loading();
+        $.ajax({
+          url: "php/controllers/viaticos/viaticos_controller.php",
+          method: "POST",
+          data: {
+            mod: "deleteSeguimientoGasto",
+            id_comentario: id_comentario,
+          },
+        })
+          .done(function (data) {
+            $("#divComentario" + id_comentario).remove();
+            Swal.close();
+          })
+          .fail(function (message) {});
+      }
+    });
+  });
+  $(document).on("click", ".editarCommentarioGasto", function () {
+    var id_comentario = $(this).attr("data-id-comentario");
+    var html = "";
+    html += '<div class="row">';
+    html += '    <div class="col mb-2 mb-sm-0">';
+    html +=
+      '        <input type="text" class="form-control border-0 comentario_gasto" placeholder="Ingrese un comentario" id="comentario_gasto" required>';
+    html += '        <div class="invalid-feedback">';
+    html += "            Por favor escriba un comentario";
+    html += "        </div>";
+    html += "    </div>";
+    html += '    <div class="col-sm-auto">';
+    html += '        <div class="btn-group">';
+    html += '            <div class="d-grid">';
+    html +=
+      '                <a class="btn btn-info enviarComentarioSeguimiento"><i class="fa-regular fa-floppy-disk"></i></a>';
+    html += "            </div>";
+    html += "        </div>";
+    html += "    </div>";
+    html += "</div>";
+    $(".chatSeguimientoGasto").append(html);
+
+    /*  Swal.fire({
+      title: "¿Está seguro de eliminar este registro?",
+      text: "No podrá revertir esta acción",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        loading();
+        $.ajax({
+          url: "php/controllers/viaticos/viaticos_controller.php",
+          method: "POST",
+          data: {
+            mod: "deleteSeguimientoGasto",
+            id_comentario: id_comentario,
+          },
+        })
+          .done(function (data) {
+            $("#divComentario" + id_comentario).remove();
+            Swal.close();
+          })
+          .fail(function (message) {});
+      }
+    }); */
   });
 
   $(document).on("change", ".select_status_gasto", function () {

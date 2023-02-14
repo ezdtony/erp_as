@@ -33,6 +33,7 @@
                             <th>Sitio</th>
                             <th>Importe</th>
                             <th>Status</th>
+                            <th>Seguimiento</th>
                             <th>Ticket</th>
                             <th>F. Fiscal</th>
                             <th>Factura</th>
@@ -70,6 +71,7 @@
                                 <td><?= $deposits->localidad ?></td>
                                 <td>$ <?= $deposits->importe ?></td>
                                 <td><i class="mdi mdi-circle text-<?= $deposits->clase_css ?>"></i><?= $deposits->estatus ?></td>
+                                <td><button data-id-gasto="<?= $deposits->id_gastos ?>" class="btn btn-primary addSeguimientoGasto" title="Seguimiento / Comentario de Gastos" data-bs-toggle="modal" data-bs-target="#seguimientoGasto"><i class="mdi mdi-chat-processing-outline"></i> </button></td>
                                 <?php if ($deposits->ruta_img != NULL) : ?>
                                     <td class="table-action">
                                         <div>
@@ -123,6 +125,9 @@ include_once('php/views/viaticos/modals/addFactura.php');
 include_once('php/views/viaticos/modals/registrarGasto.php');
 include_once('php/views/viaticos/modals/editarGasto.php');
 include_once('php/views/viaticos/modals/addFotografia.php');
+
+include_once('php/views/viaticos/modals/seguimientoGastos.php');
+
 
 ?>
 <script src="js/functions/viaticos/viaticos.js"></script>

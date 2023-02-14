@@ -39,6 +39,7 @@
                             <th>Ap. Coordinación</th>
                             <th>Status</th>
                             <th>Cambiar Status</th>
+                            <th>Seguimiento</th>
                             <th>Ticket</th>
                             <th>F. Fiscal</th>
                             <th>Factura</th>
@@ -140,6 +141,7 @@
                                         </select>
                                     </div>
                                 </td>
+                                <td><button data-id-gasto="<?= $deposits->id_gastos ?>" class="btn btn-primary addSeguimientoGasto" title="Seguimiento / Comentario de Gastos" data-bs-toggle="modal" data-bs-target="#seguimientoGasto"><i class="mdi mdi-chat-processing-outline"></i> </button></td>
                                 <?php if ($deposits->ruta_img != NULL) : ?>
                                     <td class="table-action">
                                         <div>
@@ -186,6 +188,8 @@ include_once('php/views/viaticos/modals/addFactura.php');
 include_once('php/views/viaticos/modals/registrarGasto.php');
 include_once('php/views/viaticos/modals/editarGasto.php');
 
+include_once('php/views/viaticos/modals/seguimientoGastos.php');
+
 ?>
 <script src="js/functions/viaticos/viaticos.js"></script>
 <script src="js/loading.js"></script>
@@ -206,8 +210,9 @@ include_once('php/views/viaticos/modals/editarGasto.php');
         col_10: "select",
         col_11: "none",
         col_12: "none",
-        col_14: "none",
+        col_13: "none",
         col_15: "none",
+        col_16: "none",
     });
     tGastos.init();
 </script>
