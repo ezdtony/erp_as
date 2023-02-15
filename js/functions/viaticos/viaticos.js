@@ -1428,14 +1428,26 @@ $(document).ready(function () {
         .then((decodificado) => {
           Swal.close();
           console.log(decodificado.last_id);
-          Swal.fire({
-            title: "¡Archivo guardado!",
-            text: "Se  cargó la factura correctamente!!!",
-            icon: "success",
-            timer: 1500,
-          }).then((result) => {
-            location.reload();
-          });
+          loading();
+          $.ajax({
+            url: "php/controllers/viaticos/mailFunctions.php",
+            method: "POST",
+            data: {
+              mod: "sendViaticsMailSpentUpdate",
+              id_gasto: last_id,
+            },
+          })
+            .done(function (data) {
+              Swal.fire({
+                title: "¡Archivo guardado!",
+                text: "Se  cargó la factura correctamente!!!",
+                icon: "success",
+                timer: 1500,
+              }).then((result) => {
+                location.reload();
+              });
+            })
+            .fail(function (message) {});
         });
     }
   }
