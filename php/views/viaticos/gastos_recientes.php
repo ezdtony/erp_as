@@ -169,6 +169,7 @@
                                     <?php endif; ?>
                                 <?php endif; ?>
                                 <td class="table-action">
+                                <a class="action-icon archivosExtra" data-bs-toggle="modal" data-id-gastos="<?= $deposits->id_gastos ?>" data-bs-target="#archivosExtra"> <i class="mdi mdi-folder archivosExtra"></i></a>
                                     <a id="<?= $deposits->id_gastos ?>" class="action-icon btnEditDeposits" data-bs-toggle="modal" data-bs-target="#editarGasto"> <i class="mdi mdi-pencil editGasto"></i></a>
                                     <a id="<?= $deposits->id_gastos ?>" class="action-icon deleteGasto"> <i class="mdi mdi-delete "></i></a>
                                 </td>
@@ -191,6 +192,7 @@ include_once('php/views/viaticos/modals/registrarGasto.php');
 include_once('php/views/viaticos/modals/editarGasto.php');
 
 include_once('php/views/viaticos/modals/seguimientoGastos.php');
+include_once('php/views/viaticos/modals/archivosExtra.php');
 ?>
 
 ?>

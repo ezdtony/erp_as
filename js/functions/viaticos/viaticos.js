@@ -904,6 +904,7 @@ $(document).ready(function () {
         });
     }
   });
+
   $(document).on("click", ".nuevoGasto", function () {
     loading();
     function positionSuccess(position) {
@@ -956,6 +957,58 @@ $(document).ready(function () {
     }
     navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
   });
+
+  $(document).on("click", ".archivosExtra", function () {
+    loading();
+    var id_gasto = $(this).attr("data-id-gastos");
+
+    if (id_gasto != undefined) {
+      console.log(id_gasto);
+      $(".btnAddArchivoExtra").attr("data-id-gasto", id_gasto);
+      $("#tablaArchivosExtra").find("tr:not(:first)").remove();
+      $.ajax({
+        url: "php/controllers/viaticos/viaticos_controller.php",
+        method: "POST",
+        data: {
+          mod: "getArchivosExtra",
+          id_gasto: id_gasto,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+          //--- --- ---//
+          $("#tablaArchivosExtra tr:last").after(data.html);
+          //--- --- ---//
+        })
+        .fail(function (message) {});
+
+      Swal.close();
+    }
+  });
+
+  $(document).on("click", ".btnAddArchivoExtra", function () {
+    loading();
+    var id_gasto = $(this).attr("data-id-gasto");
+    var descripcion_archivo_extra = $("#descripcion_archivo_extra").val();
+    const extra_document = document.querySelector("#inputArchivoExtra");
+    console.log(descripcion_archivo_extra);
+    if (id_gasto != undefined) {
+      if (extra_document.files.length > 0 && descripcion_archivo_extra != "") {
+        saveExtraDocument(id_gasto);
+      } else {
+        Swal.fire({
+          icon: "info",
+          title: "Por favor ingrese todos los campos requeridos",
+          text: "Debe seleccionar un archivo e ingresar una descripción del mismo",
+          timer: 3000,
+        }).then((result) => {
+          /* location.reload(); */
+        });
+      }
+    }
+  });
+
   $(document).on("click", ".addSeguimientoGasto", function () {
     loading();
     $(".chatSeguimientoGasto").empty();
@@ -1046,7 +1099,7 @@ $(document).ready(function () {
           html +=
             '<button class="btn btn-sm btn-link" data-bs-toggle="dropdown" aria-expanded="false"><i class="uil uil-ellipsis-v"></i></button>';
           html += '<div class="dropdown-menu">';
-         /*  html +=
+          /*  html +=
             '<a data-id-comentario="' +
             id_seguimiento_gastos_log +
             '" class="dropdown-item editarCommentarioGasto">Editar</a>'; */
@@ -1221,6 +1274,55 @@ $(document).ready(function () {
       })
       .fail(function (message) {});
   });
+  $(".closeExtraArchive").on("click", function (e) {
+    $("#archivosExtra")
+      .find("input,textarea,select")
+      .val("")
+      .end()
+      .find("input[type=checkbox], input[type=radio]")
+      .prop("checked", "")
+      .end();
+  });
+  function saveExtraDocument(id_gasto) {
+    var today = new Date();
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var date =
+      today.getDate() +
+      " / " +
+      (today.getMonth() + 1) +
+      " / " +
+      today.getFullYear();
+
+    const extra_document = document.querySelector("#inputArchivoExtra");
+    const descripcion_archivo_extra = $("#descripcion_archivo_extra").val();
+
+    if (extra_document.files.length > 0) {
+      let formData = new FormData();
+      formData.append("extra_document", extra_document.files[0]);
+      formData.append("id_gasto", id_gasto);
+      formData.append("descripcion_archivo_extra", descripcion_archivo_extra);
+
+      fetch("php/controllers/viaticos/saveExtraDocument.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((respuesta) => respuesta.json())
+        .then((decodificado) => {
+          Swal.close();
+          console.log(decodificado.last_id);
+          $("#tablaArchivosExtra tr:last").after(decodificado.html);
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: "Registro guardado exitosamente!!!",
+            timer: 3000,
+          }).then((result) => {
+            /* location.reload(); */
+          });
+        });
+    }
+  }
 
   function saveTicketDocument(last_id) {
     const img_payment = document.querySelector("#fotografia_ticket_gasto");

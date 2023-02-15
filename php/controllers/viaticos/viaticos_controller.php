@@ -972,3 +972,50 @@ function deleteSeguimientoGasto()
 
     echo json_encode($data);
 }
+
+function getArchivosExtra()
+{
+
+
+    $id_gasto = $_POST['id_gasto'];
+
+    $queries = new Queries;
+
+
+    $sqlGetArchivosExtra = "SELECT * FROM  asteleco_viaticos_erp.archivos_adicionales WHERE id_gastos = '$id_gasto' order by id_archivos_adicionales ASC";
+    $getArchivosExtra = $queries->getData($sqlGetArchivosExtra);
+    $html_chat = "";
+
+    if (!empty($getArchivosExtra)) {
+
+        foreach ($getArchivosExtra as $archivos_extra) {
+
+            $ruta_archivo = $archivos_extra->ruta_archivo;
+            $datelog = $archivos_extra->datelog;
+            $descripcion_archivo = $archivos_extra->descripcion_archivo;
+            $id_archivos_adicionales = $archivos_extra->id_archivos_adicionales;
+
+            $html_chat .= '<tr id="trArchivoExtra'.$id_archivos_adicionales.'">';
+            $html_chat .= '<td>'.$descripcion_archivo.'</td>';
+            $html_chat .= '<td>'.$datelog.'</td>';
+            $html_chat .= '<td><a class="btn btn-secondary" href="'.$ruta_archivo.'" target="_blank"><i class="fa-solid fa-file"></i></a></td>';
+            $html_chat .= '</tr>';
+           
+        }
+    }
+    if (!empty($getArchivosExtra)) {
+        $data = array(
+            'response' => true,
+            'message'                => 'Petición realizada con éxito!!',
+            'html' => $html_chat
+        );
+    } else {
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al obtener la información',
+        );
+    }
+
+
+    echo json_encode($data);
+}
