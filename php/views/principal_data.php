@@ -185,10 +185,22 @@ if (!isset($_SESSION['user'])) {
     FROM asteleco_personal.lista_personal AS usr 
     INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas
     INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
-    ORDER BY correo_personal ASC";
+    ORDER BY nombre_completo ASC";
 
     $getAllUsers = $queries->getData($sql_lista_personal);
 
+    $sql_lista_personal_sendMails = "SELECT ar.id_areas, correo_personal, sal.saldo,
+    ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+    FROM asteleco_personal.lista_personal AS usr 
+    INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas
+    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
+    INNER JOIN asteleco_viaticos_erp.saldos AS sal ON sal.id_personal = usr.id_lista_personal
+    ORDER BY nombre_completo ASC";
+
+    $getAllUsersSendMails = $queries->getData($sql_lista_personal_sendMails);
+
+
+    
     $sql_get_all_areas = "SELECT * FROM asteleco_personal.areas";
     $getAllAreas = $queries->getData($sql_get_all_areas);
 

@@ -41,6 +41,22 @@
         </div>
         <div class="col-xl-4 col-lg-4">
             <div class="card cta-box overflow-hidden">
+                <a href="?submodule=reportes_accesos">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div>
+                                <h6 class="text-uppercase mt-0"></h6>
+                                <h2 class="my-2" id="active-users-count">Accesos</h2>
+                                <p class="mb-0 text-muted">
+                            </div>
+                            <img class="ms-3" src="images/cloud.png" width="75" alt="Generic placeholder image">
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4">
+            <div class="card cta-box overflow-hidden">
                 <a href="">
                     <div class="card-body">
                         <div class="d-flex align-items-center">

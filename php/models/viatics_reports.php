@@ -10,12 +10,14 @@ class Viatics
         stat.descripcion AS estatus,
         rimg.ruta_archivo AS ruta_img,
         rpdf.ruta_archivo AS ruta_pdf,
-        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre
+        (CONCAT(per.nombres, ' ', per.apellido_paterno, ' ', per.apellido_materno)) AS nombre,
+        proy.nombre_proyecto
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_viaticos_erp.tipos_gasto AS tgas ON gas.id_tipos_gasto = tgas.id_tipos_gasto
         INNER JOIN asteleco_viaticos_erp.status_type AS stat ON gas.id_status_type = stat.id_status_type
         INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = gas.id_personal
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rimg ON rimg.id_rutas_archivos = gas.id_ruta_img
+        INNER JOIN asteleco_proyectos.proyectos AS proy ON proy.id_proyectos = gas.id_proyectos
 
         LEFT JOIN asteleco_viaticos_erp.rutas_archivos AS rpdf ON rpdf.id_rutas_archivos = gas.id_ruta_pdf
         WHERE id_personal = '$id_user_data' AND fecha_registro BETWEEN '$fecha_1' AND '$fecha_2'";

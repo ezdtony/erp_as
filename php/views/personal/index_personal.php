@@ -20,6 +20,8 @@
                 <h4 class="header-title mb-3">Lista de Personal</h4>
                 <br>
                 <button type="button" class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#registrarUsuario">Nuevo Usuario</button>
+                <br><br>
+                <button type="button" class="btn btn-secondary rounded-pill" data-bs-toggle="modal" data-bs-target="#modalSendMails">Enviar correos de viáticos</button>
                 <br>
                 <br>
                 <br>
@@ -89,8 +91,10 @@
 <?php
 include_once('php/views/personal/modals/registrar_usuario.php');
 include_once('php/views/personal/modals/editar_usuario.php');
+include_once('php/views/personal/modals/sendViaticsMails.php');
 
 ?>
 <script src="js/functions/personal.js"></script>
+<script src="js/functions/viaticos/mailFunctions.js"></script>
 <script src="js/functions/users/edit_user.js"></script>
 <script src="js/loading.js"></script>

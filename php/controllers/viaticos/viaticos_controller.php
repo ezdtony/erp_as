@@ -223,7 +223,20 @@ function deleteGasto()
 
     //$last_id = $getInfoRequest['last_id'];
     if (!empty($updateBalance)) {
+        $getSeguimiento = "SELECT id_seguimiento_gastos FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gastos";
+        $getInfoRequestSeguimiento = $queries->getData($getSeguimiento);
 
+        if(!empty($getInfoRequestSeguimiento)){
+            $getInfoRequestSeguimiento = $getInfoRequestSeguimiento[0];
+            $id_seguimiento_gastos = $getInfoRequestSeguimiento->id_seguimiento_gastos;
+            $DELETESeguimiento = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos_log WHERE id_seguimiento_gastos = $id_seguimiento_gastos";
+            $queries->insertData($DELETESeguimiento);
+
+        }
+
+        $sql_dlt_seg = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gastos";
+        $queries->insertData($sql_dlt_seg);
+        
         $sql_insertar_deposito = "DELETE FROM asteleco_viaticos_erp.gastos WHERE id_gastos = $id_gastos";
         //--- --- ---//
         $insertar_deposito = $queries->insertData($sql_insertar_deposito);

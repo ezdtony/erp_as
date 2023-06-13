@@ -33,7 +33,7 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                             <select id="colaborador" class="form-control select2 " data-toggle="select2">
                                 <option>Eliga un colaborador *</option>
                                 <optgroup label="Colaborador">
-                                    <?php foreach ($getUsersName as $users_name) : ?>
+                                    <?php foreach ($getUsersNameDepositos as $users_name) : ?>
                                         <?php if (isset($_GET['colaborador'])) :
                                             $colaborador = $_GET['colaborador'];
                                         ?>
@@ -91,6 +91,7 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
+                                    <th class="text-center">Proyecto</th>
                                     <th class="text-center">Fecha</th>
                                     <th class="text-center">Importe</th>
                                     <th class="text-center">T. Gasto</th>
@@ -112,6 +113,7 @@ include_once('php/views/reportes/viaticos/reports/reports_data.php');
                                 ?>
                                     <tr>
                                         <td class="text-center"><?= $registers->id_gastos ?></td>
+                                        <td class="text-center"><?= $registers->nombre_proyecto ?></td>
                                         <td class="text-center"><?= $registers->fecha_registro ?></td>
                                         <td class="text-center"><?= $registers->importe ?></td>
                                         <td class="text-center"><?= $registers->tipo_gasto ?></td>

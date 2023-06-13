@@ -42,7 +42,7 @@
                         ?>
                             <tr>
                                 <td><?= $balance-> nombre_usuario?></td>
-                                <td>$ <?= $balance-> saldo?></td>
+                                <td>$ <?= number_format($balance-> saldo, 2)?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
