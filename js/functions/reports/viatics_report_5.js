@@ -3,8 +3,11 @@ $(document).ready(function () {
   $(document).on("change", "#proyecto", function () {
     var proyecto = $(this).val();
     var rango_fechas = $("#rango_fechas").val();
-    var fecha_1 = rango_fechas.split("-")[0].trim();
-    var fecha_2 = rango_fechas.split("-")[1].trim();
+    var fecha_1 = $("#start_date_search").val().split("-")[0].trim();
+    var fecha_2 = $("#end_date_search").val().split("-")[1].trim();
+
+    const start_date_search = $("#start_date_search").val();
+    const end_date_search = $("#end_date_search").val();
 
     var url = window.location.search;
     const urlParams = new URLSearchParams(url);
@@ -17,10 +20,53 @@ $(document).ready(function () {
         "&proyecto=" +
         proyecto +
         "&fecha_1=" +
-        fecha_1 +
+        start_date_search +
         "&fecha_2=" +
-        fecha_2;
+        end_date_search +
+        "&start_date_search=" +
+        start_date_search +
+        "&end_date_search=" +
+        end_date_search;
       //--- --- ---//
+    }
+  });
+
+  $(document).on("click", ".btnSearch", function () {
+    var proyecto = $("#proyecto").val();
+
+    const start_date_search = $("#start_date_search").val();
+    const end_date_search = $("#end_date_search").val();
+
+    if (proyecto != "" && start_date_search != "" && end_date_search != "") {
+      loading();
+      var url = window.location.search;
+      const urlParams = new URLSearchParams(url);
+      if (urlParams.has("submodule")) {
+        //--- --- ---//
+        const submodule = urlParams.get("submodule");
+        window.location.search =
+          "?submodule=" +
+          submodule +
+          "&proyecto=" +
+          proyecto +
+          "&fecha_1=" +
+          start_date_search +
+          "&fecha_2=" +
+          end_date_search +
+          "&start_date_search=" +
+          start_date_search +
+          "&end_date_search=" +
+          end_date_search;
+        //--- --- ---//
+      }
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Por favor ingrese todos los campos requeridos",
+        timer: 3000,
+      }).then((result) => {
+        /* location.reload(); */
+      });
     }
   });
 

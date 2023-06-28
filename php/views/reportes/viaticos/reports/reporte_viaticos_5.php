@@ -29,9 +29,26 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <label class="form-label">Rango de fechas:</label>
-                            <input type="text" class="form-control date" id="rango_fechas" data-toggle="date-picker" data-cancel-class="btn-warning">
+                            <div class="mb-3">
+                                <label for="example-date" class="form-label">Fecha de Inicio</label>
+                                <?php if (isset($_GET['start_date_search'])) : ?>
+                                    <input class="form-control" id="start_date_search" type="date" name="date" value="<?= $_GET['start_date_search'] ?>">
+                                <?php else : ?>
+                                    <input class="form-control" id="start_date_search" type="date" name="date">
+                                <?php endif ?>
+                            </div>
                         </div>
+                        <div class="col">
+                            <div class="mb-3">
+                                <label for="example-date" class="form-label">Fecha de Fin</label>
+                                <?php if (isset($_GET['end_date_search'])) : ?>
+                                    <input class="form-control" id="end_date_search" type="date" name="date" value="<?= $_GET['end_date_search'] ?>">
+                                <?php else : ?>
+                                    <input class="form-control" id="end_date_search" type="date" name="date">
+                                <?php endif ?>
+                            </div>
+                        </div>
+
                         <div class="col">
                             <label class="form-label">Proyecto:</label>
                             <select id="proyecto" class="form-control select2 " data-toggle="select2">
@@ -54,6 +71,10 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                                 </optgroup>
                             </select>
                         </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-success btnSearch">Buscar</button>
+                        </div>
+
                         <?php if (isset($_GET['colaborador'])) : ?>
                             <div class="col">
                                 <label class="form-label">Rango de fechas:</label>
@@ -70,12 +91,8 @@ $Proyectos = $viaticos_reports->getProyectsUp();
     </div>
     <?php if (isset($_GET['proyecto']) && isset($_GET['fecha_1']) && isset($_GET['fecha_2'])) :
         $proyecto = $_GET['proyecto'];
-        $arr_fecha_1 = explode("/", $_GET['fecha_1']);
-        $fecha_1 = $arr_fecha_1[2] . '-' . $arr_fecha_1[0] . '-' . $arr_fecha_1[1];
-        $fecha_1 = str_replace(' ', '', $fecha_1);
-        $arr_fecha_2 = explode("/", $_GET['fecha_2']);
-        $fecha_2 = $arr_fecha_2[2] . '-' . $arr_fecha_2[0] . '-' . $arr_fecha_2[1];
-        $fecha_2 = str_replace(' ', '', $fecha_2);
+        $fecha_1 = $_GET['fecha_1'];
+        $fecha_2 = $_GET['fecha_2'];
 
         $getProyectsExpenses = $viaticos_reports->getProyectsExpenses($proyecto, $fecha_1, $fecha_2);
         $nombre_proy_exp = '';
@@ -112,7 +129,7 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                     <br>
                     <br>
                     <div class="table-responsive">
-                    <table data-table-name="Depósitos del proyecto <?= $nombre_proy ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport2">
+                        <table data-table-name="Depósitos del proyecto <?= $nombre_proy ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport2">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>
@@ -154,7 +171,7 @@ $Proyectos = $viaticos_reports->getProyectsUp();
                     <br>
                     <br>
                     <div class="table-responsive">
-                    <table data-table-name="Gastos del proyecto <?= $nombre_proy ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
+                        <table data-table-name="Gastos del proyecto <?= $nombre_proy ?> entre <?= $fecha_1 ?> y <?= $fecha_2 ?>" class="table table-centered mb-0 table-striped table-responsive-sm tableReport">
                             <thead class="table-dark">
                                 <tr>
                                     <th class="text-center">ID</th>

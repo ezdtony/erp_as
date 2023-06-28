@@ -4,6 +4,21 @@ $(document).ready(function () {
     var id_familias_preguntas = $(this).attr("data-id");
     $(".btnGuardarGrupoPregunta").attr("data-id", id_familias_preguntas);
   });
+  $(document).on("click", ".accordion-button", function () {
+    
+    var id_familias_preguntas = $(this).attr("data-id-familia-preg");
+    var data_hide = $(this).attr("data-hide");
+      if (data_hide) {
+        $(this).attr("data-hide", "false");
+        $("#titleDesgloseTxt"+id_familias_preguntas).show();  
+      }else{
+        $(this).attr("data-hide", "true");
+        $("#titleDesgloseTxt"+id_familias_preguntas).hide();  
+      }
+      
+    
+    
+  });
   $(document).on("click", ".editarUnidad", function () {
     loading();
     var id_vehiculos = $(this).attr("data-id");

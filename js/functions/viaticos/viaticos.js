@@ -904,7 +904,37 @@ $(document).ready(function () {
         });
     }
   });
+  $(document).on("click", ".btnSearchAllGastos", function () {
+    const start_date_search = $("#start_date_search").val();
+    const end_date_search = $("#end_date_search").val();
 
+    if (start_date_search != "" && end_date_search != "") {
+      var url = window.location.search;
+      const urlParams = new URLSearchParams(url);
+      
+      if (urlParams.has("submodule")) {
+        //--- --- ---//
+        loading();
+        const submodule = urlParams.get("submodule");
+        window.location.search =
+          "submodule=" +
+          submodule +
+          "&start_date_search=" +
+          start_date_search +
+          "&end_date_search=" +
+          end_date_search;
+        //--- --- ---//
+      }
+    }else{
+      Swal.fire({
+        icon: "warning",
+        title: "Por favor ingrese todos los campos requeridos",
+        timer: 3000,
+      }).then((result) => {
+        /* location.reload(); */
+      });
+    }
+  });
   $(document).on("click", ".nuevoGasto", function () {
     loading();
     function positionSuccess(position) {
