@@ -136,8 +136,13 @@ $viatics = new ViaticsInformation();
                                     <td><?= $deposits->localidad ?></td>
                                     <td>$ <?= $deposits->importe ?></td>
                                     <td><?= $txt_clasifiacion ?></td>
-                                    <td><?= $deposits->tipo_gasto ?></td>
-
+                                    <?php if ($deposits->id_tipos_gasto == 99) : ?>
+                                        <td>
+                                            <button type="button" data-id-gasto="<?= $deposits->id_gastos ?>" data-usuario-gasto="<?= $deposits->usuario_gasto ?>"  data-proyecto-gasto="<?= $deposits->nombre_proyecto ?>" data-gasto-manual="<?= $deposits->tipo_gasto_manual ?>"  class="btn btn-light btn-sm getComentarioGasto"><?= $deposits->tipo_gasto ?></button>
+                                        </td>
+                                    <?php else : ?>
+                                        <td><?= $deposits->tipo_gasto ?></td>
+                                    <?php endif ?>
                                     <td tabindex="0">
                                         <input type="checkbox" id="conta<?= $deposits->id_gastos ?>" id-gasto="<?= $deposits->id_gastos ?>" class="check_ap_contabilidad" <?= $ap_contabilidad ?> <?= $enab_check_contabilidad ?> data-switch="success">
                                         <label for="conta<?= $deposits->id_gastos ?>" data-on-label="Si" data-off-label="No"></label>

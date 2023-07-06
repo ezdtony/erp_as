@@ -134,26 +134,72 @@ $(document).ready(function () {
     var password_login = $("#password").val();
 
     if (
+      id_area_level == null ||
       id_area_level == "" ||
+      id_area_level == undefined ||
+      id_academic_level == null ||
       id_academic_level == "" ||
+      id_academic_level == undefined ||
+      id_genero == null ||
       id_genero == "" ||
-      fecha_nacimiento == "" ||
+      id_genero == undefined ||
+      nombre == null ||
       nombre == "" ||
+      nombre == undefined ||
+      ap_paterno == null ||
       ap_paterno == "" ||
+      ap_paterno == undefined ||
+      ap_materno == null ||
       ap_materno == "" ||
+      ap_materno == undefined ||
+      curp == null ||
       curp == "" ||
+      curp == undefined ||
+      nss == null ||
+      nss == "" ||
+      nss == undefined ||
+      fecha_nacimiento == null ||
+      fecha_nacimiento == "" ||
+      fecha_nacimiento == undefined ||
+      rfc == null ||
+      rfc == "" ||
+      rfc == undefined ||
+      id_estado_civil == null ||
       id_estado_civil == "" ||
+      id_estado_civil == undefined ||
+      calle == null ||
       calle == "" ||
+      calle == undefined ||
+      numero == null ||
       numero == "" ||
+      numero == undefined ||
+      colonia == null ||
       colonia == "" ||
+      colonia == undefined ||
+      cp == null ||
       cp == "" ||
+      cp == undefined ||
+      id_municipio == null ||
       id_municipio == "" ||
+      id_municipio == undefined ||
+      id_estado == null ||
       id_estado == "" ||
+      id_estado == undefined ||
+      telefono_pricnipal == null ||
       telefono_pricnipal == "" ||
+      telefono_pricnipal == undefined ||
+      telefono_secundario == null ||
+      telefono_secundario == "" ||
+      telefono_secundario == undefined ||
+      correo_personal == null ||
       correo_personal == "" ||
+      correo_personal == undefined ||
+      telefono_familiar_pricnipal == null ||
       telefono_familiar_pricnipal == "" ||
-      email_login == "" ||
-      password_login == ""
+      telefono_familiar_pricnipal == undefined ||
+      telefono_familiar_secundario == null ||
+      telefono_familiar_secundario == "" ||
+      telefono_familiar_secundario == undefined
     ) {
       Swal.close();
       Swal.fire({

@@ -233,6 +233,7 @@ $(document).ready(function () {
                 text: data.message,
                 timer: 2000,
               }).then((result) => {
+                loading();
                 location.reload();
               });
             } else {
@@ -308,6 +309,7 @@ $(document).ready(function () {
               text: data.message,
               timer: 2000,
             }).then((result) => {
+              loading();
               location.reload();
             });
           } else {
@@ -622,6 +624,7 @@ $(document).ready(function () {
               text: "Gasto editado correctamente",
               timer: 2000,
             }).then(function () {
+              loading();
               location.reload();
             });
           } else {
@@ -794,6 +797,7 @@ $(document).ready(function () {
               icon: "success",
               timer: 1500,
             }).then((result) => {
+              loading();
               location.reload();
             });
           });
@@ -911,7 +915,7 @@ $(document).ready(function () {
     if (start_date_search != "" && end_date_search != "") {
       var url = window.location.search;
       const urlParams = new URLSearchParams(url);
-      
+
       if (urlParams.has("submodule")) {
         //--- --- ---//
         loading();
@@ -925,7 +929,7 @@ $(document).ready(function () {
           end_date_search;
         //--- --- ---//
       }
-    }else{
+    } else {
       Swal.fire({
         icon: "warning",
         title: "Por favor ingrese todos los campos requeridos",
@@ -935,6 +939,77 @@ $(document).ready(function () {
       });
     }
   });
+  $(document).on("click", ".getComentarioGasto", function () {
+    const id_gasto = $(this).attr("data-id-gasto");
+    const usuario_gato = $(this).attr("data-usuario-gasto");
+    const proyecto_gasto = $(this).attr("data-proyecto-gasto");
+    const comentario_usuario = $(this).attr("data-gasto-manual");
+
+    html = "";
+    html += '<div class="container">';
+    html += "<h5>ID de Gasto: " + id_gasto + "</h4>";
+    html += "<h5>Usuario: " + usuario_gato + "</h4>";
+    html += "<h5>Proyecto: " + proyecto_gasto + "</h4><br>";
+    html +=
+      "<h4>Comentario usuario: <strong>" +
+      comentario_usuario +
+      "</strong></h4>";
+    Swal.fire({
+      icon: "info",
+      html: html,
+    });
+
+    /*  if (id_gasto != "" && usuario_gato != "" && proyecto_gasto != "") {
+      loading();
+      $.ajax({
+        url: "php/controllers/viaticos/viaticos_controller.php",
+        method: "POST",
+        data: {
+          mod: "getComentarioGasto",
+          id_gasto: id_gasto,
+        },
+      })
+        .done(function (data) {
+          var data = JSON.parse(data);
+          console.log(data);
+          if (data.response == true) {
+            Swal.fire({
+              icon: "success",
+              title: "Éxito",
+              text: data.message,
+              timer: 2000,
+            }).then((result) => {
+              $("#trGasto" + id_gasto).remove();
+              //  location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: data.message,
+              timer: 2000,
+            });
+          }
+        })
+        .fail(function (message) {
+          VanillaToasts.create({
+            title: "Error",
+            text: "Ocurrió un error, intentelo nuevamente",
+            type: "error",
+            timeout: 1200,
+            positionClass: "topRight",
+          });
+        });
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Por favor ingrese todos los campos requeridos",
+        timer: 3000,
+      }).then((result) => {
+      });
+    } */
+  });
+
   $(document).on("click", ".nuevoGasto", function () {
     loading();
     function positionSuccess(position) {
@@ -1379,6 +1454,7 @@ $(document).ready(function () {
             text: "Registro guardado exitosamente!!!",
             timer: 3000,
           }).then((result) => {
+            loading();
             location.reload();
           });
         });
@@ -1432,6 +1508,7 @@ $(document).ready(function () {
             text: "Registro guardado exitosamente",
             timer: 3000,
           }).then((result) => {
+            loading();
             location.reload();
           });
         });
@@ -1474,6 +1551,7 @@ $(document).ready(function () {
                 icon: "success",
                 timer: 1500,
               }).then((result) => {
+                loading();
                 location.reload();
               });
             })

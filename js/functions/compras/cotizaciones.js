@@ -624,18 +624,33 @@ $(document).ready(function () {
           if (data.response == true) {
             Swal.fire("Éxito!", data.message, "success");
             var htmlTags =
-              "<tr>" +
-              "<td>" +
+              '<tr id="trProveedor' +
+              data.lastId +
+              '">' +
+              '<td data-id-proveedor="' +
+              data.lastId +
+              '" class="td_editableProveedor" column_name="nombre_contacto">' +
               nombre_proveedor +
               "</td>" +
-              "<td>" +
+              '<td data-id-proveedor="' +
+              data.lastId +
+              '" class="td_editableProveedor" column_name="correo_contacto">' +
               mail_proveedor +
               "</td>" +
-              "<td>" +
+              '<td data-id-proveedor="' +
+              data.lastId +
+              '" class="td_editableProveedor" column_name="empresa_proveedor">' +
               empresa_proveedor +
               "</td>" +
-              "<td>" +
+              '<td data-id-proveedor="' +
+              data.lastId +
+              '" class="td_editableProveedor" column_name="telefono_contacto">' +
               telefono_proveedor +
+              "</td> " +
+              "<td>" +
+              '<button type="button" class="btn btn-danger deleteProveedor" data-id-proveedor="' +
+              data.lastId +
+              '"><i class="mdi mdi-trash-can "></i> </button>' +
               "</td>" +
               "</tr>";
 
@@ -649,7 +664,6 @@ $(document).ready(function () {
           } else {
             Swal.fire("Atención!", data.message, "info");
           }
-          //--- --- ---//
           //--- --- ---//
         })
         .fail(function (message) {
@@ -725,12 +739,25 @@ $(document).ready(function () {
           if (data.response == true) {
             Swal.fire("Éxito!", data.message, "success");
             var htmlTags =
-              "<tr>" +
+              '<tr id="trClasifMAter' +
+              data.lastId +
+              '">' +
               "<td>" +
+              '<td data-id-clasif="' +
+              data.lastId +
+              '" class="td_editableClasifMAter" column_name="nombre_corto">' +
               abreviatura_clasi +
               "</td>" +
-              "<td>" +
+              "</td>" +
+              '<td data-id-clasif="' +
+              data.lastId +
+              '" class="td_editableClasifMAter" column_name="clasificacion">' +
               clasificacion +
+              "</td>" +
+              "<td>" +
+              '<button type="button" class="btn btn-danger deleteClasifMAter" data-id-clasif="' +
+              data.lastId +
+              '"><i class="mdi mdi-trash-can "></i> </button>' +
               "</td>" +
               "</tr>";
 

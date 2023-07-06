@@ -547,12 +547,13 @@ function saveProveedor()
         '$mail_proveedor',
         '$telefono_proveedor',
         '$empresa_proveedor')";
-
-    if ($queries->insertData($stmt)) {
-
+    $insert_proov = $queries->insertData($stmt);
+    if (!empty($insert_proov)) {
+        $last_id = $insert_proov['last_id'];
         $data = array(
             'response' => true,
-            'message' => 'Se agregó correctamente el proveedor'
+            'message' => 'Se agregó correctamente el proveedor',
+            'lastId' => $last_id
         );
         //--- --- ---//
     } else {
@@ -579,12 +580,14 @@ function saveClasificacion()
     (
         '$abreviatura_clasi',
         '$clasificacion')";
-
-    if ($queries->insertData($stmt)) {
+    $insert_proov = $queries->insertData($stmt);
+    if (!empty($insert_proov)) {
+        $last_id = $insert_proov['last_id'];
 
         $data = array(
             'response' => true,
-            'message' => 'Se agregó correctamente la clasificación'
+            'message' => 'Se agregó correctamente la clasificación',
+            'lastId' => $last_id
         );
         //--- --- ---//
     } else {
@@ -639,7 +642,7 @@ function updateUserInfo()
     $column_name = $_POST['column_name'];
     $value = $_POST['value'];
 
-    $stmt = "UPDATE asteleco_personal.lista_personal SET $column_name = '$value' WHERE id_lista_personal = '$id_personal'"; 
+    $stmt = "UPDATE asteleco_personal.lista_personal SET $column_name = '$value' WHERE id_lista_personal = '$id_personal'";
 
     if ($queries->insertData($stmt)) {
         $data = array(

@@ -79,7 +79,7 @@ class ViaticsInformation
         $queries = new Queries;
         $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.id_status_type, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, 
         rut.ruta_archivo AS ruta_img, CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS usuario_gasto,
-        ti_gas.descripcion AS tipo_gasto
+        ti_gas.descripcion AS tipo_gasto, ti_gas.id_tipos_gasto
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_personal.lista_personal AS pers ON pers.id_lista_personal = gas.id_personal
         INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type
@@ -100,7 +100,7 @@ class ViaticsInformation
         $queries = new Queries;
         $sql_saldo = "SELECT gas.*, proy.codigo_proyecto, proy.nombre_proyecto, stat.id_status_type, stat.descripcion AS estatus, stat.clase_css, rut_fac.ruta_archivo AS ruta_pdf, 
         rut.ruta_archivo AS ruta_img, CONCAT( pers.nombres,' ', pers.apellido_paterno, ' ', pers.apellido_materno) AS usuario_gasto,
-        ti_gas.descripcion AS tipo_gasto
+        ti_gas.descripcion AS tipo_gasto, ti_gas.id_tipos_gasto
         FROM asteleco_viaticos_erp.gastos AS gas
         INNER JOIN asteleco_personal.lista_personal AS pers ON pers.id_lista_personal = gas.id_personal
         INNER JOIN asteleco_viaticos_erp.status_type AS stat ON stat.id_status_type = gas.id_status_type

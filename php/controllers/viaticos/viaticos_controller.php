@@ -266,6 +266,66 @@ function deleteGasto()
 
     echo json_encode($data);
 }
+
+/* function getComentarioGasto()
+{
+    $id_gastos = $_POST['id_gasto'];
+
+    $queries = new Queries;
+
+    $getOgImport = "SELECT importe, id_personal FROM asteleco_viaticos_erp.gastos WHERE id_gastos = $id_gastos";
+    $getInfoRequest = $queries->getData($getOgImport);
+    $og_import = $getInfoRequest[0]->importe;
+    $id_user_og = $getInfoRequest[0]->id_personal;
+
+    $returnBalance = "UPDATE  asteleco_viaticos_erp.saldos SET saldo = saldo + $og_import WHERE id_personal = $id_user_og";
+    $updateBalance = $queries->insertData($returnBalance);
+
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($updateBalance)) {
+        $getSeguimiento = "SELECT id_seguimiento_gastos FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gastos";
+        $getInfoRequestSeguimiento = $queries->getData($getSeguimiento);
+
+        if(!empty($getInfoRequestSeguimiento)){
+            $getInfoRequestSeguimiento = $getInfoRequestSeguimiento[0];
+            $id_seguimiento_gastos = $getInfoRequestSeguimiento->id_seguimiento_gastos;
+            $DELETESeguimiento = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos_log WHERE id_seguimiento_gastos = $id_seguimiento_gastos";
+            $queries->insertData($DELETESeguimiento);
+
+        }
+
+        $sql_dlt_seg = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gastos";
+        $queries->insertData($sql_dlt_seg);
+        
+        $sql_insertar_deposito = "DELETE FROM asteleco_viaticos_erp.gastos WHERE id_gastos = $id_gastos";
+        //--- --- ---//
+        $insertar_deposito = $queries->insertData($sql_insertar_deposito);
+        if (!empty($insertar_deposito)) {
+            $data = array(
+                'response' => true,
+                'message'                => 'El gasto se eliminó correctamente!!'
+            );
+            //--- --- ---//
+
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false,
+                'message'                => 'Error al borrar el gasto :('
+            );
+            //--- --- ---//
+        }
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al actualizar el saldo del destinatario :('
+        );
+        //--- --- ---//
+    }
+
+    echo json_encode($data);
+} */
 function saveSpent()
 {
     $arr_fecha_compra = explode("/", $_POST['fecha_compra']);

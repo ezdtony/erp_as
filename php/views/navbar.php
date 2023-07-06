@@ -204,7 +204,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="?submodule=info_auxiliar_material">Información Auxiliar Material</a>
+                                    <a href="?submodule=info_auxiliar_material">Catalogo de proveedores y materiales</a>
                                 </li>
                                 <li>
                                     <a href="?submodule=info_auxiliar_herramienta">Información Auxiliar Herramientas</a>
