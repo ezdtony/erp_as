@@ -596,6 +596,9 @@ $(document).ready(function () {
       id_author != "" &&
       sitio_gasto != "" &&
       tipos_gasto != "" &&
+      tipos_gasto != null &&
+      tipos_gasto != 0 &&
+      tipos_gasto != undefined &&
       importe_gasto != ""
     ) {
       $.ajax({

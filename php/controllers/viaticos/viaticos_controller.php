@@ -226,17 +226,16 @@ function deleteGasto()
         $getSeguimiento = "SELECT id_seguimiento_gastos FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gastos";
         $getInfoRequestSeguimiento = $queries->getData($getSeguimiento);
 
-        if(!empty($getInfoRequestSeguimiento)){
+        if (!empty($getInfoRequestSeguimiento)) {
             $getInfoRequestSeguimiento = $getInfoRequestSeguimiento[0];
             $id_seguimiento_gastos = $getInfoRequestSeguimiento->id_seguimiento_gastos;
             $DELETESeguimiento = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos_log WHERE id_seguimiento_gastos = $id_seguimiento_gastos";
             $queries->insertData($DELETESeguimiento);
-
         }
 
         $sql_dlt_seg = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos WHERE id_gastos = $id_gastos";
         $queries->insertData($sql_dlt_seg);
-        
+
         $sql_insertar_deposito = "DELETE FROM asteleco_viaticos_erp.gastos WHERE id_gastos = $id_gastos";
         //--- --- ---//
         $insertar_deposito = $queries->insertData($sql_insertar_deposito);
@@ -640,15 +639,13 @@ function updateSpent()
     $importe_og = $get_importe_og[0]->importe;
     $id_personal_og = $get_importe_og[0]->id_personal;
 
-    $sql_update_saldo = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo + '$importe_og' WHERE id_personal = $id_personal_og";
-    $update_saldo = $queries->insertData($sql_update_saldo);
 
     if (!empty($update_saldo)) {
         $sql_update_gasto = "UPDATE asteleco_viaticos_erp.gastos
             SET 
             id_asignaciones_proyectos = '$id_asignacion',
             id_tipos_gasto = '$tipos_gasto',
-            id_personal = '$id_author',
+            id_personal = '$id_personal_og',
             importe = '$importe_gasto',
             fecha_registro = '$fecha_compra',
             localidad = '$sitio_gasto',
@@ -661,8 +658,11 @@ function updateSpent()
         //$last_id = $getInfoRequest['last_id'];
         if (!empty($insertSpent)) {
 
+            $sql_update_saldo = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo + '$importe_og' WHERE id_personal = $id_personal_og";
+            $update_saldo = $queries->insertData($sql_update_saldo);
 
-            $returnBalance = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo - $importe_gasto WHERE id_personal = $id_author";
+
+            $returnBalance = "UPDATE asteleco_viaticos_erp.saldos SET saldo = saldo - $importe_gasto WHERE id_personal = $id_personal_og";
             $updateBalance = $queries->insertData($returnBalance);
 
             if (!empty($updateBalance)) {
@@ -691,7 +691,7 @@ function updateSpent()
     } else {
         $data = array(
             'response' => false,
-            'message'                => 'No tiene saldo suficiente para realizar el gasto :('
+            'message'                => 'Ocurrió un error al actualizar el gasto, por favor verifique que todos los campos estén llenos!!!'
         );
     }
 
@@ -857,7 +857,7 @@ function getSeguimientoGasto()
 
             if ($seguimientos->id_personal == $_SESSION['id_user']) {
 
-                $html_chat .= '<li class="clearfix odd" id="divComentario'.$id_seguimiento_gastos_log.'">';
+                $html_chat .= '<li class="clearfix odd" id="divComentario' . $id_seguimiento_gastos_log . '">';
                 $html_chat .= '<div class="chat-avatar">';
                 $html_chat .= '<img src="images/user_default_chat.png" class="rounded" alt="dominic">';
                 $html_chat .= '<i></i>';
@@ -1018,29 +1018,29 @@ function deleteSeguimientoGasto()
 
     $queries = new Queries;
 
-        $sql_insertar_comentario = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos_log WHERE id_seguimiento_gastos_log = $id_comentario;";
-        $insertCommentary = $queries->insertData($sql_insertar_comentario);
+    $sql_insertar_comentario = "DELETE FROM asteleco_viaticos_erp.seguimiento_gastos_log WHERE id_seguimiento_gastos_log = $id_comentario;";
+    $insertCommentary = $queries->insertData($sql_insertar_comentario);
 
 
 
-        //$last_id = $getInfoRequest['last_id'];
-        if (!empty($insertCommentary)) {
+    //$last_id = $getInfoRequest['last_id'];
+    if (!empty($insertCommentary)) {
 
-            $data = array(
-                'response' => true,
-                'message'                => 'Se eliminó el comentario!!',
-            );
-            //--- --- ---//
+        $data = array(
+            'response' => true,
+            'message'                => 'Se eliminó el comentario!!',
+        );
+        //--- --- ---//
 
-        } else {
-            //--- --- ---//
-            $data = array(
-                'response' => false,
-                'message'                => 'Error al eliminar el comentario :('
-            );
-            //--- --- ---//
-        }
-  
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false,
+            'message'                => 'Error al eliminar el comentario :('
+        );
+        //--- --- ---//
+    }
+
 
 
     echo json_encode($data);
@@ -1068,12 +1068,11 @@ function getArchivosExtra()
             $descripcion_archivo = $archivos_extra->descripcion_archivo;
             $id_archivos_adicionales = $archivos_extra->id_archivos_adicionales;
 
-            $html_chat .= '<tr id="trArchivoExtra'.$id_archivos_adicionales.'">';
-            $html_chat .= '<td>'.$descripcion_archivo.'</td>';
-            $html_chat .= '<td>'.$datelog.'</td>';
-            $html_chat .= '<td><a class="btn btn-secondary" href="'.$ruta_archivo.'" target="_blank"><i class="fa-solid fa-file"></i></a></td>';
+            $html_chat .= '<tr id="trArchivoExtra' . $id_archivos_adicionales . '">';
+            $html_chat .= '<td>' . $descripcion_archivo . '</td>';
+            $html_chat .= '<td>' . $datelog . '</td>';
+            $html_chat .= '<td><a class="btn btn-secondary" href="' . $ruta_archivo . '" target="_blank"><i class="fa-solid fa-file"></i></a></td>';
             $html_chat .= '</tr>';
-           
         }
     }
     if (!empty($getArchivosExtra)) {

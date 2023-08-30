@@ -21,6 +21,7 @@ class Access
         INNER JOIN asteleco_accesos_erp.zonas_central AS zonas ON zonas.id_zonas_central = sites.id_zonas_central
         INNER JOIN asteleco_accesos_erp.tipos_sitio AS tipos ON tipos.id_tipos_sitio = sites.id_tipos_sitio
         INNER JOIN asteleco_accesos_erp.status_operaciones AS stat ON stat.id_status_operaciones = sites.status
+        LIMIT 10
         ";
 
         $getSites = $queries->getData($sql_sites);
@@ -132,7 +133,7 @@ class Access
     {
         include_once('php/models/petitions.php');
         $queries = new Queries;
-        $sql_Central = "SELECT * FROM asteleco_accesos_erp.puertas_de_acceso";
+        $sql_Central = "SELECT * FROM asteleco_accesos_erp.puertas_de_acceso WHERE status = 1";
         $getCentral = $queries->getData($sql_Central);
 
         return ($getCentral);

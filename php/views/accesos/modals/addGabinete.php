@@ -26,6 +26,13 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+
+                <div class="mt-3">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="proteccion_gabinete">
+                        <label class="form-check-label" for="proteccion_gabinete">Con protección</label>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>

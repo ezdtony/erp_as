@@ -38,10 +38,10 @@ $getTiposSitio = $accesos->GetTipoSitio();
                         <th>Nombre Sitio</th>
                         <th>Empresa</th>
                         <th>Clasificación</th>
-                        <th>Zona</th>
                         <th>Central</th>
+                        <th>Zona</th>
                         <th>Status</th>
-                        <th>Info. Detallada</th>
+                        <!-- <th>Info. Detallada</th> -->
                     </tr>
                 </thead>
 
@@ -84,9 +84,9 @@ $getTiposSitio = $accesos->GetTipoSitio();
                             </td>
                             <td><?= ($sites->zona) ?></td>
                             <td><?= ($sites->status_sitio) ?></td>
-                            <td>
-                                <!-- <button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-secondary infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="mdi mdi-information-variant"></i> </button> -->
-                            </td>
+                            <!-- <td>
+                                <button data-id-site="<?= $sites->id_sitios ?>" data-site-name="<?= $sites->nombre_sitio ?>" data-site-code="<?= $sites->codigo_sitio ?>" class="btn btn-secondary infoSitio" data-bs-toggle="modal" data-bs-target="#infoSitio"><i class="mdi mdi-information-variant"></i> </button>
+                            </td> -->
 
                         </tr>
                     <?php endforeach ?>

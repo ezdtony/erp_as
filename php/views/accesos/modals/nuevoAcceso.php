@@ -122,12 +122,21 @@
                                                         <?php foreach ($getPuertasDeAcceso as $puertas_acceso) : ?>
                                                             <div class="mt-3">
                                                                 <label class="form-label"><?= $puertas_acceso->descripcion ?></label>
-                                                                <?php foreach ($getTiposCerraduraPA as $lock_types) : ?>
-                                                                    <div class="form-check">
-                                                                        <input type="radio" data-id-puertas-acceso="<?= $puertas_acceso->id_puertas_de_acceso ?>" id="acc<?= $lock_types->id_tipos_cerraduras ?>_group<?= $puertas_acceso->id_puertas_de_acceso ?>" name="acceso<?= $puertas_acceso->id_puertas_de_acceso ?>" value="<?= $lock_types->id_tipos_cerraduras ?>" class="form-check-input">
-                                                                        <label class="form-check-label" for="acc<?= $lock_types->id_tipos_cerraduras ?>_group<?= $puertas_acceso->id_puertas_de_acceso ?>"><?= $lock_types->descripcion ?></label>
-                                                                    </div>
-                                                                <?php endforeach; ?>
+                                                                <?php if (($puertas_acceso->id_puertas_de_acceso) == 1) : ?>
+                                                                    <?php foreach ($getTiposCerraduraPA as $lock_types) : ?>
+                                                                        <div class="form-check">
+                                                                            <input type="checkbox" data-id-puertas-acceso="<?= $puertas_acceso->id_puertas_de_acceso ?>" id="acc<?= $lock_types->id_tipos_cerraduras ?>_group<?= $puertas_acceso->id_puertas_de_acceso ?>" name="acceso<?= $puertas_acceso->id_puertas_de_acceso ?>" value="<?= $lock_types->id_tipos_cerraduras ?>" class="form-check-input check_acceso_prinicpal" data-description="<?= $lock_types->descripcion ?>">
+                                                                            <label class="form-check-label" for="acc<?= $lock_types->id_tipos_cerraduras ?>_group<?= $puertas_acceso->id_puertas_de_acceso ?>"><?= $lock_types->descripcion ?></label>
+                                                                        </div>
+                                                                    <?php endforeach; ?>
+                                                                <?php else : ?>
+                                                                    <?php foreach ($getAllLockTypesGabinetes as $lock_types) : ?>
+                                                                        <div class="form-check">
+                                                                            <input type="radio" data-id-puertas-acceso="<?= $puertas_acceso->id_puertas_de_acceso ?>" id="acc<?= $lock_types->id_tipos_cerraduras ?>_group<?= $puertas_acceso->id_puertas_de_acceso ?>" name="acceso<?= $puertas_acceso->id_puertas_de_acceso ?>" value="<?= $lock_types->id_tipos_cerraduras ?>" class="form-check-input">
+                                                                            <label class="form-check-label" for="acc<?= $lock_types->id_tipos_cerraduras ?>_group<?= $puertas_acceso->id_puertas_de_acceso ?>"><?= $lock_types->descripcion ?></label>
+                                                                        </div>
+                                                                    <?php endforeach; ?>
+                                                                <?php endif; ?>
                                                             </div>
                                                         <?php endforeach; ?>
                                                     </div>
@@ -161,17 +170,17 @@
                                                             <label class="form-label">Atterizajes</label>
                                                             <div class="form-check">
                                                                 <h5>Torre</h5>
-                                                                <input class="at_torre" type="checkbox" id="chk_att_torre"  data-switch="warning" />
+                                                                <input class="at_torre" type="checkbox" id="chk_att_torre" data-switch="warning" />
                                                                 <label for="chk_att_torre" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <h5>Centro de Carga</h5>
-                                                                <input class="at_centro_carga" type="checkbox" id="chk_at_centro_carga"  data-switch="warning" />
+                                                                <input class="at_centro_carga" type="checkbox" id="chk_at_centro_carga" data-switch="warning" />
                                                                 <label for="chk_at_centro_carga" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <h5>Escalerilla</h5>
-                                                                <input class="at_escalerilla" type="checkbox" id="chk_escalerilla"  data-switch="warning" />
+                                                                <input class="at_escalerilla" type="checkbox" id="chk_escalerilla" data-switch="warning" />
                                                                 <label for="chk_escalerilla" data-on-label="Si" data-off-label="No"></label>
                                                             </div>
                                                         </div>
@@ -320,12 +329,12 @@
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                             <div class="card-body">
                                 <div class="col-sm-12">
-                                    <label class="form-label file_label">Fotografía / Identificación del proveedor  <span class="badge badge-danger-lighten">Obligatorio</span></label>
+                                    <label class="form-label file_label">Fotografía / Identificación del proveedor <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <input class="form-control" type="file" id="fotografia_proveedor">
                                 </div>
                                 <br>
                                 <div class="col-sm-12">
-                                    <label class="form-label">Firma del proveedor  <span class="badge badge-danger-lighten">Obligatorio</span></label>
+                                    <label class="form-label">Firma del proveedor <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                     <?php include 'firmaCanvas.php'; ?>
                                     <br>
                                 </div>

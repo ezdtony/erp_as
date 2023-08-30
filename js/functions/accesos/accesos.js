@@ -703,9 +703,13 @@ $(document).ready(function () {
     /* $("#na_perimetro").select2().val("").trigger("change");
     $("#na_limpieza").select2().val("").trigger("change"); */
 
-    $("input[type=radio][name=acceso1]").each(function () {
+    /*  $("input[type=radio][name=acceso1]").each(function () {
+      $(this).prop("checked", false);
+    }); */
+    $(".check_acceso_prinicpal").each(function () {
       $(this).prop("checked", false);
     });
+
     $("input[type=radio][name=acceso2]").each(function () {
       $(this).prop("checked", false);
     });
@@ -730,7 +734,6 @@ $(document).ready(function () {
     }).done(function (data) {
       var data = JSON.parse(data);
       //console.log(data);
-      Swal.close();
       console.log(data.perim_limp);
       if (data.perim_limp.length > 0) {
         $("#txt_limpieza").text(data.perim_limp[0].limpieza);
@@ -745,14 +748,17 @@ $(document).ready(function () {
 
         for (let i = 0; i < data.access_gates.length; i++) {
           console.log(data.access_gates[i].id_tipos_cerraduras);
-          $(
-            "#acc" +
-              data.access_gates[i].id_tipos_cerraduras +
-              "_group" +
-              data.access_gates[i].id_puertas_de_acceso +
-              ""
-          ).prop("checked", true);
+          if (data.access_gates[i].id_puertas_de_acceso != 1) {
+            $(
+              "#acc" +
+                data.access_gates[i].id_tipos_cerraduras +
+                "_group" +
+                data.access_gates[i].id_puertas_de_acceso +
+                ""
+            ).prop("checked", true);
+          }
         }
+
         /* for (let i = 0; i < .length; i++) { */
         for (var index in data.electricity[0]) {
           console.log(index);
@@ -788,7 +794,39 @@ $(document).ready(function () {
           ).prop("checked", true);
         }
       }
+
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "getAPS",
+          id_sitio: id_sitio,
+        },
+      }).done(function (data) {
+        var data = JSON.parse(data);
+
+        console.log(data);
+        if (data.response) {
+          const myArray = data.data[0].ids_aps.split(" ");
+          for (let ids = 0; ids < myArray.length; ids++) {
+            var id_pas = myArray[ids];
+            $.each($(".check_acceso_prinicpal"), function () {
+              if (id_pas == $(this).val()) {
+                $(this).prop( "checked", true );
+              }
+
+              // or you can do something to the actual checked checkboxes by working directly with  'this'
+              // something like $(this).hide() (only something useful, probably) :P
+            });
+          }
+          Swal.close();
+        }else{
+          Swal.close();
+        }
+      });
     });
+    
+    
   });
   $(document).on("click", ".saveGabinete", function () {
     loading();
@@ -797,7 +835,15 @@ $(document).ready(function () {
     var baterias_gabinete = $("#baterias_gabinete").val();
     var cerraduras_gabinetes = $("#cerraduras_gabinetes").val();
     var txt_cerradura = $("#cerraduras_gabinetes option:selected").text();
+    var proteccion_gabinete = 0;
+    if ($('#proteccion_gabinete').is(':checked'))  {
+      proteccion_gabinete = 1;
+    }
 
+    var prot_gab = "CON PROTECCIÓN";
+    if (proteccion_gabinete == 0) {
+      prot_gab = "SIN PROTECCIÓN";
+    }
     $.ajax({
       url: "php/controllers/accesos/accesos_controller.php",
       method: "POST",
@@ -807,6 +853,7 @@ $(document).ready(function () {
         nombre_gabinete: nombre_gabinete,
         baterias_gabinete: baterias_gabinete,
         cerraduras_gabinetes: cerraduras_gabinetes,
+        proteccion_gabinete:proteccion_gabinete
       },
     }).done(function (data) {
       var data = JSON.parse(data);
@@ -832,6 +879,11 @@ $(document).ready(function () {
         html_gabinete += '<p class="card-text">';
         html_gabinete += "Cerradura: " + txt_cerradura;
         html_gabinete += "</p>";
+        
+        html_gabinete += '<p class="card-text">';
+        html_gabinete += "Protección: " + prot_gab;
+        html_gabinete += "</p>";
+        
         html_gabinete +=
           '<button type="button" class="btn btn-light deleteGabinete" data-id-gabinete="' +
           id_gabinete +
@@ -909,7 +961,7 @@ $(document).ready(function () {
 
     // --- PUERTAS DE ACCESO ---//
 
-    var id_tipos_cerraduras_1 = $(
+    /*  var id_tipos_cerraduras_1 = $(
       "input[type=radio][name=acceso1]:checked"
     ).val();
     var id_puertas_acceso_1 = $("input[type=radio][name=acceso1]").attr(
@@ -936,7 +988,7 @@ $(document).ready(function () {
     var id_puertas_acceso_4 = $("input[type=radio][name=acceso4]").attr(
       "data-id-puertas-acceso"
     );
-
+ */
     // --- INFORMACIÓN ADICIONAL DE PROVEEDOR ---//
     firma_b64 = $("#firma_b64").val();
     const file_input = document.querySelector("#fotografia_proveedor");
@@ -1005,10 +1057,6 @@ $(document).ready(function () {
                   hora_ingreso != "" &&
                   proveedor != "" &&
                   ayudantes != "" &&
-                  id_tipos_cerraduras_1 != undefined &&
-                  id_tipos_cerraduras_2 != undefined &&
-                  id_tipos_cerraduras_3 != undefined &&
-                  id_tipos_cerraduras_4 != undefined &&
                   firma_b64 != ""
                 ) {
                   Swal.fire({
@@ -1221,6 +1269,62 @@ $(document).ready(function () {
       });
     }
   });
+
+  $(".check_acceso_prinicpal").change(function () {
+    var id_sitio = $("#na_sitio").val();
+    values = "";
+    id_pas = [];
+    $.each($(".check_acceso_prinicpal"), function () {
+      if (this.checked) {
+        values = values + " " + $(this).attr("data-description");
+        id_pas = id_pas + " " + $(this).val();
+      }
+
+      // or you can do something to the actual checked checkboxes by working directly with  'this'
+      // something like $(this).hide() (only something useful, probably) :P
+    });
+    console.log(values);
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateAPS",
+          id_sitio: id_sitio,
+          descr: values,
+          id_pas: id_pas,
+        },
+      }).done(function (data) {
+        Swal.close();
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+
   $("input[type=radio][name=acceso2]").change(function () {
     var id_tipos_cerraduras = $(this).val();
     var id_puertas_acceso = $(this).attr("data-id-puertas-acceso");

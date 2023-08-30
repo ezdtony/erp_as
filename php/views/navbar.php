@@ -30,7 +30,7 @@
                     <span> Inicio </span>
                 </a>
             </li>
-            <?php if ($id_area <= 3 || $_SESSION['id_area'] == 5) : ?>
+            <?php if ($id_area <= 3 || $_SESSION['id_area'] == 5 || $id_user == 50) : ?>
                 <li class="side-nav-item">
                     <?php if ($_SESSION['id_area'] == 5) : ?>
                         <a href="?submodule=personal_dev" class="side-nav-link">
@@ -56,7 +56,7 @@
                         <li>
                             <a href="?submodule=proyectos_unidades">Unidades</a>
                         </li>
-                        <?php if ($id_area <= 3) : ?>
+                        <?php if ($id_area <= 3 || $id_user == 50) : ?>
                             <li>
                                 <a href="?submodule=proyectos_inactivos">Inactivos</a>
                             </li>
@@ -74,7 +74,7 @@
                 </a>
                 <div class="collapse" id="sidebarViaticos">
                     <ul class="side-nav-second-level">
-                        <?php if ($id_area <= 3) : ?>
+                        <?php if ($id_area <= 3 || $id_user == 50) : ?>
                             <li class="side-nav-item">
                                 <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
                                     <span> Administrador </span>
@@ -98,7 +98,7 @@
                                 </div>
                             </li>
                         <?php endif; ?>
-                        <?php if ($id_area >= 4) : ?>
+                        <?php if ($id_area >= 4 || $id_user == 50) : ?>
                             <li class="side-nav-item">
                                 <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
                                     <span> Personal de Campo </span>
@@ -148,6 +148,9 @@
                                 <li>
                                     <a href="?submodule=captura_accesos">Mis accesos</a>
                                 </li>
+                                <li>
+                                    <a href="?submodule=sitios">Sitios</a>
+                                </li>
                             <?php endif; ?>
 
                             <!-- <li>
@@ -164,7 +167,7 @@
                 </li>
             <?php endif ?>
 
-            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2  || ($id_area >= 4)) : ?>
+            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2  || ($id_area >= 4 || $id_user == 50)) : ?>
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                         <i class="uil-shopping-trolley"></i>

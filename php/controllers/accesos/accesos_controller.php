@@ -526,6 +526,7 @@ function saveGabinete()
     $nombre_gabinete = $_POST['nombre_gabinete'];
     $baterias_gabinete = $_POST['baterias_gabinete'];
     $cerraduras_gabinetes = $_POST['cerraduras_gabinetes'];
+    $proteccion_gabinete = $_POST['proteccion_gabinete'];
 
     $queries = new Queries;
 
@@ -533,11 +534,14 @@ function saveGabinete()
              (id_sitios,
              id_tipos_cerraduras,
              nombre_gabinete,
-             baterias_gabinete) VALUES
+             baterias_gabinete,
+             proteccion_gabinete
+             ) VALUES
              ($id_sitio,
              $cerraduras_gabinetes,
              '$nombre_gabinete',
-             $baterias_gabinete)";
+             $baterias_gabinete,
+             $proteccion_gabinete)";
 
 
 
@@ -600,6 +604,12 @@ function getGabinetesStio()
             $nombre_gabinete = $gabinetes->nombre_gabinete;
             $baterias_gabinete = $gabinetes->baterias_gabinete;
             $cerradura = $gabinetes->cerradura;
+            $proteccion_gabinete = $gabinetes->proteccion_gabinete;
+            if ($proteccion_gabinete == 1) {
+                $pg = "CON PROTECCIÓN";
+            }else{
+                $pg = "SIN PROTECCIÓN";
+            }
 
             $html_gabinetes .= '<div class="col-md-6" id="divGabinete' . $id_gabinete . '">';
             $html_gabinetes .= '<div class="card border-primary border">';
@@ -610,6 +620,9 @@ function getGabinetesStio()
             $html_gabinetes .= '</p>';
             $html_gabinetes .= '<p class="card-text">';
             $html_gabinetes .= 'Cerradura: ' . $cerradura;
+            $html_gabinetes .= '</p>';
+            $html_gabinetes .= '<p class="card-text">';
+            $html_gabinetes .= 'Protección: ' . $pg;
             $html_gabinetes .= '</p>';
             $html_gabinetes .= '<button type="button" class="btn btn-light deleteGabinete" data-id-gabinete="' . $id_gabinete . '" title="Eliminar"><i class="mdi mdi-trash-can"></i> </button>';
             $html_gabinetes .= '</div>';
@@ -1124,7 +1137,7 @@ function deleteAcceso()
     $id_acceso = $_POST['id_acceso'];
 
     $queries = new Queries;
-    
+
     $stmt = "DELETE FROM asteleco_accesos_erp.firmas_accesos
     WHERE id_accesos = $id_acceso";
     $queries->InsertData($stmt);
@@ -1132,7 +1145,7 @@ function deleteAcceso()
     $stmt = "DELETE FROM asteleco_accesos_erp.log_gabinetes_accesos
     WHERE accesos_id_accesos = $id_acceso";
     $queries->InsertData($stmt);
-    
+
     $stmt = "DELETE FROM asteleco_accesos_erp.accesos
     WHERE id_accesos = $id_acceso";
 
@@ -1180,6 +1193,101 @@ function updateTypeSite()
         );
         //--- --- ---//
     }
+    echo json_encode($data);
+}
+
+function updateAPS()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $descr = $_POST['descr'];
+    $id_pas = $_POST['id_pas'];
+    //$descr = preg_replace("[\n|\r|\n\r]", "", $descr);
+    $queries = new Queries;
+    $checExist = "SELECT * FROM asteleco_accesos_erp.accesos_prinicpales_sitios WHERE id_sitio = $id_sitio";
+    if (empty($queries->getData($checExist))) {
+        $stmt = "INSERT INTO asteleco_accesos_erp.accesos_prinicpales_sitios (id_sitio, descripcion_seguridad, ids_aps) VALUES($id_sitio, '$descr', '$id_pas')";
+        if ($getInfoRequest = $queries->insertData($stmt)) {
+            //$last_id = $getInfoRequest['last_id'];
+            //--- --- ---//
+            $data = array(
+                'response' => true
+            );
+            //--- --- ---//
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false
+            );
+            //--- --- ---//
+        }
+    } else {
+        $stmt = "UPDATE asteleco_accesos_erp.accesos_prinicpales_sitios SET descripcion_seguridad = '$descr', ids_aps = '$id_pas' WHERE id_sitio = $id_sitio";
+        if ($getInfoRequest = $queries->insertData($stmt)) {
+            //$last_id = $getInfoRequest['last_id'];
+            //--- --- ---//
+            $data = array(
+                'response' => true
+            );
+            //--- --- ---//
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false
+            );
+            //--- --- ---//
+        }
+    }
+
+    echo json_encode($data);
+}
+
+function getAPS()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    //$descr = preg_replace("[\n|\r|\n\r]", "", $descr);
+    $queries = new Queries;
+    $checExist = "SELECT * FROM asteleco_accesos_erp.accesos_prinicpales_sitios WHERE id_sitio = $id_sitio";
+    if (!empty($queries->getData($checExist))) {
+        $stmt = "SELECT * FROM asteleco_accesos_erp.accesos_prinicpales_sitios WHERE id_sitio = $id_sitio";
+        if ($getInfoRequest = $queries->getData($stmt)) {
+            //$last_id = $getInfoRequest['last_id'];
+            //--- --- ---//
+            $data = array(
+                'response' => true,
+                'data' => $getInfoRequest
+            );
+            //--- --- ---//
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false
+            );
+            //--- --- ---//
+        }
+    } else {
+        $data = array(
+            'response' => false
+        );
+        /* 
+        $stmt = "UPDATE asteleco_accesos_erp.accesos_prinicpales_sitios SET descripcion_seguridad = '$descr', ids_aps = '$id_pas' WHERE id_sitio = $id_sitio";
+        if ($getInfoRequest = $queries->insertData($stmt)) {
+            //$last_id = $getInfoRequest['last_id'];
+            //--- --- ---//
+            $data = array(
+                'response' => true
+            );
+            //--- --- ---//
+        } else {
+            //--- --- ---//
+            $data = array(
+                'response' => false
+            );
+            //--- --- ---//
+        } */
+    }
+
     echo json_encode($data);
 }
 function saveEditarHora()
