@@ -228,6 +228,7 @@ $(document).ready(function () {
                             showConfirmButton: false,
                             timer: 1500,
                           }).then((result) => {
+                            loading();
                             location.reload();
                           });
                         } else {
@@ -354,6 +355,7 @@ $(document).ready(function () {
                       showConfirmButton: false,
                       timer: 1500,
                     }).then((result) => {
+                      loading();
                       location.reload();
                     });
                   } else {

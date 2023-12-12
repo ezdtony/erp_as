@@ -23,7 +23,7 @@ $getTiposSitio = $accesos->GetTipoSitio();
         <div class="card-body">
             <h4 class="header-title mb-3">Lista de Sitios</h4>
             <br>
-            <button type="button" disabled title="Estammos trabajando en ello..." class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoSitio">Nuevo Sitio</button>
+            <button type="button"  title="Estammos trabajando en ello..." class="btn btn-info rounded-pill" data-bs-toggle="modal" data-bs-target="#nuevoSitio">Nuevo Sitio</button>
             <br>
             <br>
             <div class="button-list">
@@ -99,10 +99,10 @@ $getTiposSitio = $accesos->GetTipoSitio();
 << /div>
     <!-- end row -->
     <?php
-    /* 
+    
 include_once('php/views/accesos/modals/nuevoSitio.php');
 include_once('php/views/accesos/modals/infoSitio.php');
- */
+
 
     ?>
     <script src="js/functions/accesos/accesos.js"></script>

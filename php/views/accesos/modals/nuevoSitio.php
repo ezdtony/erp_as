@@ -60,10 +60,10 @@ $getEstados = $accesos->getAllStates();
                     <br>
                     <div class="row g-2">
                         <div class="col-md">
-                            <h5>Central *</h5>
+                            <h5>Zona *</h5>
                             <div class="form-floating mb-3">
                                 <select class="form-select mb-3" id="id_central">
-                                    <option value="" selected disabled>Elija una central *</option>
+                                    <option value="" selected disabled>Elija una zona *</option>
                                     <?php foreach ($getCentrales as $centrales) : ?>
                                         <option value="<?= $centrales->id_centrales ?>"><?= ($centrales->nombre_central) ?></option>
                                     <?php endforeach; ?>
@@ -71,10 +71,10 @@ $getEstados = $accesos->getAllStates();
                             </div>
                         </div>
                         <div class="col-md">
-                            <h5>Zona *</h5>
+                            <h5>Central *</h5>
                             <div class="form-floating mb-3">
                                 <select class="form-select mb-3" id="id_zona" disabled>
-                                    <option value="" selected disabled>Elija una zona *</option>
+                                    <option value="" selected disabled>Elija una central *</option>
                                 </select>
                             </div>
                         </div>

@@ -300,7 +300,7 @@ function sendViaticsMailSpentUpdate()
             $mail->Host       = 'mail.astelecom.com.mx';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
             $mail->Username   = 'contabilidad@astelecom.com.mx';                     //SMTP username
-            $mail->Password   = 'hcZnW7NCo3*';                               //SMTP password
+            $mail->Password   = 'rv82*ZehP2G9';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
             $mail->Port       = 465;
 
