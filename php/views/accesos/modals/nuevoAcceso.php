@@ -56,6 +56,13 @@
                                     <label for="actividad">Actividad <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                 </div>
                                 <div class="form-floating row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Fecha de ingreso:</label>
+                                            <input type="text" class="form-control date" id="fecha_ingreso" data-toggle="date-picker" data-single-date-picker="true">
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6">
                                         <label for="example-time" class="form-label">Hora de Ingreso <span class="badge badge-danger-lighten">Obligatorio</span></label>
                                         <input class="form-control" id="hora_ingreso" type="time" name="time" value="<?= date('h:i') ?>">

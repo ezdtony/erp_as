@@ -607,7 +607,7 @@ function getGabinetesStio()
             $proteccion_gabinete = $gabinetes->proteccion_gabinete;
             if ($proteccion_gabinete == 1) {
                 $pg = "CON PROTECCIÓN";
-            }else{
+            } else {
                 $pg = "SIN PROTECCIÓN";
             }
 
@@ -911,7 +911,8 @@ function saveAcceso()
     $id_sitio = $_POST['id_sitio'];
     $empresa = $_POST['empresa'];
     $actividad = $_POST['actividad'];
-    $fecha = date('Y-m-d');
+    $fecha_ingreso = explode("/", $_POST['fecha_ingreso']);
+    $fecha = $fecha_ingreso[2] . "-" . $fecha_ingreso[0] . "-" . $fecha_ingreso[1];
     $hora_ingreso = $_POST['hora_ingreso'];
     $proveedor = $_POST['proveedor'];
     $ayudantes = $_POST['ayudantes'];
@@ -1195,6 +1196,34 @@ function updateTypeSite()
     }
     echo json_encode($data);
 }
+
+function updateAttrSite()
+{
+
+    $id_sitio = $_POST['id_sitio'];
+    $val = $_POST['val'];
+    $column_name = $_POST['column_name'];
+
+    $queries = new Queries;
+
+    $stmt = "UPDATE asteleco_accesos_erp.sitios SET $column_name = $val WHERE id_sitios = $id_sitio";
+    if ($getInfoRequest = $queries->insertData($stmt)) {
+        //$last_id = $getInfoRequest['last_id'];
+        //--- --- ---//
+        $data = array(
+            'response' => true
+        );
+        //--- --- ---//
+    } else {
+        //--- --- ---//
+        $data = array(
+            'response' => false
+        );
+        //--- --- ---//
+    }
+    echo json_encode($data);
+}
+
 
 function updateAPS()
 {

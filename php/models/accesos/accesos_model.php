@@ -58,7 +58,6 @@ class Access
         INNER JOIN asteleco_accesos_erp.sitios AS sites ON sites.id_sitios = acc.id_sitios 
         INNER JOIN asteleco_personal.lista_personal AS per ON per.id_lista_personal = acc.id_personal_as
         ORDER BY id_accesos DESC
-        LIMIT 200
         ";
 
         $getSites = $queries->getData($sql_sites);

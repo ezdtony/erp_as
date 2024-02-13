@@ -6,7 +6,7 @@ class data_conn
     private $db_user = "asteleco_root";
     private $db_pass = "@%rHW6RQDMA$?jMh";
     //private $db_host = "localhost";
-    private $db_host = "209.59.139.150";
+    private $db_host = "174.136.30.142";
 
     private $db_conn;
     public function dbConn()

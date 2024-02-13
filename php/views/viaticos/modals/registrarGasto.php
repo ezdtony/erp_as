@@ -19,7 +19,7 @@
                 <!-- Single Date Picker -->
                 <div class="mb-3">
                     <label class="form-label">Fecha de compra *</label>
-                    <input disabled type="text" class="form-control date" id="fecha_compra" data-toggle="date-picker" data-single-date-picker="true">
+                    <input type="text" class="form-control date" id="fecha_compra" data-toggle="date-picker" data-single-date-picker="true">
                 </div>
 
 

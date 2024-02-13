@@ -736,10 +736,11 @@ $(document).ready(function () {
     }).done(function (data) {
       var data = JSON.parse(data);
       //console.log(data);
-      console.log(data.perim_limp);
+      console.log(data);
       if (data.perim_limp.length > 0) {
         $("#txt_limpieza").text(data.perim_limp[0].limpieza);
         $("#txt_perimetro").text(data.perim_limp[0].perimetro);
+        $("#breakers_existentes").val(data.electricity[0].breakers_existentes);
       }
       if (data.response == true) {
         $(".at_torre").prop("disabled", false);
@@ -814,7 +815,7 @@ $(document).ready(function () {
             var id_pas = myArray[ids];
             $.each($(".check_acceso_prinicpal"), function () {
               if (id_pas == $(this).val()) {
-                $(this).prop( "checked", true );
+                $(this).prop("checked", true);
               }
 
               // or you can do something to the actual checked checkboxes by working directly with  'this'
@@ -822,13 +823,11 @@ $(document).ready(function () {
             });
           }
           Swal.close();
-        }else{
+        } else {
           Swal.close();
         }
       });
     });
-    
-    
   });
   $(document).on("click", ".saveGabinete", function () {
     loading();
@@ -838,7 +837,7 @@ $(document).ready(function () {
     var cerraduras_gabinetes = $("#cerraduras_gabinetes").val();
     var txt_cerradura = $("#cerraduras_gabinetes option:selected").text();
     var proteccion_gabinete = 0;
-    if ($('#proteccion_gabinete').is(':checked'))  {
+    if ($("#proteccion_gabinete").is(":checked")) {
       proteccion_gabinete = 1;
     }
 
@@ -855,7 +854,7 @@ $(document).ready(function () {
         nombre_gabinete: nombre_gabinete,
         baterias_gabinete: baterias_gabinete,
         cerraduras_gabinetes: cerraduras_gabinetes,
-        proteccion_gabinete:proteccion_gabinete
+        proteccion_gabinete: proteccion_gabinete,
       },
     }).done(function (data) {
       var data = JSON.parse(data);
@@ -881,11 +880,11 @@ $(document).ready(function () {
         html_gabinete += '<p class="card-text">';
         html_gabinete += "Cerradura: " + txt_cerradura;
         html_gabinete += "</p>";
-        
+
         html_gabinete += '<p class="card-text">';
         html_gabinete += "Protección: " + prot_gab;
         html_gabinete += "</p>";
-        
+
         html_gabinete +=
           '<button type="button" class="btn btn-light deleteGabinete" data-id-gabinete="' +
           id_gabinete +
@@ -946,17 +945,18 @@ $(document).ready(function () {
   });
   $(document).on("click", ".bntGuardarAcceso", function () {
     // --- INFORMACIÓN DEL ACCESO ---//
-
+    loading();
     var id_sitio = $(this).attr("data-id-sitio");
     var empresa = $("#empresa").val();
     var actividad = $("#actividad").val();
     var hora_ingreso = $("#hora_ingreso").val();
+    var fecha_ingreso = $("#fecha_ingreso").val();
     var hora_salida = $("#hora_salida").val();
     var proveedor = $("#proveedor").val();
     var ayudantes = $("#ayudantes").val();
     var comentarios = $("#comentarios").val();
     var id_user = $("#id_user").val();
-
+    
     // --- INFORMACIÓN DEL SITIO ---//
 
     // --- GABINETES ---//
@@ -1057,6 +1057,7 @@ $(document).ready(function () {
                   empresa != "" &&
                   actividad != "" &&
                   hora_ingreso != "" &&
+                  fecha_ingreso != "" &&
                   proveedor != "" &&
                   ayudantes != "" &&
                   firma_b64 != ""
@@ -1083,6 +1084,7 @@ $(document).ready(function () {
                           empresa: empresa,
                           actividad: actividad,
                           hora_ingreso: hora_ingreso,
+                          fecha_ingreso: fecha_ingreso,
                           proveedor: proveedor,
                           ayudantes: ayudantes,
                           firma_b64: firma_b64,
@@ -1187,6 +1189,53 @@ $(document).ready(function () {
       });
     }
   });
+  $(document).on("focusout", "#breakers_existentes", function () {
+    var id_sitio = $("#na_sitio option:selected").val();
+    var val = $(this).val();
+    var column_name = 'breakers_existentes';
+
+    loading();
+    if (id_sitio != null) {
+      $.ajax({
+        url: "php/controllers/accesos/accesos_controller.php",
+        method: "POST",
+        data: {
+          mod: "updateAttrSite",
+          id_sitio: id_sitio,
+          column_name:column_name,
+          val: val,
+        },
+      }).done(function (data) {
+        Swal.close();
+        var data = JSON.parse(data);
+        //console.log(data);
+        if (data.response == true) {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        } else {
+          $.NotificationApp.send(
+            "Propiedad Actualizada",
+            "",
+            "top-right",
+            "#ffffff",
+            "success"
+          );
+        }
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Debe seleccionar un sitio",
+        timer: 1500,
+      });
+    }
+  });
+  
   $(document).on("click", ".saveEditarHora", function () {
     var id_acceso = $(this).attr("data-id-acceso");
     var hora_salida = $("#hora_salida_edit").val();
