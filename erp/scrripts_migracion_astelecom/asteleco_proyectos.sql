@@ -1,0 +1,483 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.7
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 31-08-2022 a las 14:54:20
+-- Versión del servidor: 10.3.35-MariaDB-cll-lve
+-- Versión de PHP: 7.4.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `asteleco_proyectos`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asignaciones_proyectos`
+--
+
+CREATE TABLE `asignaciones_proyectos` (
+  `id_asignaciones_proyectos` int(11) NOT NULL,
+  `id_proyectos` int(11) NOT NULL,
+  `id_lista_personal` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `direcciones_proyecto`
+--
+
+CREATE TABLE `direcciones_proyecto` (
+  `id_direcciones_proyecto` int(11) NOT NULL,
+  `direccion_calle` varchar(45) DEFAULT NULL,
+  `direccion_numero_int` varchar(45) DEFAULT NULL,
+  `direccion_numero_ext` varchar(45) DEFAULT NULL,
+  `direccion_colonia` varchar(45) DEFAULT NULL,
+  `direccion_municipio` varchar(45) DEFAULT NULL,
+  `direccion_zipcode` varchar(45) DEFAULT NULL,
+  `direccion_estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `direcciones_proyecto`
+--
+
+INSERT INTO `direcciones_proyecto` (`id_direcciones_proyecto`, `direccion_calle`, `direccion_numero_int`, `direccion_numero_ext`, `direccion_colonia`, `direccion_municipio`, `direccion_zipcode`, `direccion_estado`) VALUES
+(1, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX-MORELOS-PUEBLA'),
+(2, NULL, NULL, NULL, NULL, NULL, NULL, 'Puebla'),
+(3, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(4, NULL, NULL, NULL, NULL, NULL, NULL, 'Zonas Tepic, Vallarta, Colima'),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, 'Querétaro'),
+(6, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXICO '),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, 'Querétaro'),
+(8, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(9, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(10, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(11, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(12, NULL, NULL, NULL, NULL, NULL, NULL, 'Oaxaca '),
+(13, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(14, NULL, NULL, NULL, NULL, NULL, NULL, 'Almacén de Puebla'),
+(15, NULL, NULL, NULL, NULL, NULL, NULL, 'TOLUCA'),
+(16, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(17, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(18, NULL, NULL, NULL, NULL, NULL, NULL, 'Guerrero'),
+(19, NULL, NULL, NULL, NULL, NULL, NULL, 'Almacén Pachuca'),
+(20, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(21, NULL, NULL, NULL, NULL, NULL, NULL, 'Ciudad de México'),
+(22, NULL, NULL, NULL, NULL, NULL, NULL, 'Ciudad de México - Puebla'),
+(23, NULL, NULL, NULL, NULL, NULL, NULL, 'Zacatecas, San Luis Potosí, Guanajuato, Queré'),
+(24, NULL, NULL, NULL, NULL, NULL, NULL, 'MONTERREY'),
+(25, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(26, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(27, NULL, NULL, NULL, NULL, NULL, NULL, 'Veracruz, Tamaulipas, Coahuila, Nuevo León'),
+(28, NULL, NULL, NULL, NULL, NULL, NULL, 'Ciudad de México'),
+(29, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(30, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(31, NULL, NULL, NULL, NULL, NULL, NULL, 'Chihuahua, Casas Grandes, Torreón, Durango, C'),
+(32, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(33, NULL, NULL, NULL, NULL, NULL, NULL, 'Guerrero'),
+(34, NULL, NULL, NULL, NULL, NULL, NULL, 'Michoacán'),
+(35, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(36, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(37, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(38, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(39, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(40, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosí, Guanajuato, Querétaro'),
+(41, NULL, NULL, NULL, NULL, NULL, NULL, 'Monclova, Monterrey, Coahuila'),
+(42, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(43, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosí, Coahuila, Tamaulipas'),
+(44, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(45, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(46, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosí, Guanajuato, Querétaro'),
+(47, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(48, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(49, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(50, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(51, NULL, NULL, NULL, NULL, NULL, NULL, 'Oaxaca '),
+(52, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosí, Guanajuato'),
+(53, NULL, NULL, NULL, NULL, NULL, NULL, 'Por asignar'),
+(54, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(55, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(56, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(57, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(58, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(59, NULL, NULL, NULL, NULL, NULL, NULL, 'TOLLOCAN'),
+(60, NULL, NULL, NULL, NULL, NULL, NULL, 'TABASCO'),
+(61, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(62, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(63, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(64, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(65, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(66, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(67, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México, Veracruz, Puebla, Oaxaca'),
+(68, NULL, NULL, NULL, NULL, NULL, NULL, 'GUADALAJARA'),
+(69, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(70, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosí, Guanajuato, Querétaro'),
+(71, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México, Pachuca'),
+(72, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosi'),
+(73, NULL, NULL, NULL, NULL, NULL, NULL, 'Monterrey'),
+(74, NULL, NULL, NULL, NULL, NULL, NULL, 'Nayarit y Michoacán'),
+(75, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(76, NULL, NULL, NULL, NULL, NULL, NULL, 'R9'),
+(77, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(78, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(79, NULL, NULL, NULL, NULL, NULL, NULL, 'Oaxaca'),
+(80, NULL, NULL, NULL, NULL, NULL, NULL, 'R9'),
+(81, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(82, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(83, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(84, NULL, NULL, NULL, NULL, NULL, NULL, 'San Luis Potosí, Guanajuato, Querétaro'),
+(85, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(86, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(87, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(88, NULL, NULL, NULL, NULL, NULL, NULL, 'Ciudad de México'),
+(89, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(90, NULL, NULL, NULL, NULL, NULL, NULL, 'VERACRUZ'),
+(91, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXICO'),
+(92, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXICO'),
+(93, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(94, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(95, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(96, NULL, NULL, NULL, NULL, NULL, NULL, 'PUEBLA'),
+(97, NULL, NULL, NULL, NULL, NULL, NULL, 'VERACRUZ'),
+(98, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico'),
+(99, NULL, NULL, NULL, NULL, NULL, NULL, 'Almacén de Puebla'),
+(100, NULL, NULL, NULL, NULL, NULL, NULL, 'CDMX'),
+(101, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(102, NULL, NULL, NULL, NULL, NULL, NULL, 'TOLLOCAN'),
+(103, NULL, NULL, NULL, NULL, NULL, NULL, 'TOLLOCAN'),
+(104, NULL, NULL, NULL, NULL, NULL, NULL, 'TOLLOCAN'),
+(105, NULL, NULL, NULL, NULL, NULL, NULL, 'XOCHIMILCO'),
+(106, NULL, NULL, NULL, NULL, NULL, NULL, 'XOCHIMILCO'),
+(107, NULL, NULL, NULL, NULL, NULL, NULL, 'ECATEPEC'),
+(108, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXIO'),
+(109, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXIO'),
+(110, NULL, NULL, NULL, NULL, NULL, NULL, 'TOLLOCAN'),
+(111, NULL, NULL, NULL, NULL, NULL, NULL, 'Cdad. Victoria, Veracruz, Matehuala, Coahuila'),
+(112, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXICO'),
+(113, NULL, NULL, NULL, NULL, NULL, NULL, 'Puebla'),
+(114, NULL, NULL, NULL, NULL, NULL, NULL, 'R1 a R9'),
+(115, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de México'),
+(116, NULL, NULL, NULL, NULL, NULL, NULL, 'ESTADO DE MEXIO'),
+(117, NULL, NULL, NULL, NULL, NULL, NULL, 'Michoacán, Colima'),
+(118, NULL, NULL, NULL, NULL, NULL, NULL, 'Estado de Mexico ');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proyectos`
+--
+
+CREATE TABLE `proyectos` (
+  `id_proyectos` int(11) NOT NULL,
+  `id_tipos_proyecto` int(11) NOT NULL,
+  `id_direcciones_proyecto` int(11) NOT NULL,
+  `id_regiones` int(11) NOT NULL,
+  `codigo_proyecto` varchar(45) DEFAULT NULL,
+  `nombre_proyecto` varchar(250) DEFAULT NULL,
+  `nombre_corto` varchar(45) DEFAULT NULL,
+  `descripcion` varchar(500) DEFAULT NULL,
+  `id_personal_creador` varchar(45) DEFAULT NULL,
+  `id_personal_cerrado` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `fecha_inicio` date DEFAULT NULL,
+  `fecha_proyectada_cierre` date DEFAULT NULL,
+  `fecha_cierre_real` date DEFAULT NULL,
+  `log_creacion` datetime DEFAULT NULL,
+  `show_proyect` int(11) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `proyectos`
+--
+
+INSERT INTO `proyectos` (`id_proyectos`, `id_tipos_proyecto`, `id_direcciones_proyecto`, `id_regiones`, `codigo_proyecto`, `nombre_proyecto`, `nombre_corto`, `descripcion`, `id_personal_creador`, `id_personal_cerrado`, `status`, `fecha_inicio`, `fecha_proyectada_cierre`, `fecha_cierre_real`, `log_creacion`, `show_proyect`) VALUES
+(1, 1, 1, 9, 'DES-R9-2108-01', 'Prueba', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2021-08-02', '2021-08-13', '0000-00-00', '2022-08-31 12:24:44', 1),
+(2, 1, 2, 9, 'DES-R9-2108-02', 'Entrega en almacén', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-04', '2021-08-09', '2021-08-24', '2022-08-31 12:24:44', 1),
+(3, 1, 3, 7, 'DES-R7-2108-03', 'DESMONTAJE DE ANTENAS MW ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-08-04', '2021-08-05', '2022-01-25', '2022-08-31 12:24:44', 1),
+(4, 2, 4, 5, 'MAN-R5-2108-04', 'Mantenimiento preventivo a Cac’s', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-04', '2021-09-03', '2021-10-05', '2022-08-31 12:24:45', 1),
+(5, 1, 5, 6, 'DES-R6-2108-05', 'Entrega de equipo de reuso a almacén ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-03', '2021-08-03', '2021-08-26', '2022-08-31 12:24:45', 1),
+(6, 3, 6, 9, 'REP-R9-2108-06', 'INSTALACION DE ANTENAS PARA COBERTURA', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-08-09', '2021-08-20', '2022-01-25', '2022-08-31 12:24:45', 1),
+(7, 1, 7, 6, 'DES-R6-2108-07', 'Entrega de equipo de reuso a almacén ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-06', '2021-08-06', '2021-09-06', '2022-08-31 12:24:45', 1),
+(8, 4, 8, 9, 'ADE-R9-2108-08', 'Gastos en general ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-08-02', '2021-08-05', '0000-00-00', '2022-08-31 12:24:45', 1),
+(9, 5, 9, 9, 'ECA-R9-2108-09', 'Accesos Ecatepec', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2021-01-01', '0000-00-00', '0000-00-00', '2022-08-31 12:24:46', 1),
+(10, 6, 10, 9, 'TOL-R9-2108-010', 'Accesos Tollocan', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2021-01-01', '0000-00-00', '0000-00-00', '2022-08-31 12:24:46', 1),
+(11, 7, 11, 9, 'XOC-R9-2108-011', 'Accesos Xochimilco', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2021-01-01', '0000-00-00', '0000-00-00', '2022-08-31 12:24:46', 1),
+(12, 1, 12, 7, 'DES-R7-2108-012', 'DESMONTAJE DE ANTENAS MW', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-08-09', '2021-08-12', '2021-08-16', '2022-08-31 12:24:46', 1),
+(13, 8, 13, 9, 'STR-R9-2108-013', 'Recolección de equipo STREET CELL- PANALPINA', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-09', '2021-08-09', '2021-08-10', '2022-08-31 12:24:46', 1),
+(14, 8, 14, 7, 'STR-R7-2108-014', 'Armado y pintado de antenas STREET CELL ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-09', '2021-08-16', '2021-09-06', '2022-08-31 12:24:46', 1),
+(15, 6, 15, 9, 'TOL-R9-2108-015', 'APERTURA DE RADIO BASES TELCEL', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '1', '2021-08-01', '2023-12-31', '2022-07-08', '2022-08-31 12:24:47', 1),
+(16, 1, 16, 7, 'DES-R7-2108-016', 'Gastos en general', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-08-16', '2021-08-18', '2021-08-26', '2022-08-31 12:24:47', 1),
+(17, 9, 17, 7, 'UNI-R7-2108-017', 'MANTENIMIENTO Y REPARACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-08-12', '2021-08-13', '2021-09-06', '2022-08-31 12:24:47', 1),
+(18, 1, 18, 7, 'DES-R7-2108-018', 'DESMONTAJE DE ANTENAS MW', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-08-23', '2021-08-26', '2022-01-25', '2022-08-31 12:24:47', 1),
+(19, 1, 19, 9, 'DES-R9-2108-019', 'Entrega de equipo de R6 obsoleto a almacén de Pachuca', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-24', '2021-08-25', '2021-08-26', '2022-08-31 12:24:47', 1),
+(20, 4, 20, 7, 'ADE-R7-2108-020', 'Almacen Puebla ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-08-26', '2021-12-31', '0000-00-00', '2022-08-31 12:24:48', 1),
+(21, 8, 21, 9, 'STR-R9-2108-021', 'Mantenimiento a Street Cell R9', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-27', '2021-08-28', '2021-09-06', '2022-08-31 12:24:48', 1),
+(22, 1, 22, 7, 'DES-R7-2108-022', 'Traslado de equipo de almacén de Ecatepec a almacén de Puebla', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-26', '2021-08-29', '2021-09-17', '2022-08-31 12:24:48', 1),
+(23, 1, 23, 6, 'DES-R6-2108-023', 'Desmontaje de equipo R6', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-08-30', '2021-09-13', '2021-11-02', '2022-08-31 12:24:48', 1),
+(24, 10, 24, 4, 'MEG-R4-2109-024', 'ARMADO DE BOAS', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-09-01', '2021-09-07', '2021-11-30', '2022-08-31 12:24:48', 1),
+(25, 9, 25, 9, 'UNI-R9-2109-025', 'VERIFICACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-09-03', '2021-09-03', '2021-09-17', '2022-08-31 12:24:49', 1),
+(26, 9, 26, 7, 'UNI-R7-2109-026', 'MANTENIMIENTO Y REPARACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-09-06', '2021-09-07', '0000-00-00', '2022-08-31 12:24:49', 1),
+(27, 1, 27, 4, 'DES-R4-2109-027', 'Desmontaje de equipo de Mw R4', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2021-09-08', '2021-09-30', '0000-00-00', '2022-08-31 12:24:49', 1),
+(28, 8, 28, 9, 'STR-R9-2109-028', 'Instalación de Gabinete GUT y STREET CELL ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-09-09', '2021-10-09', '2021-11-26', '2022-08-31 12:24:49', 1),
+(29, 9, 29, 7, 'UNI-R7-2109-029', 'MANTENIMIENTO Y REPARACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-09-09', '2021-09-10', '0000-00-00', '2022-08-31 12:24:49', 1),
+(30, 9, 30, 7, 'UNI-R7-2109-030', 'MANTENIMIENTO Y REPARACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-09-14', '2021-09-28', '0000-00-00', '2022-08-31 12:24:49', 1),
+(31, 11, 31, 3, 'CAC-R3-2109-031', 'Mantenimiento preventivo a CAC´s', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-09-27', '2021-10-27', '2021-11-02', '2022-08-31 12:24:50', 1),
+(32, 9, 32, 7, 'UNI-R7-2109-032', 'MANTENIMIENTO Y REPARACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-09-17', '2021-09-18', '2022-06-14', '2022-08-31 12:24:50', 1),
+(33, 1, 33, 7, 'DES-R7-2109-033', 'DESMONTAJE DE ANTENAS MW', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-09-20', '2021-09-27', '0000-00-00', '2022-08-31 12:24:50', 1),
+(34, 1, 34, 5, 'DES-R5-2109-034', 'Desmontaje de equipo de Mw R5', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-09-20', '2021-09-23', '2021-11-26', '2022-08-31 12:24:50', 1),
+(35, 9, 35, 9, 'UNI-R9-2109-035', 'VERIFICACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-09-23', '2021-09-23', '2021-11-30', '2022-08-31 12:24:50', 1),
+(36, 3, 36, 9, 'REP-R9-2110-037', 'Repetidores-Munichre', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-10-04', '2021-10-18', '2022-03-17', '2022-08-31 12:24:51', 1),
+(37, 9, 37, 9, 'UNI-R9-2110-038', 'MANTENIMIENTO Y REPARACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-10-11', '2021-10-25', '2022-06-14', '2022-08-31 12:24:51', 1),
+(38, 9, 38, 9, 'UNI-R9-2110-039', 'VERIFICACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-10-12', '2021-10-18', '2022-01-13', '2022-08-31 12:24:51', 1),
+(39, 10, 39, 9, 'MEG-R9-2110-040', 'ARMADO DE BOAS', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-10-12', '2021-10-15', '2021-11-30', '2022-08-31 12:24:51', 1),
+(40, 1, 40, 6, 'DES-R6-2110-041', 'Desmontaje de equipo R6', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-10-20', '2021-10-27', '2021-11-17', '2022-08-31 12:24:52', 1),
+(41, 11, 41, 4, 'CAC-R4-2110-042', 'Mantenimiento preventivo a CAC´s', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-10-21', '2021-11-12', '2021-11-26', '2022-08-31 12:24:52', 1),
+(42, 3, 42, 9, 'REP-R9-2110-043', 'REPETIDORES PRODUCTOS DE CONSUMO ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-10-28', '2021-11-12', '2022-01-13', '2022-08-31 12:24:52', 1),
+(43, 1, 43, 4, 'DES-R4-2111-044', 'Desmontaje de equipo de Mw R4', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2021-11-03', '2021-12-03', '0000-00-00', '2022-08-31 12:24:52', 1),
+(44, 3, 44, 9, 'REP-R9-2111-045', 'REPETIDORES LCARE MEXICANA', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-11-05', '2021-11-19', '2022-01-13', '2022-08-31 12:24:52', 1),
+(45, 3, 45, 9, 'REP-R9-2111-046', 'REPETIDOR QUALTIA ALIMENTOS ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-11-16', '2021-12-03', '2022-01-13', '2022-08-31 12:24:53', 1),
+(46, 1, 46, 6, 'DES-R6-2111-047', 'Desmontaje de equipo R6', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-11-18', '2021-11-30', '2021-12-02', '2022-08-31 12:24:53', 1),
+(47, 12, 47, 9, 'CAM-R9-2111-048', 'Cambio de Capacidad y Resintonización', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '1', '2021-11-18', '2021-11-19', '2022-01-25', '2022-08-31 12:24:53', 1),
+(48, 9, 48, 9, 'UNI-R9-2111-049', 'HUNDAY', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-11-22', '2021-11-23', '2022-06-14', '2022-08-31 12:24:53', 1),
+(49, 12, 49, 7, 'CAM-R7-2111-050', 'CAMBIO DE CAPACIDAD ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-11-23', '2021-11-24', '2021-11-30', '2022-08-31 12:24:53', 1),
+(50, 13, 50, 9, 'MEG-R9-2111-051', 'ARMADO DE FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-11-24', '2021-12-10', '2022-01-25', '2022-08-31 12:24:53', 1),
+(51, 14, 51, 7, 'REU-R7-2111-052', 'Reubicacion de Mw ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-11-29', '2021-12-03', '2022-01-25', '2022-08-31 12:24:54', 1),
+(52, 1, 52, 6, 'DES-R6-2112-053', 'Desmontaje de equipo R6', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2021-12-06', '2021-12-13', '0000-00-00', '2022-08-31 12:24:54', 1),
+(53, 15, 53, 7, 'INS-R7-2112-054', 'Instalación de equipo de Mw ZTE', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2021-12-07', '0000-00-00', '0000-00-00', '2022-08-31 12:24:54', 1),
+(54, 16, 54, 9, 'MEG-R9-2112-055', 'ARMADO DE FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-12-09', '2021-12-15', '2022-01-13', '2022-08-31 12:24:54', 1),
+(55, 3, 55, 9, 'REP-R9-2112-056', 'REPETIDORES SSITEL ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-12-08', '2021-12-23', '2022-01-25', '2022-08-31 12:24:54', 1),
+(56, 3, 56, 9, 'REP-R9-2112-057', 'REPETIDORES AUTOTODO ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-12-13', '2021-12-23', '2022-01-25', '2022-08-31 12:24:55', 1),
+(57, 9, 57, 9, 'UNI-R9-2112-058', 'SPARK AZUL', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2021-12-17', '2022-01-08', '0000-00-00', '2022-08-31 12:24:55', 1),
+(58, 13, 58, 9, 'MEG-R9-2112-059', 'INSTALACION DE FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-12-20', '2021-12-24', '2022-01-13', '2022-08-31 12:24:55', 1),
+(59, 1, 59, 9, 'DES-R9-2112-060', 'DESMONTAJE ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2021-12-27', '2021-12-28', '2022-01-25', '2022-08-31 12:24:55', 1),
+(60, 1, 60, 8, 'DES-R8-2201-061', 'DESMONTAJE', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-01-06', '2022-01-28', '2022-03-17', '2022-08-31 12:24:55', 1),
+(61, 4, 61, 9, 'ADE-R9-2201-062', 'PRUEBA COVID', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-01-10', '2022-04-29', '2022-03-17', '2022-08-31 12:24:56', 1),
+(62, 5, 62, 9, 'ECA-R9-2201-063', 'INSTALACION DE UTP', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-01-13', '2022-01-17', '2022-01-12', '2022-08-31 12:24:56', 1),
+(63, 13, 63, 9, 'MEG-R9-2201-064', 'INSTALACION DE UTP', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-01-13', '2022-01-17', '2022-01-25', '2022-08-31 12:24:56', 1),
+(64, 8, 64, 9, 'STR-R9-2201-065', 'STREET CELL ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-01-19', '2022-02-04', '0000-00-00', '2022-08-31 12:24:56', 1),
+(65, 13, 65, 9, 'MEG-R9-2201-066', 'INSTALACION DE UTP', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-01-24', '2022-01-25', '2022-03-17', '2022-08-31 12:24:56', 1),
+(66, 10, 66, 9, 'MEG-R9-2201-067', 'BOAS CENTRAL CARRASCO ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-01-25', '2022-01-31', '2022-03-17', '2022-08-31 12:24:56', 1),
+(67, 15, 67, 9, 'INS-R9-2201-068', 'Instalación de equipo ZTE', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-01-25', '2022-12-25', '0000-00-00', '2022-08-31 12:24:57', 1),
+(68, 4, 68, 7, 'ADE-R7-2201-069', 'CSR', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-01-27', '2022-12-31', '0000-00-00', '2022-08-31 12:24:57', 1),
+(69, 4, 69, 5, 'ADE-R5-2201-070', 'CSR', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-01-26', '2022-12-30', '0000-00-00', '2022-08-31 12:24:57', 1),
+(70, 1, 70, 6, 'DES-R6-2201-071', 'Desmontaje de equipo R6', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-01-31', '2022-03-31', '0000-00-00', '2022-08-31 12:24:57', 1),
+(71, 11, 71, 9, 'CAC-R9-2202-072', 'Mantenimiento preventivo a CAC´s', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-02-02', '2022-02-28', '0000-00-00', '2022-08-31 12:24:57', 1),
+(72, 4, 72, 6, 'ADE-R6-2202-073', 'CSR', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-02-03', '2022-12-31', '0000-00-00', '2022-08-31 12:24:58', 1),
+(73, 1, 73, 4, 'DES-R4-2202-075', 'Desmontaje de equipo de Mw R4', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-02-09', '2022-03-09', '0000-00-00', '2022-08-31 12:24:58', 1),
+(74, 1, 74, 5, 'DES-R5-2202-076', 'Desmontaje de equipo de Mw R5', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-02-10', '2022-02-14', '0000-00-00', '2022-08-31 12:24:58', 1),
+(75, 13, 75, 9, 'MEG-R9-2202-077', 'MEGASITE INSTALACION F.O', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-02-15', '2022-02-25', '2022-03-17', '2022-08-31 12:24:58', 1),
+(76, 9, 76, 9, 'UNI-R9-2202-078', 'Verificación Unidad SANDERO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-02-16', '2023-02-16', '0000-00-00', '2022-08-31 12:24:58', 1),
+(77, 9, 77, 9, 'UNI-R9-2202-079', 'COLORADO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-02-17', '2022-12-31', '2022-06-14', '2022-08-31 12:24:59', 1),
+(78, 9, 78, 9, 'UNI-R9-2202-080', 'COLORADO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-02-17', '2022-12-31', '0000-00-00', '2022-08-31 12:24:59', 1),
+(79, 4, 79, 7, 'ADE-R7-2202-081', 'CSR', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-02-23', '2022-12-02', '0000-00-00', '2022-08-31 12:24:59', 1),
+(80, 4, 80, 9, 'ADE-R9-2203-082', 'CSR', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-03-03', '2022-12-20', '0000-00-00', '2022-08-31 12:24:59', 1),
+(81, 9, 81, 9, 'UNI-R9-2203-083', 'Hyundai', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-03-04', '2022-12-30', '2022-06-14', '2022-08-31 12:24:59', 1),
+(82, 12, 82, 7, 'CAM-R7-2203-084', 'CAMBIO DE CAPACIDAD', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-03-07', '2022-03-10', '2022-03-17', '2022-08-31 12:25:00', 1),
+(83, 9, 83, 9, 'UNI-R9-2203-085', 'F150 - 2006', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-03-08', '2023-03-08', '0000-00-00', '2022-08-31 12:25:00', 1),
+(84, 1, 84, 6, 'DES-R6-2203-086', 'Desmontaje de equipo R6', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-03-10', '2022-04-10', '0000-00-00', '2022-08-31 12:25:00', 1),
+(85, 13, 85, 9, 'MEG-R9-2203-087', 'INSTALACION DE FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-03-16', '2022-03-25', '0000-00-00', '2022-08-31 12:25:00', 1),
+(86, 13, 86, 9, 'MEG-R9-2203-088', 'INSTALACION DE FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-03-22', '2022-03-25', '0000-00-00', '2022-08-31 12:25:00', 1),
+(87, 9, 87, 9, 'UNI-R9-2203-089', 'F150-2008', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-03-22', '2022-12-30', '0000-00-00', '2022-08-31 12:25:00', 1),
+(88, 4, 88, 9, 'ADE-R9-2203-090', 'Inventario de equipos Lago Alberto', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-02-28', '2022-03-28', '0000-00-00', '2022-08-31 12:25:01', 1),
+(89, 9, 89, 9, 'UNI-R9-2203-091', 'Hyundai', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-03-24', '2022-12-30', '0000-00-00', '2022-08-31 12:25:01', 1),
+(90, 1, 90, 7, 'DES-R7-2203-092', 'DESMONTAJE', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-03-25', '2022-12-30', '0000-00-00', '2022-08-31 12:25:01', 1),
+(91, 4, 91, 9, 'ADE-R9-2204-093', 'REPARACION COMPUTADORA', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '19', NULL, '0', '2022-04-05', '2022-04-06', '0000-00-00', '2022-08-31 12:25:01', 1),
+(92, 10, 92, 9, 'MEG-R9-2204-094', 'ARMADO DE BOAS', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-04-06', '2022-04-15', '0000-00-00', '2022-08-31 12:25:01', 1),
+(93, 10, 93, 9, 'MEG-R9-2204-095', 'Armado de boas Central Portales', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-04-19', '2022-04-26', '0000-00-00', '2022-08-31 12:25:02', 1),
+(94, 13, 94, 9, 'MEG-R9-2205-096', 'INSTALACION DE FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-04-18', '2022-05-09', '2022-08-18', '2022-08-31 12:25:02', 1),
+(95, 13, 95, 9, 'MEG-R9-2205-097', 'Instalación de FO y UTP', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-05-25', '2022-05-31', '2022-07-03', '2022-08-31 12:25:02', 1),
+(96, 12, 96, 7, 'CAM-R7-2205-098', 'CAMBIO DE CAPACIDAD', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-05-25', '2022-05-27', '0000-00-00', '2022-08-31 12:25:02', 1),
+(97, 14, 97, 7, 'REU-R7-2205-099', 'REUBICACION', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-05-31', '2022-06-01', '0000-00-00', '2022-08-31 12:25:02', 1),
+(98, 13, 98, 9, 'MEG-R9-2206-0100', 'Curso de FO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-06-06', '2022-06-07', '0000-00-00', '2022-08-31 12:25:03', 1),
+(99, 9, 99, 7, 'UNI-R7-2206-0101', 'LOBO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-06-13', '2023-06-13', '0000-00-00', '2022-08-31 12:25:03', 1),
+(100, 10, 100, 9, 'MEG-R9-2206-0102', 'Instalación y armado de boas - Central Portales', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '1', '2022-06-14', '2022-06-20', '2022-08-12', '2022-08-31 12:25:03', 1),
+(101, 13, 101, 9, 'MEG-R9-2206-0103', 'Pruebas con Fluke FO y UTP - ZTE', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-06-15', '2022-06-30', '0000-00-00', '2022-08-31 12:25:03', 1),
+(102, 9, 102, 9, 'UNI-R9-2206-0104', 'CHEVY', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:03', 1),
+(103, 9, 103, 9, 'UNI-R9-2206-0105', 'MATIZ ROJO 4919', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:03', 1),
+(104, 9, 104, 9, 'UNI-R9-2206-0106', 'SPARK AMARILLO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:04', 1),
+(105, 9, 105, 9, 'UNI-R9-2206-0107', 'MOTO VENTO ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:04', 1),
+(106, 9, 106, 9, 'UNI-R9-2206-0108', 'MATIZ GRIS 9518', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:04', 1),
+(107, 9, 107, 9, 'UNI-R9-2206-0109', 'AVEO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:04', 1),
+(108, 9, 108, 9, 'UNI-R9-2206-0110', 'SANDERO', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-06-14', '2022-12-14', '0000-00-00', '2022-08-31 12:25:04', 1),
+(109, 9, 109, 9, 'UNI-R9-2206-0111', 'RAM 4000', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:05', 1),
+(110, 9, 110, 9, 'UNI-R9-2206-0112', 'MATIZ GRIS 9508', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '18', NULL, '0', '2022-06-14', '2022-12-31', '0000-00-00', '2022-08-31 12:25:05', 1),
+(111, 1, 111, 4, 'DES-R4-2206-0113', 'Desmontaje de equipo de Mw R4', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-06-24', '2022-07-25', '0000-00-00', '2022-08-31 12:25:05', 1),
+(112, 3, 112, 9, 'REP-R9-2206-0114', 'Repetidores Coppel Tepotzotlan', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-06-28', '2022-07-08', '0000-00-00', '2022-08-31 12:25:05', 1),
+(113, 12, 113, 7, 'CAM-R7-2207-0115', 'Cambio de capacidad ', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-07-25', '2022-07-26', '0000-00-00', '2022-08-31 12:25:05', 1),
+(114, 17, 114, 9, 'REV-R9-2207-0116', 'Revisión de RETS', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-07-21', '2023-07-21', '0000-00-00', '2022-08-31 12:25:05', 1),
+(115, 18, 115, 9, 'GAS-R9-2207-0117', 'Reparación de LAPs, compras de piezas para LAPS, etc', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-07-27', '2023-07-29', '0000-00-00', '2022-08-31 12:25:06', 1),
+(116, 1, 116, 9, 'DES-R9-2208-0118', 'DESMONTAJE R9', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '17', NULL, '0', '2022-08-10', '2022-08-12', '0000-00-00', '2022-08-31 12:25:06', 1),
+(117, 1, 117, 5, 'DES-R5-2208-0119', 'Desmontaje de equipo de Mw R5', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '16', NULL, '0', '2022-08-12', '2023-08-12', '0000-00-00', '2022-08-31 12:25:06', 1),
+(118, 13, 118, 9, 'MEG-R9-2208-0120', 'Megasite Ixtlahuaca', NULL, 'PROYECTO MIGRADO DEL SISTEMA OBSOLETO AL ERP', '19', NULL, '0', '2022-08-24', '2022-09-01', '0000-00-00', '2022-08-31 12:25:06', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `regiones`
+--
+
+CREATE TABLE `regiones` (
+  `id_regiones` int(11) NOT NULL,
+  `nombre_region` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `regiones`
+--
+
+INSERT INTO `regiones` (`id_regiones`, `nombre_region`) VALUES
+(1, '1'),
+(2, '2'),
+(3, '3'),
+(4, '4'),
+(5, '5'),
+(6, '6'),
+(7, '7'),
+(8, '8'),
+(9, '9');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos_proyecto`
+--
+
+CREATE TABLE `tipos_proyecto` (
+  `id_tipos_proyecto` int(11) NOT NULL,
+  `descripcion_tipo` varchar(45) DEFAULT NULL,
+  `descripcion_corta` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tipos_proyecto`
+--
+
+INSERT INTO `tipos_proyecto` (`id_tipos_proyecto`, `descripcion_tipo`, `descripcion_corta`) VALUES
+(1, 'Desmontaje MW', 'DESMW'),
+(2, 'Mantenimiento CACS', 'MANCAC'),
+(3, 'Repetidores', 'REP'),
+(4, 'Adecuaciones', 'ADEC'),
+(5, 'Ecatepec - Accesos', 'ACC-ECA'),
+(6, 'Tollocan - Accesos', 'ACC-TOL'),
+(7, 'Xochimilco - Accesos', 'ACC-XOC'),
+(8, 'Street Cell', 'STRC'),
+(9, 'Unidades', 'UNI'),
+(10, 'Megasite - Instalación y Armado de Boas', 'MGSIAB'),
+(11, 'CAC´s - Mantenimiento', 'CACMTO'),
+(12, 'Cambio de Capacidad', 'CACAP'),
+(13, 'Megasite - Instalación de FO', 'MGSIFO'),
+(14, 'Reubicación', 'REUB'),
+(15, 'Instalación MW', 'INSMW'),
+(16, 'Megasite - Instalación Fibras MPO', 'MGSIFMPO'),
+(17, 'REVISIÓN DE RETS', 'REVRT'),
+(18, 'GASTOS DE OFICINA', 'GASOFI');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `asignaciones_proyectos`
+--
+ALTER TABLE `asignaciones_proyectos`
+  ADD PRIMARY KEY (`id_asignaciones_proyectos`),
+  ADD KEY `fk_asignaciones_proyectos_proyectos1_idx` (`id_proyectos`);
+
+--
+-- Indices de la tabla `direcciones_proyecto`
+--
+ALTER TABLE `direcciones_proyecto`
+  ADD PRIMARY KEY (`id_direcciones_proyecto`);
+
+--
+-- Indices de la tabla `proyectos`
+--
+ALTER TABLE `proyectos`
+  ADD PRIMARY KEY (`id_proyectos`),
+  ADD KEY `fk_proyectos_direcciones_proyecto_idx` (`id_direcciones_proyecto`),
+  ADD KEY `fk_proyectos_tipos_proyecto1_idx` (`id_tipos_proyecto`),
+  ADD KEY `fk_proyectos_regiones1_idx` (`id_regiones`);
+
+--
+-- Indices de la tabla `regiones`
+--
+ALTER TABLE `regiones`
+  ADD PRIMARY KEY (`id_regiones`);
+
+--
+-- Indices de la tabla `tipos_proyecto`
+--
+ALTER TABLE `tipos_proyecto`
+  ADD PRIMARY KEY (`id_tipos_proyecto`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `asignaciones_proyectos`
+--
+ALTER TABLE `asignaciones_proyectos`
+  MODIFY `id_asignaciones_proyectos` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `direcciones_proyecto`
+--
+ALTER TABLE `direcciones_proyecto`
+  MODIFY `id_direcciones_proyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+
+--
+-- AUTO_INCREMENT de la tabla `proyectos`
+--
+ALTER TABLE `proyectos`
+  MODIFY `id_proyectos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+
+--
+-- AUTO_INCREMENT de la tabla `regiones`
+--
+ALTER TABLE `regiones`
+  MODIFY `id_regiones` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de la tabla `tipos_proyecto`
+--
+ALTER TABLE `tipos_proyecto`
+  MODIFY `id_tipos_proyecto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `asignaciones_proyectos`
+--
+ALTER TABLE `asignaciones_proyectos`
+  ADD CONSTRAINT `fk_asignaciones_proyectos_proyectos1` FOREIGN KEY (`id_proyectos`) REFERENCES `proyectos` (`id_proyectos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `proyectos`
+--
+ALTER TABLE `proyectos`
+  ADD CONSTRAINT `fk_proyectos_direcciones_proyecto` FOREIGN KEY (`id_direcciones_proyecto`) REFERENCES `direcciones_proyecto` (`id_direcciones_proyecto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proyectos_regiones1` FOREIGN KEY (`id_regiones`) REFERENCES `regiones` (`id_regiones`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_proyectos_tipos_proyecto1` FOREIGN KEY (`id_tipos_proyecto`) REFERENCES `tipos_proyecto` (`id_tipos_proyecto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
