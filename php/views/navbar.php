@@ -27,7 +27,7 @@
   </div>
 
   <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5">
-      <a href="index.html" class="navbar-brand bg-dark ps-5 me-0">
+      <a href="index.php" class="navbar-brand bg-dark ps-5 me-0">
         <img src="img/aslogo.png" height="50" style=" padding-right:3% !important" srcset="">
           <!-- <h1 class="text-white m-0 bg-dark">ASTELECOM</h1> -->
       </a>
@@ -36,7 +36,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
           <div class="navbar-nav ms-auto p-4 p-lg-0">
-              <a href="index.html" class="nav-item nav-link active">Inicio</a>
+              <a href="index.php" class="nav-item nav-link active">Inicio</a>
               <a href="#about_us" class="nav-item nav-link">Acerca de nosotros</a>
               <a href="#services" class="nav-item nav-link">Servicios</a>
               <!-- <div class="nav-item dropdown">
