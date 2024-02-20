@@ -4,12 +4,12 @@ error_reporting(0);
 $server ="localhost";
 $user = "root";
 $password ="astelecom";
-$bd ="asteleco_contac";
+$bd ="asteleco_contact";
 $conexion = mysqli_connect($server, $user, $password, $bd);
 if($conexion -> connect_error){
     die('Error al  conectar la base de datos'. $conexion->connect_error);
 }else{
-    echo"te conectaste exitosamente";
+    /* echo"te conectaste exitosamente"; */
 }
 
 

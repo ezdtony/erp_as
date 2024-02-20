@@ -1,5 +1,9 @@
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="../../js/form.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+<script src="/erp_as/js/form.js"></script>
 <section id="contact">
     <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
@@ -53,10 +57,14 @@
                             <textarea class="form-control rounded" id="mensaje" rows="4" name="mensaje" placeholder="Ingrese su mensaje"></textarea>
 
                             <br><button type="submit" class="btn btn-primary" id="btnenviar">Enviar</button>
+
+                            <br><br><div id="mensajeExito"></div>
+                             <div id="mensajeError"></div>
                         </div>
                     </form>
                 </div>
                 <!-- end form contac -->
+
             </div>
         </div>
     </div>
@@ -80,4 +88,9 @@
 
 <!-- Back to Top -->
 <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+<script>
+    /* evita el renvio del formulario */
+    if (window.history.replaceState) {
+			window.history.replaceState(null,null, window.location.href)
+		}
+</script>

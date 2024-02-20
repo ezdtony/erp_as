@@ -1,15 +1,22 @@
 
 <?php
+
 include_once 'Connection.php';
 
-$name=$_POST['name'];
-$email=$_POST['email'];
-$mess=$_POST['mensaje'];
+$names=$_POST['name'];
+$emails=$_POST['email'];
+$messages=$_POST['mensaje'];
 
-$query="INSERT INTO contacs (name,email,messsage) 
- VALUES ('$name','$email','$mess')";
- echo mysqli_query($conexion,$query);
+
+
+$conin = "INSERT INTO contacs (name, email, messsage) VALUES ('$names', '$emails', '$messages')";
+/* $guarcon = $conexion->query($conin) */;
+echo mysqli_query($conexion,$conin);
+
+
+
 
 
 ?>
+
 
