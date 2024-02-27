@@ -38,6 +38,8 @@ $(document).ready(function () {
                         "</div>"
 
                     );
+                     // Llamar a la función para enviar el correo electrónico
+                     enviarCorreo(name, email, mensaje);
 
                 } else {
                     $('#mensajeExito').html(
@@ -53,3 +55,48 @@ $(document).ready(function () {
         return false;
     });
 });
+// Función para enviar el correo electrónico
+
+// Función para enviar el correo electrónico
+function enviarCorreo(name, email, mensaje) {
+    $.ajax({
+        type: 'POST',
+        url: '/erp_as/php/models/mail.php',
+        data: { name: name, email: email, mensaje: mensaje },
+        success: function (respuestaCorreo) {
+            // Verificar la respuesta del envío del correo
+            if (respuestaCorreo === "1") {
+                console.log("Correo enviado exitosamente");
+            } else {
+                console.log("Fallo al enviar el correo");
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Error en la solicitud AJAX:", textStatus, errorThrown);
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+/* function enviarCorreo(name, email, mensaje) {
+    $.ajax({
+        type: 'POST',
+        url: '/erp_as/php/models/mail.php',
+        data: { name: name, email: email, mensaje: mensaje },
+        success: function (respuestaCorreo) {
+             
+            if (respuestaCorreo === "1") {
+                 console.log("Correo enviado exitosamente"); 
+            } else {
+                 console.log("Fallo al enviar el correo"); 
+            }
+        }
+    });
+} */
