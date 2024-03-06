@@ -71,6 +71,7 @@ $(document).ready(function () {
         })
           .then((respuesta) => respuesta.json())
           .then((decodificado) => {
+            swal.close()
             console.log(decodificado.last_id);
             Swal.fire({
               title: "Saldo agregado!",
@@ -155,15 +156,10 @@ $(document).ready(function () {
       curp == null ||
       curp == "" ||
       curp == undefined ||
-      nss == null ||
-      nss == "" ||
-      nss == undefined ||
+      /* se quito los no requeridos*/
       fecha_nacimiento == null ||
       fecha_nacimiento == "" ||
       fecha_nacimiento == undefined ||
-      rfc == null ||
-      rfc == "" ||
-      rfc == undefined ||
       id_estado_civil == null ||
       id_estado_civil == "" ||
       id_estado_civil == undefined ||
@@ -188,18 +184,12 @@ $(document).ready(function () {
       telefono_pricnipal == null ||
       telefono_pricnipal == "" ||
       telefono_pricnipal == undefined ||
-      telefono_secundario == null ||
-      telefono_secundario == "" ||
-      telefono_secundario == undefined ||
       correo_personal == null ||
       correo_personal == "" ||
       correo_personal == undefined ||
       telefono_familiar_pricnipal == null ||
       telefono_familiar_pricnipal == "" ||
-      telefono_familiar_pricnipal == undefined ||
-      telefono_familiar_secundario == null ||
-      telefono_familiar_secundario == "" ||
-      telefono_familiar_secundario == undefined
+      telefono_familiar_pricnipal == undefined 
     ) {
       Swal.close();
       Swal.fire({
@@ -594,7 +584,6 @@ $(document).ready(function () {
     return password;
   }
   function loading() {
-    $(document).ready(function () {
       Swal.fire({
         title: "Cargando...",
         html: '<img src="images/loading.gif" width="300" height="175">',
@@ -604,6 +593,6 @@ $(document).ready(function () {
         showCancelButton: false,
         showConfirmButton: false,
       });
-    });
+  
   }
 });

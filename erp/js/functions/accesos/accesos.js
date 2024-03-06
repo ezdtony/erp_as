@@ -22,10 +22,10 @@ $(document).ready(function () {
           for (var i = 0; i < data.data.length; i++) {
             $("#id_zona").append(
               '<option value="' +
-                data.data[i].id_zonas_central +
-                '">' +
-                data.data[i].descripcion +
-                "</option>"
+              data.data[i].id_zonas_central +
+              '">' +
+              data.data[i].descripcion +
+              "</option>"
             );
           }
           $("#id_zona").append("</optgroup>");
@@ -77,10 +77,10 @@ $(document).ready(function () {
           for (var i = 0; i < data.data.length; i++) {
             $("#municipio_sitio").append(
               '<option value="' +
-                data.data[i].id +
-                '">' +
-                data.data[i].municipio +
-                "</option>"
+              data.data[i].id +
+              '">' +
+              data.data[i].municipio +
+              "</option>"
             );
           }
           $("#municipio_sitio").prop("disabled", false);
@@ -502,7 +502,7 @@ $(document).ready(function () {
               //--- --- ---//
               //--- --- ---//
             })
-            .fail(function (message) {});
+            .fail(function (message) { });
           $.ajax({
             url: "php/controllers/accesos/accesos_controller.php",
             method: "POST",
@@ -526,7 +526,7 @@ $(document).ready(function () {
               //--- --- ---//
               //--- --- ---//
             })
-            .fail(function (message) {});
+            .fail(function (message) { });
         } else {
           Swal.fire({
             icon: "error",
@@ -754,10 +754,10 @@ $(document).ready(function () {
           if (data.access_gates[i].id_puertas_de_acceso != 1) {
             $(
               "#acc" +
-                data.access_gates[i].id_tipos_cerraduras +
-                "_group" +
-                data.access_gates[i].id_puertas_de_acceso +
-                ""
+              data.access_gates[i].id_tipos_cerraduras +
+              "_group" +
+              data.access_gates[i].id_puertas_de_acceso +
+              ""
             ).prop("checked", true);
           }
         }
@@ -790,10 +790,10 @@ $(document).ready(function () {
           console.log(data.access_gates[i].id_tipos_cerraduras);
           $(
             "#acc" +
-              data.access_gates[i].id_tipos_cerraduras +
-              "_group" +
-              data.access_gates[i].id_puertas_de_acceso +
-              ""
+            data.access_gates[i].id_tipos_cerraduras +
+            "_group" +
+            data.access_gates[i].id_puertas_de_acceso +
+            ""
           ).prop("checked", true);
         }
       }
@@ -956,7 +956,7 @@ $(document).ready(function () {
     var ayudantes = $("#ayudantes").val();
     var comentarios = $("#comentarios").val();
     var id_user = $("#id_user").val();
-    
+
     // --- INFORMACIÓN DEL SITIO ---//
 
     // --- GABINETES ---//
@@ -996,15 +996,8 @@ $(document).ready(function () {
     const file_input = document.querySelector("#fotografia_proveedor");
     const file = file_input.files[0];
     vidFileLength = file_input.files.length;
-    var file_n = file.name;
-    var f = file_n.split(".");
-    //--- --- ---//
-    var name = file_input.getAttribute("name");
-    //--- --- ---//
-    name += ".";
-    name += f[1];
 
-    if (vidFileLength == 0) {
+    if (vidFileLength === 0) {
       /* $(".inputAddStudentDocument")
         .siblings(".custom-file-label")
         .removeClass("selected")
@@ -1013,6 +1006,15 @@ $(document).ready(function () {
       Swal.fire("Atención!", "Debe elegir un archivo", "info");
       file_input.value = "";
     } else {
+
+      var file_n = file.name;
+      var f = file_n.split(".");
+      //--- --- ---//
+      var name = file_input.getAttribute("name");
+      //--- --- ---//
+      name += ".";
+      name += f[1];
+
       if (
         f[f.length - 1] != "png" &&
         f[f.length - 1] != "jpg" &&
@@ -1202,7 +1204,7 @@ $(document).ready(function () {
         data: {
           mod: "updateAttrSite",
           id_sitio: id_sitio,
-          column_name:column_name,
+          column_name: column_name,
           val: val,
         },
       }).done(function (data) {
@@ -1235,7 +1237,7 @@ $(document).ready(function () {
       });
     }
   });
-  
+
   $(document).on("click", ".saveEditarHora", function () {
     var id_acceso = $(this).attr("data-id-acceso");
     var hora_salida = $("#hora_salida_edit").val();

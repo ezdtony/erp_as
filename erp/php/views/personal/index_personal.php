@@ -97,4 +97,4 @@ include_once('php/views/personal/modals/sendViaticsMails.php');
 <script src="js/functions/personal.js"></script>
 <script src="js/functions/viaticos/mailFunctions.js"></script>
 <script src="js/functions/users/edit_user.js"></script>
-<script src="js/loading.js"></script>
+<script src="js/loading.js"></script> 
