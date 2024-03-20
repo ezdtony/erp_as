@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -25,8 +27,38 @@
                 <br>
                 <br>
                 <br>
+                
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-auto">
+                        <label for="numProducts" class="col-form-label"> Mostrar: </label>
+                    </div>
+                    <div class="col-auto">
+                        <select name="numProducts" id="numProducts" class="form-select">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="100">100</option>
+                            <option value="250">250</option>
+                            <option value="500">500</option>
+                            <option value="1000">1000</option>
+                            <option value="0">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-auto">
+                        <label for="numProducts" class="col-form-label"> registros. </label>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                    <div class="col-auto">
+                        <label for="searchProd" class="col-form-label"> Buscar: </label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text" id="searchProd" name="searchProd" class="form-control" placeholder="...">
+                    </div>
+                </div>
+                <br>
 
-                <table id="datatable-buttons" class="table table-striped dt-responsive nowrap w-100">
+                <table id="tableColabs" class="table table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -42,44 +74,23 @@
                         </tr>
                     </thead>
 
-
                     <tbody>
-                        <?php
-                        include_once('php/models/user_information_table.php');
-                        $user_information_table = new UserArchives();
-                        foreach ($getAllUsers as $user) { 
-                            $status = '';
-                            if ($user->status == 1) {
-                                $status = 'checked';
-                            }
-                            ?>
-                            <tr>
-                                <td><?= ($user->nombres) . " " . $user->apellido_paterno . " " . $user->apellido_materno ?></td>
-                                <td><?= $user->id_lista_personal ?></td>
-                                <td>
-                                    <!-- Switch-->
-                                    <div>
-                                        <input class="change_user_status" type="checkbox" id="<?= $user->id_lista_personal ?>" data-switch="success" <?=$status?>/>
-                                        <label for="<?= $user->id_lista_personal ?>" data-on-label="Si" data-off-label="No" class="mb-0 d-block"></label>
-                                    </div>
-                                </td>
-                                <td><?= ($user->descripcion_area) ?></td>
-                                <td><?= ($user->puesto_area) ?></td>
-                                <td><?= ($user->codigo_usuario) ?></td>
-                                <td><?=$user_information_table->getArchivesCount($user->id_lista_personal)?> de <?=$getArchivesTableStructure[0]->total_archives?></td>
-                                <td><?= ($user->correo_sesion) ?></td>
-                                <td><?= ($user->password) ?></td>
 
-                                <td class="table-action">
-                                    <a href="?submodule=detalle_info&id_user=<?=$user->id_lista_personal?>" target="_blank"class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
-                                    <a class="action-icon editUser" id=<?=$user->id_lista_personal?>" data-bs-container="#tooltip-container2" data-bs-toggle="modal" data-bs-target="#editarUsuario" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
-                                    <a class="action-icon deleteUser" id=<?=$user->id_lista_personal?>" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>
-                                </td>
-                            </tr>
-                        <?php } ?>
                     </tbody>
                 </table>
                 <br>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                    <dt class="col-auto" id="lblTotal"></dt>
+                    </div>
+
+                    <div class="col-6" id="navPagination">
+                    
+                    </div>
+                </div>
+                <br>
+                </div>
             </div>
             <!-- end card-body-->
         </div>
@@ -94,7 +105,8 @@ include_once('php/views/personal/modals/editar_usuario.php');
 include_once('php/views/personal/modals/sendViaticsMails.php');
 
 ?>
+<script src="js/functions/loadColabs.js"></script>
 <script src="js/functions/personal.js"></script>
 <script src="js/functions/viaticos/mailFunctions.js"></script>
 <script src="js/functions/users/edit_user.js"></script>
-<script src="js/loading.js"></script> 
+<script src="js/loading.js"></script>

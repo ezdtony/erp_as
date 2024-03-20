@@ -53,6 +53,173 @@ function getAreaLevelsByAreaID()
     echo json_encode($data);
 }
 
+function getColabsTable()
+{
+
+    $queries = new Queries;
+
+    //$id_product = $_POST['id_product'];
+    //$colab_name = $_POST['product_name'];
+    $colsSearch = [
+        "CONCAT(nombres, ' ', apellido_paterno, ' ', apellido_materno)",
+        'codigo_usuario',
+        'descripcion_area',
+        'descripcion_niveles_areas',
+        'correo_sesion',
+    ];
+    $limit =  isset($_POST['limit']) ? $_POST['limit'] : 10;
+    $actualPage =  isset($_POST['actualPage']) ? $_POST['actualPage'] : 0;
+
+    if (!$actualPage) {
+        $begin = 0;
+        $actualPage = 1;
+    } else {
+        $begin = ($actualPage - 1) * $limit;
+    }
+    $where = "";
+    if (isset($_POST['searchInput']) && ($_POST['searchInput'] != '')) {
+        $searchInput = $_POST['searchInput'];
+        $where .= " WHERE (";
+        for ($i = 0; $i < count($colsSearch); $i++) {
+            $where .= $colsSearch[$i] . " LIKE '%" . addslashes($searchInput) . "%' OR ";
+        }
+        $where = substr($where, 0, -3);
+        $where .= ") AND status = 1 ";
+    }
+
+
+    if ($limit > 0) {
+        $limit = " LIMIT $begin,  $limit";
+    } else {
+        $limit = "";
+    }
+    //echo $limit;
+    $html = "";
+
+
+
+
+
+    $sql = "SELECT SQL_CALC_FOUND_ROWS
+    UPPER (CONCAT(nombres, ' ', apellido_paterno, ' ', apellido_materno)) AS user_name,
+    id_lista_personal, codigo_usuario, descripcion_area, descripcion_niveles_areas, 
+    correo_sesion, password, status
+    FROM asteleco_personal.lista_personal AS lp
+    INNER JOIN asteleco_personal.niveles_areas AS nar ON nar.id_niveles_areas = lp.id_niveles_areas
+    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = nar.id_areas
+    $where 
+    GROUP BY id_lista_personal
+    $limit
+    ";
+
+    $getColabs = $queries->getData($sql);
+
+    $total_stock = 0;
+
+    if (!empty($getColabs)) {
+        $totalResults = count($getColabs);
+
+        $sqlAllProdsFiltered = "SELECT FOUND_ROWS() AS founded";
+        $getTotalProductsFiltered = $queries->getData($sqlAllProdsFiltered);
+        if (!empty($getTotalProductsFiltered)) {
+            $totalFiltered = ($getTotalProductsFiltered[0]->founded);
+        }
+
+        $sqlAllProds = "SELECT COUNT(id_lista_personal) AS founded
+        FROM asteleco_personal.lista_personal AS lp
+        INNER JOIN asteleco_personal.niveles_areas AS nar ON nar.id_niveles_areas = lp.id_niveles_areas
+        INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = nar.id_areas
+        ";
+        $getTotalProducts = $queries->getData($sqlAllProds);
+        if (!empty($getTotalProducts)) {
+            $totalProds = ($getTotalProducts[0]->founded);
+        }
+
+
+        foreach ($getColabs as $colab) {
+
+            $status = '';
+            if ($colab->status == 1) {
+                $status = 'checked';
+            }
+            $html .= '
+            <tr id="trColab' . $colab->id_lista_personal . '">
+            <td>' . $colab->user_name . '</td>
+            <td>'.$colab->id_lista_personal .'</td>
+            <td> <div>
+            <input class="change_user_status" type="checkbox" id="' . $colab->id_lista_personal . '" data-switch="success" ' . $status . ' />
+            <label for="' . $colab->id_lista_personal . '" data-on-label="Si" data-off-label="No" class="mb-0 d-block"></label>
+        </div>
+        </td>
+        <td>'.$colab->descripcion_area .'</td>
+        <td>'.$colab->descripcion_niveles_areas .'</td>
+        <td>'.$colab->codigo_usuario .'</td>
+        <td>'.$colab->codigo_usuario .'</td>
+        <td>'.$colab->correo_sesion .'</td>
+        <td>'.$colab->password .'</td>
+        <td class="table-action">
+        <a href="?submodule=detalle_info&id_user='.$colab->id_lista_personal.'" target="_blank"class="action-icon" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Información detallada"> <i class="mdi mdi-information"></i></a>
+        <a class="action-icon editUser" id='.$colab->id_lista_personal.'" data-bs-container="#tooltip-container2" data-bs-toggle="modal" data-bs-target="#editarUsuario" data-bs-toggle="tooltip" title="Editar información"> <i class="mdi mdi-circle-edit-outline"></i></a>
+        <a class="action-icon deleteUser" id='.$colab->id_lista_personal.'" data-bs-container="#tooltip-container2" data-bs-toggle="tooltip" title="Eliminar usuario"> <i class="mdi mdi-delete"></i></a>
+         </td>
+        </tr>';
+        }
+
+        $pagNum = 1;
+        if (($actualPage - 4) > 1) {
+            $pagNum = $actualPage - 4;
+        }
+        $totalPages = ceil($totalProds / $_POST['limit']);
+
+        $pagination = '';
+
+        $stopNav = $pagNum + 9;
+        if ($stopNav > $totalPages) {
+            $stopNav = $totalPages;
+        }
+        $pagination .= '<nav>';
+        $pagination .= '<ul class="nav nav-pills">';
+
+        for ($i = $pagNum; $i <= $stopNav; $i++) {
+            $active = $i == $actualPage ? "active" : "";
+            $pagination .= '<li class="nav-item">';
+            $pagination .= '<a class="nav-link changePage ' . $active . '" aria-current="page" href="#">' . $i . '</a>';
+            $pagination .= '</li>';
+        }
+
+
+
+
+
+
+
+        $pagination .= '</ul>';
+        $pagination .= '</nav>';
+
+        $data = array(
+            'response' => true,
+            'html' => $html,
+            'totalProds' => $totalProds,
+            'totalResults' => $totalResults,
+            'totalFiltered' => $totalFiltered,
+            'totalPages' => $totalPages,
+            'paginationNav' => $pagination
+        );
+    } else {
+
+        $html .= '
+                    </tbody>
+                </table>';
+        $data = array(
+            'response' => false,
+            'html' => $html
+        );
+    }
+
+
+
+    echo json_encode($data);
+}
 function saveNewUser()
 {
     /* INFO GENERAL */
@@ -542,7 +709,7 @@ function sendViaticsMail()
                                                                         <div style="font-family: sans-serif">
                                                                             <div class style="font-size: 12px; font-family: Oswald, Lucida Sans Unicode, Lucida Grande, sans-serif; mso-line-height-alt: 21.6px; color: #FFFFFF; line-height: 1.8;">
                                                                                 <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 61.2px;"><span style="font-size:34px;"><span style="font-size:34px;">Estimado </span><strong><span style="font-size:34px;"><span style="font-size:34px;background-color:#ffffff;"><span style="color:#003300;font-size:34px;background-color:#ffffff;">&nbsp;</span><span style="color:#003300;font-size:34px;background-color:#ffffff;"><span style="color:#008000;">' . $nombre_completo . '</span></span></span>,&nbsp;</span></strong></span></p>
-                                                                                <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 43.2px;"><span style="font-size:24px;"><span style="font-size:24px;">Te recordamos que tienes hasta el día 25 de ' . $meses[$monthNumber] . ' de '.date('Y').' para finalizar la comprobación de gastos pendientes</span></span></p>
+                                                                                <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 43.2px;"><span style="font-size:24px;"><span style="font-size:24px;">Te recordamos que tienes hasta el día 25 de ' . $meses[$monthNumber] . ' de ' . date('Y') . ' para finalizar la comprobación de gastos pendientes</span></span></p>
                                                                                 <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21.6px;">&nbsp;</p>
                                                                             </div>
                                                                         </div>
@@ -1337,7 +1504,7 @@ function sendViaticsMailMasive()
                                                                         <div style="font-family: sans-serif">
                                                                             <div class style="font-size: 12px; font-family: Oswald, Lucida Sans Unicode, Lucida Grande, sans-serif; mso-line-height-alt: 21.6px; color: #FFFFFF; line-height: 1.8;">
                                                                                 <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 61.2px;"><span style="font-size:34px;"><span style="font-size:34px;">Estimado </span><strong><span style="font-size:34px;"><span style="font-size:34px;background-color:#ffffff;"><span style="color:#003300;font-size:34px;background-color:#ffffff;">&nbsp;</span><span style="color:#003300;font-size:34px;background-color:#ffffff;"><span style="color:#008000;">' . $nombre_completo . '</span></span></span>,&nbsp;</span></strong></span></p>
-                                                                                <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 43.2px;"><span style="font-size:24px;"><span style="font-size:24px;">Te recordamos que tienes hasta el día 25 de ' . $meses[$monthNumber] . ' de '.date('Y').' para finalizar la comprobación de gastos pendientes</span></span></p>
+                                                                                <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 43.2px;"><span style="font-size:24px;"><span style="font-size:24px;">Te recordamos que tienes hasta el día 25 de ' . $meses[$monthNumber] . ' de ' . date('Y') . ' para finalizar la comprobación de gastos pendientes</span></span></p>
                                                                                 <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 21.6px;">&nbsp;</p>
                                                                             </div>
                                                                         </div>
