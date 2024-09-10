@@ -1242,7 +1242,7 @@ function sendViaticsMail()
             $mail->Port       = 465;
 
             $mail->SMTPDebug = false;
-            $mail->do_debug = 0;                           //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+          //  $mail->do_debug = 0;                           //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
             //Recipients
             $mail->setFrom('contabilidad@astelecom.com.mx', 'Departamento de Contabilidad AS');
@@ -2037,7 +2037,7 @@ function sendViaticsMailMasive()
                 $mail->Port       = 465;
 
                 $mail->SMTPDebug = false;
-                $mail->do_debug = 0;                           //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+               //$mail->do_debug = 0;                           //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
                 //Recipients
                 $mail->setFrom('contabilidad@astelecom.com.mx', 'Departamento de Contabilidad AS');

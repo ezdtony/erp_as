@@ -218,7 +218,17 @@ function createPieChart() {
 
         // Play initial series animation
         // https://www.amcharts.com/docs/v5/concepts/animations/#Animation_of_series
+
+        series.slices.template.set("tooltipText", "{category}: {value}");
         series.appear(1000, 100);
+
+
+        var total = chart_data.reduce(function(acc, data) {
+          return acc + data.value;
+        }, 0);
+
+        
+        document.getElementById("titleDiv").innerHTML = "Total comprobado: $" + total.toFixed(2);
       }); // end am5.ready()
     } else {
     }

@@ -20,6 +20,18 @@ class UserArchives
 
         return count($getUserArchives);
     }
+    public function getUsersVacationsTaken($id_user)
+    {
+        $year = date('Y');
+        include_once('php/models/petitions.php');
+        $queries = new Queries;
+        $sql_user_archives = "SELECT *
+        FROM asteleco_personal.vacations_taken
+        WHERE id_personal = $id_user AND YEAR(day_authorized) = $year AND authortized = 1";
+        $getUserArchives = $queries->getData($sql_user_archives);
+
+        return count($getUserArchives);
+    }
     public function getProfilePic($id_user_data)
     {
         include_once('php/models/petitions.php');

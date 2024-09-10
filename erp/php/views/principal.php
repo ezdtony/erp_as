@@ -143,6 +143,7 @@ $mes_actual = $mes[$month - 1];
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h4 class="header-title">Tipos de Gasto</h4>
+                        <div id="titleDiv" style="text-align: center; font-size: 20px; margin-bottom: 10px;"></div>
                         <br>
                         <h5><?= $mes_actual ?> <?= date('Y') ?></h5>
                     </div>

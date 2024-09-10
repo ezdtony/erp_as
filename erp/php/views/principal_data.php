@@ -81,6 +81,30 @@ if (!isset($_SESSION['user'])) {
     WHERE proy.status = 1 AND proy.id_tipos_proyecto != 9 AND proy.show_proyect = 1 $parametro_busqueda ORDER BY fecha_creacion_proy DESC";
     $getAllProyectsActivos = $queries->getData($todos_proyectos_activos);
 
+
+    $sqlGetUsersVacations = "SELECT ar.id_areas, correo_personal, sal.gross_salary,
+    ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+    FROM asteleco_personal.lista_personal AS usr 
+    INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas
+    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
+    LEFT JOIN asteleco_rh.colab_salaries AS sal ON sal.id_colab = usr.id_lista_personal
+    ORDER BY nombre_completo ASC
+    limit 7";
+    $getUsersVacations = $queries->getData($sqlGetUsersVacations);
+
+    $sqlGetUsersPayroll = "SELECT ar.id_areas, correo_personal, sal.gross_salary,
+    ar.descripcion_area,CONCAT(usr.nombres, ' ', usr.apellido_paterno, ' ', usr.apellido_materno) AS nombre_completo, niv_ar.descripcion_niveles_areas AS puesto_area, usr.* 
+    FROM asteleco_personal.lista_personal AS usr 
+    INNER JOIN asteleco_personal.niveles_areas AS niv_ar ON usr.id_niveles_areas = niv_ar.id_niveles_areas
+    INNER JOIN asteleco_personal.areas AS ar ON ar.id_areas = niv_ar.id_areas
+    LEFT JOIN asteleco_rh.colab_salaries AS sal ON sal.id_colab = usr.id_lista_personal
+    ORDER BY nombre_completo ASC";
+    $getUsersPayroll = $queries->getData($sqlGetUsersPayroll);
+
+    $sqlGetVacationTypes = "SELECT *
+    FROM asteleco_personal.vacation_types";
+    $getVacationsTypes = $queries->getData($sqlGetVacationTypes);
+
     $todos_proyectos_unidades = "SELECT 
     proy.id_proyectos,
     proy.`codigo_proyecto`,

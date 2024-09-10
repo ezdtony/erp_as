@@ -274,9 +274,9 @@
                 </div>
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/cs7.jpg" alt="">
+                        <img class="img-fluid" src="img/equipos-rf.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/cs7.jpg" alt="">
+                            <img class="img-fluid" src="img/equipos-rf.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -294,9 +294,9 @@
                 </div>
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/personal.jpeg" alt="">
+                        <img class="img-fluid" src="img/servicio-cel.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/personal.jpeg" alt="">
+                            <img class="img-fluid" src="img/servicio-cel.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -315,9 +315,9 @@
             <div class="row gy-5 gx-4">
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/alt7.jpg" alt="">
+                        <img class="img-fluid" src="img/ingenierias.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/alt7.jpg" alt="">
+                            <img class="img-fluid" src="img/ingenierias.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -335,9 +335,9 @@
                 </div>
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/cs7.jpg" alt="">
+                        <img class="img-fluid" src="img/microcelu.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/cs7.jpg" alt="">
+                            <img class="img-fluid" src="img/microcelu.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -354,9 +354,9 @@
                 </div>
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/personal.jpeg" alt="">
+                        <img class="img-fluid" src="img/datacenter-2.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/personal.jpeg" alt="">
+                            <img class="img-fluid" src="img/datacenter-2.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -375,9 +375,9 @@
             <div class="row gy-5 gx-4">
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/alt7.jpg" alt="">
+                        <img class="img-fluid" src="img/atencion-sitios.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/alt7.jpg" alt="">
+                            <img class="img-fluid" src="img/atencion-sitios.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -394,9 +394,9 @@
                 </div>
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/cs7.jpg" alt="">
+                        <img class="img-fluid" src="img/streetcell.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/cs7.jpg" alt="">
+                            <img class="img-fluid" src="img/streetcell.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">
@@ -413,9 +413,9 @@
                 </div>
                 <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="service-item">
-                        <img class="img-fluid" src="img/personal.jpeg" alt="">
+                        <img class="img-fluid" src="img/constru-sites.png" alt="">
                         <div class="service-img">
-                            <img class="img-fluid" src="img/personal.jpeg" alt="">
+                            <img class="img-fluid" src="img/constru-sites.png" alt="">
                         </div>
                         <div class="service-detail">
                             <div class="service-title">

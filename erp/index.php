@@ -12,6 +12,12 @@ include_once('php/views/topbar.php');
     if (isset($_GET['submodule'])) {
         $submodule = $_GET['submodule'];
         switch ($submodule) {
+            case 'vacations':
+                $include_file = 'php/views/rh/vacations/vacations.php';
+                break;
+            case 'nomina':
+                $include_file = 'php/views/rh/nomina/nomina.php';
+                break;
             case 'sitios':
                 $include_file = 'php/views/accesos/sitios.php';
                 break;

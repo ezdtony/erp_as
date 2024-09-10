@@ -30,148 +30,11 @@
                     <span> Inicio </span>
                 </a>
             </li>
-            <?php if ($id_area <= 3 || $_SESSION['id_area'] == 5 || $id_user == 50) : ?>
-                <li class="side-nav-item">
-                    <?php if ($_SESSION['id_area'] == 5) : ?>
-                        <a href="?submodule=personal_dev" class="side-nav-link">
-                        <?php else : ?>
-                            <a href="?submodule=personal" class="side-nav-link">
-                            <?php endif; ?>
-                            <i class="uil-users-alt"></i>
-                            <span> Personal </span>
-                            </a>
-                </li>
-            <?php endif; ?>
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarProyectos" aria-expanded="false" aria-controls="sidebarProyectos" class="side-nav-link">
-                    <i class="uil-suitcase"></i>
-                    <span> Proyectos </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarProyectos">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="?submodule=proyectos">Operaciones</a>
-                        </li>
-                        <li>
-                            <a href="?submodule=proyectos_unidades">Unidades</a>
-                        </li>
-                        <?php if ($id_area <= 3 || $id_user == 50) : ?>
-                            <li>
-                                <a href="?submodule=proyectos_inactivos">Inactivos</a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-
-
-            </li>
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarViaticos" aria-expanded="false" aria-controls="sidebarViaticos" class="side-nav-link">
-                    <i class="uil-usd-circle"></i>
-                    <span> Viáticos </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarViaticos">
-                    <ul class="side-nav-second-level">
-                        <?php if ($id_area <= 3 || $id_user == 50) : ?>
-                            <li class="side-nav-item">
-                                <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
-                                    <span> Administrador </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarSecondLevel">
-                                    <ul class="side-nav-third-level">
-                                        <li>
-                                            <a href="?submodule=saldos">Saldos</a>
-                                        </li>
-                                        <li>
-                                            <a href="?submodule=depositos_viaticos">Depósitos</a>
-                                        </li>
-                                        <li>
-                                            <a href="?submodule=gastos_recientes">Gastos recientes</a>
-                                        </li>
-                                        <li>
-                                            <a href="?submodule=gastos">Todos los gastos</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        <?php endif; ?>
-                        <?php if ($id_area >= 4 || $id_user == 50) : ?>
-                            <li class="side-nav-item">
-                                <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
-                                    <span> Personal de Campo </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarThirdLevel">
-                                    <ul class="side-nav-third-level">
-                                        <li>
-                                            <a href="?submodule=gastos_usuario">Gastos</a>
-                                        </li>
-                                        <li>
-                                            <a href="?submodule=depositos_viaticos">Depósitos</a>
-                                        </li>
-                                        <?php if ($_SESSION['id_area'] == 5) : ?>
-                                            <li>
-                                                <a href="?submodule=send_mails">Envíar correos</a>
-                                            </li>
-                                        <?php endif; ?>
-                                        <!-- <li>
-                                        <a href="#">Mis depósitos</a>
-                                    </li> -->
-                                    </ul>
-                                </div>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </li>
-            <?php if (($_SESSION['id_areas_level']) == 19 || $_SESSION['id_areas_level'] == 21 || $id_user <= 2) : ?>
-
-                <li class="side-nav-item">
-                    <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
-                        <i class="uil-keyhole-circle"></i>
-                        <span> Accesos </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <div class="collapse" id="sidebarAccesos">
-                        <ul class="side-nav-second-level">
-                            <?php if ($id_area <= 3) : ?>
-                                <li>
-                                    <a href="?submodule=sitios">Sitios</a>
-                                </li>
-                                <li>
-                                    <a href="?submodule=lista_accesos">Lista de accesos</a>
-                                </li>
-                            <?php else : ?>
-                                <li>
-                                    <a href="?submodule=captura_accesos">Mis accesos</a>
-                                </li>
-                                <li>
-                                    <a href="?submodule=sitios">Sitios</a>
-                                </li>
-                            <?php endif; ?>
-
-                            <!-- <li>
-                            <a href="#">Aprobados</a>
-                        </li>
-                        <li>
-                            <a href="#">Revisión</a>
-                        </li>
-                        <li>
-                            <a href="#">Concentrado</a>
-                        </li> -->
-                        </ul>
-                    </div>
-                </li>
-            <?php endif ?>
-
-            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2  || ($id_area >= 4 || $id_user == 50)) : ?>
+            <?php if ($id_user == 78) : ?>
                 <li class="side-nav-item">
                     <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
                         <i class="uil-shopping-trolley"></i>
-                        <span> Compras </span>
+                        <span> Herramienta e Inventarios </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarCompras">
@@ -189,30 +52,27 @@
                             <li>
                                 <a href="?submodule=solicitudes_herramienta">Compra de Herramienta</a>
                             </li> -->
-                            <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
-
-                                <!-- <li>
+                            <!-- <li>
                                     <a href="?submodule=inventario_material">Inventario de material</a>
                                 </li> -->
-                                <li>
-                                    <a href="?submodule=inventario_herramienta">Inventario de herramienta</a>
-                                </li>
+                            <li>
+                                <a href="?submodule=inventario_herramienta">Inventario de herramienta</a>
+                            </li>
 
-                                <!-- <li>
+                            <!-- <li>
                                     <a href="?submodule=asignaciones_herramienta">Asignaciones de herramienta</a>
                                 </li> -->
 
-                                <li>
-                                    <a href="?submodule=catalogo_material">Catálogo de material</a>
-                                </li>
+                            <li>
+                                <a href="?submodule=catalogo_material">Catálogo de material</a>
+                            </li>
 
-                                <li>
-                                    <a href="?submodule=info_auxiliar_material">Catalogo de proveedores y materiales</a>
-                                </li>
-                                <li>
-                                    <a href="?submodule=info_auxiliar_herramienta">Información Auxiliar Herramientas</a>
-                                </li>
-                            <?php endif; ?>
+                            <li>
+                                <a href="?submodule=info_auxiliar_material">Catalogo de proveedores y materiales</a>
+                            </li>
+                            <li>
+                                <a href="?submodule=info_auxiliar_herramienta">Información Auxiliar Herramientas</a>
+                            </li>
 
 
                             <!-- <li>
@@ -230,8 +90,260 @@
                         </ul>
                     </div>
                 </li>
-            <?php endif; ?>
-            <!--
+            <?php else : ?>
+                <?php if ($id_area <= 3 || $id_user == 50) : ?>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarRH" aria-expanded="false" aria-controls="sidebarRH" class="side-nav-link">
+                            <i class="uil-folder-heart"></i>
+                            <span> RH </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarRH">
+                            <ul class="side-nav-second-level">
+                                <li>
+                                    <a href="?submodule=personal">Personal</a>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevelRH" aria-expanded="false" aria-controls="sidebarSecondLevelRH">
+                                        <span> Gestión </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarSecondLevelRH">
+                                        <ul class="side-nav-third-level">
+                                            <li>
+                                                <a href="?submodule=vacations">Vacaciones</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Archivo</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Contratos</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarThirdLevelRH" aria-expanded="false" aria-controls="sidebarThirdLevelRH">
+                                        <span> Contable </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarThirdLevelRH">
+                                        <ul class="side-nav-third-level">
+                                            <li>
+                                                <a href="?submodule=nomina">Nómina</a>
+                                            </li>
+                                            <li>
+                                                <a href="?submodule=gastos">Aguinaldos</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <?php endif; ?>
+                <?php if ($id_area <= 3 || $_SESSION['id_area'] == 5 || $id_user == 50) : ?>
+                    <li class="side-nav-item">
+                        <?php if ($_SESSION['id_area'] == 5) : ?>
+                            <a href="?submodule=personal_dev" class="side-nav-link">
+                            <?php else : ?>
+                                <a href="?submodule=personal" class="side-nav-link">
+                                <?php endif; ?>
+                                <i class="uil-users-alt"></i>
+                                <span> Personal </span>
+                                </a>
+                    </li>
+                <?php endif; ?>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarProyectos" aria-expanded="false" aria-controls="sidebarProyectos" class="side-nav-link">
+                        <i class="uil-suitcase"></i>
+                        <span> Proyectos </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarProyectos">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="?submodule=proyectos">Operaciones</a>
+                            </li>
+                            <li>
+                                <a href="?submodule=proyectos_unidades">Unidades</a>
+                            </li>
+                            <?php if ($id_area <= 3 || $id_user == 50) : ?>
+                                <li>
+                                    <a href="?submodule=proyectos_inactivos">Inactivos</a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+
+
+                </li>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarViaticos" aria-expanded="false" aria-controls="sidebarViaticos" class="side-nav-link">
+                        <i class="uil-usd-circle"></i>
+                        <span> Viáticos </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarViaticos">
+                        <ul class="side-nav-second-level">
+                            <?php if ($id_area <= 3 || $id_user == 50) : ?>
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
+                                        <span> Administrador </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarSecondLevel">
+                                        <ul class="side-nav-third-level">
+                                            <li>
+                                                <a href="?submodule=saldos">Saldos</a>
+                                            </li>
+                                            <li>
+                                                <a href="?submodule=depositos_viaticos">Depósitos</a>
+                                            </li>
+                                            <li>
+                                                <a href="?submodule=gastos_recientes">Gastos recientes</a>
+                                            </li>
+                                            <li>
+                                                <a href="?submodule=gastos">Todos los gastos</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                            <?php if ($id_area >= 4 || $id_user == 50  || $id_user == 82) : ?>
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
+                                        <span> Personal de Campo </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarThirdLevel">
+                                        <ul class="side-nav-third-level">
+                                            <li>
+                                                <a href="?submodule=gastos_usuario">Gastos</a>
+                                            </li>
+                                            <li>
+                                                <a href="?submodule=depositos_viaticos">Depósitos</a>
+                                            </li>
+                                            <?php if ($_SESSION['id_area'] == 5) : ?>
+                                                <li>
+                                                    <a href="?submodule=send_mails">Envíar correos</a>
+                                                </li>
+                                            <?php endif; ?>
+                                            <!-- <li>
+                                        <a href="#">Mis depósitos</a>
+                                    </li> -->
+                                        </ul>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+                <?php if (($_SESSION['id_areas_level']) == 19 || $_SESSION['id_areas_level'] == 21 || $id_user <= 2) : ?>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarAccesos" aria-expanded="false" aria-controls="sidebarAccesos" class="side-nav-link">
+                            <i class="uil-keyhole-circle"></i>
+                            <span> Accesos </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarAccesos">
+                            <ul class="side-nav-second-level">
+                                <?php if ($id_area <= 3) : ?>
+                                    <li>
+                                        <a href="?submodule=sitios">Sitios</a>
+                                    </li>
+                                    <li>
+                                        <a href="?submodule=lista_accesos">Lista de accesos</a>
+                                    </li>
+                                <?php else : ?>
+                                    <li>
+                                        <a href="?submodule=captura_accesos">Mis accesos</a>
+                                    </li>
+                                    <li>
+                                        <a href="?submodule=sitios">Sitios</a>
+                                    </li>
+                                <?php endif; ?>
+
+                                <!-- <li>
+                            <a href="#">Aprobados</a>
+                        </li>
+                        <li>
+                            <a href="#">Revisión</a>
+                        </li>
+                        <li>
+                            <a href="#">Concentrado</a>
+                        </li> -->
+                            </ul>
+                        </div>
+                    </li>
+                <?php endif ?>
+
+                <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2  || ($id_area >= 4 || $id_user == 50)) : ?>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#sidebarCompras" aria-expanded="false" aria-controls="sidebarCompras" class="side-nav-link">
+                            <i class="uil-shopping-trolley"></i>
+                            <span> Herramienta e Inventarios </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarCompras">
+                            <ul class="side-nav-second-level">
+                                <li>
+                                    <a href="?submodule=compras_cotizaciones">Solicitudes de Material</a>
+                                </li>
+                                <!-- <li>
+                                <a href="?submodule=solicitudes_herramienta">Solicitudes de Herramienta</a>
+                            </li> -->
+                                <li>
+                                    <a href="?submodule=kits_herramienta">Kits de Herramienta</a>
+                                </li>
+                                <!-- 
+                            <li>
+                                <a href="?submodule=solicitudes_herramienta">Compra de Herramienta</a>
+                            </li> -->
+                                <?php if ($_SESSION['id_areas_level'] == 17 || $id_user <= 2) : ?>
+
+                                    <!-- <li>
+                                    <a href="?submodule=inventario_material">Inventario de material</a>
+                                </li> -->
+                                    <li>
+                                        <a href="?submodule=inventario_herramienta">Inventario de herramienta</a>
+                                    </li>
+
+                                    <!-- <li>
+                                    <a href="?submodule=asignaciones_herramienta">Asignaciones de herramienta</a>
+                                </li> -->
+
+                                    <li>
+                                        <a href="?submodule=catalogo_material">Catálogo de material</a>
+                                    </li>
+
+                                    <li>
+                                        <a href="?submodule=info_auxiliar_material">Catalogo de proveedores y materiales</a>
+                                    </li>
+                                    <li>
+                                        <a href="?submodule=info_auxiliar_herramienta">Información Auxiliar Herramientas</a>
+                                    </li>
+                                <?php endif; ?>
+
+
+                                <!-- <li>
+                            <a href="#">Solicitudes</a>
+                        </li>
+                        <li>
+                            <a href="#">Registro de Compras</a>
+                        </li>
+                        <li>
+                            <a href="#">Revisión</a>
+                        </li>
+                        <li>
+                            <a href="#">Proveedores</a>
+                        </li> -->
+                            </ul>
+                        </div>
+                    </li>
+                <?php endif; ?>
+                <!--
                 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarInventarios" aria-expanded="false" aria-controls="sidebarInventarios" class="side-nav-link">
@@ -286,7 +398,7 @@
                 </a>
             </li> -->
 
-            <!--             <?php if ($id_area <= 3) { ?>
+                <!--             <?php if ($id_area <= 3) { ?>
                 <li class="side-nav-item">
                     <a href="?submodule=creditos" class="side-nav-link">
                         <i class=" uil-bill"></i>
@@ -297,51 +409,38 @@
 
 
 
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarMantenimiento" aria-expanded="false" aria-controls="sidebarMantenimiento" class="side-nav-link">
-                    <i class="uil-car-sideview"></i>
-                    <span> Vehículos </span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="sidebarMantenimiento">
-                    <ul class="side-nav-second-level">
-                        <?php if ($id_area <= 3) : ?>
-                            <li>
-                                <a href="?submodule=unidades_admin">Unidades</a>
-                            </li>
-                            <li>
-                                <a href="?submodule=administrar_checklist">Administrar Check - List</a>
-                            </li>
-                        <?php else : ?>
-                            <li>
-                                <a href="?submodule=unidades_user">Unidades</a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </li>
-            <li class="side-nav-item">
-                <a href="?submodule=reportes" class="side-nav-link">
-                    <i class=" uil-file-medical-alt"></i>
-                    <span> Reportes </span>
-                </a>
-            </li>
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#sidebarMantenimiento" aria-expanded="false" aria-controls="sidebarMantenimiento" class="side-nav-link">
+                        <i class="uil-car-sideview"></i>
+                        <span> Vehículos </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarMantenimiento">
+                        <ul class="side-nav-second-level">
+                            <?php if ($id_area <= 3) : ?>
+                                <li>
+                                    <a href="?submodule=unidades_admin">Unidades</a>
+                                </li>
+                                <li>
+                                    <a href="?submodule=administrar_checklist">Administrar Check - List</a>
+                                </li>
+                            <?php else : ?>
+                                <li>
+                                    <a href="?submodule=unidades_user">Unidades</a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                </li>
+                <li class="side-nav-item">
+                    <a href="?submodule=reportes" class="side-nav-link">
+                        <i class=" uil-file-medical-alt"></i>
+                        <span> Reportes </span>
+                    </a>
+                </li>
+            <?php endif; ?>
         </ul>
 
-        <!-- Help Box -->
-        <!-- <div class="help-box text-white text-center">
-            <a href="javascript: void(0);" class="float-end close-btn text-white">
-                <i class="mdi mdi-close"></i>
-            </a>
-            <img src="assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
-            <h5 class="mt-3">Unlimited Access</h5>
-            <p class="mb-3">
-                Upgrade to plan to get access to unlimited reports
-            </p>
-            <a href="javascript: void(0);" class="btn btn-outline-light btn-sm">Upgrade</a>
-        </div> -->
-        <!-- end Help Box -->
-        <!-- End Sidebar -->
 
         <div class="clearfix"></div>
     </div>

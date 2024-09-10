@@ -30,7 +30,7 @@ function getPieChartInfo()
         for ($tg_ps = 0; $tg_ps < count($getInfoRequest); $tg_ps++) {
             $id_tipos_gasto = $getInfoRequest[$tg_ps]->id_tipos_gasto;
             $stmt = "SELECT SUM(importe) AS total FROM asteleco_viaticos_erp.gastos 
-            WHERE  MONTH(fecha_registro) = '$month' AND id_tipos_gasto = '$id_tipos_gasto'";
+            WHERE  MONTH(fecha_registro) = '$month' AND YEAR(fecha_registro) = '$year' AND id_tipos_gasto = '$id_tipos_gasto'";
             
             $getInfoRequest_gastg = $queries->getData($stmt);
             if (!empty($getInfoRequest_gastg)) {

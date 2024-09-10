@@ -23,7 +23,7 @@ $getAlmacenesHerramienta = $compras->getAlmacenesHerramienta();
                          </a> -->
                 </form>
             </div>
-            <h4 class="page-title">Compras | Coordinación | Inventario de Herramienta</h4>
+            <h4 class="page-title">Herramienta e Inventarios | Coordinación | Inventario de Herramienta</h4>
         </div>
     </div>
 </div>

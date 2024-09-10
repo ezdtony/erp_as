@@ -904,6 +904,100 @@ function saveIdentificacionProveedor()
      */
     echo json_encode($data);
 }
+function saveBonusPay()
+{
+
+    $folder = $_POST['folder'];
+    $module_name = $_POST['module_name'];
+
+    $id_colab = $_POST['id_colab'];
+    $ammount = $_POST['ammount'];
+    $date = $_POST['date'];
+
+    //$file_name = $_POST['name'];
+    $extension_file = basename($_FILES["formData"]["type"]);
+    $file_name = $folder . "_" . time() . ".$extension_file";
+
+    //$route = '/xampp/htdocs/documentos_alumnos/' . $_POST['student'] . '/' . $folder;
+    $route2 =  dirname(__DIR__ . '', 3) . '/uploads/' . $module_name . "/" . $folder . "/";
+    $route =  dirname(__DIR__ . '', 3) . '/uploads/' . $module_name . "/" . $folder . "/" . $file_name;
+    $route_db = 'uploads/' . $module_name . '/' . $folder . "/" . $file_name;
+    if (!file_exists($route2)) {
+        mkdir($route2, 0777, true);
+    }
+    if (move_uploaded_file($_FILES["formData"]["tmp_name"], $route)) {
+
+        $queries = new Queries;
+        $data = array(
+            'response' => true,
+            'message' => 'Se cargó correctamente el archivo',
+        );
+        $stmt = "INSERT INTO asteleco_rh.vacation_bonus (
+            id_colab,
+            amount,
+            paid,
+            date_paid,
+            url_document,
+            datelog
+        ) VALUES
+        (
+            $id_colab,
+            '$ammount',
+            1,
+            '$date',
+            '$route_db',
+            NOW())";
+        $last_id = 0;
+        $getInfoRequest = $queries->insertData($stmt);
+        $last_id = $getInfoRequest['last_id'];
+
+        if ($last_id = !0) {
+            $last_id_arch = $getInfoRequest['last_id'];
+            $data = array(
+                'response' => true,
+                'message' => 'Se registró correctamente el pago',
+                'id_reg' => $last_id_arch
+            );
+        } else {
+            $data = array(
+                'response' => false,
+                'message' => 'No se pudo cargar el archivo',
+            );
+        }
+    } else {
+        $data = array(
+            'response' => false,
+            'message' => 'No se pudo cargar el archivo',
+        );
+    }
+    // echo $file_name;
+
+    //$move = '';
+
+    /* 
+    $file = $route . '/' . $file_name;
+
+    if (!file_exists($route)) {
+        mkdir($route, 0777, true);
+    }
+
+    if (move_uploaded_file($_FILES['formData']['tmp_name'], $file)) {
+
+        $response = 1;
+
+        $movement = array(
+            'movimiento'        => $move,
+            'curp'              => $_POST['student'],
+            'documento'         => $file_name
+        );
+        $movement = json_encode($movement);
+        setLog(module, $movement, $_SESSION['colab']);
+    }
+
+    $data['response'] = $response;
+     */
+    echo json_encode($data);
+}
 
 function saveAcceso()
 {
